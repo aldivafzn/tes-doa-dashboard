@@ -91,7 +91,7 @@ export class SearchIORComponent implements OnInit {
 
   async fetchDataFromServer() {
     try {
-      const response = await axios.get('http://localhost:3000/showOccurrenceAll');
+      const response = await axios.get('http://localhost:4040/ior/show-all');
       if (response.data.status === 200) {
         this.items = response.data.showProduct;
       } else {
@@ -104,7 +104,7 @@ export class SearchIORComponent implements OnInit {
 
   async fetchDataBySearchTerm() {
     try {
-      const response = await axios.post('http://localhost:3000/searchIOR', this.searchData);
+      const response = await axios.post('http://localhost:4040/ior/search', this.searchData);
       if (response.data.status === 200) {
         this.items = response.data.showProduct;
       } else {
@@ -134,7 +134,7 @@ export class SearchIORComponent implements OnInit {
     try {
       sessionStorage.setItem('document_id', documentId);
       console.log(documentId);
-      const response = await axios.post('http://localhost:3000/getPDFDrive', {documentId});
+      const response = await axios.post('http://localhost:4040/getPDFDrive', {documentId});
       console.log(response.data.message);
       if (response.data.status === 200) {
         window.location.href = response.data.message;

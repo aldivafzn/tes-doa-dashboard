@@ -70,7 +70,7 @@ export class AccountComponent implements OnInit {
 
   async getAccountInfo() {
     try {
-      const response = await axios.post('http://localhost:3000/showAccount', { accountid: this.accountid });
+      const response = await axios.post('http://localhost:4040/account/show', { accountid: this.accountid });
       if (response.data.status === 200 && response.data.account) {
         this.account = response.data.account;
       } else {
@@ -83,7 +83,7 @@ export class AccountComponent implements OnInit {
 
   async fetchAllAccounts() {
     try {
-        const response = await axios.get('http://localhost:3000/showAllAccount');
+        const response = await axios.get('http://localhost:4040/account/show-all');
         console.log("Fetched accounts:", response.data.account);
         this.allAccounts = response.data.account;
         console.log(this.allAccounts);
@@ -95,7 +95,7 @@ export class AccountComponent implements OnInit {
 
   async changePassword() {
     try {
-        const response = await axios.post('http://localhost:3000/updatePassword', {
+        const response = await axios.post('http://localhost:4040/account/update-password', {
             email: this.ChangePass.email,
             currentPass: this.ChangePass.currentPass,
             newPass: this.ChangePass.newPass
@@ -117,7 +117,7 @@ export class AccountComponent implements OnInit {
 
   async deleteAccount() {
     try {
-        const response = await axios.delete('http://localhost:3000/deleteAccount', {
+        const response = await axios.delete('http://localhost:4040/account/delete', {
             data: { 
               email: this.DeleteAccount.email,
               password: this.DeleteAccount.password

@@ -53,7 +53,7 @@ export class FormIORComponent implements OnInit {
 
   async getAccountInfo() {
     try {
-      const response = await axios.post('http://localhost:3000/showAccount', { accountid: this.currentAccountID });
+      const response = await axios.post('http://localhost:4040/account/show', { accountid: this.currentAccountID });
       if (response.data.status === 200 && response.data.account) {
         this.account = response.data.account;
       } else {
@@ -70,7 +70,7 @@ export class FormIORComponent implements OnInit {
     const generatingToastElement = this.toastService.generatingToast('Generating NCR Form');
   
     try {
-        const response = await axios.post("http://localhost:3000/addOccurrence", this.ior_data);
+        const response = await axios.post("http://localhost:4040/ior/add", this.ior_data);
         // Remove the generating toast
         document.body.removeChild(generatingToastElement);
         if (response.data.status === 200) {

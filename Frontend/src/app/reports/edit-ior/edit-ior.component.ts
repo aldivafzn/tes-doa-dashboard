@@ -60,7 +60,7 @@ export class EditIORComponent implements OnInit{
 
   async fetchIOR() {
     try {
-      const response = await axios.post('http://localhost:3000/showOccurence',
+      const response = await axios.post('http://localhost:4040/ior/show',
         { id_ior: this.currentIorID }
       );
       this.iorData = response.data.showProduct[0];
@@ -75,7 +75,7 @@ export class EditIORComponent implements OnInit{
   async updateIOR() {
     console.log("Sending data:", this.iorData);
     try {
-      const response = await axios.put('http://localhost:3000/updateOccurence', this.iorData);
+      const response = await axios.put('http://localhost:4040/ior/update', this.iorData);
       if (response.data.status === 200) {
         this.toastService.successToast('IOR updated successfully');
         console.log('IOR updated successfully');
