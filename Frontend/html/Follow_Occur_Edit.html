@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="IOR.css">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <title>INTERNAL OCCURRENCE REPORT (IOR)</title>
+</head>
+
+<body>
+    <ul class="nav-links">
+        <img src="image/gmf9.png" alt="Login Image"
+            style="width: 95%; max-width: 300px; margin-bottom: 0px; margin-left: 0px;">
+        <li><a href="main_menu.html">Home</a></li>
+        <li class="center"><a href="Account.html">Account</a></li>
+        <li class="upward dropdown">
+            <a href="#">Audit</a>
+            <ul class="dropdown-content">
+                <li><a href="NCR_Form.html">NCR Form</a></li>
+                <li><a href="NCR_Searching.html">Searching NCR</a></li>
+                <li><a href="Follow_NCR.html">Follow On</a></li>
+            </ul>
+        </li>
+        <li class="upward dropdown">
+            <a href="#">Occurrence</a>
+            <ul class="dropdown-content">
+                <li><a href="IOR_Form.html">IOR Form</a></li>
+                <li><a href="IOR_Searching.html">Searching IOR</a></li>
+                <li><a href="Follow_Occur.html">Follow On</a></li>
+                <!-- <li><a href="#">Edit IOR</a></li> -->
+            </ul>
+        </li>
+        <li><a href="#">Personel</a></li>
+        <li><a href="#">Project</a></li>
+        <li class="upward dropdown">
+            <a href="#">Link</a>
+            <ul class="dropdown-content">
+                <li><a href="https://imsis-djpu.dephub.go.id/PortalDKPPU/" target="_blank">DGCA</a></li>
+                <li><a href="https://www.easa.europa.eu/en/regulations" target="_blank">EASA</a></li>
+            </ul>
+        </li>
+        <li class="forward"><a href="#">User Guide</a></li>
+        <li class="forward"><a href="index.html">Log Out</a></li>
+    </ul>
+
+    <div class="container" id="app">
+        <header>
+            <div class="ncr-title">UPDATE FOLLOW INTERNAL OCCURRENCE REPORT</div>
+            <header>
+            </header>
+        </header>
+        <form @submit.prevent="IOR" action="#">
+            <div class="form first">
+                <div class="details personal">
+                    <div class="fields">
+                        <div class="input-field" v-for="(value, key) in FollIOR_data" :key="key">
+                            <label>{{ key.replace(/_/g, ' ').replace(/(?:^|\s)\S/g, match =>
+                                match.toUpperCase()).replace(/Id/gi,'ID').replace(/Follup/gi, 'Follow UP')}}</label>
+
+                            <input v-if="key === 'follup_date'" type="date" v-model="FollIOR_data[key]" required>
+
+                            <input v-else-if="key === 'current_probability' || key === 'current_severity'" type="text"
+                                placeholder=" Enter your data" maxlength="1" v-model="FollIOR_data[key]" required>
+
+                            <select v-else-if="key === 'follup_uic'" v-model="FollIOR_data[key]">
+                                <option value="" disabled selected>Select Your Data</option>
+                                <option value="IM" selected>IM</option>
+                                <option value="DO">DO</option>
+                                <option value="AO">AO</option>
+                                <option value="Others">Others</option>
+                            </select>
+
+                            <select v-else-if="key === 'follup_status'" v-model="FollIOR_data[key]">
+                                <option value="" disabled selected>Select Your Data</option>
+                                <option value="Open" selected>Open</option>
+                                <option value="Closed ">Closed </option>
+                                <option value="Monitor ">Monitor </option>
+                            </select>
+                            <input v-else type="text" placeholder="Enter your data" v-model="FollIOR_data[key]"
+                                required>
+                        </div>
+                    </div>
+                </div>
+                <button class="nextBtn" type="submit">
+                    <span class="btnText">Submit</span>
+                    <i class="uil uil-navigator"></i>
+                </button>
+            </div>
+        </form>
+        <p>{{ loginMessage }}</p>
+    </div>
+    <script src="https://unpkg.com/vue@3/dist/vue.esm-browser.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.5/axios.min.js"
+        integrity="sha512-TjBzDQIDnc6pWyeM1bhMnDxtWH0QpOXMcVooglXrali/Tj7W569/wd4E8EDjk1CwOAOPSJon1VfcEt1BI4xIrA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script type="module">
+        import { createApp, ref } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js';
+
+        createApp({
+            data() {
+                return {
+                    title: "IOR",
+                    FollIOR_data: {
+                        id_IOR: '',
+                        follup_detail: '',
+                        follupby: '',
+                        follup_uic: '',
+                        follup_date: '',
+                        follup_datarefer: '',
+                        follup_status: '',
+                        nextuic_follup: '',
+                        current_probability: '',
+                        current_severity: '',
+                        current_riskindex: ''
+                    },
+                    loginMessage: ''
+                };
+            },
+            methods: {
+                redirectToMainMenu() {
+                    window.location.href = 'main_menu.html';
+                },
+                async IOR() {
+                    console.log("Sending data:", this.FollIOR_data);
+                    try {
+                        const response = await axios.put("http://localhost:3000/updateFollowUpOccurrence", this.FollIOR_data);
+                        console.log(this.FollIOR_data);
+
+                        if (response.data.status === 200) {
+                            this.loginMessage = 'Occurrence Updated successfully';
+                        } else {
+                            this.loginMessage = 'Failed to Update occurrence';
+                        }
+                    } catch (error) {
+                        console.error("Error during login:", error);
+                        this.loginMessage = 'Failed to Update occurrence' + error;
+                    }
+                },
+            }
+        }).mount('#app');
+    </script>
+</body>
+
+</html>

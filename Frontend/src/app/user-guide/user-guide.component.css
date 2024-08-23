@@ -1,0 +1,61 @@
+.img-custom {
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
+}
+.user-manual {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  padding: 20px;
+}
+
+h1 {
+  font-size: 24px;
+  color: #7d7d7d;
+}
+
+h3 {
+  font-size: 18px;
+  font-weight: bold;
+  color: rgb(0, 0, 0);
+}
+
+ul {
+  list-style-type: disc;
+  margin-left: 20px;
+}
+
+ul.custom-ul {
+  list-style-type: none;
+}
+
+li {
+  margin-bottom: 10px;
+}
+
+code {
+  background-color: #f4f4f4;
+  padding: 2px 4px;
+  border-radius: 4px;
+}
+
+
+/* Add to your global styles or component-specific styles */
+ul.list-none {
+  list-style-type: none; /* Ensures no list markers */
+  padding-left: 0; /* Ensures no padding on the left side */
+}
+
+ul.list-none > li {
+  list-style-type: none; /* Ensures no list markers on list items */
+}
+/* Add this to your global styles or component-specific styles */
+ul.list-none {
+  list-style: none; /* Ensures no list markers */
+  padding-left: 0; /* Removes padding on the left */
+  margin: 0; /* Removes any default margin */
+}
+
+ul.list-none > li {
+  list-style: none; /* Ensures no list markers on list items */
+}

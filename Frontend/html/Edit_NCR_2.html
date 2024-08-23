@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!----======== CSS ======== -->
+    <link rel="stylesheet" href="IOR.css">
+    <!----===== Iconscout CSS ===== -->
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <title>EDIT NON-CONFORMANCE REPORT (NCR)</title>
+</head>
+
+<body>
+    <ul class="nav-links">
+        <img src="image/gmf9.png" alt="Login Image"
+            style="width: 95%; max-width: 300px; margin-bottom: 0px; margin-left: 0px;">
+        <li><a href="main_menu.html">Home</a></li>
+        <li class="center"><a href="Account.html">Account</a></li>
+        <li class="upward dropdown">
+            <a href="#">Audit</a>
+            <ul class="dropdown-content">
+                <li><a href="NCR_Form.html">NCR Form</a></li>
+                <li><a href="NCR_Searching.html">Searching NCR</a></li>
+                <li><a href="Follow_NCR.html">Follow On</a></li>
+            </ul>
+        </li>
+        <li class="upward dropdown">
+            <a href="#">Occurrence</a>
+            <ul class="dropdown-content">
+                <li><a href="IOR_Form.html">IOR Form</a></li>
+                <li><a href="IOR_Searching.html">Searching IOR</a></li>
+                <li><a href="Follow_Occur.html">Follow On</a></li>
+            </ul>
+        </li>
+        <li><a href="#">Personel</a></li>
+        <li><a href="#">Project</a></li>
+        <li class="upward dropdown">
+            <a href="#">Link</a>
+            <ul class="dropdown-content">
+                <li><a href="https://imsis-djpu.dephub.go.id/PortalDKPPU/" target="_blank">DGCA</a></li>
+                <li><a href="https://www.easa.europa.eu/en/regulations" target="_blank">EASA</a></li>
+            </ul>
+        </li>
+        <li class="forward"><a href="#">User Guide</a></li>
+        <li class="forward"><a href="index.html">Log Out</a></li>
+    </ul>
+
+    <div class="container" id="app">
+        <header>
+            <div class="ncr-title">EDIT NON-CONFORMANCE REPORT</div>
+            <header>
+            </header>
+        </header>
+        <form @submit.prevent="IOR" action="#">
+            <div class="form first">
+                <div class="details personal">
+                    <div class="fields">
+                        <div class="input-field" v-for="(value, key) in NCR_data" :key="key">
+                            <label>{{ key.replace(/_/g, ' ').replace(/(?:^|\s)\S/g, match =>
+                                match.toUpperCase()).replace(/Ncr/gi, 'NCR').replace(/Temporarylink/gi, 'Remark').replace(/Ian/gi, 'IAN')
+                                }}</label>
+                                <input
+                                v-if="key === 'issued_date' || key === 'answer_duedate' || key === 'audit_date' || key === 'acknowledge_date'"
+                                type="date" v-model="NCR_data[key]" required>
+
+                            <select v-else-if="key === 'problem_analis'" v-model="NCR_data[key]">
+                                <option value="" disabled selected>Select Your Data</option>
+                                <option value="Required">Required</option>
+                                <option value="Not Required">Not Required</option>
+                            </select>
+
+                            <select v-else-if="key === 'regulationbased'" v-model="NCR_data[key]">
+                                <option value="" disabled selected>Select Your Data</option>
+                                <option value="DGCA">DGCA</option>
+                                <option value="EASA">EASA</option>
+                            </select>
+
+                            <select v-else-if="key === 'audit_type'" v-model="NCR_data[key]">
+                                <option value="" disabled selected>Select Your Data</option>
+                                <option value="Procedure">Procedure</option>
+                                <option value="Product">Product</option>
+                                <option value="Surveillance">Surveillance</option>
+                            </select>
+
+                            <select v-else-if="key === 'audit_scope'" v-model="NCR_data[key]">
+                                <option value="" disabled selected>Select Your Data</option>
+                                <option value="Authority">Authority</option>
+                                <option value="Internal">Internal</option>
+                                <option value="External">External</option>
+                                <option value="Subcontractor">Subcontractor</option>
+                            </select>
+
+                            <select v-else-if="key === 'to_uic'" v-model="NCR_data[key]">
+                                <option value="" disabled selected>Select Your Data</option>
+                                <option value="Chief Design Office">Chief Design Office</option>
+                                <option value="Chief Airworthiness Office">Chief Airworthiness Office</option>
+                                <option value="Chief Independent Monitoring">Chief Independent Monitoring</option>
+                                <option value="Head of DOA">Head of DOA</option>
+                            </select>
+
+                            <select v-else-if="key === 'level_finding'" v-model="NCR_data[key]">
+                                <option value="" disabled selected>Select Your Data</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                            </select>
+
+                            <select v-else-if="key === 'problem_analis'" v-model="NCR_data[key]">
+                                <option value="" disabled selected>Select Your Data</option>
+                                <option value="Required">Required</option>
+                                <option value="Not required">Not required</option>
+                            </select>
+
+                            <select v-else-if="key === 'issue_ian'" v-model="NCR_data[key]">
+                                <option value="" disabled selected>Select Your Data</option>
+                                <option value="true">Yes</option>
+                                <option value="false">No</option>
+                            </select>
+
+                            <select v-else-if="key === 'status'" v-model="NCR_data[key]"
+                                placeholder="Select Responsible Office">
+                                <option value="" disabled selected>Select Your Data</option>
+                                <option value="Open">Open</option>
+                                <option value="Closed">Closed</option>
+                                <option value="Monitor">Monitor</option>
+                            </select>
+
+                            <select v-else-if="key === 'responsible_office'" v-model="NCR_data[key]">
+                                <option value="" disabled selected>Select Your Data</option>
+                                <option value="AO: Airworthiness Office">AO: Airworthiness Office</option>
+                                <option value="DO: Design Office">DO: Design Office</option>
+                                <option value="IM: Independent Monitoring">IM: Independent Monitoring</option>
+                                <option value="PR: Partner">PR: Partner</option>
+                                <option value="SC: Subcontractor">SC: Subcontractor</option>
+                                <option value="BR: BRIN">BR: BRIN</option>
+                                <option value="GF: GMF AeroAsia">GF: GMF AeroAsia</option>
+                                <option value="BA: BIFA Flying School">BA: BIFA Flying School</option>
+                                <option value="EL: Elang Lintas Indonesia">EL: Elang Lintas Indonesia</option>
+                            </select>
+
+                            <input v-else-if="key === 'accountid'" v-model="currentAccountID" readonly>
+                            
+                            <input v-else-if="key === 'ncr_init_id'" v-model="currentIORID" readonly>
+
+                            <input v-else type="text" placeholder="Enter your data" v-model="NCR_data[key]" required>
+                        </div>
+                    </div>
+                </div>
+                <button class="nextBtn" type="submit">
+                    <span class="btnText">Submit</span>
+                    <i class="uil uil-navigator"></i>
+                </button>
+            </div>
+        </form>
+        <p>{{ loginMessage }}</p>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.5/axios.min.js"
+        integrity="sha512-TjBzDQIDnc6pWyeM1bhMnDxtWH0QpOXMcVooglXrali/Tj7W569/wd4E8EDjk1CwOAOPSJon1VfcEt1BI4xIrA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script type="module">
+
+        import { createApp, ref } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js';
+
+        createApp({
+            data() {
+                return {
+                    title: "IOR",
+                    currentAccountID: '',
+                    currentIORID:'',
+                    NCR_data: {
+                        accountid: '',
+                        ncr_init_id:'',
+                        regulationbased: '',
+                        subject: '',
+                        audit_no: '',
+                        ncr_no: '',
+                        issued_date: '',
+                        responsible_office: '',
+                        audit_type: '',
+                        audit_scope: '',
+                        to_uic: '',
+                        attention: '',
+                        require_condition: '',
+                        level_finding: '',
+                        problem_analis: '',
+                        answer_duedate: '',
+                        issue_ian: '',
+                        ian_no: '',
+                        encounter_condition: '',
+                        audit_by: '',
+                        audit_date: '',
+                        acknowledge_by: '',
+                        acknowledge_date: '',
+                        status: '',
+                        temporarylink: ''
+                    },
+                    loginMessage: ''
+                };
+            },
+            mounted() {
+                const accountid = sessionStorage.getItem('accountid');
+                if (accountid) {
+                    this.currentAccountID = accountid;
+                } else {
+                    window.location.href = 'login.html';
+                }
+
+                const ncrData = sessionStorage.getItem('ncr_init_id');
+                if (ncrData) {
+                    this.currentIORID = ncrData;
+                }
+            },
+            methods: {
+                redirectToMainMenu() {
+                    window.location.href = 'main_menu.html';
+                },
+                async IOR() {
+                    this.NCR_data.accountid = this.currentAccountID;
+                    this.NCR_data.ncr_init_id = this.currentIORID;
+
+                    console.log("Sending data:", this.NCR_data);
+                    try {
+                        const response = await axios.put("http://localhost:3000/UpdateNCRInit", this.NCR_data);
+                        console.log(response);
+                        if (response.data.status === 200) {
+                            this.loginMessage = 'NCR Updated';
+                        } else {
+                            this.loginMessage = 'Failed to Update NCR';
+                        }
+                    } catch (error) {
+                        this.loginMessage = 'Failed to Update NCR' + error;
+                    }
+                },
+            }
+        }).mount('#app');
+    </script>
+</body>
+
+</html>

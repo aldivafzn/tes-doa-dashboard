@@ -1,0 +1,87 @@
+@keyframes scroll-right {
+    0% {
+      transform: translateX(100%);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+  
+  .scroll-container {
+    width: 100%;
+    overflow: hidden; /* Hide overflow to ensure scrolling is smooth */
+    white-space: nowrap; /* Prevent line breaks inside the container */
+    position: relative; /* Positioning for the absolute child */
+  }
+  
+  .scroll-content {
+    display: flex;
+    animation: scroll-right 20s linear infinite; /* Adjust duration as needed */
+    white-space: nowrap; /* Prevent line breaks */
+  }
+  
+  .item {
+    flex: 0 0 auto; /* Prevent items from shrinking or growing */
+    width: 560px; /* Adjust as needed to fit your content */
+    height: 315px; /* Adjust as needed to fit your content */
+    margin-right: 0; /* No margin to ensure no gaps */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  iframe {
+    width: 100%;
+    height: 100%;
+  }
+  
+  .tradingview-widget-container {
+    width: 560px; /* Match the width of other items */
+    height: 315px; /* Match the height of other items */
+  }
+  
+  .carousel-item {
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+  }
+  
+  .carousel-item.active {
+    opacity: 1;
+  }
+  
+  .carousel-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0; /* Adjust as needed */
+    padding: 1.5rem; /* Adjust as needed */
+    background-color: rgba(53, 53, 53, 0.5); /* Adjust as needed */
+    color: white;
+    margin-top: 20px; /* Add margin-top here */
+  }
+  
+  .carousel-image {
+    margin-top: -20px; /* Adjust as needed */
+  }
+  
+  /* Replace Tailwind's @apply with standard CSS */
+  .static-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+  
+  .content-center {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: center;
+  }
+  
+  .item {
+    flex-shrink: 0;
+  }
+ 
+  

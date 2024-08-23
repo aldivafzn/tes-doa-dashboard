@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NCR Searching</title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.6/css/jquery.dataTables.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+    <link rel="stylesheet" href="Account.css">
+</head>
+
+<body>
+
+    <ul class="nav-links">
+        <img src="image/gmf9.png" alt="Login Image"
+            style="width: 95%; max-width: 300px; margin-bottom: 0px; margin-left: 0px;">
+        <li><a href="main_menu2.html">Home</a></li>
+        <li class="center"><a href="Account2.html">Account</a></li>
+        <li class="upward dropdown">
+            <a href="#">Audit</a>
+            <ul class="dropdown-content">
+                <li><a href="NCR_Searching_2.html">View NCR</a></li>
+            </ul>
+        </li>
+        <li class="upward dropdown">
+            <a href="#">Occurrence</a>
+            <ul class="dropdown-content">
+                <li><a href="IOR_Searching_2.html">View IOR</a></li>
+            </ul>
+        </li>
+        <li><a href="#">Personel</a></li>
+        <li><a href="#">Project</a></li>
+        <li class="upward dropdown">
+            <a href="#">Link</a>
+            <ul class="dropdown-content">
+                <li><a href="https://imsis-djpu.dephub.go.id/PortalDKPPU/" target="_blank">DGCA</a></li>
+                <li><a href="https://www.easa.europa.eu/en/regulations" target="_blank">EASA</a></li>
+            </ul>
+        </li>
+        <li class="forward"><a href="#">User Guide</a></li>
+        <li class="forward"><a href="index.html">Log Out</a></li>
+    </ul>
+
+    <div id="app">
+        <h2>{{ title }}</h2>
+
+        <!-- Input pencarian -->
+        <div class="search-bar">
+            <label for="search">Search:</label>
+            <input type="text" id="search" v-model="searchTerm" @input="filterTable">
+        </div>
+
+        <div class="show-table" style="margin-top: 20px;">
+            <div class="table-responsive" style="overflow: auto;">
+                <table class="table" id="data-table" style="background-color: white; overflow-y:scroll;">
+                    <thead style="background-color: #CCE6F4;">
+                        <tr>
+                            <th id="ncr_init_id">NCR Init ID</th>
+                            <th id="regulationbased">Regulation Based</th>
+                            <th id="subject">Subject</th>
+                            <th id="audit_plan_no">Audit Plan No</th>
+                            <th id="ncr_no">NCR No</th>
+                            <th id="issued_date">Issued Date</th>
+                            <th id="responsibility_office">Responsibility Office</th>
+                            <th id="audit_type">Audit Type</th>
+                            <th id="to_uic">To UIC</th>
+                            <th id="require_condition_reference">Require Condition Reference</th>
+                            <th id="level_finding">Level Finding</th>
+                            <th id="problem_analis">Problem Analis</th>
+                            <th id="answer_due_date">Answer Due Date</th>
+                            <th id="issued_ian">Issued IAN</th>
+                            <th id="ian_no">IAN No</th>
+                            <th id="encountered_condition">Encountered Condition</th>
+                            <th id="audit_by">Audit By</th>
+                            <th id="audit_date">Audit Date</th>
+                            <th id="acknowledge_by">Acknowledge By</th>
+                            <th id="acknowledge_date">Acknowledge Date</th>
+                            <th id="status">Status</th>
+                            <th id="temporary_link">Temporary Link</th>
+                            <th id="action">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="item in items" :key="item.ncr_init_id">
+                            <td>{{ item.ncr_init_id }}</td>
+                            <td>{{ item.regulationbased }}</td>
+                            <td>{{ item.subject }}</td>
+                            <td>{{ item.audit_plan_no }}</td>
+                            <td>{{ item.ncr_no }}</td>
+                            <td>{{ item.issued_date }}</td>
+                            <td>{{ item.responsibility_office }}</td>
+                            <td>{{ item.audit_type }}</td>
+                            <td>{{ item.to_uic }}</td>
+                            <td>{{ item.require_condition_reference }}</td>
+                            <td>{{ item.level_finding }}</td>
+                            <td>{{ item.problem_analysis }}</td>
+                            <td>{{ item.answer_due_date }}</td>
+                            <td>{{ item.issue_ian }}</td>
+                            <td>{{ item.ian_no }}</td>
+                            <td>{{ item.encountered_condition }}</td>
+                            <td>{{ item.audit_by }}</td>
+                            <td>{{ item.audit_date }}</td>
+                            <td>{{ item.acknowledge_by }}</td>
+                            <td>{{ item.acknowledge_date }}</td>
+                            <td>{{ item.status }}</td>
+                            <td>{{ item.temporarylink }}</td>
+                            <td>
+                                <button @click="navigatePreview(item.ncr_init_id)">Preview</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- Tombol Export to Excel -->
+        <button @click="exportToExcel">Export to Excel</button>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
+    <script type="module">
+        import { createApp, ref } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js';
+
+        document.addEventListener("DOMContentLoaded", async () => {
+            createApp({
+                data() {
+                    return {
+                        title: "Searching NCR",
+                        items: [],
+                        searchTerm: ''
+                    };
+                },
+                methods: {
+                    async fetchDataFromServer() {
+                        try {
+                            const response = await axios.get("http://localhost:3000/showNCRInit");
+                            if (response.data.status === 200) {
+                                this.items = response.data.showProduct;
+                            } else {
+                                console.error('Error Message:', response.data.message);
+                            }
+                        } catch (error) {
+                            console.error('Error:', error);
+                        }
+                    },
+                    exportToExcel() {
+                        // Mengambil data dari tabel
+                        const table = document.getElementById('data-table');
+                        const ws = XLSX.utils.table_to_sheet(table);
+
+                        // Membuat file Excel
+                        const wb = XLSX.utils.book_new();
+                        XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+
+                        // Menyimpan file Excel
+                        XLSX.writeFile(wb, 'NCR_Data.xlsx');
+                    },
+                    navigatePreview(ncrNo) {
+                        // Menggunakan sessionStorage untuk menyimpan ncr_init_id
+                        sessionStorage.setItem('ncr_init_id', ncrNo);
+                        // Menggunakan window.location.href untuk mengarahkan ke halaman previewPage.html
+                        window.location.href = 'previewPage.html';
+                    },
+                    navigateEdit(ncrNo) {
+                        // Store the NCR data in sessionStorage
+                        sessionStorage.setItem('ncr_data', JSON.stringify(this.items.find(item => item.ncr_init_id === ncrNo)));
+                        // Redirect to Edit_NCR.html
+                        window.location.href = 'Edit_NCR_2.html';
+                    },
+                    filterTable() {
+                        // Fungsi ini akan dipanggil setiap kali nilai pencarian berubah
+                        // dan akan memfilter items yang cocok dengan searchTerm.
+                        const tableBody = $('#data-table tbody');
+                        tableBody.empty();
+
+                        this.items.forEach(item => {
+                            if (item.ncr_init_id.toLowerCase().includes(this.searchTerm.toLowerCase())) {
+                                const row = document.createElement("tr");
+                                row.innerHTML = `
+                                    <td>${item.ncr_init_id}</td>
+                                    <td>${item.regulationbased}</td>
+                                    <td>${item.subject}</td>
+                                    <td>${item.audit_plan_no}</td>
+                                    <td>${item.ncr_no}</td>
+                                    <td>${item.issued_date}</td>
+                                    <td>${item.responsibility_office}</td>
+                                    <td>${item.audit_type}</td>
+                                    <td>${item.to_uic}</td>
+                                    <td>${item.require_condition_reference}</td>
+                                    <td>${item.level_finding}</td>
+                                    <td>${item.problem_analysis}</td>
+                                    <td>${item.answer_due_date}</td>
+                                    <td>${item.issue_ian}</td>
+                                    <td>${item.ian_no}</td>
+                                    <td>${item.encountered_condition}</td>
+                                    <td>${item.audit_by}</td>
+                                    <td>${item.audit_date}</td>
+                                    <td>${item.acknowledge_by}</td>
+                                    <td>${item.acknowledge_date}</td>
+                                    <td>${item.status}</td>
+                                    <td>${item.temporarylink}</td>
+                                    <td>
+                                        <button class="preview-button">Preview</button>
+                                    </td>
+                                `;
+                                tableBody.append(row);
+                            }
+                        });
+                        const previewButtons = document.querySelectorAll('.preview-button');
+                        previewButtons.forEach(button => {
+                            button.addEventListener('click', () => {
+                                const ncrId = button.closest('tr').querySelector('td:first-child').textContent;
+                                this.navigatePreview(ncrId);
+                            });
+                        });
+                    }
+                },
+                watch: {
+                    searchTerm() {
+                        this.filterTable();
+                    }
+                },
+                mounted() {
+                    this.fetchDataFromServer();
+                    setInterval(() => {
+                        this.fetchDataFromServer();
+                    }, 5000);
+                }
+            }).mount('#app');
+        });
+    </script>
+</body>
+
+</html>

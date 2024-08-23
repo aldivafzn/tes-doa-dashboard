@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IOR Searching</title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.6/css/jquery.dataTables.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+    <link rel="stylesheet" href="Account.css">
+</head>
+
+<body>
+
+    <ul class="nav-links">
+        <img src="image/gmf9.png" alt="Login Image"
+            style="width: 95%; max-width: 300px; margin-bottom: 0px; margin-left: 0px;">
+        <li><a href="main_menu.html">Home</a></li>
+        <li class="center"><a href="Account.html">Account</a></li>
+        <li class="upward dropdown">
+            <a href="#">Audit</a>
+            <ul class="dropdown-content">
+                <li><a href="NCR_Form.html">NCR Form</a></li>
+                <li><a href="NCR_Searching.html">Searching NCR</a></li>
+                <li><a href="Follow_NCR.html">Follow On</a></li>
+            </ul>
+        </li>
+        <li class="upward dropdown">
+            <a href="#">Occurrence</a>
+            <ul class="dropdown-content">
+                <li><a href="IOR_Form.html">IOR Form</a></li>
+                <li><a href="IOR_Searching.html">Searching IOR</a></li>
+                <li><a href="Follow_Occur.html">Follow On</a></li>
+                <!-- <li><a href="#">Edit IOR</a></li> -->
+            </ul>
+        </li>
+        <li><a href="#">Personel</a></li>
+        <li><a href="#">Project</a></li>
+        <li class="upward dropdown">
+            <a href="#">Link</a>
+            <ul class="dropdown-content">
+                <li><a href="https://imsis-djpu.dephub.go.id/PortalDKPPU/" target="_blank">DGCA</a></li>
+                <li><a href="https://www.easa.europa.eu/en/regulations" target="_blank">EASA</a></li>
+            </ul>
+        </li>
+        <li class="forward"><a href="#">User Guide</a></li>
+        <li class="forward"><a href="index.html">Log Out</a></li>
+    </ul>
+
+    <div id="app">
+        <h2>{{ title }}</h2>
+
+        <!-- Input pencarian -->
+        <div class="search-bar">
+            <label for="search">Search:</label>
+            <input type="text" id="search" v-model="searchTerm" @input="filterTable">
+        </div>
+
+        <div class="show-table" style="margin-top: 20px;">
+            <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
+                <table class="table" id="data-table" style="background-color: white; overflow-y:scroll;">
+                    <thead style="background-color: #CCE6F4;">
+                        <tr>
+                            <th id="id_ior">ID IOR</th>
+                            <th id="subject_ior">Subject IOR</th>
+                            <th id="occur_nbr">IOR Number</th>
+                            <th id="occur_date">IOR Date</th>
+                            <th id="reference_ior">Reference IOR</th>
+                            <th id="to_uic">To UIC</th>
+                            <th id="cc_uic">CC UIC</th>
+                            <th id="category_ior">Category IOR</th>
+                            <th id="type_or_phone_number">Type OR Phone Number</th>
+                            <th id="level_type">Level Type</th>
+                            <th id="detail_occurrence">Detail Occurance</th>
+                            <th id="reported_by">Reported By</th>
+                            <th id="reporter_uic">Reporter UIC</th>
+                            <th id="report_date">Report Date</th>
+                            <th id="report_identify">Report Identify</th>
+                            <th id="data_reference">Data Reference</th>
+                            <th id="hirac_process">Hirac Process</th>
+                            <th id="initial_probability">Initial Probability</th>
+                            <th id="initial_severity">Initial Severity</th>
+                            <th id="initial_riskindex">Initial Riskindex</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="item in items" :key="item.id_ior">
+                            <td>{{ item.id_ior }}</td>
+                            <td>{{ item.subject_ior }}</td>
+                            <td>{{ item.occur_nbr }}</td>
+                            <td>{{ item.occur_date }}</td>
+                            <td>{{ item.reference_ior }}</td>
+                            <td>{{ item.to_uic }}</td>
+                            <td>{{ item.cc_uic }}</td>
+                            <td>{{ item.category_occur }}</td>
+                            <td>{{ item.type_or_pnbr }}</td>
+                            <td>{{ item.level_type }}</td>
+                            <td>{{ item.detail_occurance }}</td>
+                            <td>{{ item.reportedby }}</td>
+                            <td>{{ item.reporter_uic }}</td>
+                            <td>{{ item.report_date }}</td>
+                            <td>{{ item.reporter_identity }}</td>
+                            <td>{{ item.data_reference }}</td>
+                            <td>{{ item.hirac_process }}</td>
+                            <td>{{ item.initial_probability }}</td>
+                            <td>{{ item.initial_severity }}</td>
+                            <td>{{ item.initial_riskindex }}</td>
+                            <td>
+                                <button class="preview-button" @click="navigatePreview(item.id_ior)">Preview</button> 
+                                <button class="preview-button" @click="navigateEdit(item.id_ior)">Edit</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- Tombol Export to Excel -->
+        <button @click="exportToExcel">Export to Excel</button>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
+    <script type="module">
+        import { createApp, ref } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js';
+
+        document.addEventListener("DOMContentLoaded", async () => {
+            createApp({
+                data() {
+                    return {
+                        title: "Searching IOR",
+                        items: [],
+                        searchTerm: ''
+                    };
+                },
+                methods: {
+                    async fetchDataFromServer() {
+                        try {
+                            const response = await axios.get("http://localhost:3000/showOccurrenceAll");
+                            if (response.data.status === 200) {
+                                this.items = response.data.showProduct;
+                                this.id_ior = response.data.showProduct.id_ior;
+                                this.loginMessage = 'NCR ID: ' + this.id_ior;
+                                sessionStorage.setItem('id_ior', this.id_ior);
+                            } else {
+                                console.error('Error Message:', response.data.message);
+                            }
+                        } catch (error) {
+                            console.error('Error:', error);
+                        }
+                    },
+                    exportToExcel() {
+                        // Mengambil data dari tabel
+                        const table = document.getElementById('data-table');
+                        const ws = XLSX.utils.table_to_sheet(table);
+
+                        // Membuat file Excel
+                        const wb = XLSX.utils.book_new();
+                        XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+
+                        // Menyimpan file Excel
+                        XLSX.writeFile(wb, 'IOR_Data.xlsx');
+                    },
+                    navigatePreview(iorData) {
+                        // Menggunakan sessionStorage untuk menyimpan ncr_init_id
+                        sessionStorage.setItem('IOR_Data', iorData);
+                        // Menggunakan window.location.href untuk mengarahkan ke halaman previewPage.html
+                        window.location.href = 'previewPage.html';
+                    },
+                    navigateEdit(iorData) {
+                        sessionStorage.setItem('id_ior',iorData);
+                        window.location.href = 'IOR_Edit.html';
+                    },
+                    filterTable() {
+                        // Fungsi ini akan dipanggil setiap kali nilai pencarian berubah
+                        // dan akan memfilter items yang cocok dengan searchTerm.
+                        const tableBody = $('#data-table tbody');
+                        tableBody.empty();
+
+                        this.items.forEach(item => {
+                            if (item.ncr_init_id.toLowerCase().includes(this.searchTerm.toLowerCase())) {
+                                const row = document.createElement("tr");
+                                row.innerHTML = `
+                                    <td>${item.id_ior}</td>
+                                    <td>${item.subject_ior}</td>
+                                    <td>${item.occur_nbr}</td>
+                                    <td>${item.occur_date}</td>
+                                    <td>${item.reference_ior}</td>
+                                    <td>${item.to_uic}</td>
+                                    <td>${item.cc_uic}</td>
+                                    <td>${item.category_occur}</td>
+                                    <td>${item.type_or_pnbr}</td>
+                                    <td>${item.level_type}</td>
+                                    <td>${item.detail_occurance}</td>
+                                    <td>${item.reportedby}</td>
+                                    <td>${item.reporter_uic}</td>
+                                    <td>${item.report_date}</td>
+                                    <td>${item.reporter_identity}</td>
+                                    <td>${item.data_reference}</td>
+                                    <td>${item.hirac_process}</td>
+                                    <td>${item.initial_probability}</td>
+                                    <td>${item.initial_severity}</td>
+                                    <td>${item.initial_riskindex}</td>
+                                    <td>
+                                        <button class="preview-button">Preview</button>
+                                    </td>
+                                `;
+                                tableBody.append(row);
+                            }
+                        });
+                        const previewButtons = document.querySelectorAll('.preview-button');
+                        previewButtons.forEach(button => {
+                            button.addEventListener('click', () => {
+                                const ncrId = button.closest('tr').querySelector('td:first-child').textContent;
+                                this.navigatePreview(ncrId);
+                            });
+                        });
+                    }
+                },
+                watch: {
+                    searchTerm() {
+                        this.filterTable();
+                    }
+                },
+                mounted() {
+                    this.fetchDataFromServer();
+                    setInterval(() => {
+                        this.fetchDataFromServer();
+                    }, 5000);
+                }
+            }).mount('#app');
+        });
+    </script>
+</body>
+
+</html>

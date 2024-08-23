@@ -1,0 +1,234 @@
+<app-navbar></app-navbar>
+<div class="min-h-screen mt-20 md:mt-10 flex items-center justify-center">
+  <div class="mx-auto w-11/12 my-8 bg-white shadow-md rounded-lg overflow-hidden">
+    <div class="p-6">
+      <h2 class="text-2xl font-semibold text-gray-900 text-center justify-center mb-3 uppercase py-3">Search Internal Occurrence Report</h2>
+      <form class="w-full mx-auto" (ngSubmit)="search()">
+        <div class="relative flex items-center">
+          <!-- Button with filter icon -->
+          <button type="button" (click)="toggleFilter()" class="p-3 mr-1 bg-gray-200 hover:bg-gray-300 rounded-full focus:outline-none">
+            <svg class="w-6 h-6 text-gray-600" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7C3 6.44772 3.44772 6 4 6H20C20.5523 6 21 6.44772 21 7C21 7.55228 20.5523 8 20 8H4C3.44772 8 3 7.55228 3 7ZM6 12C6 11.4477 6.44772 11 7 11H17C17.5523 11 18 11.4477 18 12C18 12.5523 17.5523 13 17 13H7C6.44772 13 6 12.5523 6 12ZM9 17C9 16.4477 9.44772 16 10 16H14C14.5523 16 15 16.4477 15 17C15 17.5523 14.5523 18 14 18H10C9.44772 18 9 17.5523 9 17Z"/>
+            </svg>
+          </button>
+          <div class="relative w-full">
+            <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+              <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+              </svg>
+            </div>
+            <input type="search" id="default-search" [(ngModel)]="searchTerm" name="search" class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 focus:outline-none" placeholder="Search by TO UIC or IOR INIT ID" required />
+            <button type="submit" class="text-white absolute right-2.5 bottom-2.5 bg-[#016299] hover:bg-[#015581] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2">Search</button>
+          </div>
+        </div>
+        <div *ngIf="showFilters" class="mt-2">
+          <label for="filter" class="p-2 block text-lg font-bold text-gray-700">Filter By</label>
+          <div class="p-2 flex flex-wrap">
+            <!-- <h2 class="text-lg font-semibold">Filter</h2> -->
+            <!-- Category IOR Dropdown -->
+            <div class="w-full md:w-1/6 px-1 mb-2">
+              <label for="category-ior" class="text-md font-semibold">Category IOR</label>
+              <select [(ngModel)]="filterBy.category_ior" id="category-ior" class="block w-full mt-2 p-2 border border-gray-300 rounded-md">
+                <option value="" disabled selected>Select your data</option>
+                <option value="DOA Management">DOA Management</option>
+                <option value="Procedure">Procedure</option>
+                <option value="Document">Document</option>
+                <option value="Personnel">Personnel</option>
+                <option value="Facility">Facility</option>
+                <option value="Partner or Subcontractor">Partner or Subcontractor</option>
+                <option value="Material">Material</option>
+                <option value="Information Technology">Information Technology</option>
+                <option value="Training">Training</option>
+                <option value="Others">Others</option>
+              </select>
+            </div>
+            
+            <!-- Type of IOR Dropdown -->
+            <div class="w-full md:w-1/6 px-1 mb-2">
+              <label for="type-ior" class="text-md font-semibold">Type of IOR</label>
+              <select [(ngModel)]="filterBy.type_or_phone_number" id="type-ior" class="block w-full mt-2 p-2 border border-gray-300 rounded-md">
+                <option value="" disabled selected>Select your data</option>
+                <option value="phone">Phone</option>
+                <option value="number">Number</option>
+              </select>
+            </div>
+            
+            <!-- Level Type Dropdown -->
+            <div class="w-full md:w-1/6 px-1 mb-2">
+              <label for="level-type" class="text-md font-semibold">Level Type</label>
+              <select [(ngModel)]="filterBy.level_type" id="level-type" class="block w-full mt-2 p-2 border border-gray-300 rounded-md">
+                <option value="" disabled selected>Select your data</option>
+                <option value="Aircraft">Aircraft</option>
+                <option value="Engine">Engine</option>
+                <option value="APU">APU</option>
+                <option value="Others">Others</option>
+              </select>
+            </div>
+            
+            <!-- Reporter Identity Dropdown -->
+            <div class="w-full md:w-1/6 px-1 mb-2">
+              <label for="reporter-identity" class="text-md font-semibold">Reporter Identity</label>
+              <select [(ngModel)]="filterBy.report_identify" id="reporter-identity" class="block w-full mt-2 p-2 border border-gray-300 rounded-md">
+                <option value="" disabled selected>Select your data</option>
+                <option value="Shown">Shown</option>
+                <option value="Hidden">Hidden</option>
+              </select>
+            </div>
+            
+            <!-- Data Reference Dropdown -->
+            <div class="w-full md:w-1/6 px-1 mb-2">
+              <label for="data-reference" class="text-md font-semibold">Data Reference</label>
+              <select [(ngModel)]="filterBy.data_reference" id="data-reference" class="block w-full mt-2 p-2 border border-gray-300 rounded-md">
+                <option value="" disabled selected>Select your data</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+              </select>
+            </div>
+            
+            <!-- Hirac Process Dropdown -->
+            <div class="w-full md:w-1/6 px-1 mb-2">
+              <label for="hirac-process" class="text-md font-semibold">Hirac Process</label>
+              <select [(ngModel)]="filterBy.hirac_process" id="hirac-process" class="block w-full mt-2 p-2 border border-gray-300 rounded-md">
+                <option value="" disabled selected>Select your data</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+              </select>
+            </div>
+            
+            <!-- Initial Probability, Initial Severity, Initial Risk Index Dropdowns -->
+            <div class="w-full md:w-1/6 px-1 mb-2">
+              <label for="initial-probability" class="text-md font-semibold">Initial Probability</label>
+              <select [(ngModel)]="filterBy.initial_probability" id="initial-probability" class="block w-full mt-2 p-2 border border-gray-300 rounded-md">
+                <option value="" disabled selected>Select your data</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+              </select>
+            </div>
+            
+            <div class="w-full md:w-1/6 px-1 mb-2">
+              <label for="initial-severity" class="text-md font-semibold">Initial Severity</label>
+              <select [(ngModel)]="filterBy.initial_severity" id="initial-severity" class="block w-full mt-2 p-2 border border-gray-300 rounded-md">
+                <option value="" disabled selected>Select your data</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+              </select>
+            </div>
+            
+            <div class="w-full md:w-1/6 px-1 mb-2">
+              <label for="initial-riskindex" class="text-md font-semibold">Initial Risk Index</label>
+              <select [(ngModel)]="filterBy.initial_riskindex" id="initial-riskindex" class="block w-full mt-2 p-2 border border-gray-300 rounded-md">
+                <option value="" disabled selected>Select your data</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+              </select>
+            </div>
+            <!-- Current Probability, Initial Severity, Initial Risk Index Dropdowns -->
+            <div class="w-full md:w-1/6 px-1 mb-2">
+              <label for="Current-probability" class="text-md font-semibold">Current Probability</label>
+              <select [(ngModel)]="filterBy.current_probability" id="Current-probability" class="block w-full mt-2 p-2 border border-gray-300 rounded-md">
+                <option value="" disabled selected>Select your data</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+              </select>
+            </div>
+            
+            <div class="w-full md:w-1/6 px-1 mb-2">
+              <label for="Current-severity" class="text-md font-semibold">Current Severity</label>
+              <select [(ngModel)]="filterBy.current_severity" id="Current-severity" class="block w-full mt-2 p-2 border border-gray-300 rounded-md">
+                <option value="" disabled selected>Select your data</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+              </select>
+            </div>
+            
+            <div class="w-full md:w-1/6 px-1 mb-2">
+              <label for="Current-riskindex" class="text-md font-semibold">Current Risk Index</label>
+              <select [(ngModel)]="filterBy.current_riskindex" id="Current-riskindex" class="block w-full mt-2 p-2 border border-gray-300 rounded-md">
+                <option value="" disabled selected>Select your data</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </form>
+      
+      <div class="show-table mt-5 border border-gray-500">
+        <div class="table-responsive overflow-auto" style="max-height: 600px; min-height: 200px;">
+          <table class="table w-full bg-white overflow-y-scroll" id="data-table">
+            <thead class="bg-blue-100 font-medium">
+              <tr class="border-b border-gray-500">
+                <th id="subject_ior" class="px-4 py-2 border-r border-gray-500">Subject&nbsp;IOR</th>
+                <th id="occur_nbr" class="px-4 py-2 border-r border-gray-500">IOR&nbsp;Number</th>
+                <th id="occur_date" class="px-4 py-2 border-r border-gray-500">IOR&nbsp;Date</th>
+                <th id="reference_ior" class="px-4 py-2 border-r border-gray-500">Reference&nbsp;IOR</th>
+                <th id="to_uic" class="px-4 py-2 border-r border-gray-500">To&nbsp;UIC</th>
+                <th id="cc_uic" class="px-4 py-2 border-r border-gray-500">CC&nbsp;UIC</th>
+                <th id="category_ior" class="px-4 py-2 border-r border-gray-500">Category&nbsp;IOR</th>
+                <th id="type_or_phone_number" class="px-4 py-2 border-r border-gray-500">Type&nbsp;OR&nbsp;Phone&nbsp;Number</th>
+                <th id="level_type" class="px-4 py-2 border-r border-gray-500">Level&nbsp;Type</th>
+                <th id="detail_occurrence" class="px-4 py-2 border-r border-gray-500">Detail&nbsp;Occurrence</th>
+                <th id="reported_by" class="px-4 py-2 border-r border-gray-500">Reported&nbsp;By</th>
+                <th id="reporter_uic" class="px-4 py-2 border-r border-gray-500">Reporter&nbsp;UIC</th>
+                <th id="report_date" class="px-4 py-2 border-r border-gray-500">Report&nbsp;Date</th>
+                <th id="report_identify" class="px-4 py-2 border-r border-gray-500">Report Identify</th>
+                <th id="data_reference" class="px-4 py-2 border-r border-gray-500">Data Reference</th>
+                <th id="hirac_process" class="px-4 py-2 border-r border-gray-500">Hirac Process</th>
+                <th id="initial_probability" class="px-4 py-2 border-r border-gray-500">Initial Probability</th>
+                <th id="initial_severity" class="px-4 py-2 border-r border-gray-500">Initial Severity</th>
+                <th id="initial_riskindex" class="px-4 py-2 border-r border-gray-500">Initial Risk index</th>
+                <th id="current_probability" class="px-4 py-2 border-r border-gray-500">Current Probability</th>
+                <th id="current_severity" class="px-4 py-2 border-r border-gray-500">Current Severity</th>
+                <th id="current_riskindex" class="px-4 py-2 border-r border-gray-500">Current Risk index</th>
+                <th id="action" class="px-4 py-2">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of items" class="border-b border-gray-500">
+                <td class="px-4 py-2 border-r border-gray-500">{{ item.subject_ior }}</td>
+                <td class="px-4 py-2 border-r border-gray-500">{{ item.occur_nbr }}</td>
+                <td class="px-4 py-2 border-r border-gray-500">{{ item.occur_date }}</td>
+                <td class="px-4 py-2 border-r border-gray-500">{{ item.reference_ior }}</td>
+                <td class="px-4 py-2 border-r border-gray-500">{{ item.to_uic }}</td>
+                <td class="px-4 py-2 border-r border-gray-500">{{ item.cc_uic }}</td>
+                <td class="px-4 py-2 border-r border-gray-500">{{ item.category_ior }}</td>
+                <td class="px-4 py-2 border-r border-gray-500">{{ item.type_or_phone_number }}</td>
+                <td class="px-4 py-2 border-r border-gray-500">{{ item.level_type }}</td>
+                <td class="px-4 py-2 border-r border-gray-500">{{ item.detail_occurrence }}</td>
+                <td class="px-4 py-2 border-r border-gray-500">{{ item.reported_by }}</td>
+                <td class="px-4 py-2 border-r border-gray-500">{{ item.reporter_uic }}</td>
+                <td class="px-4 py-2 border-r border-gray-500">{{ item.report_date }}</td>
+                <td class="px-4 py-2 border-r border-gray-500">{{ item.report_identify }}</td>
+                <td class="px-4 py-2 border-r border-gray-500">{{ item.data_reference }}</td>
+                <td class="px-4 py-2 border-r border-gray-500">{{ item.hirac_process }}</td>
+                <td class="px-4 py-2 border-r border-gray-500">{{ item.initial_probability }}</td>
+                <td class="px-4 py-2 border-r border-gray-500">{{ item.initial_severity }}</td>
+                <td class="px-4 py-2 border-r border-gray-500">{{ item.initial_riskindex }}</td>
+                <td class="px-4 py-2 border-r border-gray-500">{{ item.current_probability }}</td>
+                <td class="px-4 py-2 border-r border-gray-500">{{ item.current_severity }}</td>
+                <td class="px-4 py-2 border-r border-gray-500">{{ item.current_riskindex }}</td>
+                <td class="px-4 py-2 text-center">
+                  <button (click)="navigatePreview(item.document_id)" class="inline-block bg-[#016299] rounded border-2 border-primary px-3 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white">Preview</button>
+                  <button (click)="navigateEdit(item.id_ior)" class="inline-block bg-[#016299] rounded border-2 border-primary px-3 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white">Edit</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="flex justify-center mt-5">
+        <button class="text-white justify-center bg-[#107c41] hover:bg-[#185c37] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-4 py-2" (click)="exportToExcel()">
+          <i class="fas fa-file-excel text-white mr-2"></i>Export to Excel
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>
+

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+    <div id="app">
+        <img src="image/gmf9.png" alt="Login Image" style="width: 100%; max-width: 300px; margin: 10px 0 0 10px;">
+        <div class="blue-block"></div>
+        <h1 class="header">DOA Dashboard Apps</h1>
+        <h2>{{ title }}</h2>
+        <form @submit.prevent="login">
+            <label for="email">Email :</label>
+            <input type="text" id="email" v-model="loginData.email" required>
+            <label for="password">Password:</label>
+            <input type="password" id="Password" v-model="loginData.Password" required>
+            <button type="submit">Login</button>
+        </form>
+        <div class="button-container"><button @click="forgotPassword">Lupa Password?</button></div>
+        <div class="button-container"><button @click="registerAccount">Belum Punya Akun?</button></div>
+        <p v-if="showEmailDisplay" id="emailDisplay">{{ loginMessage }}</p>
+        <p v-if="showEmailDisplay" id="emailDisplay">{{ email ? 'Account ID: ' + email : '' }}</p>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.5/axios.min.js"
+        integrity="sha512-TjBzDQIDnc6pWyeM1bhMnDxtWH0QpOXMcVooglXrali/Tj7W569/wd4E8EDjk1CwOAOPSJon1VfcEt1BI4xIrA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script type="module">
+        import { createApp, ref } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js';
+
+        createApp({
+            data() {
+                return {
+                    loginData: {
+                        email: '',
+                        Password: ''
+                    },
+                    loginMessage: '',
+                    email: null,
+                    showEmailDisplay: false
+                };
+            },
+            methods: {
+                async login() {
+                    console.log("Sending data:", this.loginData);
+                    try {
+                        const response = await axios.post("http://localhost:3000/login", this.loginData);
+                        console.log("Server response:", response.data);
+
+                        if (response.data.status === 200 && response.data.message === 'Login successful') {
+                            const userRole = response.data.user.role;
+                            this.email = response.data.user.email;
+                            this.loginMessage = 'Account ID: ' + this.email;
+                            sessionStorage.setItem('email', this.email);
+                            this.showEmailDisplay = true;
+
+                            if (userRole === 'Admin') {
+                                this.loginMessage += ' - Redirecting...';
+                                window.location.href = 'main_menu.html';
+                            } else if (userRole === 'DO' || userRole === 'AO' || userRole === 'IM') {
+                                this.loginMessage += ' - Redirecting...';
+                                window.location.href = 'main_menu2.html';
+                            }
+                        } else {
+                            this.loginMessage = response.data.message;
+                            this.showEmailDisplay = true;
+                        }
+                        return ("Login successful");
+                    } catch (error) {
+                        console.error("Error during login:", error);
+                        this.loginMessage = error.response?.data?.message || "An error occurred during login";
+                        this.showEmailDisplay = true;
+                    }
+                },
+                forgotPassword() {
+                    this.loginMessage = "Hubungi Admin dengan nomor 123456";
+                    this.showEmailDisplay = true;
+                },
+                registerAccount() {
+                    window.location.href = 'Register.html';
+                }
+            },
+            mounted() {
+                this.showEmailDisplay = false;
+            }
+        }).mount('#app');
+    </script>
+</body>
+
+</html>
