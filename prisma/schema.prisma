@@ -1,0 +1,332 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model account {
+  accountid        String             @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name             String?            @db.VarChar(255)
+  unit             office_code?
+  password         String?            @default("admin") @db.VarChar(255)
+  role             user_role?
+  email            String?            @unique @db.VarChar(255)
+  ior              String?            @db.VarChar(255)
+  ncr              String?            @db.VarChar(255)
+  ncr_followresult ncr_followresult[] @ignore
+  ncr_initial      ncr_initial[]
+  ncr_reply        ncr_reply[]        @ignore
+}
+
+model assignpic {
+  pic_id                   String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  do_project_id            String?         @db.Uuid
+  name                     String?
+  role                     String?
+  authorizedlettervalidity DateTime?       @db.Date
+  tbl_do_project           tbl_do_project? @relation(fields: [do_project_id], references: [do_project_id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model commercialaspect {
+  cost_id        String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  do_project_id  String?         @db.Uuid
+  budget         String?
+  costspend      String?
+  postproject    String?
+  billingprocess String?
+  tbl_do_project tbl_do_project? @relation(fields: [do_project_id], references: [do_project_id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model highlightissue {
+  highlight_id     String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  do_project_id    String?         @db.Uuid
+  date             DateTime?       @db.Date
+  problemissue     String?
+  correctiveaction String?
+  pic              String?
+  status           String?         @db.VarChar(5)
+  remark           String?
+  tbl_do_project   tbl_do_project? @relation(fields: [do_project_id], references: [do_project_id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model ncr_followresult {
+  accountid                String?      @db.Uuid
+  ncr_init_id              String?      @db.Uuid
+  close_corrective_actions String?
+  proposed_close_auditee   String
+  proposed_close_date      DateTime     @db.Date
+  is_close                 Boolean
+  effectiveness            effective
+  refer_verification       String?      @db.VarChar(10)
+  sheet_no                 String?      @db.VarChar(50)
+  new_ncr_issue_nbr        String?      @db.VarChar(10)
+  close_approved_by        String
+  close_approved_date      DateTime     @db.Date
+  verified_chief_im        String
+  verified_date            DateTime     @db.Date
+  temporarylink            String?
+  account                  account?     @relation(fields: [accountid], references: [accountid], onDelete: NoAction, onUpdate: NoAction)
+  ncr_initial              ncr_initial? @relation(fields: [ncr_init_id], references: [ncr_init_id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@ignore
+}
+
+model ncr_initial {
+  accountid                   String?            @db.Uuid
+  ncr_init_id                 String             @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  regulationbased             reg_based
+  subject                     String
+  audit_plan_no               String             @db.VarChar(10)
+  ncr_no                      String             @db.VarChar(11)
+  issued_date                 DateTime           @db.Date
+  responsibility_office       responoffice
+  audit_type                  audittype
+  audit_scope                 auditscope
+  to_uic                      uic
+  attention                   String
+  require_condition_reference String
+  level_finding               level
+  problem_analysis            probanalis
+  answer_due_date             DateTime           @db.Date
+  issue_ian                   Boolean
+  ian_no                      String
+  encountered_condition       String
+  audit_by                    String
+  audit_date                  DateTime           @db.Date
+  acknowledge_by              String
+  acknowledge_date            DateTime           @db.Date
+  status                      enum_stat
+  temporarylink               String?
+  ncr_followresult            ncr_followresult[] @ignore
+  account                     account?           @relation(fields: [accountid], references: [accountid], onDelete: NoAction, onUpdate: NoAction)
+  ncr_reply                   ncr_reply[]        @ignore
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model ncr_reply {
+  accountid                   String?      @db.Uuid
+  ncr_init_id                 String?      @db.Uuid
+  rca_problem                 String
+  corrective_action           String
+  preventive_action           String
+  identified_by_auditee       String
+  identified_date             DateTime     @db.Date
+  accept_by_auditor           String
+  auditor_accept_date         DateTime     @db.Date
+  temporarylink               String?
+  recommend_corrective_action String?
+  account                     account?     @relation(fields: [accountid], references: [accountid], onDelete: NoAction, onUpdate: NoAction)
+  ncr_initial                 ncr_initial? @relation(fields: [ncr_init_id], references: [ncr_init_id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@ignore
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model requireddocuments {
+  doc_id              String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  do_project_id       String?         @db.Uuid
+  documenttype        String?
+  documentname        String?
+  documentnumber      String?
+  documentcreatedby   String?
+  documentcreateddate DateTime?       @db.Date
+  documentcheckby     String?
+  documentcheckdate   DateTime?       @db.Date
+  documentapproveby   String?
+  documentapprovedate DateTime?       @db.Date
+  status              String?         @db.VarChar(5)
+  remark              String?
+  tbl_do_project      tbl_do_project? @relation(fields: [do_project_id], references: [do_project_id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model tbl_category_ior {
+  id_ior          String?         @db.Uuid
+  id_ior_category String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  number_cat      String?         @db.VarChar(2)
+  occur_nbr       String?         @db.VarChar(60)
+  tbl_occurrence  tbl_occurrence? @relation(fields: [id_ior], references: [id_ior], onDelete: NoAction, onUpdate: NoAction)
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model tbl_do_project {
+  do_project_id              String              @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  regulationbased            String?             @db.VarChar(5)
+  projecttitle               String?
+  projectnumber              String?
+  projectdescription         String?
+  projectcreateddate         DateTime?           @db.Date
+  eststartdate               DateTime?           @db.Date
+  estfinishdate              DateTime?           @db.Date
+  actstartdate               DateTime?           @db.Date
+  actfinishdate              DateTime?           @db.Date
+  aircrafttypeenginetypepart String?
+  numberofaircraftenginepart String?
+  customername               String?
+  projectclassification      String?             @db.VarChar(5)
+  subclassification          String?             @db.VarChar(10)
+  assignpic                  assignpic[]
+  commercialaspect           commercialaspect[]
+  highlightissue             highlightissue[]
+  requireddocuments          requireddocuments[]
+}
+
+model tbl_follupoccur {
+  id_follup           String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id_ior              String?         @db.Uuid
+  follup_detail       String?
+  follupby            String?         @db.VarChar(75)
+  follup_uic          String?         @db.VarChar(4)
+  follup_date         DateTime?       @db.Date
+  follup_datarefer    Boolean?
+  follup_status       String?         @db.VarChar(8)
+  nextuic_follup      String?         @db.VarChar(4)
+  current_probability String?         @db.VarChar(1)
+  current_severity    String?         @db.VarChar(1)
+  current_riskindex   String?         @db.VarChar(40)
+  tbl_occurrence      tbl_occurrence? @relation(fields: [id_ior], references: [id_ior], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model tbl_occurrence {
+  id_ior              String             @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  subject_ior         String?
+  occur_nbr           String?            @db.VarChar(15)
+  occur_date          DateTime?          @db.Date
+  reference_ior       String?            @db.VarChar(80)
+  to_uic              String?            @db.VarChar(4)
+  cc_uic              String?            @db.VarChar(4)
+  category_occur      String?            @db.VarChar(1)
+  type_or_pnbr        String?            @db.VarChar(15)
+  level_type          String?            @db.VarChar(10)
+  detail_occurance    String?
+  reportedby          String?            @db.VarChar(75)
+  reporter_uic        String?            @db.VarChar(4)
+  report_date         DateTime?          @db.Date
+  reporter_identity   String?            @db.VarChar(8)
+  data_reference      String?            @db.VarChar(8)
+  hirac_process       String?            @db.VarChar(8)
+  initial_probability String?            @db.VarChar(1)
+  initial_severity    String?            @db.VarChar(1)
+  initial_riskindex   String?            @db.VarChar(40)
+  tbl_category_ior    tbl_category_ior[]
+  tbl_follupoccur     tbl_follupoccur[]
+}
+
+enum audit_type {
+  Procedure_Audit @map("Procedure Audit")
+  Product_Audit   @map("Product Audit")
+}
+
+enum auditscope {
+  Authority
+  Internal
+  External
+  Subcontractor
+}
+
+enum audittype {
+  Procedure
+  Product
+  Surveillance
+}
+
+enum effective {
+  Effective
+  Not_Effective @map("Not Effective")
+}
+
+enum enum_stat {
+  Open
+  Monitor
+  Closed
+}
+
+enum level {
+  ONE @map("1")
+  TWO @map("2")
+  THREE @map("3")
+}
+
+enum office_code {
+  TE
+  TEC_1 @map("TEC-1")
+  TEA
+  TEA_1 @map("TEA-1")
+  TEA_2 @map("TEA-2")
+  TEA_3 @map("TEA-3")
+  TEA_4 @map("TEA-4")
+  TED
+  TED_1 @map("TED-1")
+  TED_2 @map("TED-2")
+  TED_3 @map("TED-3")
+  TED_4 @map("TED-4")
+  TER
+  TER_1 @map("TER-1")
+  TER_2 @map("TER-2")
+  TER_3 @map("TER-3")
+  TER_4 @map("TER-4")
+  TER_5 @map("TER-5")
+  TEL
+  TEL_1 @map("TEL-1")
+  TEL_2 @map("TEL-2")
+  TEJ
+  TEJ_1 @map("TEJ-1")
+  TEJ_2 @map("TEJ-2")
+  TEJ_3 @map("TEJ-3")
+  TEM
+  TEM_1 @map("TEM-1")
+  TEM_2 @map("TEM-2")
+  TEM_3 @map("TEM-3")
+}
+
+enum probanalis {
+  Required
+  Not_Required @map("Not Required")
+}
+
+enum reg_based {
+  DGCA
+  EASA
+}
+
+enum responoffice {
+  AO__Airworthiness_Office   @map("AO: Airworthiness Office")
+  DO__Design_Office          @map("DO: Design Office")
+  IM__Independent_Monitoring @map("IM: Independent Monitoring")
+  PR__Partner                @map("PR: Partner")
+  SC__Subcontractor          @map("SC: Subcontractor")
+  BR__BRIN                   @map("BR: BRIN")
+  GF__GMF_AeroAsia           @map("GF: GMF AeroAsia")
+  BA__BIFA_Flying_School     @map("BA: BIFA Flying School")
+  EL__Elang_Lintas_Indonesia @map("EL: Elang Lintas Indonesia")
+}
+
+enum uic {
+  Chief_Design_Office          @map("Chief Design Office")
+  Chief_Airworthiness_Office   @map("Chief Airworthiness Office")
+  Chief_Independent_Monitoring @map("Chief Independent Monitoring")
+  Head_of_DOA                  @map("Head of DOA")
+}
+
+enum user_role {
+  Admin
+  DO
+  AO
+  IM
+}
+
+enum work_station {
+  AO__Airworthiness_Office   @map("AO: Airworthiness Office")
+  DO__Design_Office          @map("DO: Design Office")
+  IM__Independent_Monitoring @map("IM: Independent Monitoring")
+  PR__Partner                @map("PR: Partner")
+  SC__Subcontractor          @map("SC: Subcontractor")
+  BR__BRIN                   @map("BR: BRIN")
+  GF__GMF_AeroAsia           @map("GF: GMF AeroAsia")
+  BA__BIFA_Flying_School     @map("BA: BIFA Flying School")
+  EL__Elang_Lintas_Indonesia @map("EL: Elang Lintas Indonesia")
+}
