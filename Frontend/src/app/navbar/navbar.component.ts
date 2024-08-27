@@ -23,9 +23,6 @@ export class NavbarComponent implements OnInit {
     if (!token) {
       window.location.href = '/login';
     }
-    // console.log('Retrieved accountid:', this.accountid);
-    // console.log('Retrieved role:', this.role);
-    // insert functions to decode token and fetch accountid & role with token
   }
 
   logout() {

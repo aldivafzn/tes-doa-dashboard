@@ -9,27 +9,27 @@ import { FormsModule } from '@angular/forms'; // Ensure FormsModule is imported
 interface Occurence {
   id_ior: string,
   subject_ior: string,
-  occur_nbr: string | null,
-  occur_date: Date | null,
-  reference_ior: string | null,
-  to_uic: string | null,
-  cc_uic: string | null,
-  category_occur: string | null,
-  type_or_pnbr: string | null,
-  level_type: string | null,
-  detail_occurrance: string | null,
-  reportedby: string | null,
-  reporter_uic: string | null,
-  report_date: Date | null,
-  report_identity: string | null,
-  data_reference: string | null,
-  hirac_process: string | null,
-  initial_probability: string | null,
-  initial_severity: string | null,
-  initial_riskindex: string | null,
-  current_probability: string | null,
-  current_severity: string | null,
-  current_riskindex: string | null
+  occur_nbr: string,
+  occur_date: Date,
+  reference_ior: string,
+  to_uic: string,
+  cc_uic: string,
+  category_occur: string,
+  type_or_pnbr: string,
+  level_type: string,
+  detail_occurance: string,
+  reportedby: string,
+  reporter_uic: string,
+  report_date: Date,
+  reporter_identity: string,
+  data_reference: string,
+  hirac_process: string,
+  initial_probability: string,
+  initial_severity: string,
+  initial_riskindex: string,
+  current_probability: string,
+  current_severity: string,
+  current_riskindex: string
   document_id: string
 }
 
@@ -57,7 +57,6 @@ interface Filters {
 })
 export class SearchIORComponent implements OnInit {
   items: Occurence[] = [];
-  searchData = { input: '' };
   searchTerm: string = '';
   filterBy: Filters = { 
     category_ior : '',
@@ -104,7 +103,7 @@ export class SearchIORComponent implements OnInit {
 
   async fetchDataBySearchTerm() {
     try {
-      const response = await axios.post('http://localhost:4040/ior/search', this.searchData);
+      const response = await axios.post('http://localhost:4040/ior/search', { input: this.searchTerm });
       if (response.data.status === 200) {
         this.items = response.data.result;
       } else {

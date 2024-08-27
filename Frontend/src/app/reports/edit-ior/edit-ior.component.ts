@@ -18,28 +18,24 @@ interface JwtPayload {
 interface Occurence {
   id_ior: string,
   subject_ior: string,
-  occur_nbr: string | null,
-  occur_date: Date | null,
-  reference_ior: string | null,
-  to_uic: string | null,
-  cc_uic: string | null,
-  category_occur: string | null,
-  type_or_pnbr: string | null,
-  level_type: string | null,
-  detail_occurrance: string | null,
-  reportedby: string | null,
-  reporter_uic: string | null,
-  report_date: Date | null,
-  report_identity: string | null,
-  data_reference: string | null,
-  hirac_process: string | null,
-  initial_probability: string | null,
-  initial_severity: string | null,
-  initial_riskindex: string | null,
-  current_probability: string | null,
-  current_severity: string | null,
-  current_riskindex: string | null
-  document_id: string | null
+  occur_nbr: string,
+  occur_date: Date | string,
+  reference_ior: string,
+  to_uic: string,
+  cc_uic: string,
+  category_occur: string,
+  type_or_pnbr: string,
+  level_type: string,
+  detail_occurance: string,
+  ReportedBy: string,
+  reporter_uic: string,
+  report_date: Date | string,
+  reporter_identity: string,
+  Data_reference: string,
+  hirac_process: string,
+  initial_probability: string,
+  initial_severity: string,
+  initial_riskindex: string
 }
 
 @Component({
@@ -56,46 +52,36 @@ export class EditIORComponent implements OnInit{
   iorData: Occurence = {
     id_ior: '',
     subject_ior: '',
-    category_occur: null,
-    occur_nbr: null,
-    occur_date: null,
-    reference_ior: null,
-    type_or_pnbr: null,
-    to_uic: null,
-    cc_uic: null,
-    level_type: null,
-    detail_occurrance: null,
-    reportedby: null,
-    reporter_uic: null,
-    report_date: null,
-    report_identity: null,
-    data_reference: null,
-    hirac_process: null,
-    initial_probability: null,
-    initial_severity: null,
-    initial_riskindex: null,
-    current_probability: null,
-    current_severity: null,
-    current_riskindex: null,
-    document_id: null
+    category_occur: '',
+    occur_nbr: '',
+    occur_date: '',
+    reference_ior: '',
+    type_or_pnbr: '',
+    to_uic: '',
+    cc_uic: '',
+    level_type: '',
+    detail_occurance: '',
+    ReportedBy: '',
+    reporter_uic: '',
+    report_date: '',
+    reporter_identity: '',
+    Data_reference: '',
+    hirac_process: '',
+    initial_probability: '',
+    initial_severity: '',
+    initial_riskindex: ''
   };
 
   ngOnInit() {
     const token = this.authService.getToken();
-    if (token) {
-      const { sub } = jwtDecode<JwtPayload>(token);
-      this.currentAccountID = sub;
-      // console.log('Retrieved accountid:', accountID);
-      // insert functions to decode token and fetch accountid & role with token
-    } else {
-      window.location.href = '/login';
-    }
 
     const id_ior = localStorage.getItem('id_ior');
     if (id_ior) {
       this.currentIorID = id_ior;
       console.log('Retrieved id_ior:', id_ior);
       this.fetchIOR();
+    } else {
+      window.location.href = '/searchIOR';
     }
   }
 
@@ -104,7 +90,7 @@ export class EditIORComponent implements OnInit{
       const response = await axios.post('http://localhost:4040/ior/show',
         { id_IOR: this.currentIorID }
       );
-      this.iorData = response.data.result[0];
+      this.iorData = response.data.result;
       // this.iorData.occur_date = this.iorData.occur_date.slice(0, 10);
       // this.iorData.report_date = this.iorData.report_date.slice(0, 10);
     } catch (error) {
@@ -114,6 +100,8 @@ export class EditIORComponent implements OnInit{
   }
 
   async updateIOR() {
+    this.iorData.occur_date = new Date(this.iorData.occur_date)
+    this.iorData.report_date = new Date(this.iorData.report_date)
     console.log("Sending data:", this.iorData);
     try {
       const response = await axios.put('http://localhost:4040/ior/update', this.iorData);

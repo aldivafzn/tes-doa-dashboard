@@ -24,17 +24,12 @@ export class FollowonIORComponent {
   account: any = {};
   constructor(private authService: AuthService) { }
 
-  async ngOnInit() {
-    const token = await this.authService.getToken();
+  ngOnInit() {
+    const token = this.authService.getToken();
     if (token) {
       const { sub } = jwtDecode<JwtPayload>(token);
       this.accountid = sub;
     }
-    // console.log('Retrieved accountid:', this.accountid);
-    // if (this.accountid) {
-    //   this.getAccountInfo();
-    // }
-    // insert functions to decode token and fetch accountid & role with token
   }
 
   async getAccountInfo() {

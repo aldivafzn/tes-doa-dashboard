@@ -20,7 +20,7 @@
             <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2" for="grid-state">
               Subject IOR
             </label>
-            <input [value]="iorData.subject_ior" name="subjectIOR" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 leading-tight" type="text" placeholder="Enter your data" required>
+            <input [(ngModel)]="iorData.subject_ior" name="subjectIOR" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 leading-tight" type="text" placeholder="Enter your data" required>
           </div>
           <!-- Occur NBR -->
           <div class="w-full md:w-1/4 px-3 mb-6 md:mb-0">
@@ -52,12 +52,12 @@
               To UIC
             </label>
             <div class="relative">
-              <select [(ngModel)]="iorData.to_uic" name="toUIC" class="block appearance-none w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 pr-8 leading-tight" required>
+              <select [(ngModel)]="iorData.to_uic" name="to_uic" class="block appearance-none w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 pr-8 leading-tight" required>
                 <option value="" disabled selected>Select your data</option>
-                <option [value]="'Chief Design Office'">Chief Design Office</option>
-                <option [value]="'Chief Airworthiness Office'">Chief Airworthiness Office</option>
-                <option [value]="'Chief Independent Monitoring'">Chief Independent Monitoring</option>
-                <option [value]="'Head of DOA'">Head of DOA</option>
+                <option [value]="'DO'">Chief Design Office</option>
+                <option [value]="'AO'">Chief Airworthiness Office</option>
+                <option [value]="'IM'">Chief Independent Monitoring</option>
+                <option [value]="'DOA'">Head of DOA</option>
               </select>
               <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                 <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
@@ -70,12 +70,12 @@
               CC UIC
             </label>
             <div class="relative">
-              <select [(ngModel)]="iorData.cc_uic" name="ccUIC" class="block appearance-none w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 pr-8 leading-tight" required>
+              <select [(ngModel)]="iorData.cc_uic" name="cc_uic" class="block appearance-none w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 pr-8 leading-tight" required>
                 <option value="" disabled selected>Select your data</option>
-                <option [value]="'Chief Design Office'">Chief Design Office</option>
-                <option [value]="'Chief Airworthiness Office'">Chief Airworthiness Office</option>
-                <option [value]="'Chief Independent Monitoring'">Chief Independent Monitoring</option>
-                <option [value]="'Head of DOA'">Head of DOA</option>
+                <option [value]="'DO'">Chief Design Office</option>
+                <option [value]="'AO'">Chief Airworthiness Office</option>
+                <option [value]="'IM'">Chief Independent Monitoring</option>
+                <option [value]="'DOA'">Head of DOA</option>
               </select>
               <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                 <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
@@ -88,7 +88,7 @@
               Category Occur
             </label>
             <div class="relative">
-              <select [(ngModel)]="iorData.category_occur" name="categoryOccur" class="block appearance-none w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 pr-8 leading-tight" required>
+              <select [(ngModel)]="iorData.category_occur" name="categoryOccur" class="block appearance-none w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 pr-8 leading-tight" >
                 <option value="" disabled selected>Select your data</option>
                 <option [value]="'DOA Management'">DOA Management</option>
                 <option [value]="'Procedure'">Procedure</option>
@@ -113,9 +113,6 @@
             </label>
             <div class="relative">
               <input  [(ngModel)]="iorData.type_or_pnbr" name="typeOrPnbr" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 leading-tight" type="text" placeholder="Enter your data" required>
-              <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
-              </div>
             </div>
           </div>
         </div>
@@ -144,14 +141,20 @@
             <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2" for="grid-state">
               Reported By
             </label>
-            <input  [(ngModel)]="iorData.reportedby" name="reportedBy" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 leading-tight" type="text" placeholder="Enter your data" required>
+            <input  [(ngModel)]="iorData.ReportedBy" name="reportedBy" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 leading-tight" type="text" placeholder="Enter your data" required>
           </div>
           <!-- Reporter UIC -->
           <div class="w-full md:w-1/5 px-3 mb-6 md:mb-0">
             <label class="block  tracking-wide text-gray-700 text-xs font-semibold mb-2" for="grid-state">
               Reporter UIC
             </label>
-            <input [(ngModel)]="iorData.reporter_uic" name="reporter_ui" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 leading-tight" type="text" placeholder="Enter your data" required>
+            <select [(ngModel)]="iorData.reporter_uic" name="cc_uic" class="block appearance-none w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 pr-8 leading-tight" required>
+              <option value="" disabled selected>Select your data</option>
+              <option [value]="'DO'">Chief Design Office</option>
+              <option [value]="'AO'">Chief Airworthiness Office</option>
+              <option [value]="'IM'">Chief Independent Monitoring</option>
+              <option [value]="'DOA'">Head of DOA</option>
+            </select>
           </div>
           <!-- Report Date -->
           <div class="w-full md:w-1/5 px-3 mb-6 md:mb-0">
@@ -166,7 +169,7 @@
               Reporter Identity
             </label>
             <div class="relative">
-              <select  [(ngModel)]="iorData.report_identity" name="reporterIdentity" class="block appearance-none w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 pr-8 leading-tight" required>
+              <select  [(ngModel)]="iorData.reporter_identity" name="reporterIdentity" class="block appearance-none w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 pr-8 leading-tight" required>
                 <option value="" disabled selected>Select your data</option>
                 <option [value]="'Shown'">Shown</option>
                 <option [value]="'Hidden'">Hidden </option>
@@ -185,7 +188,7 @@
               Data Reference
             </label>
             <div class="relative">
-              <select  [(ngModel)]="iorData.data_reference" name="dataReference" class="block appearance-none w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 pr-8 leading-tight" required>
+              <select  [(ngModel)]="iorData.Data_reference" name="dataReference" class="block appearance-none w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 pr-8 leading-tight" required>
                 <option value="" disabled selected>Select your data</option>
                 <option [value]="'Yes'">Yes</option>
                 <option [value]="'No'">No</option>
@@ -240,7 +243,7 @@
             <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2" for="grid-password">
               Detail Occurence
             </label>
-            <textarea [(ngModel)]="iorData.detail_occurrance" name="detailOccurence" class="appearance-none block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 leading-tight text-sm" placeholder="Enter your data" required></textarea>
+            <textarea [(ngModel)]="iorData.detail_occurance" name="detailOccurence" class="appearance-none block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 leading-tight text-sm" placeholder="Enter your data" required></textarea>
           </div>
         </div>
         <!-- Submit Button -->

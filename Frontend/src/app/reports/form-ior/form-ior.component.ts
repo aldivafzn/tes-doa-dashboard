@@ -17,24 +17,24 @@ interface JwtPayload {
 
 interface IORData {
   subject_ior: string,
-  category_occur: string | null,
-  occur_nbr: string | null,
-  occur_date: Date | null,
-  reference_ior: string | null,
-  type_or_pnbr: string | null,
-  to_uic: string | null,
-  cc_uic: string | null,
-  level_type: string | null,
-  detail_occurance: string | null,
-  ReportedBy: string | null,
-  reporter_uic: string | null,
-  report_date: Date | null,
-  reporter_identity: string | null,
-  Data_reference: string | null,
-  hirac_process: string | null,
-  initial_probability: string | null,
-  initial_severity: string | null,
-  initial_riskindex: string | null
+  category_occur: string,
+  occur_nbr: string,
+  occur_date: Date | string,
+  reference_ior: string,
+  type_or_pnbr: string,
+  to_uic: string,
+  cc_uic: string,
+  level_type: string,
+  detail_occurance: string,
+  ReportedBy: string,
+  reporter_uic: string,
+  report_date: Date | string,
+  reporter_identity: string,
+  Data_reference: string,
+  hirac_process: string,
+  initial_probability: string,
+  initial_severity: string,
+  initial_riskindex: string
 }
 
 @Component({
@@ -49,37 +49,35 @@ export class FormIORComponent implements OnInit {
   currentAccountID = '';
   ior_data: IORData = {
     subject_ior: '',
-    category_occur: null,
-    occur_nbr: null,
-    occur_date: null,
-    reference_ior: null,
-    type_or_pnbr: null,
-    to_uic: null,
-    cc_uic: null,
-    level_type: null,
-    detail_occurance: null,
-    ReportedBy: null,
-    reporter_uic: null,
-    report_date: new Date(),
-    reporter_identity: null,
-    Data_reference: null,
-    hirac_process: null,
-    initial_probability: null,
-    initial_severity: null,
-    initial_riskindex: null
+    category_occur: '',
+    occur_nbr: '',
+    occur_date: '',
+    reference_ior: '',
+    type_or_pnbr: '',
+    to_uic: '',
+    cc_uic: '',
+    level_type: '',
+    detail_occurance: '',
+    ReportedBy: '',
+    reporter_uic: '',
+    report_date: '',
+    reporter_identity: '',
+    Data_reference: '',
+    hirac_process: '',
+    initial_probability: '',
+    initial_severity: '',
+    initial_riskindex: ''
   };
 
-  async ngOnInit() {
-    const token = await this.authService.getToken();
+  ngOnInit() {
+    const token = this.authService.getToken();
     if (token) {
       const { sub } = jwtDecode<JwtPayload>(token);
       this.currentAccountID = sub;
-      // this.currentAccountID = accountid;
-      // console.log('Retrieved accountid:', accountid);
-      // this.getAccountInfo();
-      // insert functions to decode token and fetch accountid & role with token
-    } else {
-      window.location.href = '/login';
+      console.log('Retrieved accountid:', this.currentAccountID);
+      if (this.currentAccountID) {
+        this.getAccountInfo();
+      }
     }
   }
 
@@ -99,6 +97,8 @@ export class FormIORComponent implements OnInit {
   }
 
   async submitIOR() {
+    this.ior_data.occur_date = new Date(this.ior_data.occur_date);
+    this.ior_data.report_date = new Date(this.ior_data.report_date);
     console.log("Sending data:", this.ior_data);
     // Show the generating toast
     const generatingToastElement = this.toastService.generatingToast('Generating NCR Form');
