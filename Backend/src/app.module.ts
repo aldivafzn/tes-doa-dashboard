@@ -9,10 +9,18 @@ import { HelperService } from './utils/hash.util';
 import { AuthModule } from './auth/auth.module';
 import { IorController } from './controllers/ior.controller';
 import { IorService } from './services/ior.service';
+import { NcrController } from './controllers/ncr.controller';
+import { NcrService } from './services/ncr.service';
 
 @Module({
   imports: [ConfigModule.forRoot({ isGlobal: true }), PrismaModule, AuthModule],
-  controllers: [AppController, AccountController, IorController],
-  providers: [AppService, AccountService, HelperService, IorService],
+  controllers: [AppController, AccountController, IorController, NcrController],
+  providers: [
+    AppService,
+    AccountService,
+    HelperService,
+    IorService,
+    NcrService,
+  ],
 })
 export class AppModule {}

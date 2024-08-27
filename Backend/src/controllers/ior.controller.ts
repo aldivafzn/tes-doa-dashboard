@@ -115,6 +115,7 @@ export class IorController {
     return result;
   }
 
+  @UseGuards(JwtAuthGuard)
   @Post('category/add')
   async addCategoryIOR(@Body() dto: AddCategoryIORDto) {
     const result = await this.iorService.addCategoryIOR(dto);
@@ -125,6 +126,7 @@ export class IorController {
     };
   }
 
+  @UseGuards(JwtAuthGuard)
   @Post('follow-up/add')
   async addFollowUpOccurrence(@Body() dto: AddFollowUpOccurrenceDto) {
     const result = await this.iorService.addFollowUpOccurrence(dto);
@@ -135,6 +137,7 @@ export class IorController {
     };
   }
 
+  @UseGuards(JwtAuthGuard)
   @Put('follow-up/update')
   async updateFollowUpOccurrence(@Body() dto: UpdateFollowUpOccurrenceDto) {
     const result = await this.iorService.updateFollowUpOccurrence(dto);

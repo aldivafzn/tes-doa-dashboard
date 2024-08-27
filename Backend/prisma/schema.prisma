@@ -102,7 +102,7 @@ model ncr_initial {
   acknowledge_date            DateTime           @db.Date
   status                      enum_stat
   temporarylink               String?
-  ncr_followresult            ncr_followresult[] @ignore
+  ncr_followresult            ncr_followresult[] @ignore 
   account                     account?           @relation(fields: [accountid], references: [accountid], onDelete: NoAction, onUpdate: NoAction)
   ncr_reply                   ncr_reply[]        @ignore
 }
@@ -246,8 +246,8 @@ enum enum_stat {
 }
 
 enum level {
-  ONE @map("1")
-  TWO @map("2")
+  ONE   @map("1")
+  TWO   @map("2")
   THREE @map("3")
 }
 
