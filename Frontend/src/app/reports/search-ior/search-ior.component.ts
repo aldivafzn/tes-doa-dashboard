@@ -9,27 +9,27 @@ import { FormsModule } from '@angular/forms'; // Ensure FormsModule is imported
 interface Occurence {
   id_ior: string,
   subject_ior: string,
-  occur_nbr: string,
-  occur_date: string,
-  reference_ior: string,
-  to_uic: string,
-  cc_uic: string,
-  category_ior: string,
-  type_or_phone_number: string,
-  level_type: string,
-  detail_occurrence: string,
-  reported_by: string,
-  reporter_uic: string,
-  report_date: string,
-  report_identify: string,
-  data_reference: string,
-  hirac_process: string,
-  initial_probability: string,
-  initial_severity: string,
-  initial_riskindex: string,
-  current_probability: string,
-  current_severity: string,
-  current_riskindex: string,
+  occur_nbr: string | null,
+  occur_date: Date | null,
+  reference_ior: string | null,
+  to_uic: string | null,
+  cc_uic: string | null,
+  category_occur: string | null,
+  type_or_pnbr: string | null,
+  level_type: string | null,
+  detail_occurrance: string | null,
+  reportedby: string | null,
+  reporter_uic: string | null,
+  report_date: Date | null,
+  report_identity: string | null,
+  data_reference: string | null,
+  hirac_process: string | null,
+  initial_probability: string | null,
+  initial_severity: string | null,
+  initial_riskindex: string | null,
+  current_probability: string | null,
+  current_severity: string | null,
+  current_riskindex: string | null
   document_id: string
 }
 
@@ -93,7 +93,7 @@ export class SearchIORComponent implements OnInit {
     try {
       const response = await axios.get('http://localhost:4040/ior/show-all');
       if (response.data.status === 200) {
-        this.items = response.data.showProduct;
+        this.items = response.data.result;
       } else {
         console.error('Error Message:', response.data.message);
       }
@@ -106,7 +106,7 @@ export class SearchIORComponent implements OnInit {
     try {
       const response = await axios.post('http://localhost:4040/ior/search', this.searchData);
       if (response.data.status === 200) {
-        this.items = response.data.showProduct;
+        this.items = response.data.result;
       } else {
         console.error('Error Message:', response.data.message);
         this.items = [];
@@ -132,7 +132,7 @@ export class SearchIORComponent implements OnInit {
 
   async navigatePreview(documentId: string) {
     try {
-      sessionStorage.setItem('document_id', documentId);
+      localStorage.setItem('document_id', documentId);
       console.log(documentId);
       const response = await axios.post('http://localhost:4040/getPDFDrive', {documentId});
       console.log(response.data.message);
@@ -147,7 +147,7 @@ export class SearchIORComponent implements OnInit {
   }
 
   navigateEdit(id_ior: string) {
-    sessionStorage.setItem('id_ior', id_ior);
+    localStorage.setItem('id_ior', id_ior);
     window.location.href = '/editIOR';
   }
 }

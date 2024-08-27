@@ -1,7 +1,16 @@
 import { Component } from '@angular/core';
 import { NavbarComponent } from '../../navbar/navbar.component';
 import { FooterComponent } from '../../footer/footer.component';
+import { AuthService } from '../../auth.service';
 import axios from 'axios';
+import { jwtDecode } from 'jwt-decode';
+
+interface JwtPayload {
+  email: string,
+  sub: string,
+  iat: number,
+  exp: number
+}
 
 @Component({
   selector: 'app-followon-ior',
@@ -13,13 +22,19 @@ import axios from 'axios';
 export class FollowonIORComponent {
   accountid: string | null = null;
   account: any = {};
+  constructor(private authService: AuthService) { }
 
-  ngOnInit() {
-    this.accountid = sessionStorage.getItem('accountid');
-    console.log('Retrieved accountid:', this.accountid);
-    if (this.accountid) {
-      this.getAccountInfo();
+  async ngOnInit() {
+    const token = await this.authService.getToken();
+    if (token) {
+      const { sub } = jwtDecode<JwtPayload>(token);
+      this.accountid = sub;
     }
+    // console.log('Retrieved accountid:', this.accountid);
+    // if (this.accountid) {
+    //   this.getAccountInfo();
+    // }
+    // insert functions to decode token and fetch accountid & role with token
   }
 
   async getAccountInfo() {

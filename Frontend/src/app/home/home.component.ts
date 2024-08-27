@@ -17,8 +17,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {}
 
   ngAfterViewInit(): void {
-    this.loadTradingViewWidgets();
-    this.startAutoScroll();
+    if (typeof document !== 'undefined') { 
+      this.loadTradingViewWidgets();
+      this.startAutoScroll();
+    }
   }
 
   loadTradingViewWidgets(): void {
