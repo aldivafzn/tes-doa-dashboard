@@ -3,7 +3,6 @@ import {
   Post,
   Get,
   Body,
-  Query,
   UseGuards,
   Put,
   Delete,
@@ -48,8 +47,8 @@ export class IorController {
 
   @UseGuards(JwtAuthGuard)
   @Post('show')
-  async showOccurrence(@Query() query: ShowOccurrenceDto) {
-    const { id_IOR } = query;
+  async showOccurrence(@Body() showOccurrenceDto: ShowOccurrenceDto) {
+    const { id_IOR } = showOccurrenceDto;
 
     if (!id_IOR) {
       return {

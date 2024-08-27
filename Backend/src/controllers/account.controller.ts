@@ -26,7 +26,7 @@ export class AccountController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Get('show')
+  @Post('show')
   async showAccount(@Body() showAccountDto: ShowAccountDto) {
     return this.accountService.showAccount(showAccountDto);
   }
