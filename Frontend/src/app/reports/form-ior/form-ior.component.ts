@@ -4,7 +4,38 @@ import { FooterComponent } from '../../footer/footer.component';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ToastService } from '../../toast.service';
+import { AuthService } from '../../auth.service';
 import axios from 'axios';
+import { jwtDecode } from 'jwt-decode';
+
+interface JwtPayload {
+  email: string,
+  sub: string,
+  iat: number,
+  exp: number
+}
+
+interface IORData {
+  subject_ior: string,
+  category_occur: string | null,
+  occur_nbr: string | null,
+  occur_date: Date | null,
+  reference_ior: string | null,
+  type_or_pnbr: string | null,
+  to_uic: string | null,
+  cc_uic: string | null,
+  level_type: string | null,
+  detail_occurance: string | null,
+  ReportedBy: string | null,
+  reporter_uic: string | null,
+  report_date: Date | null,
+  reporter_identity: string | null,
+  Data_reference: string | null,
+  hirac_process: string | null,
+  initial_probability: string | null,
+  initial_severity: string | null,
+  initial_riskindex: string | null
+}
 
 @Component({
   selector: 'app-form-ior',
@@ -14,36 +45,39 @@ import axios from 'axios';
   styleUrl: './form-ior.component.css'
 })
 export class FormIORComponent implements OnInit {
-  constructor(private toastService: ToastService) { }
+  constructor(private toastService: ToastService, private authService: AuthService) { }
   currentAccountID = '';
-  ior_data = {
+  ior_data: IORData = {
     subject_ior: '',
-    occur_nbr: '',
-    occur_date: '',
-    reference_ior: '',
-    to_uic: '',
-    cc_uic: '',
-    category_occur: '',
-    type_or_pnbr: '',
-    level_type: '',
-    detail_occurance: '',
-    ReportedBy: '',
-    reporter_uic: '',
-    report_date: '',
-    reporter_identity: '',
-    Data_reference: '',
-    hirac_process: '',
-    initial_probability: '',
-    initial_severity: '',
-    initial_riskindex: ''
+    category_occur: null,
+    occur_nbr: null,
+    occur_date: null,
+    reference_ior: null,
+    type_or_pnbr: null,
+    to_uic: null,
+    cc_uic: null,
+    level_type: null,
+    detail_occurance: null,
+    ReportedBy: null,
+    reporter_uic: null,
+    report_date: new Date(),
+    reporter_identity: null,
+    Data_reference: null,
+    hirac_process: null,
+    initial_probability: null,
+    initial_severity: null,
+    initial_riskindex: null
   };
 
-  ngOnInit() {
-    const accountid = sessionStorage.getItem('accountid');
-    if (accountid) {
-      this.currentAccountID = accountid;
-      console.log('Retrieved accountid:', accountid);
-      this.getAccountInfo();
+  async ngOnInit() {
+    const token = await this.authService.getToken();
+    if (token) {
+      const { sub } = jwtDecode<JwtPayload>(token);
+      this.currentAccountID = sub;
+      // this.currentAccountID = accountid;
+      // console.log('Retrieved accountid:', accountid);
+      // this.getAccountInfo();
+      // insert functions to decode token and fetch accountid & role with token
     } else {
       window.location.href = '/login';
     }
@@ -77,7 +111,8 @@ export class FormIORComponent implements OnInit {
           this.toastService.successToast('IOR form added successfully');
           console.log("IOR form added successfully");
         } else {
-          this.toastService.failedToast('Failed to submit IOR form');
+          //this.toastService.failedToast('Failed to submit IOR form');
+          this.toastService.failedToast(response.data.status);
           console.error("Failed to submit IOR form:", response.data.message);
         }
     } catch (error) {
