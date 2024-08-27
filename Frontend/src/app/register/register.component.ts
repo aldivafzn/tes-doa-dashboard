@@ -4,7 +4,16 @@ import { FooterComponent } from '../footer/footer.component';
 import { ToastService } from '../toast.service';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from '../auth.service';
 import axios, { AxiosError } from 'axios';
+import { jwtDecode } from 'jwt-decode';
+
+interface JwtPayload {
+  email: string,
+  sub: string,
+  iat: number,
+  exp: number
+}
 
 @Component({
   selector: 'app-register',
@@ -22,13 +31,16 @@ export class RegisterComponent implements OnInit {
   email: string | null = null;
   showEmailDisplay = false;
 
-  constructor(private router: Router, private toastService: ToastService) { }
+  constructor(private router: Router, private toastService: ToastService, private authService: AuthService) { }
 
   ngOnInit() {
-    this.accountid = sessionStorage.getItem('accountid');
-    this.role = sessionStorage.getItem('role');
-    console.log('Retrieved accountid:', this.accountid);
-    console.log('Retrieved role:', this.role);
+    const token = this.authService.getToken();
+    this.role = 'Admin';
+    if (token) {
+      const { sub } = jwtDecode<JwtPayload>(token);
+      this.accountid = sub;
+      console.log('Retrieved accountid:', this.accountid);
+    }
     if (this.accountid === null){
       console.log('Redirecting to login page');
       this.router.navigate(['/login']);

@@ -4,7 +4,16 @@ import { FormsModule } from '@angular/forms';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { FooterComponent } from '../footer/footer.component';
 import { ToastService } from '../toast.service';
+import { AuthService } from '../auth.service';
 import axios from 'axios';
+import { jwtDecode } from 'jwt-decode';
+
+interface JwtPayload {
+  email: string,
+  sub: string,
+  iat: number,
+  exp: number
+}
 
 interface AccountData {
   name: string;
@@ -23,14 +32,14 @@ interface AccountData {
 
 export class AccountComponent implements OnInit {
 
-  constructor(private toastService: ToastService) { }
+  constructor(private toastService: ToastService, private authService: AuthService) { }
 
   selectedTab: string = 'account-info';
   
   selectTab(tab: string) {
     this.selectedTab = tab;
   }
- 
+
   accountid: string | null = null;
   role: string | null = null;
   account: any = {};
@@ -42,7 +51,7 @@ export class AccountComponent implements OnInit {
     unit: '',
     role: ''
   };
-  allAccounts: AccountData[] = [];
+  allAccounts: any[] = [];
   ChangePass = {
     email: '',
     currentPass: '',
@@ -53,14 +62,17 @@ export class AccountComponent implements OnInit {
     password: ''
   };
 
-  ngOnInit() {
-    this.accountid = sessionStorage.getItem('accountid');
-    this.role = sessionStorage.getItem('role');
-    console.log('Retrieved accountid:', this.accountid);
-    console.log('Retrieved role:', this.role);
-    if (this.accountid) {
-      this.getAccountInfo();
-      this.fetchAllAccounts();
+  async ngOnInit() {
+    const token = this.authService.getToken();
+    this.role = 'Admin';
+    if (token) {
+      const { sub } = jwtDecode<JwtPayload>(token);
+      this.accountid = sub;
+      console.log('Retrieved accountid:', this.accountid);
+      if (this.accountid) {
+        this.getAccountInfo();
+        this.fetchAllAccounts();
+      }
     }
   }
 
@@ -84,8 +96,8 @@ export class AccountComponent implements OnInit {
   async fetchAllAccounts() {
     try {
         const response = await axios.get('http://localhost:4040/account/show-all');
-        console.log("Fetched accounts:", response.data.account);
-        this.allAccounts = response.data.account;
+        console.log("Fetched accounts:", response.data.accounts);
+        this.allAccounts = response.data.accounts;
         console.log(this.allAccounts);
     } catch (error) {
         console.error("Error fetching all accounts:", error);
@@ -117,11 +129,9 @@ export class AccountComponent implements OnInit {
 
   async deleteAccount() {
     try {
-        const response = await axios.delete('http://localhost:4040/account/delete', {
-            data: { 
-              email: this.DeleteAccount.email,
-              password: this.DeleteAccount.password
-            }
+        const response = await axios.post('http://localhost:4040/account/delete', {
+          email: this.DeleteAccount.email,
+          password: this.DeleteAccount.password
         });
 
         console.log("Delete Password :", response.data.account);

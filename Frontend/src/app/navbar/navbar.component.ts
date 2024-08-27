@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import axios from 'axios';
 import { ToastService } from '../toast.service';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -12,22 +13,25 @@ import { ToastService } from '../toast.service';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-  constructor(private router: Router, private toastService: ToastService) { }
+  constructor(private router: Router, private toastService: ToastService, private authService: AuthService) { }
 
-  accountid: string | null = null;
   role: string | null = null;
 
   ngOnInit() {
-    this.accountid = sessionStorage.getItem('accountid');
-    this.role = sessionStorage.getItem('role');
-    console.log('Retrieved accountid:', this.accountid);
-    console.log('Retrieved role:', this.role);
+    const token = this.authService.getToken();
+    this.role = 'Admin'
+    if (!token) {
+      window.location.href = '/login';
+    }
+    // console.log('Retrieved accountid:', this.accountid);
+    // console.log('Retrieved role:', this.role);
+    // insert functions to decode token and fetch accountid & role with token
   }
 
   logout() {
     axios.post(`http://localhost:4040/account/logout`)
       .then(response => {
-        sessionStorage.removeItem('accountid');
+        this.authService.removeToken();
         this.router.navigate(['/login']);
         this.toastService.successToast('Logout successful');
         console.log(response.data);
