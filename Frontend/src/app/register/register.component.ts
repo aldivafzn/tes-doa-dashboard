@@ -35,7 +35,6 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit() {
     const token = this.authService.getToken();
-    this.role = 'Admin';
     if (token) {
       const { sub } = jwtDecode<JwtPayload>(token);
       this.accountid = sub;
@@ -45,7 +44,21 @@ export class RegisterComponent implements OnInit {
       console.log('Redirecting to login page');
       this.router.navigate(['/login']);
     }
+    this.getRole();
     this.showEmailDisplay = false;
+  }
+
+  async getRole() {
+    try {
+      const response = await axios.post('http://localhost:4040/account/show', { accountid: this.accountid });
+      if (response.data.status === 200 && response.data.account) {
+        this.role = response.data.account.role;
+      } else {
+        console.error('Error fetching account information:', response.data.message);
+      }
+    } catch (error) {
+      console.error('There was an error fetching account info!', error);
+    }
   }
 
   isAdmin(): boolean {

@@ -22,6 +22,38 @@ interface AccountData {
   role: string;
 }
 
+enum unit {
+  TE = "TE",
+  TEC_1 = "TEC-1",
+  TEA = "TEA",
+  TEA_1 = "TEA-1",
+  TEA_2 = "TEA-2",
+  TEA_3 = "TEA-3",
+  TEA_4 = "TEA-4",
+  TED = "TED",
+  TED_1 = "TED-1",
+  TED_2 = "TED-2",
+  TED_3 = "TED-3",
+  TED_4 = "TED-4",
+  TER = "TER",
+  TER_1 = "TER-1",
+  TER_2 = "TER-2",
+  TER_3 = "TER-3",
+  TER_4 = "TER-4",
+  TER_5 = "TER-5",
+  TEL = "TEL",
+  TEL_1 = "TEL-1",
+  TEL_2 = "TEL-2",
+  TEJ = "TEJ",
+  TEJ_1 = "TEJ-1",
+  TEJ_2 = "TEJ-2",
+  TEJ_3 = "TEJ-3",
+  TEM = "TEM",
+  TEM_1 = "TEM-1",
+  TEM_2 = "TEM-2",
+  TEM_3 = "TEM-3"
+}
+
 @Component({
   selector: 'app-account',
   standalone: true,
@@ -62,9 +94,8 @@ export class AccountComponent implements OnInit {
     password: ''
   };
 
-  async ngOnInit() {
+  ngOnInit() {
     const token = this.authService.getToken();
-    this.role = 'Admin';
     if (token) {
       const { sub } = jwtDecode<JwtPayload>(token);
       this.accountid = sub;
@@ -72,6 +103,7 @@ export class AccountComponent implements OnInit {
       if (this.accountid) {
         this.getAccountInfo();
         this.fetchAllAccounts();
+        this.role = localStorage.getItem('role');
       }
     }
   }
@@ -85,6 +117,7 @@ export class AccountComponent implements OnInit {
       const response = await axios.post('http://localhost:4040/account/show', { accountid: this.accountid });
       if (response.data.status === 200 && response.data.account) {
         this.account = response.data.account;
+        this.account.unit = this.convertEnumValue(unit, this.account.unit);
       } else {
         console.error('Error fetching account information:', response.data.message);
       }
@@ -147,5 +180,10 @@ export class AccountComponent implements OnInit {
         console.error("Error deleting account:", error);
         this.toastService.failedToast('Error deleting account');
     }
+  }
+
+  convertEnumValue(enumObj: any, value: string): string {
+    // Convert the value if it's a key in the enum object
+    return enumObj[value] || value;
   }
 }
