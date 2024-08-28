@@ -209,21 +209,43 @@ export class IorService {
       current_riskindex,
     } = dto;
 
-    return await this.prisma.tbl_follupoccur.create({
-      data: {
-        id_ior: id_IOR,
-        follup_detail,
-        follupby,
-        follup_uic,
-        follup_date,
-        follup_datarefer,
-        follup_status,
-        nextuic_follup,
-        current_probability,
-        current_severity,
-        current_riskindex,
-      },
-    });
+    // Validate that required fields are present
+    if (!id_IOR) {
+      throw new Error('id_IOR is required');
+    }
+
+    // Ensure the follow-up occurrence has a date
+    if (!follup_date) {
+      throw new Error('Follow-up date is required');
+    }
+
+    try {
+      // Create the follow-up occurrence in the database
+      const newFollowUpOccurrence = await this.prisma.tbl_follupoccur.create({
+        data: {
+          id_ior: id_IOR,
+          follup_detail,
+          follupby,
+          follup_uic,
+          follup_date,
+          follup_datarefer,
+          follup_status,
+          nextuic_follup,
+          current_probability,
+          current_severity,
+          current_riskindex,
+        },
+      });
+
+      return {
+        status: 201,
+        message: 'Follow-up occurrence added successfully',
+        data: newFollowUpOccurrence,
+      };
+    } catch (error) {
+      console.error('Error adding follow-up occurrence:', error);
+      throw new Error('Error Adding Follow-Up Occurrence');
+    }
   }
 
   async updateFollowUpOccurrence(dto: UpdateFollowUpOccurrenceDto) {

@@ -29,6 +29,7 @@ export class AccountService {
       const token = await this.authService.generateJwtToken(
         email,
         user.accountid.toString(),
+        user.role,
       );
 
       return {
