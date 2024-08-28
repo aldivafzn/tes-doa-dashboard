@@ -14,6 +14,8 @@ import { UserGuideComponent } from './user-guide/user-guide.component';
 import { EditNCRComponent } from './reports/edit-ncr/edit-ncr.component';
 import { EditIORComponent } from './reports/edit-ior/edit-ior.component';
 import { PersonnelComponent } from './personnel/personnel.component';
+import { SearchFollowupIORComponent } from './reports/search-followup-ior/search-followup-ior.component';
+import { EditFollowupIORComponent } from './reports/edit-followup-ior/edit-followup-ior.component';
 
 export const routes: Routes = [
     // Essential routes
@@ -32,6 +34,8 @@ export const routes: Routes = [
     { path: 'searchIOR', component: SearchIORComponent },
     { path: 'followIOR', component: FollowonIORComponent },
     { path: 'editIOR', component: EditIORComponent },
+    { path: 'searchFollowupIOR', component: SearchFollowupIORComponent},
+    { path: 'editFollowupIOR', component: EditFollowupIORComponent },
     // Redirects
     { path: '', redirectTo: '/login', pathMatch: 'full' },
     { path: '**', redirectTo: '/login', pathMatch: 'full' },

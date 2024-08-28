@@ -8,6 +8,14 @@ import { AuthService } from '../../auth.service';
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
 
+interface JwtPayload {
+  email: string,
+  userId: string,
+  role: string,
+  iat: number,
+  exp: number
+}
+
 interface FollowUpIOR {
   id_IOR: string,
   follup_detail: string,
@@ -47,6 +55,35 @@ export class FollowonIORComponent {
     current_riskindex: ''
   };
   subjectIOR: string = '';
+  currentAccountID: string = '';
+
+  account: any = {}
+
+  ngOnInit() {
+    const token = this.authService.getToken();
+    if (token) {
+      const { userId } = jwtDecode<JwtPayload>(token);
+      this.currentAccountID = userId;
+      console.log('Retrieved accountid:', this.currentAccountID);
+    }
+    if (this.currentAccountID) {
+      this.getAccountInfo();
+      this.followIORData.follupby = this.account.name;
+    }
+  }
+
+  async getAccountInfo() {
+    try {
+      const response = await axios.post('http://localhost:4040/account/show', { accountid: this.currentAccountID });
+      if (response.data.status === 200 && response.data.account) {
+        this.account = response.data.account;
+      } else {
+        console.error('Error fetching account information:', response.data.message);
+      }
+    } catch (error) {
+      console.error('There was an error fetching account info!', error);
+    }
+  }
 
   async fetchDataBySubject() {
     try {
@@ -66,10 +103,10 @@ export class FollowonIORComponent {
   async submitFollowIOR() {
     this.followIORData.id_IOR = await this.fetchDataBySubject();
     if (!this.followIORData.id_IOR) {
+      this.toastService.failedToast('There was an error adding Follow on NCR');
       return;
     }
     this.followIORData.follup_date = new Date(this.followIORData.follup_date);
-    // this.followIORData.follup_datarefer = !!this.followIORData.follup_datarefer;
     console.log("Sending data:", this.followIORData);
     try {
       const response = await axios.post('http://localhost:4040/ior/follow-up/add', this.followIORData);

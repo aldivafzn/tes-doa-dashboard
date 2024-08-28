@@ -73,19 +73,19 @@ enum enum_stat {
 interface NCRInitial {
   accountid: string,
   ncr_init_id: string,
-  regulationbased: string | reg_based,
+  regulationbased: string,
   subject: string,
   audit_plan_no: string,
   ncr_no: string,
   issued_date: string,
-  responsibility_office: string | responoffice,
-  audit_type: string | audittype,
-  audit_scope: string | auditscope,
-  to_uic: string | uic,
+  responsibility_office: string,
+  audit_type: string,
+  audit_scope: string,
+  to_uic: string,
   attention: string,
   require_condition_reference: string,
   level_finding: string | level,
-  problem_analysis: string | probanalis,
+  problem_analysis: string,
   answer_due_date: string,
   issue_ian: boolean | string,
   ian_no: string,
@@ -94,7 +94,7 @@ interface NCRInitial {
   audit_date: string,
   acknowledge_by: string,
   acknowledge_date: string,
-  status: string | enum_stat,
+  status: string,
   documentid: string
 }
 
@@ -178,7 +178,7 @@ export class SearchNCRComponent implements OnInit {
   async fetchDataBySearchTerm() {
     try {
       const response = await axios.post('http://localhost:4040/ncr/search', {
-        input: this.searchTerm,
+        input: this.searchTerm
         //filterBy: this.filterBy // Include filter criteria in the request
       });
       if (response.data.status === 200) {
@@ -201,10 +201,12 @@ export class SearchNCRComponent implements OnInit {
       } else {
         console.error('Error Message:', response.data.message);
         this.items = [];
+        window.location.href = '/login';
       }
     } catch (error) {
       console.error('Error:', error);
       this.items = [];
+      window.location.href = '/login';
     }
   }
 

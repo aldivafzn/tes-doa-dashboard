@@ -119,7 +119,7 @@ export class FormIORComponent implements OnInit {
           window.location.href = '/searchIOR';
         } else {
           //this.toastService.failedToast('Failed to submit IOR form');
-          this.toastService.failedToast(response.data.status);
+          this.toastService.failedToast("Failed to submit IOR form:");
           console.error("Failed to submit IOR form:", response.data.message);
         }
     } catch (error) {

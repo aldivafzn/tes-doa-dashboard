@@ -3,44 +3,24 @@ import { CommonModule } from '@angular/common';
 import { NavbarComponent } from "../../navbar/navbar.component";
 import { FooterComponent } from "../../footer/footer.component";
 import { AuthService } from '../../auth.service';
-import { jwtDecode } from 'jwt-decode';
 import axios from 'axios';
 import * as XLSX from 'xlsx';
 import { FormsModule } from '@angular/forms'; // Ensure FormsModule is imported
 
-interface JwtPayload {
-  email: string,
-  userId: string,
-  role: string,
-  iat: number,
-  exp: number
-}
-
-interface Occurence {
+interface FollupIOR {
+  id_follup: string,
   id_ior: string,
-  subject_ior: string,
-  occur_nbr: string,
-  occur_date: string,
-  reference_ior: string,
-  to_uic: string,
-  cc_uic: string,
-  category_occur: string,
-  type_or_pnbr: string,
-  level_type: string,
-  detail_occurance: string,
-  reportedby: string,
-  reporter_uic: string,
-  report_date: string,
-  reporter_identity: string,
-  data_reference: string,
-  hirac_process: string,
-  initial_probability: string,
-  initial_severity: string,
-  initial_riskindex: string,
+  follup_detail: string,
+  follupby: string,
+  follup_uic: string,
+  follup_date: string,
+  follup_datarefer: string,
+  follup_status: string,
+  nextuic_follup: string,
   current_probability: string,
   current_severity: string,
-  current_riskindex: string
-  document_id: string
+  current_riskindex: string,
+  subject_ior: string
 }
 
 interface Filters {
@@ -62,13 +42,13 @@ interface Filters {
   selector: 'app-search-ior',
   standalone: true,
   imports: [CommonModule, NavbarComponent, FooterComponent, FormsModule],
-  templateUrl: './search-ior.component.html',
-  styleUrls: ['./search-ior.component.css']
+  templateUrl: './search-followup-ior.component.html',
+  styleUrls: ['./search-followup-ior.component.css']
 })
-export class SearchIORComponent implements OnInit {
+export class SearchFollowupIORComponent implements OnInit {
   constructor(private authService: AuthService) { }
 
-  items: Occurence[] = [];
+  items: FollupIOR[] = [];
   searchTerm: string = '';
   filterBy: Filters = { 
     category_ior : '',
@@ -93,35 +73,47 @@ export class SearchIORComponent implements OnInit {
   }
 
   search() {
-    console.log('Filter by:', this.filterBy);
+    //console.log('Filter by:', this.filterBy);
     console.log('Search term:', this.searchTerm);
     this.fetchDataBySearchTerm();
   }
 
   ngOnInit() {
-    const token = this.authService.getToken();
-    if (token) {
-      const { role } = jwtDecode<JwtPayload>(token);
-      this.role = role;
-      console.log('Retrieved role:', this.role);
-    }
     this.fetchDataFromServer();
   }
 
   async fetchDataFromServer() {
     try {
-      const response = await axios.get('http://localhost:4040/ior/show-all');
+      const response = await axios.get('http://localhost:4040/ior/follow-up/show-all');
       if (response.data.status === 200) {
         this.items = response.data.result;
         for (let i = 0; i < this.items.length; i++) {
-          this.items[i].occur_date = this.items[i].occur_date.slice(0, 10);
-          this.items[i].report_date = this.items[i].report_date.slice(0, 10);
+          this.items[i].follup_date = this.items[i].follup_date.slice(0, 10);
+          this.items[i].subject_ior = await this.fetchIORSubject(this.items[i].id_ior);
         }
+
       } else {
         console.error('Error Message:', response.data.message);
       }
     } catch (error) {
       console.error('Error:', error);
+    }
+  }
+
+  async fetchIORSubject(id_ior: string) {
+    try{
+      const response = await axios.post('http://localhost:4040/ior/show', {
+        id_IOR: id_ior
+      });
+      if (response.data.status === 200) {
+        return response.data.result.id_ior;
+      } else {
+        console.error('Error Message:', response.data.message);
+        return null;
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      return null;
     }
   }
 
@@ -169,8 +161,8 @@ export class SearchIORComponent implements OnInit {
     }
   }
 
-  navigateEdit(id_ior: string) {
-    localStorage.setItem('id_ior', id_ior);
-    window.location.href = '/editIOR';
+  navigateEdit(id_follup: string) {
+    localStorage.setItem('id_follup_ior', id_follup);
+    window.location.href = '/editFollowupIOR';
   }
 }

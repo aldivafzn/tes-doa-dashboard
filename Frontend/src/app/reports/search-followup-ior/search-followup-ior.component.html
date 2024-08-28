@@ -6,7 +6,7 @@
       <form class="w-full mx-auto" (ngSubmit)="search()">
         <div class="relative flex items-center">
           <!-- Button with filter icon -->
-          <button type="button" (click)="toggleFilter()" class="p-3 mr-1 bg-gray-200 hover:bg-gray-300 rounded-full focus:outline-none">
+          <!-- <button type="button" (click)="toggleFilter()" class="p-3 mr-1 bg-gray-200 hover:bg-gray-300 rounded-full focus:outline-none">
             <svg class="w-6 h-6 text-gray-600" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7C3 6.44772 3.44772 6 4 6H20C20.5523 6 21 6.44772 21 7C21 7.55228 20.5523 8 20 8H4C3.44772 8 3 7.55228 3 7ZM6 12C6 11.4477 6.44772 11 7 11H17C17.5523 11 18 11.4477 18 12C18 12.5523 17.5523 13 17 13H7C6.44772 13 6 12.5523 6 12ZM9 17C9 16.4477 9.44772 16 10 16H14C14.5523 16 15 16.4477 15 17C15 17.5523 14.5523 18 14 18H10C9.44772 18 9 17.5523 9 17Z"/>
             </svg>
@@ -19,7 +19,7 @@
             </div>
             <input type="search" id="default-search" [(ngModel)]="searchTerm" name="search" class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 focus:outline-none" placeholder="Search by TO UIC or IOR INIT ID" required />
             <button type="submit" class="text-white absolute right-2.5 bottom-2.5 bg-[#016299] hover:bg-[#015581] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2">Search</button>
-          </div>
+          </div> -->
         </div>
         <div *ngIf="showFilters" class="mt-2">
           <label for="filter" class="p-2 block text-lg font-bold text-gray-700">Filter By</label>
@@ -165,57 +165,35 @@
             <thead class="bg-blue-100 font-medium">
               <tr class="border-b border-gray-500">
                 <th id="subject_ior" class="px-4 py-2 border-r border-gray-500">Subject&nbsp;IOR</th>
-                <th id="occur_nbr" class="px-4 py-2 border-r border-gray-500">IOR&nbsp;Number</th>
-                <th id="occur_date" class="px-4 py-2 border-r border-gray-500">IOR&nbsp;Date</th>
-                <th id="reference_ior" class="px-4 py-2 border-r border-gray-500">Reference&nbsp;IOR</th>
-                <th id="to_uic" class="px-4 py-2 border-r border-gray-500">To&nbsp;UIC</th>
-                <th id="cc_uic" class="px-4 py-2 border-r border-gray-500">CC&nbsp;UIC</th>
-                <th id="category_ior" class="px-4 py-2 border-r border-gray-500">Category&nbsp;IOR</th>
-                <th id="type_or_phone_number" class="px-4 py-2 border-r border-gray-500">Type&nbsp;OR&nbsp;Phone&nbsp;Number</th>
-                <th id="level_type" class="px-4 py-2 border-r border-gray-500">Level&nbsp;Type</th>
-                <th id="detail_occurrence" class="px-4 py-2 border-r border-gray-500">Detail&nbsp;Occurrence</th>
-                <th id="reported_by" class="px-4 py-2 border-r border-gray-500">Reported&nbsp;By</th>
-                <th id="reporter_uic" class="px-4 py-2 border-r border-gray-500">Reporter&nbsp;UIC</th>
-                <th id="report_date" class="px-4 py-2 border-r border-gray-500">Report&nbsp;Date</th>
-                <th id="report_identify" class="px-4 py-2 border-r border-gray-500">Report Identify</th>
-                <th id="data_reference" class="px-4 py-2 border-r border-gray-500">Data Reference</th>
-                <th id="hirac_process" class="px-4 py-2 border-r border-gray-500">Hirac Process</th>
-                <th id="initial_probability" class="px-4 py-2 border-r border-gray-500">Initial Probability</th>
-                <th id="initial_severity" class="px-4 py-2 border-r border-gray-500">Initial Severity</th>
-                <th id="initial_riskindex" class="px-4 py-2 border-r border-gray-500">Initial Risk index</th>
-                <!-- <th id="current_probability" class="px-4 py-2 border-r border-gray-500">Current Probability</th>
+                <th id="follupby" class="px-4 py-2 border-r border-gray-500">Follow&nbsp;Up&nbsp;By</th>
+                <th id="follup_uic" class="px-4 py-2 border-r border-gray-500">Follow&nbsp;Up&nbsp;UIC</th>
+                <th id="follup_date" class="px-4 py-2 border-r border-gray-500">Follow&nbsp;Up&nbsp;Date</th>
+                <th id="follup_datarefer" class="px-4 py-2 border-r border-gray-500">Follow&nbsp;Up&nbsp;Reference</th>
+                <th id="follup_status" class="px-4 py-2 border-r border-gray-500">Follow&nbsp;Up&nbsp;Status</th>
+                <th id="follup_detail" class="px-4 py-2 border-r border-gray-500">Follow&nbsp;Up&nbsp;Detail</th>
+                <th id="current_probability" class="px-4 py-2 border-r border-gray-500">Current Probability</th>
                 <th id="current_severity" class="px-4 py-2 border-r border-gray-500">Current Severity</th>
-                <th id="current_riskindex" class="px-4 py-2 border-r border-gray-500">Current Risk index</th> -->
+                <th id="current_riskindex" class="px-4 py-2 border-r border-gray-500">Current Risk Index</th>
+                <th id="nextuic_follup" class="px-4 py-2 border-r border-gray-500">Next&nbsp;Follow&nbsp;Up&nbsp;UIC</th>
                 <th id="action" class="px-4 py-2">Action</th>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let item of items" class="border-b border-gray-500">
                 <td class="px-4 py-2 border-r border-gray-500">{{ item.subject_ior }}</td>
-                <td class="px-4 py-2 border-r border-gray-500">{{ item.occur_nbr }}</td>
-                <td class="px-4 py-2 border-r border-gray-500">{{ item.occur_date }}</td>
-                <td class="px-4 py-2 border-r border-gray-500">{{ item.reference_ior }}</td>
-                <td class="px-4 py-2 border-r border-gray-500">{{ item.to_uic }}</td>
-                <td class="px-4 py-2 border-r border-gray-500">{{ item.cc_uic }}</td>
-                <td class="px-4 py-2 border-r border-gray-500">{{ item.category_occur }}</td>
-                <td class="px-4 py-2 border-r border-gray-500">{{ item.type_or_pnbr }}</td>
-                <td class="px-4 py-2 border-r border-gray-500">{{ item.level_type }}</td>
-                <td class="px-4 py-2 border-r border-gray-500">{{ item.detail_occurance }}</td>
-                <td class="px-4 py-2 border-r border-gray-500">{{ item.reportedby }}</td>
-                <td class="px-4 py-2 border-r border-gray-500">{{ item.reporter_uic }}</td>
-                <td class="px-4 py-2 border-r border-gray-500">{{ item.report_date }}</td>
-                <td class="px-4 py-2 border-r border-gray-500">{{ item.reporter_identity }}</td>
-                <td class="px-4 py-2 border-r border-gray-500">{{ item.data_reference }}</td>
-                <td class="px-4 py-2 border-r border-gray-500">{{ item.hirac_process }}</td>
-                <td class="px-4 py-2 border-r border-gray-500">{{ item.initial_probability }}</td>
-                <td class="px-4 py-2 border-r border-gray-500">{{ item.initial_severity }}</td>
-                <td class="px-4 py-2 border-r border-gray-500">{{ item.initial_riskindex }}</td>
-                <!-- <td class="px-4 py-2 border-r border-gray-500">{{ item.current_probability }}</td>
+                <td class="px-4 py-2 border-r border-gray-500">{{ item.follupby }}</td>
+                <td class="px-4 py-2 border-r border-gray-500">{{ item.follup_uic }}</td>
+                <td class="px-4 py-2 border-r border-gray-500">{{ item.follup_date }}</td>
+                <td class="px-4 py-2 border-r border-gray-500">{{ item.follup_datarefer }}</td>
+                <td class="px-4 py-2 border-r border-gray-500">{{ item.follup_status }}</td>
+                <td class="px-4 py-2 border-r border-gray-500">{{ item.follup_detail }}</td>
+                <td class="px-4 py-2 border-r border-gray-500">{{ item.current_probability }}</td>
                 <td class="px-4 py-2 border-r border-gray-500">{{ item.current_severity }}</td>
-                <td class="px-4 py-2 border-r border-gray-500">{{ item.current_riskindex }}</td> -->
+                <td class="px-4 py-2 border-r border-gray-500">{{ item.current_riskindex }}</td>
+                <td class="px-4 py-2 border-r border-gray-500">{{ item.nextuic_follup }}</td>
                 <td class="px-4 py-2 text-center">
-                  <button (click)="navigatePreview(item.document_id)" class="inline-block bg-[#016299] rounded border-2 border-primary px-3 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white">Preview</button>
-                  <button (click)="navigateEdit(item.id_ior)" class="inline-block bg-[#016299] rounded border-2 border-primary px-4 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white" *ngIf="role === 'Admin' || role === 'IM'">
+                  <!-- <button (click)="navigatePreview(item.document_id)" class="inline-block bg-[#016299] rounded border-2 border-primary px-3 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white">Preview</button> -->
+                  <button (click)="navigateEdit(item.id_follup)" class="inline-block bg-[#016299] rounded border-2 border-primary px-4 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white" *ngIf="role === 'Admin' || role === 'IM'">
                     <i class="fas fa-edit" style="font-size: 12px;"></i> Edit
                   </button>
                 </td>
