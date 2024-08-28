@@ -10,7 +10,7 @@ interface Occurence {
   id_ior: string,
   subject_ior: string,
   occur_nbr: string,
-  occur_date: Date,
+  occur_date: Date | string,
   reference_ior: string,
   to_uic: string,
   cc_uic: string,
@@ -20,7 +20,7 @@ interface Occurence {
   detail_occurance: string,
   reportedby: string,
   reporter_uic: string,
-  report_date: Date,
+  report_date: Date | string,
   reporter_identity: string,
   data_reference: string,
   hirac_process: string,
@@ -93,6 +93,10 @@ export class SearchIORComponent implements OnInit {
       const response = await axios.get('http://localhost:4040/ior/show-all');
       if (response.data.status === 200) {
         this.items = response.data.result;
+        for (let i = 0; i < this.items.length; i++) {
+          this.items[i].occur_date = this.items[i].occur_date.toString().slice(0, 10);
+          this.items[i].report_date = this.items[i].report_date.toString().slice(0, 10);
+        }
       } else {
         console.error('Error Message:', response.data.message);
       }
@@ -105,7 +109,7 @@ export class SearchIORComponent implements OnInit {
     try {
       const response = await axios.post('http://localhost:4040/ior/search', { input: this.searchTerm });
       if (response.data.status === 200) {
-        this.items = response.data.result;
+        this.items = response.data.showProduct;
       } else {
         console.error('Error Message:', response.data.message);
         this.items = [];
