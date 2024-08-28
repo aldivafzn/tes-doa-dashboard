@@ -199,7 +199,7 @@ model tbl_occurrence {
   reference_ior       String?            @db.VarChar(80)
   to_uic              String?            @db.VarChar(4)
   cc_uic              String?            @db.VarChar(4)
-  category_occur      String?            @db.VarChar(1)
+  category_occur      String?            @db.VarChar(30)
   type_or_pnbr        String?            @db.VarChar(15)
   level_type          String?            @db.VarChar(10)
   detail_occurance    String?

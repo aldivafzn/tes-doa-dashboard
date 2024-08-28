@@ -1,6 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from './prisma.service';
-import { CreateNCRDto, UpdateNCRDto, DeleteNCRDto } from '../dtos/ncr.dto';
+import {
+  CreateNCRDto,
+  UpdateNCRDto,
+  DeleteNCRDto,
+  ShowNCRDto,
+  SearchNCRDto,
+} from '../dtos/ncr.dto';
+import { uic } from '@prisma/client';
 
 @Injectable()
 export class NcrService {
@@ -102,5 +109,58 @@ export class NcrService {
       message: 'Showing NCR Initials',
       ncrs,
     };
+  }
+
+  async searchNcr(searchNcrDto: SearchNCRDto) {
+    const { input } = searchNcrDto;
+    const numberRegex = /^\d+$/;
+    let ncrs;
+
+    if (numberRegex.test(input)) {
+      ncrs = await this.prisma.ncr_initial.findMany({
+        where: { ncr_init_id: input },
+      });
+    } else {
+      // Attempt to map input to a uic enum value
+      const toUicValue = Object.keys(uic).find((key) =>
+        uic[key].replace(/_/g, ' ').toLowerCase().includes(input.toLowerCase()),
+      );
+
+      ncrs = await this.prisma.ncr_initial.findMany({
+        where: {
+          OR: [
+            { audit_by: { contains: input, mode: 'insensitive' } },
+            ...(toUicValue ? [{ to_uic: toUicValue as uic }] : []),
+          ],
+        },
+      });
+    }
+
+    return {
+      status: 200,
+      message: ncrs.length > 0 ? 'Showing result of NCR' : 'No Data NCR',
+      showProduct: ncrs,
+    };
+  }
+
+  async showNcrById(showNcrDto: ShowNCRDto) {
+    const { ncr_init_id } = showNcrDto;
+    const ncr = await this.prisma.ncr_initial.findUnique({
+      where: { ncr_init_id },
+    });
+
+    if (ncr) {
+      return {
+        status: 200,
+        message: 'Showing NCR Initial by ID',
+        showProduct: [ncr],
+      };
+    } else {
+      return {
+        status: 200,
+        message: 'No Data NCR Initial by ID',
+        showProduct: [],
+      };
+    }
   }
 }

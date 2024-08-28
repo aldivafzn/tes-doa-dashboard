@@ -9,7 +9,13 @@ import {
   Request,
 } from '@nestjs/common';
 import { NcrService } from '../services/ncr.service';
-import { CreateNCRDto, UpdateNCRDto, DeleteNCRDto } from '../dtos/ncr.dto';
+import {
+  CreateNCRDto,
+  UpdateNCRDto,
+  DeleteNCRDto,
+  SearchNCRDto,
+  ShowNCRDto,
+} from '../dtos/ncr.dto';
 import { JwtAuthGuard } from '../auth/jwt.guard';
 
 @Controller('ncr')
@@ -40,5 +46,17 @@ export class NcrController {
   @Get('show-all')
   async showAllNcrs() {
     return this.ncrService.showAllNcrs();
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post('search')
+  async searchNcr(@Body() searchNcrDto: SearchNCRDto) {
+    return this.ncrService.searchNcr(searchNcrDto);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post('show')
+  async showNcrById(@Body() showNcrDto: ShowNCRDto) {
+    return this.ncrService.showNcrById(showNcrDto);
   }
 }
