@@ -17,6 +17,7 @@ import {
   AddCategoryIORDto,
   AddFollowUpOccurrenceDto,
   UpdateFollowUpOccurrenceDto,
+  ShowFollowUpOccurrenceDto,
 } from '../dtos/ior.dto';
 
 import { JwtAuthGuard } from 'src/auth/jwt.guard';
@@ -145,5 +146,55 @@ export class IorController {
       message: 'Follow-Up Occurrence Updated',
       result,
     };
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('follow-up/show-all')
+  async showAllFollowUpOccurrences() {
+    try {
+      const result = await this.iorService.getAllFollowUpOccurrences();
+      return {
+        status: 200,
+        message: 'Follow-up occurrences found',
+        result,
+      };
+    } catch (error) {
+      return {
+        status: 500,
+        message: 'Error Fetching Follow-Up Occurrences',
+        error: error.message,
+      };
+    }
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post('follow-up/show')
+  async showFollowUpOccurrence(
+    @Body() showFollowUpOccurrenceDto: ShowFollowUpOccurrenceDto,
+  ) {
+    const { id_follup } = showFollowUpOccurrenceDto;
+
+    if (!id_follup) {
+      return {
+        status: 400,
+        message: 'id_follup is required',
+      };
+    }
+
+    try {
+      const result = await this.iorService.getFollowUpOccurrence(id_follup);
+      return {
+        status: 200,
+        message: 'Follow-up occurrence found',
+        result,
+      };
+    } catch (error) {
+      console.error('Error fetching follow-up occurrence:', error);
+      return {
+        status: 500,
+        message: 'Error Fetching Follow-Up Occurrence',
+        error: error.message,
+      };
+    }
   }
 }

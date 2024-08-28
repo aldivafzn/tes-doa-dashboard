@@ -243,4 +243,9 @@ export class AddFollowUpOccurrenceDto {
   readonly current_riskindex?: string;
 }
 
+export class ShowFollowUpOccurrenceDto {
+  @IsString()
+  readonly id_follup: string;
+}
+
 export class UpdateFollowUpOccurrenceDto extends AddFollowUpOccurrenceDto {}

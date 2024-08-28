@@ -257,4 +257,27 @@ export class IorService {
       },
     });
   }
+
+  async getFollowUpOccurrence(id_follup: string) {
+    if (!id_follup) {
+      throw new Error('id_follup is required');
+    }
+
+    try {
+      const followUpOccurrence = await this.prisma.tbl_follupoccur.findUnique({
+        where: { id_follup },
+      });
+      if (!followUpOccurrence) {
+        throw new Error('Follow-up occurrence not found');
+      }
+      return followUpOccurrence;
+    } catch (error) {
+      console.error('Error fetching follow-up occurrence:', error);
+      throw new Error('Error Fetching Follow-Up Occurrence');
+    }
+  }
+
+  async getAllFollowUpOccurrences() {
+    return this.prisma.tbl_follupoccur.findMany();
+  }
 }

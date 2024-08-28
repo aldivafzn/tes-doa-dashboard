@@ -126,3 +126,15 @@ export class DeleteNCRDto {
   @IsNotEmpty()
   ncr_init_id: string;
 }
+
+export class SearchNCRDto {
+  @IsString()
+  @IsNotEmpty()
+  input: string;
+}
+
+export class ShowNCRDto {
+  @IsString()
+  @IsNotEmpty()
+  ncr_init_id: string;
+}
