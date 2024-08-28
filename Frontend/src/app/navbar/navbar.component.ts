@@ -8,7 +8,8 @@ import { jwtDecode } from 'jwt-decode';
 
 interface JwtPayload {
   email: string,
-  sub: string,
+  userId: string,
+  role: string,
   iat: number,
   exp: number
 }
@@ -27,35 +28,22 @@ export class NavbarComponent implements OnInit {
   role: string | null = null;
 
   ngOnInit() {
-    if (window.location.href !== '/ior/edit') {
-      localStorage.removeItem('id_ior');
-    }
     const token = this.authService.getToken();
     if (token) {
-      const { sub } = jwtDecode<JwtPayload>(token);
-      this.accountId = sub;
+      const { userId, role } = jwtDecode<JwtPayload>(token);
+      this.accountId = userId;
+      this.role = role;
       console.log('Retrieved accountid:', this.accountId);
-      if (this.accountId) {
-        this.getRole();
-        if (this.role) {
-          localStorage.setItem('role', this.role.toString());
-        }
+      console.log('Retrieved role:', this.role);
+      if (window.location.href != 'http://localhost:4200/editIOR') {
+        localStorage.removeItem('id_ior');
+      }
+      if (window.location.href != 'http://localhost:4200/editNCR') {
+        localStorage.removeItem('ncr_init_id');
       }
     } else {
+      this.toastService.failedToast('Please login again');
       window.location.href = '/login';
-    }
-  }
-
-  async getRole() {
-    try {
-      const response = await axios.post('http://localhost:4040/account/show', { accountid: this.accountId });
-      if (response.data.status === 200 && response.data.account) {
-        this.role = response.data.account.role;
-      } else {
-        console.error('Error fetching account information:', response.data.message);
-      }
-    } catch (error) {
-      console.error('There was an error fetching account info!', error);
     }
   }
 
@@ -63,7 +51,7 @@ export class NavbarComponent implements OnInit {
     axios.post(`http://localhost:4040/account/logout`)
       .then(response => {
         this.authService.removeToken();
-        localStorage.removeItem('role');
+        this.role = null;
         this.router.navigate(['/login']);
         this.toastService.successToast('Logout successful');
         console.log(response.data);

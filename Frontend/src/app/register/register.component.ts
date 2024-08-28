@@ -10,7 +10,8 @@ import { jwtDecode } from 'jwt-decode';
 
 interface JwtPayload {
   email: string,
-  sub: string,
+  userId: string,
+  role: string,
   iat: number,
   exp: number
 }
@@ -36,29 +37,17 @@ export class RegisterComponent implements OnInit {
   ngOnInit() {
     const token = this.authService.getToken();
     if (token) {
-      const { sub } = jwtDecode<JwtPayload>(token);
-      this.accountid = sub;
+      const { userId, role } = jwtDecode<JwtPayload>(token);
+      this.accountid = userId;
+      this.role = role;
       console.log('Retrieved accountid:', this.accountid);
+      console.log('Retrieved role:', this.role);
     }
     if (this.accountid === null){
       console.log('Redirecting to login page');
       this.router.navigate(['/login']);
     }
-    this.getRole();
     this.showEmailDisplay = false;
-  }
-
-  async getRole() {
-    try {
-      const response = await axios.post('http://localhost:4040/account/show', { accountid: this.accountid });
-      if (response.data.status === 200 && response.data.account) {
-        this.role = response.data.account.role;
-      } else {
-        console.error('Error fetching account information:', response.data.message);
-      }
-    } catch (error) {
-      console.error('There was an error fetching account info!', error);
-    }
   }
 
   isAdmin(): boolean {
@@ -77,6 +66,7 @@ export class RegisterComponent implements OnInit {
       if (response.data.status === 200) {
         this.registerMessage = response.data.message;
         this.toastService.successToast('Registration successful');
+        window.location.href = '/account'
       } else {
         this.registerMessage = response.data.message;
         this.toastService.failedToast('Email/password not valid, please use company domain and strong password');

@@ -10,7 +10,8 @@ import { jwtDecode } from 'jwt-decode';
 
 interface JwtPayload {
   email: string,
-  sub: string,
+  userId: string,
+  role: string,
   iat: number,
   exp: number
 }
@@ -72,9 +73,14 @@ export class FormIORComponent implements OnInit {
   ngOnInit() {
     const token = this.authService.getToken();
     if (token) {
-      const { sub } = jwtDecode<JwtPayload>(token);
-      this.currentAccountID = sub;
+      const { userId, role } = jwtDecode<JwtPayload>(token);
+      this.currentAccountID = userId;
       console.log('Retrieved accountid:', this.currentAccountID);
+      console.log('Retrieved role:', role);
+      if (role !== 'Admin' && role !== 'IM') {
+        this.toastService.failedToast('Unauthorized to access page');
+        window.location.href = '/home';
+      }
       if (this.currentAccountID) {
         this.getAccountInfo();
       }
@@ -110,6 +116,7 @@ export class FormIORComponent implements OnInit {
         if (response.data.status === 200) {
           this.toastService.successToast('IOR form added successfully');
           console.log("IOR form added successfully");
+          window.location.href = '/searchIOR';
         } else {
           //this.toastService.failedToast('Failed to submit IOR form');
           this.toastService.failedToast(response.data.status);

@@ -10,7 +10,8 @@ import { jwtDecode } from 'jwt-decode';
 
 interface JwtPayload {
   email: string,
-  sub: string,
+  userId: string,
+  role: string,
   iat: number,
   exp: number
 }
@@ -74,6 +75,14 @@ export class EditIORComponent implements OnInit{
 
   ngOnInit() {
     const token = this.authService.getToken();
+    if (token) {
+      const { role } = jwtDecode<JwtPayload>(token);
+      console.log('Retrieved role:', role);
+      if (role !== 'Admin' && role !== 'IM') {
+        this.toastService.failedToast('Unauthorized to access page');
+        window.location.href = '/home';
+      }
+    }
 
     const id_ior = localStorage.getItem('id_ior');
     if (id_ior) {
@@ -91,8 +100,8 @@ export class EditIORComponent implements OnInit{
         { id_IOR: this.currentIorID }
       );
       this.iorData = response.data.result;
-      // this.iorData.occur_date = this.iorData.occur_date.slice(0, 10);
-      // this.iorData.report_date = this.iorData.report_date.slice(0, 10);
+      this.iorData.occur_date = this.iorData.occur_date.toString().slice(0, 10);
+      this.iorData.report_date = this.iorData.report_date.toString().slice(0, 10);
     } catch (error) {
       this.toastService.failedToast('There was an error fetching IOR');
       console.error('There was an error fetching IOR:', error);

@@ -10,7 +10,8 @@ import { jwtDecode } from 'jwt-decode';
 
 interface JwtPayload {
   email: string,
-  sub: string,
+  userId: string,
+  role: string,
   iat: number,
   exp: number
 }
@@ -97,13 +98,14 @@ export class AccountComponent implements OnInit {
   ngOnInit() {
     const token = this.authService.getToken();
     if (token) {
-      const { sub } = jwtDecode<JwtPayload>(token);
-      this.accountid = sub;
+      const { userId, role } = jwtDecode<JwtPayload>(token);
+      this.accountid = userId;
+      this.role = role.toString();
       console.log('Retrieved accountid:', this.accountid);
+      console.log('Retrieved role:', this.role);
       if (this.accountid) {
         this.getAccountInfo();
         this.fetchAllAccounts();
-        this.role = localStorage.getItem('role');
       }
     }
   }

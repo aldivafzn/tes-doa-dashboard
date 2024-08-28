@@ -4,7 +4,44 @@ import { FooterComponent } from '../../footer/footer.component';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ToastService } from '../../toast.service';
+import { AuthService } from '../../auth.service';
 import axios from 'axios';
+import { jwtDecode } from 'jwt-decode';
+
+interface JwtPayload {
+  email: string,
+  userId: string,
+  role: string,
+  iat: number,
+  exp: number
+}
+
+interface NCRInitData {
+  ncr_init_id: string,
+  regulationbased: string,
+  subject: string,
+  audit_plan_no: string,
+  ncr_no: string,
+  issued_date: Date | string,
+  responsibility_office: string,
+  audit_type: string,
+  audit_scope: string,
+  to_uic: string,
+  attention: string,
+  require_condition_reference: string,
+  level_finding: string,
+  problem_analysis: string,
+  answer_due_date: Date | string,
+  issue_ian: string | boolean,
+  ian_no: string,
+  encountered_condition: string,
+  audit_by: string,
+  audit_date: Date | string,
+  acknowledge_by: string,
+  acknowledge_date: Date | string,
+  status: string,
+  temporarylink: string
+}
 
 @Component({
   selector: 'app-edit-ncr',
@@ -14,11 +51,10 @@ import axios from 'axios';
   styleUrl: './edit-ncr.component.css'
 })
 export class EditNCRComponent implements OnInit {
-  constructor(private toastService: ToastService) { }
+  constructor(private toastService: ToastService, private authService: AuthService) { }
   currentAccountID = '';
   currentNCRinitID = '';
-  ncr_data = {
-    accountid: '',
+  ncrData: NCRInitData = {
     ncr_init_id: '',
     regulationbased: '',
     subject: '',
@@ -42,37 +78,42 @@ export class EditNCRComponent implements OnInit {
     acknowledge_by: '',
     acknowledge_date: '',
     status: '',
-    temporarylink: '',
-    documentid: '',
+    temporarylink: ''
   };
 
   ngOnInit() {
-    const accountid = sessionStorage.getItem('accountid');
-    if (accountid) {
-      this.currentAccountID = accountid;
-      console.log('Retrieved accountid:', accountid);
-    } else {
-      window.location.href = '/login';
+    const token = this.authService.getToken();
+    if (token) {
+      const { userId, role } = jwtDecode<JwtPayload>(token);
+      this.currentAccountID = userId;
+      console.log('Retrieved accountid:', this.currentAccountID);
+      console.log('Retrieved role:', role);
+      if (role !== 'Admin' && role !== 'IM') {
+        this.toastService.failedToast('Unauthorized to access page');
+        window.location.href = '/home';
+      }
     }
 
-    const ncrinitid = sessionStorage.getItem('ncr_init_id');
-    if (ncrinitid) {
-      this.currentNCRinitID = ncrinitid;
-      console.log('Retrieved ncr_init_id:', ncrinitid);
+    const ncr_init_id = localStorage.getItem('ncr_init_id');
+    if (ncr_init_id) {
+      this.currentNCRinitID = ncr_init_id;
+      console.log('Retrieved ncr_init_id:', ncr_init_id);
       this.fetchNCR();
+    } else {
+      window.location.href = '/searchNCR';
     }
   }
 
   async fetchNCR() {
     try {
-      const response = await axios.post('http://localhost:3000/showNCRInit_ID',
+      const response = await axios.post('http://localhost:4040/ncr/show',
         { ncr_init_id: this.currentNCRinitID }
       );
-      this.ncr_data = response.data.showProduct[0];
-      this.ncr_data.issued_date = this.ncr_data.issued_date.slice(0, 10);
-      this.ncr_data.answer_due_date = this.ncr_data.answer_due_date.slice(0, 10);
-      this.ncr_data.audit_date = this.ncr_data.audit_date.slice(0, 10);
-      this.ncr_data.acknowledge_date = this.ncr_data.acknowledge_date.slice(0, 10);
+      this.ncrData = response.data.showProduct[0];
+      this.ncrData.issued_date = this.ncrData.issued_date.toString().slice(0, 10);
+      this.ncrData.answer_due_date = this.ncrData.answer_due_date.toString().slice(0, 10);
+      this.ncrData.audit_date = this.ncrData.audit_date.toString().slice(0, 10);
+      this.ncrData.acknowledge_date = this.ncrData.acknowledge_date.toString().slice(0, 10);
     } catch (error) {
       this.toastService.failedToast('There was an error fetching NCR');
       console.error('There was an error fetching NCR:', error);
@@ -80,13 +121,18 @@ export class EditNCRComponent implements OnInit {
   }
 
   async updateNCR() {
-    this.ncr_data.accountid = this.currentAccountID;
-    console.log("Sending data:", this.ncr_data);
+    this.ncrData.issued_date = new Date(this.ncrData.issued_date);
+    this.ncrData.answer_due_date = new Date(this.ncrData.answer_due_date);
+    this.ncrData.audit_date = new Date(this.ncrData.audit_date);
+    this.ncrData.acknowledge_date = new Date(this.ncrData.acknowledge_date);
+    console.log("Sending data:", this.ncrData);
     try {
-      const response = await axios.put('http://localhost:3000/UpdateNCRInit', this.ncr_data);
+      const response = await axios.put('http://localhost:4040/ncr/update', this.ncrData);
       if (response.data.status === 200) {
         this.toastService.successToast('NCR updated successfully');
         console.log('NCR updated successfully');
+        localStorage.removeItem('ncr_init_id');
+        window.location.href = '/searchNCR';
       } else {
         this.toastService.failedToast('Failed to update NCR');
         console.error('Failed to update NCR:', response.data.message);

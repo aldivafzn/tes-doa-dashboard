@@ -2,9 +2,19 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NavbarComponent } from "../../navbar/navbar.component";
 import { FooterComponent } from "../../footer/footer.component";
+import { AuthService } from '../../auth.service';
+import { jwtDecode } from 'jwt-decode';
 import axios from 'axios';
 import * as XLSX from 'xlsx';
 import { FormsModule } from '@angular/forms'; // Ensure FormsModule is imported
+
+interface JwtPayload {
+  email: string,
+  userId: string,
+  role: string,
+  iat: number,
+  exp: number
+}
 
 interface Occurence {
   id_ior: string,
@@ -56,6 +66,8 @@ interface Filters {
   styleUrls: ['./search-ior.component.css']
 })
 export class SearchIORComponent implements OnInit {
+  constructor(private authService: AuthService) { }
+
   items: Occurence[] = [];
   searchTerm: string = '';
   filterBy: Filters = { 
@@ -74,6 +86,8 @@ export class SearchIORComponent implements OnInit {
   }; // Filter terms
   showFilters: boolean = false;
 
+  role: string | null = null;
+
   toggleFilter() {
     this.showFilters = !this.showFilters;
   }
@@ -85,6 +99,12 @@ export class SearchIORComponent implements OnInit {
   }
 
   ngOnInit() {
+    const token = this.authService.getToken();
+    if (token) {
+      const { role } = jwtDecode<JwtPayload>(token);
+      this.role = role;
+      console.log('Retrieved role:', this.role);
+    }
     this.fetchDataFromServer();
   }
 

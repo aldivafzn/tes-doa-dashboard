@@ -22,13 +22,6 @@ interface FollowUpIOR {
   current_riskindex: string
 }
 
-interface JwtPayload {
-  email: string,
-  sub: string,
-  iat: number,
-  exp: number
-}
-
 @Component({
   selector: 'app-followon-ior',
   standalone: true,

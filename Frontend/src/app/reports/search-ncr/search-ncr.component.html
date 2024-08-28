@@ -133,9 +133,8 @@
           <table class="table w-full bg-white overflow-y-scroll text-sm" id="data-table">
             <thead class="bg-blue-100 font-medium">
               <tr class="border-b border-gray-500">
-                <th id="ncr_init_id" class="px-4 py-2 border-r border-gray-500">NCR&nbsp;Init&nbsp;ID</th>
-                <th id="regulationbased" class="px-4 py-2 border-r border-gray-500">Regulation Based</th>
                 <th id="subject" class="px-4 py-2 border-r border-gray-500">Subject</th>
+                <th id="regulationbased" class="px-4 py-2 border-r border-gray-500">Regulation Based</th>
                 <th id="audit_plan_no" class="px-4 py-2 border-r border-gray-500">Audit&nbsp;Plan&nbsp;No</th>
                 <th id="ncr_no" class="px-10 py-2 border-r border-gray-500">NCR&nbsp;No</th>
                 <th id="issued_date" class="px-4 py-2 border-r border-gray-500">Issued Date</th>
@@ -154,15 +153,13 @@
                 <th id="acknowledge_by" class="px-4 py-2 border-r border-gray-500">Acknowledge&nbsp;By</th>
                 <th id="acknowledge_date" class="px-4 py-2 border-r border-gray-500">Acknowledge&nbsp;Date</th>
                 <th id="status" class="px-4 py-2 border-r border-gray-500">Status</th>
-                <th id="document_id" class="px-4 py-2 border-r border-gray-500">Document ID</th>
                 <th id="action" class="px-4 py-2">Action</th>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let item of items" class="border-b border-gray-500">
-                <td class="px-4 py-2 border-r border-gray-500">{{ item.ncr_init_id }}</td>
-                <td class="px-4 py-2 border-r border-gray-500">{{ item.regulationbased }}</td>
                 <td class="px-4 py-2 border-r border-gray-500">{{ item.subject }}</td>
+                <td class="px-4 py-2 border-r border-gray-500">{{ item.regulationbased }}</td>
                 <td class="px-4 py-2 border-r border-gray-500">{{ item.audit_plan_no }}</td>
                 <td class="px-4 py-2 border-r border-gray-500">{{ item.ncr_no }}</td>
                 <td class="px-4 py-2 border-r border-gray-500">{{ item.issued_date }}</td>
@@ -181,10 +178,9 @@
                 <td class="px-4 py-2 border-r border-gray-500">{{ item.acknowledge_by }}</td>
                 <td class="px-4 py-2 border-r border-gray-500">{{ item.acknowledge_date }}</td>
                 <td class="px-4 py-2 border-r border-gray-500">{{ item.status }}</td>
-                <td class="px-4 py-2 border-r border-gray-500">{{ item.documentid }}</td>
                 <td class="px-4 py-2 text-center">
                   <button (click)="navigatePreview(item.documentid)" class="inline-block bg-[#016299] rounded border-2 border-primary px-3 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white">Preview</button>
-                  <button (click)="navigateEdit(item.ncr_init_id)" class="inline-block bg-[#016299] rounded border-2 border-primary px-4 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white">
+                  <button (click)="navigateEdit(item.ncr_init_id)" class="inline-block bg-[#016299] rounded border-2 border-primary px-4 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white" *ngIf="role === 'Admin' || role === 'IM'">
                     <i class="fas fa-edit" style="font-size: 12px;"></i> Edit
                   </button>
                 </td>

@@ -4,7 +4,17 @@ import { FooterComponent } from '../../footer/footer.component';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ToastService } from '../../toast.service';
+import { AuthService } from '../../auth.service';
 import axios from 'axios';
+import { jwtDecode } from 'jwt-decode';
+
+interface JwtPayload {
+  email: string,
+  userId: string,
+  role: string,
+  iat: number,
+  exp: number
+}
 
 @Component({
   selector: 'app-followon-ncr',
@@ -14,7 +24,7 @@ import axios from 'axios';
   styleUrl: './followon-ncr.component.css'
 })
 export class FollowonNCRComponent implements OnInit {
-  constructor(private toastService: ToastService) { }
+  constructor(private toastService: ToastService, private authService: AuthService) { }
   currentAccountID = '';
   followncr_data = {
     accountid: '',
@@ -35,11 +45,14 @@ export class FollowonNCRComponent implements OnInit {
   };
 
   ngOnInit() {
-    const accountid = sessionStorage.getItem('accountid');
-    if (accountid) {
-      this.currentAccountID = accountid;
-      console.log('Retrieved accountid:', accountid);
-      this.getAccountInfo();
+    const token = this.authService.getToken();
+    if (token) {
+      const { userId } = jwtDecode<JwtPayload>(token);
+      this.currentAccountID = userId;
+      console.log('Retrieved accountid:', this.currentAccountID);
+      if (this.currentAccountID) {
+        this.getAccountInfo();
+      }
     } else {
       window.location.href = '/login';
     }
@@ -49,7 +62,7 @@ export class FollowonNCRComponent implements OnInit {
 
   async getAccountInfo() {
     try {
-      const response = await axios.post('http://localhost:3000/showAccount', { accountid: this.currentAccountID });
+      const response = await axios.post('http://localhost:4040/account/show', { accountid: this.currentAccountID });
       if (response.data.status === 200 && response.data.account) {
         this.account = response.data.account;
       } else {
@@ -64,7 +77,7 @@ export class FollowonNCRComponent implements OnInit {
     this.followncr_data.accountid = this.currentAccountID;
     console.log("Sending data:", this.followncr_data);
     try {
-      const response = await axios.post('http://localhost:3000/addNCRFollowResult', this.followncr_data);
+      const response = await axios.post('http://localhost:4040/ncr/follow-up/add', this.followncr_data);
 
       if (response.data.status === 200) {
         this.toastService.successToast('Follow on NCR added successfully');
