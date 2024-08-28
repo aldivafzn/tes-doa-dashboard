@@ -1,0 +1,120 @@
+<app-navbar></app-navbar>
+<div class="min-h-screen flex items-center justify-center">
+  <div class="max-w-5xl mx-auto w-full md:w-1/2 p-3 bg-white shadow-md rounded-lg">
+    <div class="md:flex">
+      <ul class="flex flex-col md:me-3 space-y-4 text-sm font-medium text-gray-500 mb-4 md:mb-0 md:w-1/4">
+        <li (click)="selectTab('account-info')">
+          <a href="/account#account-info" class="inline-flex items-center px-4 py-3 rounded-lg w-full"
+          [ngClass]="{'text-white bg-[#016299]': selectedTab === 'account-info', 'hover:text-gray-900 bg-gray-50 hover:bg-gray-100': selectedTab !== 'account-info'}">
+          Account Info
+        </a>
+      </li>
+      <li (click)="selectTab('change-password')" *ngIf="isAdmin()">
+        <a href="/account#change-password" class="inline-flex items-center px-4 py-3 rounded-lg w-full"
+        [ngClass]="{'text-white bg-[#016299]': selectedTab === 'change-password', 'hover:text-gray-900 bg-gray-50 hover:bg-gray-100': selectedTab !== 'change-password'}">
+        Change Password
+      </a>
+    </li>
+    <li (click)="selectTab('all-accounts')" *ngIf="isAdmin()">
+      <a href="/account#all-accounts" class="inline-flex items-center px-4 py-3 rounded-lg w-full"
+      [ngClass]="{'text-white bg-[#016299]': selectedTab === 'all-accounts', 'hover:text-gray-900 bg-gray-50 hover:bg-gray-100': selectedTab !== 'all-accounts'}">
+      All Accounts
+    </a>
+  </li>
+  <li (click)="selectTab('delete-account')" *ngIf="isAdmin()">
+    <a href="/account#delete-account" class="inline-flex items-center px-4 py-3 rounded-lg w-full"
+    [ngClass]="{'text-white bg-[#016299]': selectedTab === 'delete-account', 'hover:text-gray-900 bg-gray-50 hover:bg-gray-100': selectedTab !== 'delete-account'}">
+    Delete Account
+  </a>
+</li>
+<li *ngIf="isAdmin()">
+  <a href="/register" class="'text-white inline-flex items-center px-4 py-3 rounded-lg w-full hover:text-gray-900 bg-gray-50 hover:bg-gray-100">
+    Add Account
+  </a>
+</li>
+</ul>
+<div class="p-5 bg-gray-50 text-medium text-gray-500 w-auto h-96 md:w-3/4">
+  <div id="account-info" *ngIf="selectedTab === 'account-info'">
+    <div class="mb-4">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="name">Name</label>
+      <input [value]="account.name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="name" type="text" readonly>
+    </div>
+    <div class="mb-4">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="email">Email</label>
+      <input [value]="account.email" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" type="email" readonly>
+    </div>
+    <div class="mb-4">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="uniy">Unit</label>
+      <input [value]="account.unit" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="unit" type="text"readonly>
+    </div>
+    <div class="mb-4">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="role">Role</label>
+      <input [value]="account.role" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="role" type="text" readonly>
+    </div>
+  </div>
+  <form id="change-password" *ngIf="selectedTab === 'change-password'" (ngSubmit)="changePassword()">
+    <div class="mb-4">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="email">Email</label>
+      <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" type="text" [(ngModel)]="ChangePass.email" name="email " placeholder="name@gmf-aeroasia.co.id" required>
+    </div>
+    <div class="mb-4">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="currentPass">Current password</label>
+      <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="currentPass" type="password" [(ngModel)]="ChangePass.currentPass" placeholder="••••••••" name="currentPass" onclick="togglePasswordVisibility" required>
+    </div>
+    <div class="mb-4">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="newPass">New password</label>
+      <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"id="newPass" type="password" placeholder="••••••••" [(ngModel)]="ChangePass.newPass" name="newPass" onclick="togglePasswordVisibility" required>
+    </div>
+    <button type="submit" class="w-full text-white bg-[#016299] hover:bg-[#015581] focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center">Change Password</button>
+  </form>
+  <div id="all-accounts" *ngIf="selectedTab === 'all-accounts'">
+    <div class="show-table border border-gray-500">
+      <div class="table-responsive overflow-y-auto h-80">
+        <table class="table w-full text-sm">
+          <thead class="bg-blue-100">
+            <tr class="border-b border-gray-500">
+              <th class="px-4 py-2 border-r border-gray-500">Name</th>
+              <th class="px-4 py-2 border-r border-gray-500">Email</th>
+              <th class="px-4 py-2 border-r border-gray-500">Unit</th>
+              <th class="px-4 py-2 border-r border-gray-500">Role</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let account of allAccounts" class="border-b border-gray-500">
+              <td class="px-4 py-2 border-r border-gray-500">{{ account.name }}</td>
+              <td class="px-4 py-2 border-r border-gray-500">{{ account.email }}</td>
+              <td class="px-4 py-2 border-r border-gray-500 text-center">{{ account.unit }}</td>
+              <td class="px-4 py-2 border-r border-gray-500 text-center">{{ account.role }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <form id="delete-account" *ngIf="selectedTab === 'delete-account'" (ngSubmit)="deleteAccount()">
+    <div class="mb-4">
+      <label class="block text-gray-700 text-sm font-bold mb-2">Email</label>
+      <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" type="text" placeholder="name@gmf-aeroasia.co.id" [(ngModel)]="DeleteAccount.email" name="email" required>
+    </div>
+    <div class="mb-4">
+      <label class="block text-gray-700 text-sm font-bold mb-2">Password</label>
+      <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="password" type="password" placeholder="••••••••" [(ngModel)]="DeleteAccount.password" name="password" onclick="togglePasswordVisibility" required>
+    </div>
+    <button type="submit" class="w-full text-white bg-[#016299] hover:bg-[#015581] focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 items-center text-center">Delete Account</button>
+  </form>
+</div>
+</div>
+</div>
+</div> 
+<app-footer></app-footer>
+<script>
+  function togglePasswordVisibility() {
+    const passwordField = document.getElementById('password');
+    const togglePassword = document.getElementById('togglePassword');
+    if (togglePassword.checked) {
+      passwordField.type = 'text';
+    } else {
+      passwordField.type = 'password';
+    }
+  }
+</script>

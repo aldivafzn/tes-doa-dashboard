@@ -1,0 +1,105 @@
+<app-navbar></app-navbar>
+<div class="min-h-screen mt-20 md:mt-10 flex items-center justify-center">
+  <div class="mx-auto w-11/12 bg-white shadow-md rounded-lg overflow-hidden">
+    <div class="p-6">
+      <h2 class="text-2xl font-bold text-gray-900 text-center justify-center mb-3 uppercase py-3">Personnels</h2>
+      <form class="w-full mx-auto" (ngSubmit)="search()">  
+        <div class="relative flex items-center">
+          <!-- Button with filter icon -->
+          <button type="button" (click)="toggleFilter()" class="p-3 mr-1 bg-gray-200 hover:bg-gray-300 rounded-full focus:outline-none">
+            <svg class="w-6 h-6 text-gray-600" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7C3 6.44772 3.44772 6 4 6H20C20.5523 6 21 6.44772 21 7C21 7.55228 20.5523 8 20 8H4C3.44772 8 3 7.55228 3 7ZM6 12C6 11.4477 6.44772 11 7 11H17C17.5523 11 18 11.4477 18 12C18 12.5523 17.5523 13 17 13H7C6.44772 13 6 12.5523 6 12ZM9 17C9 16.4477 9.44772 16 10 16H14C14.5523 16 15 16.4477 15 17C15 17.5523 14.5523 18 14 18H10C9.44772 18 9 17.5523 9 17Z"/>
+            </svg>
+          </button>
+          <div class="relative w-full">
+            <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+              <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+              </svg>
+            </div>
+            <input type="search" id="default-search" [(ngModel)]="searchTerm" name="search" class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 focus:outline-none" placeholder="Search by name, personnel number, or email" required />
+            <button type="submit" class="text-white absolute right-2.5 bottom-2.5 bg-[#016299] hover:bg-[#015581] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2">Search</button>
+          </div>
+        </div>
+        <div *ngIf="showFilters" class="mt-2">
+          <label for="filter" class="p-2 block text-lg font-bold text-gray-700">Filter By</label>
+          <div class="p-2 flex flex-wrap">
+            <!-- <h2 class="text-lg font-semibold">Filter</h2> -->
+            <!-- Employment Date Lower Bound -->
+            <div class="w-full md:w-1/2 px-1 mb-2">
+              <label for="employment_lower" class="text-md font-semibold">Employment Date From</label>
+              <input type="date" [(ngModel)]="filterBy.employment_lower" id="employment_lower" class="block w-full mt-2 p-2 border border-gray-300 rounded-md"/>
+            </div>
+            <!-- Employment Date Upper Bound -->
+            <div class="w-full md:w-1/2 px-1 mb-2">
+              <label for="employment_upper" class="text-md font-semibold">Employment Date To</label>
+              <input type="date" [(ngModel)]="filterBy.employment_upper" id="employment_upper" class="block w-full mt-2 p-2 border border-gray-300 rounded-md"/>
+            </div>
+          </div>
+        </div>
+      </form>
+      <div class="show-table mt-5 border border-gray-500">
+        <div class="table-responsive overflow-auto "style="max-height: 600px; min-height: 200px;">
+          <table class="table w-full bg-white overflow-y-scroll text-sm" id="data-table">
+            <thead class="bg-blue-100 font-medium">
+              <tr class="border-b border-gray-500">
+                <th id="personnelNo" class="px-4 py-2 border-r border-gray-500">Personnel&nbsp;Number</th>
+                <th id="name" class="px-4 py-2 border-r border-gray-500">Name</th>
+                <th id="department" class="px-4 py-2 border-r border-gray-500">Department</th>
+                <th id="email" class="px-4 py-2 border-r border-gray-500">Email Address</th>
+                <th id="employment" class="px-4 py-2 border-r border-gray-500">Employment&nbsp;Date</th>
+                <th id="documentId" class="px-4 py-2 border-r border-gray-500">Document ID</th>
+                <th id="action" class="px-4 py-2">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- <tr *ngFor="let item of items" class="border-b border-gray-500">
+                <td class="px-4 py-2 border-r border-gray-500">{{ item.personnelNo }}</td>
+                <td class="px-4 py-2 border-r border-gray-500">{{ item.name }}</td>
+                <td class="px-4 py-2 border-r border-gray-500">{{ item.department }}</td>
+                <td class="px-4 py-2 border-r border-gray-500">{{ item.email }}</td>
+                <td class="px-4 py-2 border-r border-gray-500">{{ item.documentId }}</td>
+                <td class="px-4 py-2">
+                  <button (click)="navigatePreview(item.documentId)" class="inline-block bg-[#016299] rounded border-2 border-primary px-3 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white">Preview</button>
+                </td>
+              </tr> -->
+              <tr class="border-b border-gray-500">
+                <td class="px-4 py-2 border-r border-gray-500">5749293512</td>
+                <td class="px-4 py-2 border-r border-gray-500">Kilroy</td>
+                <td class="px-4 py-2 border-r border-gray-500">JKTTEJ-1</td>
+                <td class="px-4 py-2 border-r border-gray-500">test&#64;gmail.com</td>
+                <td class="px-4 py-2 border-r border-gray-500">1993-24-12</td>
+                <td class="px-4 py-2 border-r border-gray-500">adiskf93fjlalwldjdsa112</td>
+                <td class="px-4 py-2 text-center">
+                  <button class="inline-block bg-[#016299] rounded border-2 border-primary px-3 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white">Preview</button>
+                </td>
+              </tr>
+              <tr class="border-b border-gray-500">
+                <td class="px-4 py-2 border-r border-gray-500">7395739283</td>
+                <td class="px-4 py-2 border-r border-gray-500">Jeffri</td>
+                <td class="px-4 py-2 border-r border-gray-500">JKTTEJ-1</td>
+                <td class="px-4 py-2 border-r border-gray-500">jeffri&#64;gmail.com</td>
+                <td class="px-4 py-2 border-r border-gray-500">2013-17-06</td>
+                <td class="px-4 py-2 border-r border-gray-500">adiskf93fjlalwldjdsa112</td>
+                <td class="px-4 py-2 text-center">
+                  <button class="inline-block bg-[#016299] rounded border-2 border-primary px-3 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white">Preview</button>
+                </td>
+              </tr>
+              <tr class="border-b border-gray-500">
+                <td class="px-4 py-2 border-r border-gray-500">90838598492</td>
+                <td class="px-4 py-2 border-r border-gray-500">Mikel</td>
+                <td class="px-4 py-2 border-r border-gray-500">JKTTEJ-1</td>
+                <td class="px-4 py-2 border-r border-gray-500">mikel&#64;gmail.com</td>
+                <td class="px-4 py-2 border-r border-gray-500">2013-08-11</td>
+                <td class="px-4 py-2 border-r border-gray-500">adiskf93fjlalwldjdsa112</td>
+                <td class="px-4 py-2 text-center">
+                  <button class="inline-block bg-[#016299] rounded border-2 border-primary px-3 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white">Preview</button>
+                </td>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <app-footer></app-footer>

@@ -1,0 +1,200 @@
+<app-navbar></app-navbar>
+<div class="min-h-screen mt-20 md:mt-10 flex items-center justify-center">
+  <div class="mx-auto w-11/12 bg-white shadow-md rounded-lg overflow-hidden">
+    <div class="p-6">
+      <h2 class="text-2xl font-bold text-gray-900 text-center justify-center mb-3 uppercase py-3">Search NON-CONFORMANCE REPORT </h2>
+      <form class="w-full mx-auto" (ngSubmit)="search()">
+        <div class="relative flex items-center">
+          <!-- Button with filter icon -->
+          <button type="button" (click)="toggleFilter()" class="p-3 mr-1 bg-gray-200 hover:bg-gray-300 rounded-full focus:outline-none">
+            <svg class="w-6 h-6 text-gray-600" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7C3 6.44772 3.44772 6 4 6H20C20.5523 6 21 6.44772 21 7C21 7.55228 20.5523 8 20 8H4C3.44772 8 3 7.55228 3 7ZM6 12C6 11.4477 6.44772 11 7 11H17C17.5523 11 18 11.4477 18 12C18 12.5523 17.5523 13 17 13H7C6.44772 13 6 12.5523 6 12ZM9 17C9 16.4477 9.44772 16 10 16H14C14.5523 16 15 16.4477 15 17C15 17.5523 14.5523 18 14 18H10C9.44772 18 9 17.5523 9 17Z"/>
+            </svg>
+          </button>
+          <div class="relative w-full">
+            <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+              <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+              </svg>
+            </div>
+            <input type="search" id="default-search" [(ngModel)]="searchTerm" name="search" class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 focus:outline-none" placeholder="Search by TO UIC or AUDIT BY" required />
+            <button type="submit" class="text-white absolute right-2.5 bottom-2.5 bg-[#016299] hover:bg-[#015581] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2">Search</button>
+          </div>
+        </div>
+        <div *ngIf="showFilters" class="mt-2">
+          <label for="filter" class="p-2 block text-lg font-bold text-gray-700">Filter By</label>
+          <div class="p-2 flex flex-wrap">
+            <!-- <h2 class="text-lg font-semibold">Filter</h2> -->  
+            <!-- Regulations Based -->
+            <div class="w-full md:w-1/5 px-1 mb-2">
+              <label for="regulation-based" class="text-md font-semibold">Regulations Based</label>
+              <select [(ngModel)]="filterBy.regulationBased" id="type-ior" class="block w-full mt-2 p-2 border border-gray-300 rounded-md">
+                <option value="" disabled selected>Select your data</option>
+                <option value="'DGCA'">DGCA</option>
+                <option value="'EASA'">EASA</option>
+              </select>
+            </div>
+            
+            <!-- responsible office Dropdown -->
+            <div class="w-full md:w-2/5 px-1 mb-2">
+              <label for="responsibile-office" class="text-md font-semibold">Responsibile Office</label>
+              <select [(ngModel)]="filterBy.responsibilityOffice" id="responsibile-office" class="block w-full mt-2 p-2 border border-gray-300 rounded-md">
+                <option value="" disabled selected>Select your data</option>
+                <option value="'AO: Airworthiness Office'">AO: Airworthiness Office</option>
+                <option value="'DO: Design Office'">DO: Design Office</option>
+                <option value="'IM: Independent Monitoring'">IM: Independent Monitoring</option>
+                <option value="'PR: Partner'">PR: Partner</option>
+                <option value="'SC: Subcontractor'">SC: Subcontractor</option>
+                <option value="'BR: BRIN'">BR: BRIN</option>
+                <option value="'GF: GMF AeroAsia'">GF: GMF AeroAsia</option>
+                <option value="'BA: BIFA Flying School'">BA: BIFA Flying School</option>
+                <option value="'EL: Elang Lintas Indonesia'">EL: Elang Lintas Indonesia</option>
+              </select>
+            </div>
+            
+            <!--Audit type Dropdown -->
+            <div class="w-full md:w-1/5 px-1 mb-2">
+              <label for="audit-type" class="text-md font-semibold">AuditType</label>
+              <select [(ngModel)]="filterBy.auditType" id="audit-type" class="block w-full mt-2 p-2 border border-gray-300 rounded-md">
+                <option value="" disabled selected>Select your data</option>
+                <option value="'Procedure'">Procedure</option>
+                <option value="'Product'">Product</option>
+                <option value="'Surveillance'">Surveillance</option>
+              </select>
+            </div>
+            
+            <!-- audit scope Dropdown -->
+            <div class="w-full md:w-1/5 px-1 mb-2">
+              <label for="data-reference" class="text-md font-semibold">Audit Scope</label>
+              <select [(ngModel)]="filterBy.auditScope" id="data-reference" class="block w-full mt-2 p-2 border border-gray-300 rounded-md">
+                <option value="" disabled selected>Select your data</option>
+                <option value="'Authority'">Authority</option>
+                <option value="'Internal'">Internal</option>
+                <option value="'External'">External</option>
+                <option value="'Subcontractor'">Subcontractor</option>
+              </select>
+            </div>
+            
+            <!-- to uic Dropdown -->
+            <div class="w-full md:w-1/5 px-1 mb-2">
+              <label for="to-uic" class="text-md font-semibold">To UIC</label>
+              <select [(ngModel)]="filterBy.toUIC" id="to-uic" class="block w-full mt-2 p-2 border border-gray-300 rounded-md">
+                <option value="" disabled selected>Select your data</option>
+                <option value="'Chief Design Office'">Chief Design Office</option>
+                <option value="'Chief Airworthiness Office'">Chief Airworthiness Office</option>
+                <option value="'Chief Independent Monitoring'">Chief Independent Monitoring</option>
+                <option value="'Head of DOA'">Head of DOA</option>
+              </select>
+            </div>
+            <!-- level of finding Dropdown -->
+            <div class="w-full md:w-1/5 px-1 mb-2">
+              <label for="level-finding" class="text-md font-semibold">Level Finding</label>
+              <select [(ngModel)]="filterBy.levelFinding" id="level-finding" class="block w-full mt-2 p-2 border border-gray-300 rounded-md">
+                <option value="" disabled selected>Select your data</option>
+                <option value="'1'">1</option>
+                <option value="'2'">2</option>
+                <option value="'3'">3</option>
+              </select>
+            </div>
+            <!-- problem analysis Dropdown -->
+            <div class="w-full md:w-1/5 px-1 mb-2">
+              <label for="problem-analysis" class="text-md font-semibold">Problem Analysis</label>
+              <select [(ngModel)]="filterBy.problemAnalysis" id="problem-analysis" class="block w-full mt-2 p-2 border border-gray-300 rounded-md">
+                <option value="" disabled selected>Select your data</option>
+                <option value="'Required'">Required</option>
+                <option value="'Not required'">Not required</option>
+              </select>
+            </div>
+            <!-- Issue IAN Dropdown -->
+            <div class="w-full md:w-1/5 px-1 mb-2">
+              <label for="issue-ian" class="text-md font-semibold">Issue IAN</label>
+              <select [(ngModel)]="filterBy.issueIAN" id="issue-ian" class="block w-full mt-2 p-2 border border-gray-300 rounded-md">
+                <option value="" disabled selected>Select your data</option>
+                <option value="true">Yes</option>
+                <option value="false">No</option>
+              </select>
+            </div>
+            <!-- Status Dropdown -->
+            <div class="w-full md:w-1/5 px-1 mb-2">
+              <label for="status" class="text-md font-semibold">Status</label>
+              <select [(ngModel)]="filterBy.status" id="status" class="block w-full mt-2 p-2 border border-gray-300 rounded-md">
+                <option value="" disabled selected>Select your data</option>
+                <option value="'Open'">Open</option>
+                <option value="'Closed'">Closed</option>
+                <option value="'Monitor'">Monitor</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </form>
+      
+      <div class="show-table mt-5 border border-gray-500">
+        <div class="table-responsive overflow-auto "style="max-height: 600px; min-height: 200px;">
+          <table class="table w-full bg-white overflow-y-scroll text-sm" id="data-table">
+            <thead class="bg-blue-100 font-medium">
+              <tr class="border-b border-gray-500">
+                <th id="subject" class="px-4 py-2 border-r border-gray-500">Subject</th>
+                <th id="regulationbased" class="px-4 py-2 border-r border-gray-500">Regulation Based</th>
+                <th id="audit_plan_no" class="px-4 py-2 border-r border-gray-500">Audit&nbsp;Plan&nbsp;No</th>
+                <th id="ncr_no" class="px-10 py-2 border-r border-gray-500">NCR&nbsp;No</th>
+                <th id="issued_date" class="px-4 py-2 border-r border-gray-500">Issued Date</th>
+                <th id="responsibility_office" class="px-4 py-2 border-r border-gray-500">Responsibility&nbsp;Office</th>
+                <th id="audit_type" class="px-4 py-2 border-r border-gray-500">Audit&nbsp;Type</th>
+                <th id="to_uic" class="px-16 py-2 border-r border-gray-500">To&nbsp;UIC</th>
+                <th id="require_condition_reference" class="px-4 py-2 border-r border-gray-500">Require&nbsp;Condition&nbsp;Reference</th>
+                <th id="level_finding" class="px-4 py-2 border-r border-gray-500">Level Finding</th>
+                <th id="problem_analis" class="px-8 py-2 border-r border-gray-500">Problem Analysis</th>
+                <th id="answer_due_date" class="px-4 py-2 border-r border-gray-500">Answer&nbsp;Due&nbsp;Date</th>
+                <th id="issued_ian" class="px-4 py-2 border-r border-gray-500">Issued&nbsp;IAN</th>
+                <th id="ian_no" class="px-10 py-2 border-r border-gray-500">IAN&nbsp;No</th>
+                <th id="encountered_condition" class="px-4 py-2 border-r border-gray-500">Encountered Condition</th>
+                <th id="audit_by" class="px-4 py-2 border-r border-gray-500">Audit By</th>
+                <th id="audit_date" class="px-4 py-2 border-r border-gray-500">Audit Date</th>
+                <th id="acknowledge_by" class="px-4 py-2 border-r border-gray-500">Acknowledge&nbsp;By</th>
+                <th id="acknowledge_date" class="px-4 py-2 border-r border-gray-500">Acknowledge&nbsp;Date</th>
+                <th id="status" class="px-4 py-2 border-r border-gray-500">Status</th>
+                <th id="action" class="px-4 py-2">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of items" class="border-b border-gray-500">
+                <td class="px-4 py-2 border-r border-gray-500">{{ item.subject }}</td>
+                <td class="px-4 py-2 border-r border-gray-500">{{ item.regulationbased }}</td>
+                <td class="px-4 py-2 border-r border-gray-500">{{ item.audit_plan_no }}</td>
+                <td class="px-4 py-2 border-r border-gray-500">{{ item.ncr_no }}</td>
+                <td class="px-4 py-2 border-r border-gray-500">{{ item.issued_date }}</td>
+                <td class="px-4 py-2 border-r border-gray-500">{{ item.responsibility_office }}</td>
+                <td class="px-4 py-2 border-r border-gray-500">{{ item.audit_type }}</td>
+                <td class="px-4 py-2 border-r border-gray-500">{{ item.to_uic }}</td>
+                <td class="px-4 py-2 border-r border-gray-500">{{ item.require_condition_reference }}</td>
+                <td class="px-4 py-2 border-r border-gray-500">{{ item.level_finding }}</td>
+                <td class="px-4 py-2 border-r border-gray-500">{{ item.problem_analysis }}</td>
+                <td class="px-4 py-2 border-r border-gray-500">{{ item.answer_due_date }}</td>
+                <td class="px-4 py-2 border-r border-gray-500">{{ item.issue_ian }}</td>
+                <td class="px-4 py-2 border-r border-gray-500">{{ item.ian_no }}</td>
+                <td class="px-4 py-2 border-r border-gray-500">{{ item.encountered_condition }}</td>
+                <td class="px-4 py-2 border-r border-gray-500">{{ item.audit_by }}</td>
+                <td class="px-4 py-2 border-r border-gray-500">{{ item.audit_date }}</td>
+                <td class="px-4 py-2 border-r border-gray-500">{{ item.acknowledge_by }}</td>
+                <td class="px-4 py-2 border-r border-gray-500">{{ item.acknowledge_date }}</td>
+                <td class="px-4 py-2 border-r border-gray-500">{{ item.status }}</td>
+                <td class="px-4 py-2 text-center">
+                  <button (click)="navigatePreview(item.documentid)" class="inline-block bg-[#016299] rounded border-2 border-primary px-3 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white">Preview</button>
+                  <button (click)="navigateEdit(item.ncr_init_id)" class="inline-block bg-[#016299] rounded border-2 border-primary px-4 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white" *ngIf="role === 'Admin' || role === 'IM'">
+                    <i class="fas fa-edit" style="font-size: 12px;"></i> Edit
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="flex justify-center mt-5">
+        <button class="text-white justify-center bg-[#107c41] hover:bg-[#185c37] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-4 py-2" (click)="exportToExcel()">
+          <i class="fas fa-file-excel text-white mr-2"></i>Export to Excel
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>

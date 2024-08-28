@@ -1,0 +1,48 @@
+.footer-logo-container a {
+    display: inline-block;
+}
+.footer-logo-container {
+    text-align: right;
+    padding: 20px; /* Adjust the padding as needed */
+}
+footer-logo-container a {
+    display: inline-block;
+}
+@keyframes scroll {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+  .scroll-container {
+    animation: scroll 20s linear infinite;
+  }
+  .scroll-container {
+    overflow: hidden; /* Hide the overflowing content */
+    position: relative;
+    height: 2.5rem; /* Adjust height as needed */
+  }
+  
+  .scroll-content {
+    display: flex;
+    white-space: nowrap;
+    animation: scroll-left 20s linear infinite; /* Adjust duration for speed */
+  }
+  
+  .scroll-content a {
+    margin-right: 1rem; /* Adjust spacing between items */
+  }
+  
+  /* Keyframes for scrolling effect */
+  @keyframes scroll-left {
+    0% {
+      transform: translateX(100%);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+  
+  

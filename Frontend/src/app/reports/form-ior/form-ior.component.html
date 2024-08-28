@@ -1,0 +1,261 @@
+<app-navbar></app-navbar>
+<div class="min-h-screen flex items-center justify-center">
+  <div class="mx-auto mt-24 w-full md:w-auto my-8 bg-white shadow-md rounded-lg overflow-hidden">
+    <div class="p-6">
+      <form (ngSubmit)="submitIOR()">
+        <div class="bg-[#02507d] rounded-lg">
+          <h2 class="text-2xl font-semibold text-white text-center justify-center mb-7 py-3 mx-3">INTERNAL OCCURRENCE REPORT</h2>
+        </div>
+        
+        <!-- First Row -->
+        <div class="flex flex-wrap -mx-3 mb-6">
+          <!-- Account Name-->
+          <div class="w-full md:w-1/4 px-3 mb-6 md:mb-0">
+            <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2">
+              Account Name
+            </label>
+            <input [value]="account.name" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 leading-tight" id="grid-city" type="text" readonly>
+          </div>
+          <!-- Subject IOR -->
+          <div class="w-full md:w-1/4 px-3 mb-6 md:mb-0">
+            <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2" for="grid-state">
+              Subject IOR
+            </label>
+            <input [(ngModel)]="ior_data.subject_ior" name="subject_ior" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 leading-tight" type="text" placeholder="Enter your data" required>
+          </div>
+          <!-- Occur NBR -->
+          <div class="w-full md:w-1/4 px-3 mb-6 md:mb-0">
+            <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2">
+              Occur NBR
+            </label>
+            <input [(ngModel)]="ior_data.occur_nbr" name="occur_nbr" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 leading-tight" type="text" placeholder="Enter your data" required>
+          </div>
+          <!-- Occur Date -->
+          <div class="w-full md:w-1/4 px-3 mb-6 md:mb-0">
+            <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2">
+              Occur Date
+            </label>
+            <input [(ngModel)]="ior_data.occur_date" name="occur_date"  class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 leading-tight" type="date" required>
+          </div>
+        </div>
+        <!-- Second Row -->
+        <div class="flex flex-wrap -mx-3 mb-6">
+          <!-- Reference IOR -->
+          <div class="w-full md:w-1/5 px-3 mb-6 md:mb-0">
+            <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2" for="grid-state">
+              Reference IOR
+            </label>
+            <input [(ngModel)]="ior_data.reference_ior" name="reference_ior" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 leading-tight" type="text" placeholder="Enter your data" required>
+          </div>
+          <!-- TO UIC -->
+          <div class="w-full md:w-1/5 px-3 mb-6 md:mb-0">
+            <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2">
+              To UIC
+            </label>
+            <div class="relative">
+              <select [(ngModel)]="ior_data.to_uic" name="to_uic" class="block appearance-none w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 pr-8 leading-tight" required>
+                <option value="" disabled selected>Select your data</option>
+                <option [value]="'DO'">Chief Design Office</option>
+                <option [value]="'AO'">Chief Airworthiness Office</option>
+                <option [value]="'IM'">Chief Independent Monitoring</option>
+                <option [value]="'DOA'">Head of DOA</option>
+              </select>
+              <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+              </div>
+            </div>
+          </div>
+          <!-- CC UIC -->
+          <div class="w-full md:w-1/5 px-3 mb-6 md:mb-0">
+            <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2">
+              CC UIC
+            </label>
+            <div class="relative">
+              <select [(ngModel)]="ior_data.cc_uic" name="cc_uic" class="block appearance-none w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 pr-8 leading-tight" required>
+                <option value="" disabled selected>Select your data</option>
+                <option [value]="'DO'">Chief Design Office</option>
+                <option [value]="'AO'">Chief Airworthiness Office</option>
+                <option [value]="'IM'">Chief Independent Monitoring</option>
+                <option [value]="'DOA'">Head of DOA</option>
+              </select>
+              <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+              </div>
+            </div>
+          </div>
+          <!-- Category Occur -->
+          <div class="w-full md:w-1/5 px-3 mb-6 md:mb-0">
+            <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2" for="grid-state">
+              Category Occur
+            </label>
+            <div class="relative">
+              <select [(ngModel)]="ior_data.category_occur" name="category_occur" class="block appearance-none w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 pr-8 leading-tight" >
+                <option value="" disabled selected>Select your data</option>
+                <option [value]="'DOA Management'">DOA Management</option>
+                <option [value]="'Procedure'">Procedure</option>
+                <option [value]="'Document'">Document</option>
+                <option [value]="'Personnel'">Personnel</option>
+                <option [value]="'Facility'">Facility</option>
+                <option [value]="'Partner or Subcontractor'">Partner or Subcontractor</option>
+                <option [value]="'Material'">Material</option>
+                <option [value]="'Information Technology'">Information Technology</option>
+                <option [value]="'Training'">Training</option>
+                <option [value]="'Others'">Others</option>
+              </select>
+              <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+              </div>
+            </div>
+          </div>
+          <!-- Type Or Pnbr -->
+          <div class="w-full md:w-1/5 px-3 mb-6 md:mb-0">
+            <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2" for="grid-state">
+              Type or Part Number Related Data
+            </label>
+            <input  [(ngModel)]="ior_data.type_or_pnbr" name="typeOrPnbr" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 leading-tight" type="text" placeholder="Enter your data" required>
+          </div>
+        </div>
+        <!-- Third Row -->
+        <div class="flex flex-wrap -mx-3 mb-6">
+          <!-- Level Type -->
+          <div class="w-full md:w-1/5 px-3 mb-6 md:mb-0">
+            <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2" for="grid-state">
+              Level Type
+            </label>
+            <div class="relative">
+              <select [(ngModel)]="ior_data.level_type" name="level_type" class="block appearance-none w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 pr-8 leading-tight" required>
+                <option value="" disabled selected>Select your data</option>
+                <option [value]="'Aircraft'">Aircraft</option>
+                <option [value]="'Engine'">Engine</option>
+                <option [value]="'APU'">APU</option>
+                <option [value]="'Others'">Others</option>
+              </select>
+              <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+              </div>
+            </div>
+          </div>
+          <!-- Reported By -->
+          <div class="w-full md:w-1/5 px-3 mb-6 md:mb-0">
+            <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2" for="grid-state">
+              Reported By
+            </label>
+            <input  [(ngModel)]="ior_data.ReportedBy" name="ReportedBy" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 leading-tight" type="text" placeholder="Enter your data" required>
+          </div>
+          <!-- Reporter UIC -->
+          <div class="w-full md:w-1/5 px-3 mb-6 md:mb-0">
+            <label class="block  tracking-wide text-gray-700 text-xs font-semibold mb-2" for="grid-state">
+              Reporter UIC
+            </label>
+            <div class="relative">
+              <select [(ngModel)]="ior_data.reporter_uic" name="cc_uic" class="block appearance-none w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 pr-8 leading-tight" required>
+                <option value="" disabled selected>Select your data</option>
+                <option [value]="'DO'">Chief Design Office</option>
+                <option [value]="'AO'">Chief Airworthiness Office</option>
+                <option [value]="'IM'">Chief Independent Monitoring</option>
+                <option [value]="'HDO'">Head of DOA</option>
+              </select>
+              <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+              </div>
+            </div>
+          </div>
+          <!-- Report Date -->
+          <div class="w-full md:w-1/5 px-3 mb-6 md:mb-0">
+            <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2" for="grid-state">
+              Report Date
+            </label>
+            <input [(ngModel)]="ior_data.report_date" name="report_date" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 leading-tight" type="date" required>
+          </div>
+          <!-- Reporter Identity -->
+          <div class="w-full md:w-1/5 px-3 mb-6 md:mb-0">
+            <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2" for="grid-state">
+              Reporter Identity
+            </label>
+            <div class="relative">
+              <select  [(ngModel)]="ior_data.reporter_identity" name="reporter_identity" class="block appearance-none w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 pr-8 leading-tight" required>
+                <option value="" disabled selected>Select your data</option>
+                <option [value]="'Shown'">Shown</option>
+                <option [value]="'Hidden'">Hidden </option>
+              </select>
+              <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Fourth Row -->
+        <div class="flex flex-wrap -mx-3 mb-6">
+          <!-- Data Reference -->
+          <div class="w-full md:w-1/5 px-3 mb-6 md:mb-0">
+            <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2" for="grid-state">
+              Data Reference
+            </label>
+            <div class="relative">
+              <select  [(ngModel)]="ior_data.Data_reference" name="Data_reference" class="block appearance-none w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 pr-8 leading-tight" required>
+                <option value="" disabled selected>Select your data</option>
+                <option [value]="'Yes'">Yes</option>
+                <option [value]="'No'">No</option>
+              </select>
+              <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+              </div>
+            </div>
+          </div>
+          <!-- Hirac Process -->
+          <div class="w-full md:w-1/5 px-3 mb-6 md:mb-0">
+            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-state">
+              HIRAC Process
+            </label>
+            <div class="relative">
+              <select  [(ngModel)]="ior_data.hirac_process" name="hirac_process" class="block appearance-none w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 pr-8 leading-tight" required>
+                <option value="" disabled selected>Select your data</option>
+                <option [value]="'Yes'">Yes</option>
+                <option [value]="'No'">No</option>
+              </select>
+              <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+              </div>
+            </div>
+          </div>
+          <!-- Initial Probability -->
+          <div class="w-full md:w-1/5 px-3 mb-6 md:mb-0">
+            <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2" for="grid-state">
+              Initial Probability
+            </label>
+            <input  [(ngModel)]="ior_data.initial_probability" name="initial_probability" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 leading-tight" type="text" placeholder="Enter your data" required>
+          </div>
+          <!-- Initial Severity -->
+          <div class="w-full md:w-1/5 px-3 mb-6 md:mb-0">
+            <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2" for="grid-state">
+              Initial Severity
+            </label>
+            <input [(ngModel)]="ior_data.initial_severity" name="initial_severity" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 leading-tight" type="text" placeholder="Enter your data" required>
+          </div>
+          <!-- Initial Risk Index -->
+          <div class="w-full md:w-1/5 px-3 mb-6 md:mb-0">
+            <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2" for="grid-state">
+              Initial Risk Index
+            </label>
+            <input [(ngModel)]="ior_data.initial_riskindex" name="initial_riskindex" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 leading-tight" type="text" placeholder="Enter your data" required>
+          </div>
+        </div>
+        <!-- Fifth Row -->
+        <div class="flex flex-wrap -mx-3 mb-6">
+          <!-- DETAIL OCCURANCE -->
+          <div class="w-full px-3">
+            <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2" for="grid-password">
+              Detail Occurance
+            </label>
+            <textarea [(ngModel)]="ior_data.detail_occurance" name="detail_occurance" class="appearance-none block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 leading-tight text-sm" placeholder="Enter your data" required></textarea>
+          </div>
+        </div>
+        <!-- Submit Button -->
+        <div class="flex items-center justify-center">
+          <button type="submit" class="w-full md:w-1/6 text-white bg-[#016299] hover:bg-[#015581] focus:ring-4 focus:outline-none font-semibold rounded-lg text-base px-5 py-2.5 text-center">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>

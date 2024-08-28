@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<!-- Coding By CodingNepal - codingnepalweb.com -->
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="IOR.css">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <title>INTERNAL OCCURRENCE REPORT (IOR)</title>
+</head>
+
+<body>
+
+    <ul class="nav-links">
+        <img src="image/gmf9.png" alt="Login Image"
+            style="width: 95%; max-width: 300px; margin-bottom: 0px; margin-left: 0px;">
+        <li><a href="main_menu.html">Home</a></li>
+        <li class="center"><a href="Account.html">Account</a></li>
+        <li class="upward dropdown">
+            <a href="#">Audit</a>
+            <ul class="dropdown-content">
+                <li><a href="NCR_Form.html">NCR Form</a></li>
+                <li><a href="NCR_Searching.html">Searching NCR</a></li>
+                <li><a href="Follow_NCR.html">Follow On</a></li>
+            </ul>
+        </li>
+        <li class="upward dropdown">
+            <a href="#">Occurrence</a>
+            <ul class="dropdown-content">
+                <li><a href="IOR_Form.html">IOR Form</a></li>
+                <li><a href="IOR_Searching.html">Searching IOR</a></li>
+                <li><a href="Follow_Occur.html">Follow On</a></li>
+                <!-- <li><a href="#">Edit IOR</a></li> -->
+            </ul>
+        </li>
+        <li><a href="#">Personel</a></li>
+        <li><a href="#">Project</a></li>
+        <li class="upward dropdown">
+            <a href="#">Link</a>
+            <ul class="dropdown-content">
+                <li><a href="https://imsis-djpu.dephub.go.id/PortalDKPPU/" target="_blank">DGCA</a></li>
+                <li><a href="https://www.easa.europa.eu/en/regulations" target="_blank">EASA</a></li>
+            </ul>
+        </li>
+        <li class="forward"><a href="#">User Guide</a></li>
+        <li class="forward"><a href="index.html">Log Out</a></li>
+    </ul>
+
+    <div class="container" id="app">
+        <header>
+            <div class="ncr-title">EDIT INTERNAL OCCURRENCE REPORT</div>
+            <header>
+            </header>
+        </header>
+        <form @submit.prevent="IOR" action="#">
+            <div class="form first">
+                <div class="details personal">
+                    <div class="fields">
+                        <div class="input-field" v-for="(value, key) in IOR_data" :key="key">
+                            <label>{{ key.replace(/_/g, ' ').replace(/(?:^|\s)\S/g, match =>
+                                match.toUpperCase()).replace(/ior/gi, 'IOR').replace(/Uic/gi, 'UIC').replace(/Cc/gi,
+                                'cc')}}</label>
+                            <input v-if="key === 'occur_date'||key === 'report_date'" type="date"
+                                v-model="IOR_data[key]" required>
+                            <input v-else-if="key === 'occur_nbr'" type="text" placeholder="YYYY-MM-SSS"
+                                pattern="\d{4}-\d{2}-\d{3}" v-model="IOR_data[key]" required>
+                            <select v-else-if="key === 'level_type'" v-model="IOR_data[key]">
+                                <option value="" disabled selected>Select Your Data</option>
+                                <option value="Aircraft" selected>Aircraft</option>
+                                <option value="Engine">Engine</option>
+                                <option value="APU">APU</option>
+                                <option value="Others">Others</option>
+                            </select>
+
+                            <select v-else-if="key === 'reporter_identity'" v-model="IOR_data[key]">
+                                <option value="" disabled selected>Select Your Data</option>
+                                <option value="Shown" selected>Shown</option>
+                                <option value="Hidden ">Hidden </option>
+                            </select>
+                            <select v-else-if="key === 'hirac_process'" v-model="IOR_data[key]">
+                                <option value="" disabled selected>Select Your Data</option>
+                                <option value="Yes" selected>Yes</option>
+                                <option value="No">No </option>
+                            </select>
+                            <textarea v-else-if="key === 'detail_occurance'" placeholder=" Enter your data" rows="2"
+                                v-model="IOR_data[key]" required></textarea>
+
+                            <input v-else-if="key === 'id_ior'" v-model="currentIORID" readonly>
+
+                            <input v-else type="text" placeholder="Enter your data" v-model="IOR_data[key]" required>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="nextBtn" type="submit">
+                    <span class="btnText">Submit</span>
+                    <i class="uil uil-navigator"></i>
+                </button>
+            </div>
+        </form>
+        <p>{{ loginMessage }}</p>
+    </div>
+    <script src="https://unpkg.com/vue@3/dist/vue.esm-browser.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.5/axios.min.js"
+        integrity="sha512-TjBzDQIDnc6pWyeM1bhMnDxtWH0QpOXMcVooglXrali/Tj7W569/wd4E8EDjk1CwOAOPSJon1VfcEt1BI4xIrA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script type="module">
+        import { createApp, ref } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js';
+
+        createApp({
+            data() {
+                return {
+                    title: "IOR",
+                    currentAccountID: '',
+                    currentIORID: '',
+                    IOR_data: {
+                        id_ior: '',
+                        subject_ior: '',
+                        occur_nbr: '',
+                        occur_date: '',
+                        reference_ior: '',
+                        to_uic: '',
+                        cc_uic: '',
+                        category_occur: '',
+                        type_or_pnbr: '',
+                        level_type: '',
+                        detail_occurance: '',
+                        ReportedBy: '',
+                        reporter_uic: '',
+                        report_date: '',
+                        reporter_identity: '',
+                        Data_reference: '',
+                        hirac_process: '',
+                        initial_probability: '',
+                        initial_severity: '',
+                        initial_riskindex: ''
+                    },
+                    loginMessage: ''
+                };
+            },
+            mounted() {
+                const accountid = sessionStorage.getItem('accountid');
+                if (accountid) {
+                    this.currentAccountID = accountid;
+                } else {
+                    window.location.href = 'login.html';
+                }
+
+                const iorData = sessionStorage.getItem('id_ior');
+                if (iorData) {
+                    this.currentIORID = iorData;
+                }
+            },
+            methods: {
+                redirectToMainMenu() {
+                    window.location.href = 'main_menu.html';
+                },
+                async IOR() {
+                    console.log("Sending data:", this.IOR_data);
+                    try {
+                        this.IOR_data.id_ior = this.currentIORID;
+                        const response = await axios.put("http://localhost:3000/updateOccurrence", this.IOR_data);
+                        console.log(this.IOR_data);
+
+                        if (response.data.status === 200) {
+                            this.loginMessage = 'Occurrence Updated successfully';
+                        } else {
+                            console.log("Response from server:", response);
+                            this.loginMessage = 'Failed to Update occurrence';
+                        }
+                    } catch (error) {
+                        console.error("Error during login:", error);
+                        this.loginMessage = 'Failed to Update occurrence' + error;
+                    }
+                },
+            }
+        }).mount('#app');
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,157 @@
+<app-navbar></app-navbar>
+<div class="min-h-screen flex items-center justify-center">
+  <div class="mx-auto mt-24 w-full md:w-auto my-8 bg-white shadow-md rounded-lg overflow-hidden">
+    <div class="p-6">
+      <form (ngSubmit)="submitFollowNCR()">
+        <div class="bg-[#02507d] rounded-lg">
+          <h2 class="text-2xl font-semibold text-white text-center justify-center mb-7 py-3 mx-3 uppercase">Follow on Non-Conformance Report</h2>
+        </div>
+        
+        <!-- First Row -->
+        <div class="flex flex-wrap -mx-3 mb-6">
+          <!-- Account Name-->
+          <div class="w-full md:w-1/4 px-3 mb-6 md:mb-0">
+            <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2">
+              Account Name
+            </label>
+            <input [value]="account.name" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none py-3 px-4 leading-tight" id="grid-city" type="text" readonly>
+          </div>
+          <!-- NCR Init ID -->
+          <div class="w-full md:w-1/4 px-3 mb-6 md:mb-0">
+            <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2" for="grid-state">
+              NCR Init ID
+            </label>
+            <input [(ngModel)]="followncr_data.ncr_init_id" name="ncr_init_id" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 leading-tight" type="text" placeholder="Enter your data" required>
+          </div>
+          <!-- Proposed Closed Audit -->
+          <div class="w-full md:w-1/4 px-3 mb-6 md:mb-0">
+            <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2">
+              Proposed Closed Auditee
+            </label>
+            <input [(ngModel)]="followncr_data.proposed_close_audit" name="proposed_close_audit" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 leading-tight" type="text" placeholder="Enter your data" required>
+          </div>
+          <!-- Proposed Close Date -->
+          <div class="w-full md:w-1/4 px-3 mb-6 md:mb-0">
+            <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2" for="grid-state">
+              Proposed Close Date
+            </label>
+            <input [(ngModel)]="followncr_data.proposed_close_date" name="proposed_close_date" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 leading-tight" type="date" required>
+          </div>
+        </div>
+        
+        <!-- Second Row -->
+        <div class="flex flex-wrap -mx-3 mb-6">
+          <!-- Is Close -->
+          <div class="w-full md:w-1/5 px-3 mb-6 md:mb-0">
+            <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2">
+              Is Close
+            </label>
+            <div class="relative">
+              <select [(ngModel)]="followncr_data.is_close" name="is_close" class="block appearance-none w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 pr-8leading-tight" id="grid-state" required>
+                <option value="" disabled selected>Select your data</option>
+                <option [value]="'true'">Close</option>
+                <option [value]="'false'">Open</option>
+              </select>
+              <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+              </div>
+            </div>
+          </div>
+          <!-- EFFECTIVE -->
+          <div class="w-full md:w-1/5 px-3 mb-6 md:mb-0">
+            <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2">
+              Effectiveness
+            </label>
+            <div class="relative">
+              <select [(ngModel)]="followncr_data.effective" name="effective" class="block appearance-none w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 pr-8leading-tight" id="grid-state" required>
+                <option value="" disabled selected>Select your data</option>
+                <option [value]="'Effective'">Effective</option>
+                <option [value]="'Not Effective'">Not Effective</option>
+              </select>
+              <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+              </div>
+            </div>
+          </div>
+          <!-- REFER VERIF -->
+          <div class="w-full md:w-1/5 px-3 mb-6 md:mb-0">
+            <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2">
+              Refer Verification
+            </label>
+            <input [(ngModel)]="followncr_data.refer_verif" name="refer_verif" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 leading-tight" type="text" placeholder="Enter your data" required>
+          </div>
+          <!-- SHEET NO -->
+          <div class="w-full md:w-1/5 px-3 mb-6 md:mb-0">
+            <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2">
+              Sheet No
+            </label>
+            <input [(ngModel)]="followncr_data.sheet_no" name="sheet_no" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 leading-tight" type="text" placeholder="Enter your data" required>
+          </div>
+          <!-- New NCR Issue No -->
+          <div class="w-full md:w-1/5 px-3 mb-6 md:mb-0">
+            <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2">
+              New NCR Issue NBR
+            </label>
+            <input [(ngModel)]="followncr_data.new_ncr_issue_no" name="new_ncr_issue_no" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 leading-tight" type="text" placeholder="Enter your data" required>
+          </div>
+        </div>
+        
+        <!-- Third Row -->
+        <div class="flex flex-wrap -mx-3 mb-6">
+          <!-- Close Approvedby -->
+          <div class="w-full md:w-1/5 px-3 mb-6 md:mb-0">
+            <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2">
+              Close Approved by
+            </label>
+            <input [(ngModel)]="followncr_data.close_approvedby" name="close_approvedby" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 leading-tight" type="text" placeholder="Enter your data" required>
+          </div>
+          <!-- Closed Approved Date -->
+          <div class="w-full md:w-1/5 px-3 mb-6 md:mb-0">
+            <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2">
+              Close Approved Date
+            </label>
+            <input [(ngModel)]="followncr_data.close_approveddate" name="close_approveddate" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 leading-tight" type="date" required>
+          </div>
+          <!-- VERIF CHIED -->
+          <div class="w-full md:w-1/5 px-3 mb-6 md:mb-0">
+            <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2">
+              Verified Chief IM
+            </label>
+            <input [(ngModel)]="followncr_data.verif_chied" name="verif_chied" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 leading-tight" type="text" placeholder="Enter your data" required>
+          </div>
+          <!-- verif Date -->
+          <div class="w-full md:w-1/5 px-3 mb-6 md:mb-0">
+            <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2">
+              Verified Date
+            </label>
+            <input [(ngModel)]="followncr_data.verif_date" name="verif_date" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 leading-tight" type="date" required>
+          </div>
+          <!-- Temporary Link -->
+          <div class="w-full md:w-1/5 px-3 mb-6 md:mb-0">
+            <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2">
+              Temporary Link
+            </label>
+            <input [(ngModel)]="followncr_data.temporarylink" name="temporarylink" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 leading-tight" type="text" placeholder="Enter your data" required>
+          </div>
+        </div>
+        
+        <!-- Fourth Row -->
+        <div class="flex flex-wrap -mx-3 mb-6">
+          <!-- CLOSE CORRECTIVE -->
+          <div class="w-full px-3">
+            <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2" for="grid-password">
+              Close Corrective Actions
+            </label>
+            <textarea [(ngModel)]="followncr_data.close_corrective" name="close_corrective" class="appearance-none block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 leading-tight text-sm" placeholder="Enter your data" required></textarea>
+          </div>
+        </div>
+        
+        <!-- Submit Button -->
+        <div class="flex items-center justify-center">
+          <button type="submit" class="w-full md:w-1/6 text-white bg-[#016299] hover:bg-[#015581] focus:ring-4 focus:outline-none font-semibold rounded-lg text-base px-5 py-2.5 text-center">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>

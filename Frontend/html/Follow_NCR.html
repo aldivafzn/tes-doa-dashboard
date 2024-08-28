@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!----======== CSS ======== -->
+    <link rel="stylesheet" href="IOR.css">
+    <!----===== Iconscout CSS ===== -->
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <title>NON-CONFORMANCE REPORT (NCR)</title>
+</head>
+
+<body>
+
+    <ul class="nav-links">
+        <img src="image/gmf9.png" alt="Login Image"
+            style="width: 95%; max-width: 300px; margin-bottom: 0px; margin-left: 0px;">
+        <li><a href="main_menu.html">Home</a></li>
+        <li class="center"><a href="Account.html">Account</a></li>
+        <li class="upward dropdown">
+            <a href="#">Audit</a>
+            <ul class="dropdown-content">
+                <li><a href="NCR_Form.html">NCR Form</a></li>
+                <li><a href="NCR_Searching.html">Searching NCR</a></li>
+                <li><a href="Follow_NCR.html">Follow On</a></li>
+            </ul>
+        </li>
+        <li class="upward dropdown">
+            <a href="#">Occurrence</a>
+            <ul class="dropdown-content">
+                <li><a href="IOR_Form.html">IOR Form</a></li>
+                <li><a href="IOR_Searching.html">Searching IOR</a></li>
+                <li><a href="Follow_Occur.html">Follow On</a></li>
+                <!-- <li><a href="#">Edit IOR</a></li> -->
+            </ul>
+        </li>
+        <li><a href="#">Personel</a></li>
+        <li><a href="#">Project</a></li>
+        <li class="upward dropdown">
+            <a href="#">Link</a>
+            <ul class="dropdown-content">
+                <li><a href="https://imsis-djpu.dephub.go.id/PortalDKPPU/" target="_blank">DGCA</a></li>
+                <li><a href="https://www.easa.europa.eu/en/regulations" target="_blank">EASA</a></li>
+            </ul>
+        </li>
+        <li class="forward"><a href="#">User Guide</a></li>
+        <li class="forward"><a href="index.html">Log Out</a></li>
+    </ul>
+
+    <div class="container" id="app">
+        <header>
+            <div class="ncr-title">FOLLOW ON NON-CONFORMANCE REPORT</div>
+            <header>
+            </header>
+        </header>
+        <form @submit.prevent="FollowNCR" action="#">
+            <div class="form first">
+                <div class="details personal">
+                    <div class="fields">
+                        <div class="input-field" v-for="(value, key) in FollowNCR_data" :key="key">
+                            <label>{{ key.replace(/_/g, ' ').replace(/(?:^|\s)\S/g, match =>
+                                match.toUpperCase()).replace(/Ncr/gi, 'NCR').replace(/id/gi, 'ID')
+                                .replace(/Temporarylink/gi, 'Remark') }}</label>
+
+                            <input
+                                v-if="key === 'proposed_close_date' || key === 'close_approveddate' || key === 'verif_date'"
+                                type="date" v-model="FollowNCR_data[key]" required>
+
+                            <select v-else-if="key === 'is_close'" v-model="FollowNCR_data[key]">
+                                <option value="" disabled selected>Select Your Data</option>
+                                <option value="true">Close</option>
+                                <option value="false">Open</option>
+                            </select>
+
+                            <select v-else-if="key === 'effective'" v-model="FollowNCR_data[key]">
+                                <option value="" disabled selected>Select Your Data</option>
+                                <option value="Effective">Effective</option>
+                                <option value="Not Effective">Not Effective</option>
+                            </select>
+
+                            <input v-else-if="key === 'accountid'" v-model="currentAccountID" readonly>
+
+                            <textarea v-else-if="key === 'close_corrective'" placeholder=" Enter your data" rows="2"
+                                v-model="FollowNCR_data[key]" required></textarea>
+
+                            <input v-else type="text" placeholder="Enter your data" v-model="FollowNCR_data[key]"
+                                required>
+                        </div>
+                    </div>
+                </div>
+                <button class="nextBtn" type="submit">
+                    <span class="btnText">Submit</span>
+                    <i class="uil uil-navigator"></i>
+                </button>
+            </div>
+        </form>
+        <p>{{ loginMessage }}</p>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.5/axios.min.js"
+        integrity="sha512-TjBzDQIDnc6pWyeM1bhMnDxtWH0QpOXMcVooglXrali/Tj7W569/wd4E8EDjk1CwOAOPSJon1VfcEt1BI4xIrA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script type="module">
+
+        import { createApp, ref } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js';
+
+        createApp({
+            data() {
+                return {
+                    title: "FollowUp NCR",
+                    currentAccountID: '',
+                    FollowNCR_data: {
+                        accountid: '',
+                        ncr_init_id: '',
+                        close_corrective: '',
+                        proposed_close_audit: '',
+                        proposed_close_date: '',
+                        is_close: '',
+                        effective: '',
+                        refer_verif: '',
+                        sheet_no: '',
+                        new_ncr_issue_no: '',
+                        close_approvedby: '',
+                        close_approveddate: '',
+                        verif_chied: '',
+                        verif_date: '',
+                        temporarylink: ''
+                    },
+                    loginMessage: ''
+                };
+            },
+            mounted() {
+                const accountid = sessionStorage.getItem('accountid');
+                if (accountid) {
+                    this.currentAccountID = accountid;
+                } else {
+                    window.location.href = 'login.html';
+                }
+            },
+            methods: {
+                redirectToMainMenu() {
+                    window.location.href = 'main_menu.html';
+                },
+
+                async FollowNCR() {
+                    console.log("Sending data:", this.FollowNCR_data);
+
+                    this.NCR_data.accountid = this.currentAccountID;
+
+                    try {
+                        const response = await axios.post("http://localhost:3000/addNCRFollowResult", this.FollowNCR_data);
+
+                        if (response.data.status === 200 && response.data.message === 'NRC Follow Result Created') {
+                            this.loginMessage = 'Follow Occurrence added successfully';
+                        } else {
+                            this.loginMessage = 'Failed to add occurrence';
+                        }
+                    } catch (error) {
+                        console.error("Error during login:", error);
+                        this.loginMessage = 'Failed to add occurrence' + error;
+                    }
+                },
+
+                redirectToFollowOccur(buttonType) {
+                    if (buttonType === 'NCR') {
+                        // Redirect to the Occurence page
+                        window.location.href = 'NCR_Form.html';
+                    } else if (buttonType === 'FollowOn') {
+                        // Redirect to the Follow_Occur page
+                    }
+                }
+
+            }
+        }).mount('#app');
+    </script>
+</body>
+
+</html>

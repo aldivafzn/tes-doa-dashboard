@@ -1,0 +1,998 @@
+<app-navbar></app-navbar>
+<div class="min-h-screen flex items-center justify-center mt-20 my-20">
+  <div class="text-pretty max-w-5xl mx-auto w-full md:w-3/4 p-3 bg-white shadow-md rounded-lg">
+    <div class="p-6">
+      <div class="bg-[#02507d] rounded-lg">
+        <h2 class="text-2xl font-semibold text-white text-center mb-7 uppercase py-3 mx-3">User Guide</h2>
+      </div>
+      <div class="md:flex">
+        <!-- select tab -->
+        <ul class="list-none custom-ul flex flex-col md:me-3 space-y-4 text-sm font-medium text-gray-500 mb-4 md:mb-0 md:w-1/4">
+          <li (click)="selectMainTab('account')">
+            <a href="/userGuide#account" class="inline-flex items-center px-5 py-4 rounded-lg w-full text-base" 
+            [ngClass]="{'text-white bg-[#016299] hover:bg-[#015581]': selectedMainTab === 'account', 'hover:text-gray-900 bg-gray-50 hover:bg-gray-100': selectedMainTab !== 'account'}">
+            Account
+          </a>
+        </li>
+        <li (click)="selectMainTab('audit')">
+          <a href="/userGuide#audit" class="inline-flex items-center px-5 py-4 rounded-lg w-full text-base" 
+          [ngClass]="{'text-white bg-[#016299] hover:bg-[#015581]': selectedMainTab === 'audit', 'hover:text-gray-900 bg-gray-50 hover:bg-gray-100': selectedMainTab !== 'audit'}">
+          Audit
+        </a>
+      </li>
+      <li (click)="selectMainTab('occurrence')">
+        <a href="/userGuide#occurrence" class="inline-flex items-center px-5 py-4 rounded-lg w-full text-base" 
+        [ngClass]="{'text-white bg-[#016299] hover:bg-[#015581]': selectedMainTab === 'occurrence', 'hover:text-gray-900 bg-gray-50 hover:bg-gray-100': selectedMainTab !== 'occurrence'}">
+        Occurrence
+      </a>
+    </li>
+    
+    
+    <!-- <li (click)="selectMainTab('personnel')">
+      <a href="/userGuide#personnel" class="inline-flex items-center px-4 py-3 rounded-lg w-full" 
+      [ngClass]="{'text-white bg-[#016299] hover:bg-[#015581]': selectedMainTab === 'personnel', 'hover:text-gray-900 bg-gray-50 hover:bg-gray-100': selectedMainTab !== 'personnel'}">
+      Personnel
+    </a>
+  </li>
+  <li (click)="selectMainTab('project')">
+    <a href="/userGuide#project" class="inline-flex items-center px-4 py-3 rounded-lg w-full" 
+    [ngClass]="{'text-white bg-[#016299] hover:bg-[#015581]': selectedMainTab === 'project', 'hover:text-black bg-gray-50 hover:bg-gray-100': selectedMainTab !== 'project'}">
+    Project
+  </a>
+</li> -->
+</ul>
+
+<!-- content area -->
+<div class="p-5 bg-gray-50 text-grey-900 w-full md:w-3/4">
+  <!-- Account tab content with nested tabs -->
+  <div id="account" *ngIf="selectedMainTab === 'account'">
+    <div class="border-b border-gray-200 dark:border-gray-700">
+      <ul class="list-none flex flex-wrap -mb-px text-sm font-medium text-center text-gray-500 dark:text-gray-400">
+        <!-- Container for the tabs -->
+        <ul class="flex w-full list-none p-0 m-0">
+          <!-- Login Page -->
+          <li class="flex w-1/2">
+            <a (click)="selectNestedTab('loginpage')" href="/userGuide#loginpage" class="inline-flex items-center justify-center w-full p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300 group"
+            [ngClass]="{'text-[#016299] border-[#016299]': selectedNestedTab === 'loginpage', 'hover:text-gray-600 hover:border-gray-300': selectedNestedTab !== 'loginpage'}">
+            Login Page
+          </a>
+        </li>
+        <!-- Account Info nested tab -->
+        <li class="flex w-1/2">
+          <a (click)="selectNestedTab('accountinfo')" href="/userGuide#accountinfo" class="inline-flex items-center justify-center w-full p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300 group"
+          [ngClass]="{'text-[#016299] border-[#016299]': selectedNestedTab === 'accountinfo', 'hover:text-gray-600 hover:border-gray-300': selectedNestedTab !== 'accountinfo'}">
+          Account Info
+        </a>
+      </li>
+    </ul>
+  </ul>
+</div>
+
+<!-- Nested tab content for Login Page -->
+<div id="loginpage" *ngIf="selectedNestedTab === 'loginpage'">
+  <br><h2 class="font-bold text-center text-xl">Login Page</h2><br>
+  <img src="..\..\assets\Userguide\account\login2page.png" class="w-full p-6"/><br>
+  <div class="user-manual w-fit ">
+    <h2 class="font-bold">Accessing the Login Page</h2><br>
+    <h3>Open Your Browser:</h3>
+    <ul>
+      <li>Launch your preferred web browser (e.g., Chrome, Firefox, Safari).</li>
+    </ul>
+    <h3>Navigate to the Login Page:</h3>
+    <ul>
+      <li>Enter the URL for the login page in the address bar and press <code style="color:black;">Enter</code> or can be accessed via a link on the homepage of the platform.
+      </ul><br>
+      <h2 class="font-bold">Logging In</h2><br>
+      <h3>Enter Your Username:</h3>
+      <ul>
+        <li>Locate the <strong>"Email"</strong> field on the login page.</li>
+        <li>Click on the field and type your registered email address.</li>
+      </ul>
+      <h3>Enter Your Password:</h3>
+      <ul>
+        <li>Click on the <strong>"Password"</strong> field. Remember your password must be atleast 8</li>
+        <li>Type your password. Ensure that you enter it correctly, paying attention to case sensitivity.</li>
+      </ul>
+      <h3>Optional Remember Me:</h3>
+      <ul>
+        <li>If available and if you are on a personal device, check the <strong>"Remember Me"</strong> box to stay logged in on this device.</li>
+        <li>This will keep you signed in across sessions until you log out.</li>
+      </ul>
+      <h3>Click the Login Button:</h3>
+      <ul>
+        <li>Once you have entered your credentials, click the <strong>"Login"</strong> button to proceed.</li>
+      </ul><br>
+      <h2 class="font-bold">Handling Common Issues</h2><br>
+      <h3>Forgot Your Password?:</h3>
+      <ul>
+        <li>If you cannot remember your password, click the <strong>"Forgot Password?"</strong> link found below the password field.</li>
+        <li>Follow the on-screen instructions to reset your password. This involves receiving a notification to contact your system administrator.</li>
+      </ul>
+      <h3>Incorrect Username or Password:</h3>
+      <ul>
+        <li>Ensure that you have entered your username and password correctly.</li>
+        <li>Check for typos, and make sure Caps Lock is not turned on.</li>
+        <li>If the issue persists, use the <strong>"Forgot Password?"</strong> ways to reset your password.</li>
+      </ul>
+      <h3>Technical Issues:</h3>
+      <ul>
+        <li>If the login page does not load or you encounter errors, try refreshing the page or clearing your browser’s cache.</li>
+        <li>Ensure that your internet connection is stable. If issues persist, contact technical support.</li>
+      </ul><br>
+      <h2 class="font-bold">Security Tips</h2><br>
+      <h3>Keep Your Credentials Confidential:</h3>
+      <ul>
+        <li>Never share your username or password with anyone.</li>
+      </ul>
+      <h3>Log Out After Use:</h3>
+      <ul>
+        <li>Always log out from the account when you are done, especially on shared or public computers.</li>
+      </ul>
+      <h3>Update Your Password Regularly:</h3>
+      <ul>
+        <li>Change your password periodically to maintain security.</li>
+      </ul><br>
+    </div>
+  </div>
+  
+  <!-- Nested tab content for Account Info -->
+  <div id="accountinfo" *ngIf="selectedNestedTab === 'accountinfo'">
+    <br><h2 class="font-bold text-center text-xl">Account Info</h2><br>
+    <img src="..\..\assets\Userguide\account\accountinfo.png" class="w-full p-6"/><br>            
+    <h3 class="font-bold">Name</h3>
+    <p>This field displays your full name as it is registered within the system. It is essential to ensure that this information is accurate and up-to-date as it is used for identification and communication purposes.</p>
+    <br>
+    <h3 class="font-bold">Email</h3>
+    <p>This field shows the email address associated with your account. The email address is a vital piece of information as it is used for logging in, receiving notifications, and password recovery. Ensuring that this email is current and accessible is important for maintaining account security and receiving timely updates.</p>
+    <br>
+    <h3 class="font-bold">Unit</h3>
+    <p>This field indicates the organizational unit or department you belong to. This information helps in categorizing users based on their functional areas within the organization. It aids in ensuring that communication and permissions are appropriately managed according to departmental roles and responsibilities.</p>
+    <br>
+    <h3 class="font-bold">Role</h3>
+    <p>This field shows your role within the organization, such as Admin, DO, AO or IM. The role assigned to your account determines the level of access and permissions you have on the platform. It is crucial for maintaining security and proper access controls, ensuring that each user has the appropriate level of access required for their duties.</p>
+  </div>
+</div>
+<!-- Other tab contents -->
+<div id="audit" *ngIf="selectedMainTab === 'audit'">
+  <div class="border-b border-gray-200 dark:border-gray-700">
+    <!-- Added list-none class to remove default list markers -->
+    <ul class="list-none flex flex-wrap -mb-px text-sm font-medium text-center text-gray-500 dark:text-gray-400">
+      <!-- NCR Form -->
+      <li class="flex w-1/3">
+        <a (click)="selectNestedTab('ncrform')" href="/userGuide#ncrform" class="inline-flex items-center justify-center w-full p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300 group"
+        [ngClass]="{'text-[#016299] border-[#016299]': selectedNestedTab === 'ncrform', 'hover:text-gray-600 hover:border-gray-300': selectedNestedTab !== 'ncrform'}">
+        NCR Form
+      </a>
+    </li>
+    <!-- Search NCR -->
+    <li class="flex w-1/3">
+      <a (click)="selectNestedTab('searchncr')" href="/userGuide#searchncr" class="inline-flex items-center justify-center w-full p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300 group"
+      [ngClass]="{'text-[#016299] border-[#016299]': selectedNestedTab === 'searchncr', 'hover:text-gray-600 hover:border-gray-300': selectedNestedTab !== 'searchncr'}">
+      Search NCR
+    </a>
+  </li>
+  <!-- Follow On NCR -->
+  <li class="flex w-1/3">
+    <a (click)="selectNestedTab('followonncr')" href="/userGuide#followonncr" class="inline-flex items-center justify-center w-full p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300 group"
+    [ngClass]="{'text-[#016299] border-[#016299]': selectedNestedTab === 'followonncr', 'hover:text-gray-600 hover:border-gray-300': selectedNestedTab !== 'followonncr'}">
+    Follow On NCR
+  </a>
+</li>
+</ul>
+</div>            
+
+<!-- Nested tab content for NCR Form -->
+<div id="ncrform" *ngIf="selectedNestedTab === 'ncrform'">
+  <br><h2 class="font-bold text-center text-xl">Non-Conformance Report Form</h2><br>
+  <img src="..\..\assets\Userguide\audit\NCRform.png" class="w-full p-6"/><br>
+  <div class="w-fit">
+    <div class="min-h-screen bg-gray-50 p-6">
+      <!-- User Guide Table -->
+      <section class="max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-6 mb-8">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-4">Form Fields and Instructions</h2>
+        <div class="overflow-x-auto">
+          <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-100">
+              <tr>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Field</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
+              </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+              <tr *ngFor="let field of fields">
+                <td class="px-6 py-4 text-sm font-medium text-gray-900">{{ field.field }}</td>
+                <td class="px-6 py-4 text-sm text-gray-500">{{ field.description }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+
+<!-- Nested tab content for Search NCR -->
+<div id="searchncr" *ngIf="selectedNestedTab === 'searchncr'">
+  <br><h2 class="font-bold text-center text-xl">Search Non-Conformance Form</h2><br>
+  <img src="..\..\assets\Userguide\audit\searchNCR.png" class="w-full p-6"/><br>            
+  <div class="container mx-auto p-4">
+    <section class="mb-6">
+      <h2 class="text-xl font-semibold mb-2">Introduction</h2>
+      <p class="text-gray-700">
+        This guide provides comprehensive instructions for users to effectively search for Non-Conformance Reports (NCRs) using the search functionality provided in the system. Ensure that you have the necessary permissions to access and search the NCR database.
+      </p>
+    </section>
+    
+    <section class="mb-6">
+      <h2 class="text-xl font-semibold mb-2">Accessing the Search NCR Page</h2>
+      <ol class="list-decimal pl-6 text-gray-700">
+        <li>Open your preferred web browser (e.g., Chrome, Firefox, Safari).</li>
+        <li>Enter the URL for the NCR search page provided by your organization.</li>
+        <li>The page title "Search NON-CONFORMANCE REPORT" should be visible.</li>
+      </ol>
+    </section>
+    
+    <section class="mb-6">
+      <h2 class="text-xl font-semibold mb-2">Using the Search Functionality</h2>
+      <h3 class="text-lg font-semibold mb-2">Search Parameters:</h3>
+      <p class="text-gray-700">
+        You can search for NCRs using either the TO UIC or NCR INIT ID fields. Enter the appropriate search term in the search input field.
+      </p><br>
+      <h3 class="text-lg font-semibold mb-2">Initiate the Search:</h3>
+      <p class="text-gray-700">
+        After entering the search term, click the Search button or press enter. The system will process your request and display the relevant NCRs in a table format.
+      </p>
+    </section>
+    
+    <section class="mb-6">
+      <div class="container mx-auto p-4">
+        <h2 class="text-xl font-semibold mb-4">Understanding the Search Results</h2>
+        <p class="text-gray-700 mb-4">
+          The search results are displayed in a table with the following columns:
+        </p>
+        <table class="min-w-full bg-white border border-gray-200">
+          <thead class="bg-gray-100">
+            <tr>
+              <th class="px-4 py-2 text-left text-gray-600">Column</th>
+              <th class="px-4 py-2 text-left text-gray-600">Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="px-4 py-2 border-b">NCR Init ID</td>
+              <td class="px-4 py-2 border-b">Unique identifier for the NCR initiation.</td>
+            </tr>
+            <tr>
+              <td class="px-4 py-2 border-b">Regulation Based</td>
+              <td class="px-4 py-2 border-b">Basis of the regulation related to the NCR.</td>
+            </tr>
+            <tr>
+              <td class="px-4 py-2 border-b">Subject</td>
+              <td class="px-4 py-2 border-b">Subject or title of the NCR.</td>
+            </tr>
+            <tr>
+              <td class="px-4 py-2 border-b">Audit Plan No</td>
+              <td class="px-4 py-2 border-b">Number assigned to the audit plan.</td>
+            </tr>
+            <tr>
+              <td class="px-4 py-2 border-b">NCR No</td>
+              <td class="px-4 py-2 border-b">The specific NCR number.</td>
+            </tr>
+            <tr>
+              <td class="px-4 py-2 border-b">Issued Date</td>
+              <td class="px-4 py-2 border-b">Date when the NCR was issued.</td>
+            </tr>
+            <tr>
+              <td class="px-4 py-2 border-b">Responsibility Office</td>
+              <td class="px-4 py-2 border-b">Office responsible for addressing the NCR.</td>
+            </tr>
+            <tr>
+              <td class="px-4 py-2 border-b">Audit Type</td>
+              <td class="px-4 py-2 border-b">Type of audit performed.</td>
+            </tr>
+            <tr>
+              <td class="px-4 py-2 border-b">To UIC</td>
+              <td class="px-4 py-2 border-b">Unique identifier code for the unit.</td>
+            </tr>
+            <tr>
+              <td class="px-4 py-2 border-b">Require Condition Reference</td>
+              <td class="px-4 py-2 border-b">Reference for the required condition.</td>
+            </tr>
+            <tr>
+              <td class="px-4 py-2 border-b">Level Finding</td>
+              <td class="px-4 py-2 border-b">Level of the finding (e.g., 1, 2, 3).</td>
+            </tr>
+            <tr>
+              <td class="px-4 py-2 border-b">Problem Analysis</td>
+              <td class="px-4 py-2 border-b">Analysis of the problem identified.</td>
+            </tr>
+            <tr>
+              <td class="px-4 py-2 border-b">Answer Due Date</td>
+              <td class="px-4 py-2 border-b">Date by which a response is due.</td>
+            </tr>
+            <tr>
+              <td class="px-4 py-2 border-b">Issued IAN</td>
+              <td class="px-4 py-2 border-b">Identifier for issued IAN.</td>
+            </tr>
+            <tr>
+              <td class="px-4 py-2 border-b">IAN No</td>
+              <td class="px-4 py-2 border-b">Number for the issued IAN.</td>
+            </tr>
+            <tr>
+              <td class="px-4 py-2 border-b">Encountered Condition</td>
+              <td class="px-4 py-2 border-b">Condition encountered during the audit.</td>
+            </tr>
+            <tr>
+              <td class="px-4 py-2 border-b">Audit By</td>
+              <td class="px-4 py-2 border-b">Name of the auditor.</td>
+            </tr>
+            <tr>
+              <td class="px-4 py-2 border-b">Audit Date</td>
+              <td class="px-4 py-2 border-b">Date of the audit.</td>
+            </tr>
+            <tr>
+              <td class="px-4 py-2 border-b">Acknowledge By</td>
+              <td class="px-4 py-2 border-b">Person who acknowledged the NCR.</td>
+            </tr>
+            <tr>
+              <td class="px-4 py-2 border-b">Acknowledge Date</td>
+              <td class="px-4 py-2 border-b">Date of acknowledgment.</td>
+            </tr>
+            <tr>
+              <td class="px-4 py-2 border-b">Status</td>
+              <td class="px-4 py-2 border-b">Current status of the NCR.</td>
+            </tr>
+            <tr>
+              <td class="px-4 py-2 border-b">Temporary Link</td>
+              <td class="px-4 py-2 border-b">Link for temporary access.</td>
+            </tr>
+            <tr>
+              <td class="px-4 py-2 border-b">Action</td>
+              <td class="px-4 py-2 border-b">Actions available (e.g., Preview, Edit).</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+    
+    <section class="mb-6">
+      <h2 class="text-xl font-semibold mb-2">Performing Actions on Search Results</h2>
+      <h3 class="text-lg font-semibold mb-2">Preview an NCR:</h3>
+      <p class="text-gray-700">
+        Click the Preview button next to the NCR you wish to view. This will open a detailed view of the selected NCR.
+      </p>
+      <h3 class="text-lg font-semibold mb-2">Edit an NCR:</h3>
+      <p class="text-gray-700">
+        Click the Edit button next to the NCR you wish to modify. This will redirect you to the edit page where you can update the NCR details.
+      </p>
+      <h3 class="text-lg font-semibold mb-2">Export to Excel:</h3>
+      <p class="text-gray-700">
+        Click the Export to Excel button to download the search results in an Excel format for offline analysis and record-keeping.
+      </p>
+    </section>
+    
+  </div>
+</div>
+
+
+<!-- Nested tab content for Follow On NCR -->
+<div id="followonncr" *ngIf="selectedNestedTab === 'followonncr'">
+  <br><h2 class="font-bold text-center text-xl">Follow On NCR</h2><br>
+  <img src="..\..\assets\Userguide\audit\followon.png" class="w-full p-6"/><br>            
+  <div class="min-h-screen bg-gray-50 p-6">
+    <!-- Header Section -->
+    <section class="max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-6 mb-8">
+      <!-- <h1 class="text-3xl font-semibold text-gray-800 mb-4">User Guide: Follow-On Non-Conformance Report</h1> -->
+      <p class="text-gray-600 mb-6">
+        This guide provides a detailed walkthrough for users on how to complete the "Follow on Non-Conformance Report" form. This form is essential for managing and updating the status of Non-Conformance Reports (NCRs). Please ensure you have the appropriate permissions and understand the necessary steps before proceeding.
+      </p>
+    </section>
+    
+    <!-- Accessing the Form -->
+    <section class="max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-6 mb-8">
+      <h2 class="text-2xl font-semibold text-gray-800 mb-4">Accessing the Form</h2>
+      <ol class="list-decimal list-inside space-y-2 text-gray-600">
+        <li>Launch your preferred web browser (e.g., Google Chrome, Mozilla Firefox, Apple Safari).</li>
+        <li>Navigate to the URL provided by your organization to access the form.</li>
+        <li>Ensure the page title displays "Follow on Non-Conformance Report".</li>
+      </ol>
+    </section>
+    
+    <!-- Form Fields and Instructions -->
+    <section class="max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-6 mb-8">
+      <h2 class="text-2xl font-semibold text-gray-800 mb-4">Form Fields and Instructions</h2>
+      <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-gray-100">
+            <tr>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Field</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
+            </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-200">
+            <tr *ngFor="let field of formFields">
+              <td class="px-6 py-4 text-sm font-medium text-gray-900">{{ field.name }}</td>
+              <td class="px-6 py-4 text-sm text-gray-500">{{ field.description }}</td>
+              <td class="px-6 py-4 text-sm text-gray-500">{{ field.action }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+    
+    <!-- Submitting the Form -->
+    <section class="max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-6 mb-8">
+      <h2 class="text-2xl font-semibold text-gray-800 mb-4">Submitting the Form</h2>
+      <ol class="list-decimal list-inside space-y-2 text-gray-600">
+        <li><strong>Review:</strong> Thoroughly review all entered information for accuracy and completeness. Ensure all required fields are filled out.</li>
+        <li><strong>Submit:</strong> Click the <strong>Submit</strong> button located at the bottom of the form. The button is styled with a blue background and white text, changing to a darker blue on hover. Confirm submission by checking for any confirmation messages or prompts.</li>
+      </ol>
+    </section>
+    
+    <!-- Troubleshooting -->
+    <section class="max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-6 mb-8">
+      <h2 class="text-2xl font-semibold text-gray-800 mb-4">Troubleshooting</h2>
+      <ul class="list-disc list-inside space-y-2 text-gray-600">
+        <li><strong>Missing Information:</strong> Ensure all mandatory fields are completed before attempting to submit the form.</li>
+        <li><strong>Date Issues:</strong> Verify that all dates are selected correctly and fall within appropriate ranges.</li>
+        <li><strong>Dropdown Menus:</strong> Ensure options are selected from the dropdown menus accurately.</li>
+      </ul>
+    </section>
+  </div>
+</div>
+</div>
+<!-- Main Occurrence Tab -->
+<div id="occurrence" *ngIf="selectedMainTab === 'occurrence'">
+  <!-- Nested Tabs for Occurrence -->
+  <div class="border-b border-gray-200 dark:border-gray-700">
+    <ul class="list-none flex flex-wrap -mb-px text-sm font-medium text-center text-gray-500 dark:text-gray-400">
+      <!-- Container for the tabs -->
+      <ul class="flex w-full list-none p-0 m-0">
+        <!-- IOR Form Tab -->
+        <li class="flex w-1/3 me-2">
+          <a (click)="selectNestedTab('iorform'); $event.preventDefault();"
+          class="inline-flex items-center justify-center w-full p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300 group"
+          [ngClass]="{'text-[#016299] border-[#016299]': selectedNestedTab === 'iorform', 'hover:text-gray-600 hover:border-gray-300': selectedNestedTab !== 'iorform'}">
+          IOR Form
+        </a>
+      </li>
+      
+      <!-- Search IOR Tab -->
+      <li class="flex w-1/3 me-2">
+        <a (click)="selectNestedTab('searchior'); $event.preventDefault();"
+        class="inline-flex items-center justify-center w-full p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300 group"
+        [ngClass]="{'text-[#016299] border-[#016299]': selectedNestedTab === 'searchior', 'hover:text-gray-600 hover:border-gray-300': selectedNestedTab !== 'searchior'}">
+        Search IOR
+      </a>
+    </li>
+    
+    <!-- Follow On IOR Tab -->
+    <li class="flex w-1/3 me-2">
+      <a (click)="selectNestedTab('followonior'); $event.preventDefault();"
+      class="inline-flex items-center justify-center w-full p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300 group"
+      [ngClass]="{'text-[#016299] border-[#016299]': selectedNestedTab === 'followonior', 'hover:text-gray-600 hover:border-gray-300': selectedNestedTab !== 'followonior'}">
+      Follow On IOR
+    </a>
+  </li>
+</ul>
+
+
+</ul>
+</div>
+
+
+<!-- Nested Tab Content -->
+<!-- IOR Form Content -->
+<div id="iorform" *ngIf="selectedNestedTab === 'iorform'">
+  <div class="min-h-screen bg-gray-100 py-12">
+    <div class="container mx-auto px-4">
+      <div class="bg-white shadow-md rounded-lg overflow-hidden">
+        <div class="p-6">
+          <br><h2 class="font-bold text-center text-xl">Internal Occurrence Report</h2><br>
+          <img src="..\..\assets\Userguide\Occurrence\formior.png" class="w-full p-6"/><br>            
+          
+          <!-- Overview Section -->
+          <section class="mb-8">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-4">Overview</h2>
+            <p class="text-gray-700 mb-4">
+              Welcome to the <strong>Internal Occurrence Report</strong> form. This guide provides step-by-step instructions to help you accurately complete and submit the report.
+            </p>
+          </section>
+          
+          <!-- Accessing the Form Section -->
+          <section class="mb-8">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-4">Accessing the Form</h2>
+            <ul class="list-disc list-inside text-gray-700 mb-4">
+              <li>Ensure you are logged in to your organization's system.</li>
+              <li>Navigate to the <strong>Internal Occurrence Report</strong> form through the provided section or URL.</li>
+            </ul>
+          </section>
+          
+          <!-- Filling Out the Form Section -->
+          <section class="mb-8">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-4">Filling Out the Form</h2>
+            
+            <!-- Accordion for Detailed Instructions -->
+            <div class="space-y-4">
+              <!-- General Information -->
+              <div>
+                <h3 class="text-xl font-semibold text-gray-800 mb-2">1. General Information</h3>
+                <div class="space-y-2">
+                  <div class="bg-gray-50 p-4 rounded-lg">
+                    <h4 class="text-lg font-semibold text-gray-800">Account Name:</h4>
+                    <p class="text-gray-700">This field is auto-filled with your account details. It displays the name associated with your login.</p>
+                  </div>
+                  <div class="bg-gray-50 p-4 rounded-lg">
+                    <h4 class="text-lg font-semibold text-gray-800">Subject IOR:</h4>
+                    <p class="text-gray-700">Enter a brief description of the subject related to the internal occurrence.</p>
+                  </div>
+                  <div class="bg-gray-50 p-4 rounded-lg">
+                    <h4 class="text-lg font-semibold text-gray-800">Occur NBR:</h4>
+                    <p class="text-gray-700">Provide the number associated with the occurrence.</p>
+                  </div>
+                  <div class="bg-gray-50 p-4 rounded-lg">
+                    <h4 class="text-lg font-semibold text-gray-800">Occur Date:</h4>
+                    <p class="text-gray-700">Select the date on which the occurrence took place.</p>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Reference Information -->
+              <div>
+                <h3 class="text-xl font-semibold text-gray-800 mb-2">2. Reference Information</h3>
+                <div class="space-y-2">
+                  <div class="bg-gray-50 p-4 rounded-lg">
+                    <h4 class="text-lg font-semibold text-gray-800">Reference IOR:</h4>
+                    <p class="text-gray-700">Input any reference number or identifier related to the internal occurrence.</p>
+                  </div>
+                  <div class="bg-gray-50 p-4 rounded-lg">
+                    <h4 class="text-lg font-semibold text-gray-800">To UIC:</h4>
+                    <p class="text-gray-700">Enter the UIC (Unique Identifier Code) for the department or individual to whom the report is addressed.</p>
+                  </div>
+                  <div class="bg-gray-50 p-4 rounded-lg">
+                    <h4 class="text-lg font-semibold text-gray-800">CC UIC:</h4>
+                    <p class="text-gray-700">Provide UICs of individuals or departments to be copied on this report.</p>
+                  </div>
+                  <div class="bg-gray-50 p-4 rounded-lg">
+                    <h4 class="text-lg font-semibold text-gray-800">Category Occur:</h4>
+                    <p class="text-gray-700">Select the category that best describes the occurrence from the dropdown menu (e.g., DOA Management, Personnel, Material, etc.).</p>
+                  </div>
+                  <div class="bg-gray-50 p-4 rounded-lg">
+                    <h4 class="text-lg font-semibold text-gray-800">Type Or Pnbr:</h4>
+                    <p class="text-gray-700">Specify the type or part number related to the occurrence.</p>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Detailed Information -->
+              <div>
+                <h3 class="text-xl font-semibold text-gray-800 mb-2">3. Detailed Information</h3>
+                <div class="space-y-2">
+                  <div class="bg-gray-50 p-4 rounded-lg">
+                    <h4 class="text-lg font-semibold text-gray-800">Level Type:</h4>
+                    <p class="text-gray-700">Choose the level of the occurrence (e.g., Aircraft, Engine, APU, Others).</p>
+                  </div>
+                  <div class="bg-gray-50 p-4 rounded-lg">
+                    <h4 class="text-lg font-semibold text-gray-800">Reported By:</h4>
+                    <p class="text-gray-700">Enter your name or the name of the individual reporting the occurrence.</p>
+                  </div>
+                  <div class="bg-gray-50 p-4 rounded-lg">
+                    <h4 class="text-lg font-semibold text-gray-800">Reporter UIC:</h4>
+                    <p class="text-gray-700">Provide the UIC of the reporter.</p>
+                  </div>
+                  <div class="bg-gray-50 p-4 rounded-lg">
+                    <h4 class="text-lg font-semibold text-gray-800">Report Date:</h4>
+                    <p class="text-gray-700">Select the date when the report is being submitted.</p>
+                  </div>
+                  <div class="bg-gray-50 p-4 rounded-lg">
+                    <h4 class="text-lg font-semibold text-gray-800">Reporter Identity:</h4>
+                    <p class="text-gray-700">Indicate if the reporter’s identity should be shown or hidden.</p>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Assessment -->
+              <div>
+                <h3 class="text-xl font-semibold text-gray-800 mb-2">4. Assessment</h3>
+                <div class="space-y-2">
+                  <div class="bg-gray-50 p-4 rounded-lg">
+                    <h4 class="text-lg font-semibold text-gray-800">Data Reference:</h4>
+                    <p class="text-gray-700">Input any additional data references relevant to the occurrence.</p>
+                  </div>
+                  <div class="bg-gray-50 p-4 rounded-lg">
+                    <h4 class="text-lg font-semibold text-gray-800">Hirac Process:</h4>
+                    <p class="text-gray-700">Specify whether the occurrence has undergone a Hirac process (Yes/No).</p>
+                  </div>
+                  <div class="bg-gray-50 p-4 rounded-lg">
+                    <h4 class="text-lg font-semibold text-gray-800">Initial Probability:</h4>
+                    <p class="text-gray-700">Assess the initial probability of the occurrence.</p>
+                  </div>
+                  <div class="bg-gray-50 p-4 rounded-lg">
+                    <h4 class="text-lg font-semibold text-gray-800">Initial Severity:</h4>
+                    <p class="text-gray-700">Evaluate the initial severity level.</p>
+                  </div>
+                  <div class="bg-gray-50 p-4 rounded-lg">
+                    <h4 class="text-lg font-semibold text-gray-800">Initial Risk Index:</h4>
+                    <p class="text-gray-700">Provide the calculated initial risk index.</p>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Detailed Occurrence -->
+              <div>
+                <h3 class="text-xl font-semibold text-gray-800 mb-2">5. Detailed Occurrence</h3>
+                <div class="bg-gray-50 p-4 rounded-lg">
+                  <h4 class="text-lg font-semibold text-gray-800">Detail Occurrence:</h4>
+                  <p class="text-gray-700">Use the textarea to provide a comprehensive description of the occurrence. Include any relevant details, observations, and context.</p>
+                </div>
+              </div>
+            </div>
+          </section>
+          
+          <!-- Submitting the Form Section -->
+          <section class="mb-8">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-4">Submitting the Form</h2>
+            <ul class="list-disc list-inside text-gray-700 mb-4">
+              <li>Review all entered information for accuracy.</li>
+              <li>Click the <strong>Submit</strong> button at the bottom of the form.</li>
+              <li>Confirm submission by verifying any on-screen confirmation messages.</li>
+            </ul>
+          </section>
+          
+          <!-- Troubleshooting Section -->
+          <section class="mb-8">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-4">Troubleshooting</h2>
+            <ul class="list-disc list-inside text-gray-700 mb-4">
+              <li><strong>Incomplete Fields:</strong> Ensure all required fields (marked with an asterisk) are filled.</li>
+              <li><strong>Data Validation Errors:</strong> Address any error messages provided for corrections.</li>
+              <li><strong>Technical Issues:</strong> Contact IT support for help with technical difficulties.</li>
+            </ul>
+          </section>
+          
+          <!-- Additional Resources Section -->
+          <section>
+            <h2 class="text-2xl font-semibold text-gray-800 mb-4">Additional Resources</h2>
+            <ul class="list-disc list-inside text-gray-700 mb-4">
+              <li><strong>Help Desk:</strong> Reach out to your organization’s help desk for further assistance.</li>
+              <li><strong>User Manual:</strong> Consult the user manual or training materials available on the portal.</li>
+            </ul>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Search IOR Content -->
+<div id="searchior" *ngIf="selectedNestedTab === 'searchior'">
+  <div class="container mx-auto p-4">
+    <section class="mb-6">
+      <h2 class="text-xl font-bold text-center mb-2">Searching Internal Occurrence Report </h2>
+      <img src="..\..\assets\Userguide\Occurrence\searchIOR.png" class="w-full p-6"/><br>
+      <p>Welcome to the Search Internal Occurrence Report form. This guide provides step-by-step instructions to help you effectively search for internal occurrence reports using specific parameters. The primary search parameters include <strong>"To UIC"</strong> and <strong>"IOR Init ID"</strong>.</p>
+    </section>
+    
+    <section class="mb-6">
+      <h2 class="text-2xl font-semibold mb-2">Accessing the Form</h2>
+      <ol class="list-decimal list-inside ml-4">
+        <li><strong>Login</strong>: Ensure you are logged in to your organization's system.</li>
+        <li><strong>Navigation</strong>: Navigate to the Search Internal Occurrence Report form through the provided section or URL.</li>
+      </ol>
+    </section>
+    
+    <section class="mb-6">
+      <h2 class="text-2xl font-semibold mb-2">Searching for Reports</h2>
+      <ol class="list-decimal list-inside ml-4">
+        <li><strong>Enter Search Criteria</strong>:
+          <ul class="list-disc list-inside ml-6">
+            <li><strong>To UIC</strong>: Enter the UIC to which the IOR is assigned.</li>
+            <li><strong>IOR Init ID</strong>: Enter the initial ID of the IOR.</li>
+          </ul>
+        </li>
+        <li><strong>Search</strong>: Click the Search button to view the results.</li>
+      </ol>
+    </section>
+    
+    <section class="mb-6">
+      <h2 class="text-2xl font-semibold mb-2">Table of Results</h2>
+      <p>Once the search is performed, the results are displayed in a dynamically updated table. Below is a detailed description of each column in the table:</p>
+      <div class="overflow-x-auto">
+        <table class="table-auto w-full bg-white shadow-md rounded-lg overflow-hidden mt-4">
+          <thead class="bg-gray-100">
+            <tr>
+              <th class="px-4 py-2 border">Column</th>
+              <th class="px-4 py-2 border">Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="px-4 py-2 border">ID IOR</td>
+              <td class="px-4 py-2 border">The unique identifier for the IOR.</td>
+            </tr>
+            <tr>
+              <td class="px-4 py-2 border">Subject IOR</td>
+              <td class="px-4 py-2 border">The subject or title of the IOR.</td>
+            </tr>
+            <tr>
+              <td class="px-4 py-2 border">IOR Number</td>
+              <td class="px-4 py-2 border">The number assigned to the IOR.</td>
+            </tr>
+            <tr>
+              <td class="px-4 py-2 border">IOR Date</td>
+              <td class="px-4 py-2 border">The date the IOR was created.</td>
+            </tr>
+            <tr>
+              <td class="px-4 py-2 border">Reference IOR</td>
+              <td class="px-4 py-2 border">Any reference associated with the IOR.</td>
+            </tr>
+            <tr>
+              <td class="px-4 py-2 border">To UIC</td>
+              <td class="px-4 py-2 border">The UIC to which the IOR is assigned.</td>
+            </tr>
+            <tr>
+              <td class="px-4 py-2 border">CC UIC</td>
+              <td class="px-4 py-2 border">The UIC that is CC'd on the IOR.</td>
+            </tr>
+            <tr>
+              <td class="px-4 py-2 border">Category IOR</td>
+              <td class="px-4 py-2 border">The category of the IOR.</td>
+            </tr>
+            <tr>
+              <td class="px-4 py-2 border">Type OR Phone Number</td>
+              <td class="px-4 py-2 border">The type or phone number related to the IOR.</td>
+            </tr>
+            <tr>
+              <td class="px-4 py-2 border">Level Type</td>
+              <td class="px-4 py-2 border">The level type of the occurrence.</td>
+            </tr>
+            <tr>
+              <td class="px-4 py-2 border">Detail Occurrence</td>
+              <td class="px-4 py-2 border">Detailed description of the occurrence.</td>
+            </tr>
+            <tr>
+              <td class="px-4 py-2 border">Reported By</td>
+              <td class="px-4 py-2 border">The individual who reported the occurrence.</td>
+            </tr>
+            <tr>
+              <td class="px-4 py-2 border">Reporter UIC</td>
+              <td class="px-4 py-2 border">The UIC of the reporter.</td>
+            </tr>
+            <tr>
+              <td class="px-4 py-2 border">Report Date</td>
+              <td class="px-4 py-2 border">The date the report was made.</td>
+            </tr>
+            <tr>
+              <td class="px-4 py-2 border">Report Identify</td>
+              <td class="px-4 py-2 border">The identifier for the report.</td>
+            </tr>
+            <tr>
+              <td class="px-4 py-2 border">Data Reference</td>
+              <td class="px-4 py-2 border">Data reference information.</td>
+            </tr>
+            <tr>
+              <td class="px-4 py-2 border">Hirac Process</td>
+              <td class="px-4 py-2 border">Indicates if the Hirac process was followed.</td>
+            </tr>
+            <tr>
+              <td class="px-4 py-2 border">Initial Probability</td>
+              <td class="px-4 py-2 border">The initial probability assessment.</td>
+            </tr>
+            <tr>
+              <td class="px-4 py-2 border">Initial Severity</td>
+              <td class="px-4 py-2 border">The initial severity assessment.</td>
+            </tr>
+            <tr>
+              <td class="px-4 py-2 border">Initial Risk Index</td>
+              <td class="px-4 py-2 border">The initial risk index.</td>
+            </tr>
+            <tr>
+              <td class="px-4 py-2 border">Current Probability</td>
+              <td class="px-4 py-2 border">The current probability assessment.</td>
+            </tr>
+            <tr>
+              <td class="px-4 py-2 border">Current Severity</td>
+              <td class="px-4 py-2 border">The current severity assessment.</td>
+            </tr>
+            <tr>
+              <td class="px-4 py-2 border">Current Risk Index</td>
+              <td class="px-4 py-2 border">The current risk index.</td>
+            </tr>
+            <tr>
+              <td class="px-4 py-2 border">Actions</td>
+              <td class="px-4 py-2 border">Buttons to preview and edit the report.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+    
+    <section class="mb-6">
+      <h2 class="text-2xl font-semibold mb-2">Exporting Results to Excel</h2>
+      <p>Click the Export to Excel button to export the search results to an Excel file for further analysis.</p>
+    </section>
+    
+    <section class="mb-6">
+      <h2 class="text-2xl font-semibold mb-2">Tips for Effective Use</h2>
+      <ul class="list-disc list-inside ml-4">
+        <li><strong>Use Specific Search Criteria</strong>: For more precise results, use specific search criteria like exact UIC codes or IOR Init IDs.</li>
+        <li><strong>Check Details</strong>: Always check the details in the table to ensure the correct report is selected.</li>
+        <li><strong>Regular Updates</strong>: Keep the data and your search criteria updated to reflect the most current reports.</li>
+      </ul>
+    </section>
+  </div>
+</div>
+
+<!-- Follow On IOR Content -->
+<div id="followonior" *ngIf="selectedNestedTab === 'followonior'">
+  
+  <div class="min-h-screen flex items-center justify-center">
+    <div class="mx-auto mt-24 w-full md:w-auto my-8 bg-white shadow-md rounded-lg overflow-hidden">
+      <div class="p-6">
+        <h2 class="text-xl text-center font-semibold mb-2">Follow On Internal Occurrence Report</h2>
+        <img src="..\..\assets\Userguide\Occurrence\followonior.png" class="w-full p-6"/><br>     
+        <h2 class="text-xl font-semibold mt-8 mb-4">Overview</h2>
+        <p class="mb-4">This guide provides comprehensive instructions for completing and submitting the "Follow On Internal Occurrence Report" (IOR) form. The Follow On IOR is an essential tool for tracking and managing the status of internal occurrences. By following this guide, you will be able to correctly fill out the form, ensure all necessary details are included, and understand how to locate and manage your submitted forms.</p>
+        
+        <h2 class="text-xl font-semibold mt-8 mb-4">Accessing the Form</h2>
+        <ul class="list-disc list-inside mb-4">
+          <li><strong>Login:</strong> Ensure you are logged into your organization’s system.</li>
+          <li><strong>Navigate to the Form:</strong>
+            <ul class="list-disc list-inside ml-6">
+              <li><strong>Find the Navigation Bar:</strong> The navigation bar is typically located at the top or side of your application interface.</li>
+              <li><strong>Locate "Occurrence":</strong> In the navigation bar, look for the "Occurrence" section.</li>
+              <li><strong>Select "Follow On Internal Occurrence Report":</strong> Click on this option to open the form.</li>
+            </ul>
+          </li>
+        </ul>
+        
+        <h2 class="text-xl font-semibold mt-8 mb-4">Completing the Form</h2>
+        <div class="overflow-x-auto">
+          <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
+              <tr>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Section</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Field</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Field Type</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Options</th>
+              </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+              <!-- Form Header -->
+              <tr>
+                <td class="px-6 py-4 text-sm font-medium text-gray-900">Form Header</td>
+                <td class="px-6 py-4 text-sm text-gray-500">Title</td>
+                <td class="px-6 py-4 text-sm text-gray-500">The title displayed at the top of the form.</td>
+                <td class="px-6 py-4 text-sm text-gray-500">-</td>
+                <td class="px-6 py-4 text-sm text-gray-500">-</td>
+              </tr>
+              <tr>
+                <td class="px-6 py-4 text-sm font-medium text-gray-900"></td>
+                <td class="px-6 py-4 text-sm text-gray-500">Location</td>
+                <td class="px-6 py-4 text-sm text-gray-500">Positioned at the top of the form within a blue header.</td>
+                <td class="px-6 py-4 text-sm text-gray-500">-</td>
+                <td class="px-6 py-4 text-sm text-gray-500">-</td>
+              </tr>
+              <!-- First Row -->
+              <tr>
+                <td class="px-6 py-4 text-sm font-medium text-gray-900">First Row</td>
+                <td class="px-6 py-4 text-sm text-gray-500">ID IOR</td>
+                <td class="px-6 py-4 text-sm text-gray-500">Enter the unique identifier for the IOR.</td>
+                <td class="px-6 py-4 text-sm text-gray-500">Text input</td>
+                <td class="px-6 py-4 text-sm text-gray-500">-</td>
+              </tr>
+              <tr>
+                <td class="px-6 py-4 text-sm font-medium text-gray-900"></td>
+                <td class="px-6 py-4 text-sm text-gray-500">Follow Up By</td>
+                <td class="px-6 py-4 text-sm text-gray-500">Enter the name of the person responsible for the follow-up.</td>
+                <td class="px-6 py-4 text-sm text-gray-500">Text input</td>
+                <td class="px-6 py-4 text-sm text-gray-500">-</td>
+              </tr>
+              <tr>
+                <td class="px-6 py-4 text-sm font-medium text-gray-900"></td>
+                <td class="px-6 py-4 text-sm text-gray-500">Follow Up Date</td>
+                <td class="px-6 py-4 text-sm text-gray-500">Select the date for the follow-up action.</td>
+                <td class="px-6 py-4 text-sm text-gray-500">Date input</td>
+                <td class="px-6 py-4 text-sm text-gray-500">-</td>
+              </tr>
+              <tr>
+                <td class="px-6 py-4 text-sm font-medium text-gray-900"></td>
+                <td class="px-6 py-4 text-sm text-gray-500">Follow Up UIC</td>
+                <td class="px-6 py-4 text-sm text-gray-500">Select the UIC responsible for the follow-up.</td>
+                <td class="px-6 py-4 text-sm text-gray-500">Dropdown menu</td>
+                <td class="px-6 py-4 text-sm text-gray-500">IM, DO, Others</td>
+              </tr>
+              <!-- Second Row -->
+              <tr>
+                <td class="px-6 py-4 text-sm font-medium text-gray-900">Second Row</td>
+                <td class="px-6 py-4 text-sm text-gray-500">Follow Up Detail Occurrence</td>
+                <td class="px-6 py-4 text-sm text-gray-500">Provide detailed information about the follow-up.</td>
+                <td class="px-6 py-4 text-sm text-gray-500">Textarea</td>
+                <td class="px-6 py-4 text-sm text-gray-500">-</td>
+              </tr>
+              <!-- Third Row -->
+              <tr>
+                <td class="px-6 py-4 text-sm font-medium text-gray-900">Third Row</td>
+                <td class="px-6 py-4 text-sm text-gray-500">Follow Up Data Reference</td>
+                <td class="px-6 py-4 text-sm text-gray-500">Indicate the relevance of the data reference.</td>
+                <td class="px-6 py-4 text-sm text-gray-500">Dropdown menu</td>
+                <td class="px-6 py-4 text-sm text-gray-500">Yes, No</td>
+              </tr>
+              <tr>
+                <td class="px-6 py-4 text-sm font-medium text-gray-900"></td>
+                <td class="px-6 py-4 text-sm text-gray-500">Follow Up Status</td>
+                <td class="px-6 py-4 text-sm text-gray-500">Specify the status of the follow-up.</td>
+                <td class="px-6 py-4 text-sm text-gray-500">Dropdown menu</td>
+                <td class="px-6 py-4 text-sm text-gray-500">Open, Close, Monitor</td>
+              </tr>
+              <tr>
+                <td class="px-6 py-4 text-sm font-medium text-gray-900"></td>
+                <td class="px-6 py-4 text-sm text-gray-500">Next UIC Follow Up</td>
+                <td class="px-6 py-4 text-sm text-gray-500">Enter the UIC for the next follow-up action.</td>
+                <td class="px-6 py-4 text-sm text-gray-500">Text input</td>
+                <td class="px-6 py-4 text-sm text-gray-500">-</td>
+              </tr>
+              <!-- Fourth Row -->
+              <tr>
+                <td class="px-6 py-4 text-sm font-medium text-gray-900">Fourth Row</td>
+                <td class="px-6 py-4 text-sm text-gray-500">Current Probability</td>
+                <td class="px-6 py-4 text-sm text-gray-500">Enter the current probability associated with the IOR.</td>
+                <td class="px-6 py-4 text-sm text-gray-500">Text input</td>
+                <td class="px-6 py-4 text-sm text-gray-500">-</td>
+              </tr>
+              <tr>
+                <td class="px-6 py-4 text-sm font-medium text-gray-900"></td>
+                <td class="px-6 py-4 text-sm text-gray-500">Current Severity</td>
+                <td class="px-6 py-4 text-sm text-gray-500">Enter the current severity level of the IOR.</td>
+                <td class="px-6 py-4 text-sm text-gray-500">Text input</td>
+                <td class="px-6 py-4 text-sm text-gray-500">-</td>
+              </tr>
+              <tr>
+                <td class="px-6 py-4 text-sm font-medium text-gray-900"></td>
+                <td class="px-6 py-4 text-sm text-gray-500">Current Risk Index</td>
+                <td class="px-6 py-4 text-sm text-gray-500">Enter the current risk index related to the IOR.</td>
+                <td class="px-6 py-4 text-sm text-gray-500">Text input</td>
+                <td class="px-6 py-4 text-sm text-gray-500">-</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        
+        <h2 class="text-xl font-semibold mt-8 mb-4">Submitting the Form</h2>
+        <ul class="list-disc list-inside mb-4">
+          <li><strong>Review:</strong> Ensure all fields are completed accurately and all necessary information is provided.</li>
+          <li><strong>Submit:</strong> Click the "Submit" button at the bottom of the form to finalize your entry.</li>
+        </ul>
+        
+        <h2 class="text-xl font-semibold mt-8 mb-4">Managing Submitted Forms</h2>
+        <p class="mb-4">Once you have submitted the Follow On Internal Occurrence Report, you can view and manage your submissions in the "Occurrence" section of the navigation bar. This allows you to track the status of your reports and ensure they are properly recorded.</p>
+        
+        <h2 class="text-xl font-semibold mt-8 mb-4">Finding the Follow On Form in Navigation:</h2>
+        <ul class="list-disc list-inside mb-4">
+          <li><strong>Locate the Navigation Bar:</strong> Find the navigation bar at the top or side of your application interface.</li>
+          <li><strong>Go to "Occurrence":</strong> Click on the "Occurrence" section.</li>
+          <li><strong>Select the Follow On Form:</strong> Here you will see a list of submitted forms and the option to access the Follow On Internal Occurrence Report.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  
+</div>
+</div>
+
+<div id="personnel" *ngIf="selectedMainTab === 'personnel'">
+  <h2 class="text-lg font-bold mb-3">Personnel</h2>
+  <p>This section provides information on personnel management...</p>
+</div>
+<div id="project" *ngIf="selectedMainTab === 'project'">
+  <h2 class="text-lg font-bold mb-3">Project</h2>
+  <p>This section provides information on project management...</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<app-footer></app-footer>

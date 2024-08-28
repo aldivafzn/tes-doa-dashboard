@@ -1,0 +1,151 @@
+<app-navbar></app-navbar>
+<div class="min-h-screen flex items-center justify-center">
+  <div class="mx-auto mt-24 w-full md:w-auto my-8 bg-white shadow-md rounded-lg overflow-hidden">
+    <div class="p-6">
+      <form (ngSubmit)="updateFollowupIOR()">
+        <!-- IOR #1 -->
+        <div class="bg-[#02507d] rounded-lg">
+          <h2 class="text-2xl font-semibold text-white text-center justify-center mb-7 uppercase py-3 mx-3">Follow On Internal Occurrence Report </h2> 
+        </div>
+        <!-- First Row -->
+        <div class="flex flex-wrap -mx-3 mb-6">
+          <!-- IOR Subject -->
+          <!-- <div class="w-full md:w-1/4 px-3 mb-6 md:mb-0">
+            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+              IOR Subject
+            </label>
+            <input [(ngModel)]="subjectIOR" name="subjectIOR" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 leading-tight" type="text" placeholder="Enter Your Data" required>
+          </div> -->
+          <!-- Follow Up by -->
+          <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+              Follow Up By
+            </label>
+            <input [value]="follupData.follupby" name="follupBy" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 leading-tight" type="text" readonly>
+          </div>
+          <!-- Follow Up UIC -->
+          <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-state">
+              Follow Up UIC
+            </label>
+            <div class="relative">
+              <select [(ngModel)]="follupData.follup_uic" name="follupUIC" class="block appearance-none w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 leading-tight" placeholder="Select" required>
+                <option value="" disabled selected>Select your data</option>
+                <option [value]="'DO'">Chief Design Office</option>
+                <option [value]="'AO'">Chief Airworthiness Office</option>
+                <option [value]="'IM'">Chief Independent Monitoring</option>
+                <option [value]="'HDO'">Head of DOA</option>
+              </select>
+              <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+              </div>
+            </div>
+          </div>
+          <!-- Report Date -->
+          <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+              Follow Up Date
+            </label>
+            <input [(ngModel)]="follupData.follup_date" name="follupDate" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 leading-tight" type="date" required>
+          </div>
+        </div>
+        
+        <!-- Second row -->
+        <div class="flex flex-wrap -mx-3 mb-6">
+          <!-- DETAIL OCCURANCE -->
+          <div class="w-full px-3">
+            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-password">
+              Follow up Detail Occurance
+            </label>
+            <textarea [(ngModel)]="follupData.follup_detail" name="follupDetail" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 leading-tight" placeholder="Enter your data" required></textarea>
+          </div> 
+        </div>
+        
+        <!-- third Row -->
+        <div class="flex flex-wrap -mx-3 mb-6">
+          <!-- followup Data reference -->
+          <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-state">
+              Follow Up Data reference
+            </label>
+            <div class="relative">
+              <select [(ngModel)]="follupData.follup_datarefer" name="follupDataRefer" class="block appearance-none w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 leading-tight" placeholder="Select" required>
+                <option value="" disabled selected>Select</option>
+                <option [ngValue]="true">Yes</option>
+                <option [ngValue]="false">No</option>
+              </select>
+              <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+              </div>
+            </div>
+          </div>
+          <!-- followup status -->
+          <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-state">
+              Follow Up Status
+            </label>
+            <div class="relative">
+              <select [(ngModel)]="follupData.follup_status" name="follupStatus" class="block appearance-none w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 leading-tight" placeholder="Select" required>
+                <option value="" disabled selected>Select</option>
+                <option [value]="'open'">Open</option>
+                <option [value]="'close'">Close</option>
+                <!-- <option [value]="'monitor'">Monitor</option> -->
+              </select>
+              <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+              </div>
+            </div>
+          </div>
+          <!-- Next Follow Up UIC -->
+          <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-state">
+              Next Follow Up UIC
+            </label>
+            <div class="relative">
+              <select [(ngModel)]="follupData.nextuic_follup" name="nextFollupUIC" class="block appearance-none w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 leading-tight" placeholder="Select" required>
+                <option value="" disabled selected>Select your data</option>
+                <option [value]="'DO'">Chief Design Office</option>
+                <option [value]="'AO'">Chief Airworthiness Office</option>
+                <option [value]="'IM'">Chief Independent Monitoring</option>
+                <option [value]="'HDO'">Head of DOA</option>
+              </select>
+              <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+              </div>
+            </div>
+          </div> 
+        </div>
+        
+        <!-- fourth Row -->
+        <div class="flex flex-wrap -mx-3 mb-6">
+          <!-- Current probability -->
+          <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+              Current Probability
+            </label>
+            <input [(ngModel)]="follupData.current_probability" name="currentProbability" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 leading-tight" type="text" placeholder="Enter Your Data" required>
+          </div>
+          <!-- initial Severity -->
+          <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+              Current Severity
+            </label>
+            <input [(ngModel)]="follupData.current_severity" name="currentSeverity" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 leading-tight" type="text" placeholder="Enter Your Data" required>
+          </div>
+          <!-- initial Risk index -->
+          <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+              Current Risk index
+            </label>
+            <input [(ngModel)]="follupData.current_riskindex" name="currentRiskIndex" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 leading-tight" type="text" placeholder="Enter Your Data" required>
+          </div>
+        </div>
+        <!-- Submit Button -->
+        <div class="flex items-center justify-center">
+          <button type="submit" class="w-full md:w-1/6 text-white bg-[#016299] hover:bg-[#015581] focus:ring-4 focus:outline-none font-semibold rounded-lg text-base px-5 py-2.5 text-center">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>

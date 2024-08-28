@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Preview</title>
+    <link rel="stylesheet" href="Account.css">
+    <style>
+        html {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+
+        .pdf-container {
+            max-width: 210mm;
+            margin: 20px auto;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow: visible;
+            padding: 20px; /* Padding untuk memberikan ruang di sekitar kontennya */
+            border: 1px solid blue; /* Border untuk menandai batas PDF */
+        }
+
+        .pdf-content p {
+            margin: 10px 0;
+        }
+
+        .pdf-footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #3498db;
+        }
+
+        .pdf-footer button {
+            padding: 10px;
+            background-color: white;
+            color: #3498db;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+<script src="https://unpkg.com/html2pdf.js"></script>
+<script src="https://rawgit.com/eKoopmans/html2pdf/master/dist/html2pdf.bundle.js"></script>
+
+</head>
+
+<body>
+
+    <ul class="nav-links">
+        <img src="image/gmf9.png" alt="Login Image"
+            style="width: 95%; max-width: 300px; margin-bottom: 0px; margin-left: 0px;">
+        <li><a href="main_menu.html">Home</a></li>
+        <li class="center"><a href="Account.html">Account</a></li>
+        <li class="upward dropdown">
+            <a href="#">Audit</a>
+            <ul class="dropdown-content">
+                <li><a href="NCR_Form.html">NCR Form</a></li>
+                <li><a href="NCR_Searching.html">Searching NCR</a></li>
+                <li><a href="Follow_NCR.html">Follow On</a></li>
+            </ul>
+        </li>
+        <li class="upward dropdown">
+            <a href="#">Occurrence</a>
+            <ul class="dropdown-content">
+                <li><a href="IOR_Form.html">IOR Form</a></li>
+                <li><a href="Follow_Occur.html">Follow On</a></li>
+                <li><a href="#">Edit IOR</a></li>
+            </ul>
+        </li>
+        <li><a href="#">Personel</a></li>
+        <li><a href="#">Project</a></li>
+        <li class="upward dropdown">
+            <a href="#">Link</a>
+            <ul class="dropdown-content">
+                <li><a href="https://imsis-djpu.dephub.go.id/PortalDKPPU/" target="_blank">DGCA</a></li>
+                <li><a href="https://www.easa.europa.eu/en/regulations" target="_blank">EASA</a></li>
+            </ul>
+        </li>
+        <li class="forward"><a href="#">User Guide</a></li>
+        <li class="forward"><a href="index.html">Log Out</a></li>
+    </ul>
+
+    <div class="pdf-container">
+        <div class="pdf-content" id="previewContent">
+        </div>
+    </div>
+
+    <div class="pdf-footer">
+        <button onclick="generatePDF()">Generate PDF</button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/html2pdf.js"></script>
+    <script type="module">
+        async function loadPreviewData() {
+            try {
+                const urlParams = new URLSearchParams(window.location.search);
+                const ncrNo = urlParams.get('ncrNo') || sessionStorage.getItem('ncr_init_id');
+
+                console.log(ncrNo);
+                if (!ncrNo) {
+                    console.error('No ncr_init_id found.');
+                    return;
+                }
+
+                const url = 'http://localhost:3000/searchNCR';
+                const requestData = {
+                    ncr_init_id: ncrNo
+                };
+                // Menggunakan Axios untuk memanggil endpoint showNCRInit_ID
+                const response = await axios.post(url, requestData);
+
+                console.log(response);
+                if (response.data.status === 200) {
+                    const previewContent = document.getElementById('previewContent');
+                    const data = response.data.showProduct; // Perhatikan perubahan di sini
+
+                    if (data && data.length > 0) {
+                        // Menampilkan data dalam elemen HTML
+                        previewContent.innerHTML = `
+                            <p>NCR Init ID: ${data[0].ncr_init_id}</p>
+                            <p>Regulation Based: ${data[0].regulationbased}</p>
+                            <p>Subject: ${data[0].subject}</p>
+                            <p>Audit Plan No: ${data[0].audit_plan_no}</p>
+                            <p>NCR No: ${data[0].ncr_no}</p>
+                            <p>Issued Date: ${data[0].issued_date}</p>
+                            <p>Responsible Office: ${data[0].responsibility_office}</p>
+                            <p>Audir Type: ${data[0].audit_type}</p>
+                            <p>To UIC: ${data[0].to_uic}</p>
+                            <p>Require Condition Reference: ${data[0].require_condition_reference}</p>
+                            <p>Level Finding: ${data[0].level_finding}</p>
+                            <p>Problem Analis: ${data[0].problem_analysis}</p>
+                            <p>Answer Due Date: ${data[0].answer_due_date}</p>
+                            <p>Issued IAN: ${data[0].issue_ian}</p>
+                            <p>IAN No: ${data[0].ian_no}</p>
+                            <p>Encontered Condition: ${data[0].encountered_condition}</p>
+                            <p>Audit By: ${data[0].audit_by}</p>
+                            <p>Audit Date: ${data[0].audit_date}</p>
+                            <p>Acknowledge By: ${data[0].acknowledge_by}</p>
+                            <p>Acknowledge Date: ${data[0].acknowledge_date}</p>
+                            <p>Status: ${data[0].status}</p>
+                            <p>Temporary Link: ${data[0].temporarylink}</p>
+                        `;
+                    } else {
+                        console.error('No preview data found.');
+                    }
+                } else {
+                    console.error('Error Message:', response.data.message);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        // Memanggil fungsi untuk memuat data preview saat halaman dimuat
+        document.addEventListener("DOMContentLoaded", () => {
+            loadPreviewData();
+        });
+
+        // Fungsi untuk membuat PDF
+        window.generatePDF = async function () {
+            try {
+                // Menggunakan URLSearchParams untuk mendapatkan ncr_init_id dari URL
+                const urlParams = new URLSearchParams(window.location.search);
+                const ncrNo = urlParams.get('ncrNo') || sessionStorage.getItem('ncr_init_id');
+
+                console.log(ncrNo);
+                if (!ncrNo) {
+                    console.error('No ncr_init_id found.');
+                    return;
+                }
+
+                const url = 'http://localhost:3000/searchNCR';
+                const requestData = {
+                    ncr_init_id: ncrNo
+                };
+                // Menggunakan Axios untuk memanggil endpoint showNCRInit_ID
+                const response = await axios.post(url, requestData);
+
+                console.log(response);
+                if (response.data.status === 200) {
+                    const data = response.data.showProduct; // Perhatikan perubahan di sini
+
+                    if (data && data.length > 0) {
+                        // Menampilkan data dalam elemen HTML
+                        const previewContent = document.getElementById('previewContent');
+                        previewContent.innerHTML = `
+                            <p>NCR Init ID: ${data[0].ncr_init_id}</p>
+                            <p>Regulation Based: ${data[0].regulationbased}</p>
+                            <p>Subject: ${data[0].subject}</p>
+                            <p>Audit Plan No: ${data[0].audit_plan_no}</p>
+                            <p>NCR No: ${data[0].ncr_no}</p>
+                            <p>Issued Date: ${data[0].issued_date}</p>
+                            <p>Responsible Office: ${data[0].responsibility_office}</p>
+                            <p>Audir Type: ${data[0].audit_type}</p>
+                            <p>To UIC: ${data[0].to_uic}</p>
+                            <p>Require Condition Reference: ${data[0].require_condition_reference}</p>
+                            <p>Level Finding: ${data[0].level_finding}</p>
+                            <p>Problem Analis: ${data[0].problem_analysis}</p>
+                            <p>Answer Due Date: ${data[0].answer_due_date}</p>
+                            <p>Issued IAN: ${data[0].issue_ian}</p>
+                            <p>IAN No: ${data[0].ian_no}</p>
+                            <p>Encontered Condition: ${data[0].encountered_condition}</p>
+                            <p>Audit By: ${data[0].audit_by}</p>
+                            <p>Audit Date: ${data[0].audit_date}</p>
+                            <p>Acknowledge By: ${data[0].acknowledge_by}</p>
+                            <p>Acknowledge Date: ${data[0].acknowledge_date}</p>
+                            <p>Status: ${data[0].status}</p>
+                            <p>Temporary Link: ${data[0].temporarylink}</p>
+                        `;
+
+                        // Setelah menampilkan data, generate PDF
+                const contentToConvert = previewContent;
+
+                // Membuat opsi untuk html2pdf
+                const options = {
+                    margin: 20,
+                    filename: `NCR_Preview_${ncrNo}.pdf`,
+                    image: { type: 'jpeg', quality: 0.98 },
+                    html2canvas: { scale: 2 },
+                    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+                };
+
+                // Menggunakan html2pdf untuk mengonversi elemen HTML menjadi PDF
+                const pdf = await html2pdf().from(contentToConvert).set(options).outputPdf();
+
+                // Membuat blob dari hasil PDF
+                const blob = new Blob([pdf], { type: 'application/pdf' });
+
+                // Membuat URL objek untuk blob
+                const blobUrl = URL.createObjectURL(blob);
+
+                // Membuka URL objek dalam tab baru
+                window.open(blobUrl);
+                    } else {
+                        console.error('No preview data found.');
+                    }
+                } else {
+                    console.error('Error Message:', response.data.message);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+    </script>
+</body>
+
+</html>
