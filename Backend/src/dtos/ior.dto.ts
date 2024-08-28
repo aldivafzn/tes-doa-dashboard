@@ -1,87 +1,98 @@
 import {
+  category_occur,
+  follups_status,
+  level_type,
+  uic,
+} from '@prisma/client';
+import {
   IsString,
-  IsOptional,
   IsDate,
   IsNotEmpty,
   IsBoolean,
+  IsEnum,
 } from 'class-validator';
 
 export class CreateOccurrenceDto {
+  @IsNotEmpty()
   @IsString()
   readonly subject_ior: string;
 
-  @IsString()
-  readonly category_occur: string;
+  @IsNotEmpty()
+  @IsEnum(category_occur)
+  readonly category_occur: category_occur;
 
+  @IsNotEmpty()
   @IsString()
   readonly occur_nbr: string;
 
   @IsDate()
-  @IsOptional()
+  @IsNotEmpty()
   readonly occur_date?: Date;
 
   @IsString()
-  @IsOptional()
+  @IsNotEmpty()
   readonly reference_ior?: string;
 
   @IsString()
-  @IsOptional()
+  @IsNotEmpty()
   readonly type_or_pnbr?: string;
 
-  @IsString()
-  @IsOptional()
-  readonly to_uic?: string;
+  @IsEnum(uic)
+  @IsNotEmpty()
+  readonly to_uic?: uic;
+
+  @IsEnum(uic)
+  @IsNotEmpty()
+  readonly cc_uic?: uic;
+
+  @IsEnum(level_type)
+  @IsNotEmpty()
+  readonly level_type?: level_type;
 
   @IsString()
-  @IsOptional()
-  readonly cc_uic?: string;
-
-  @IsString()
-  @IsOptional()
-  readonly level_type?: string;
-
-  @IsString()
-  @IsOptional()
+  @IsNotEmpty()
   readonly detail_occurance?: string;
 
   @IsString()
+  @IsNotEmpty()
   readonly ReportedBy: string;
 
-  @IsString()
-  @IsOptional()
-  readonly reporter_uic?: string;
+  @IsEnum(uic)
+  @IsNotEmpty()
+  readonly reporter_uic?: uic;
 
   @IsDate()
-  @IsOptional()
+  @IsNotEmpty()
   readonly report_date?: Date;
 
   @IsString()
-  @IsOptional()
+  @IsNotEmpty()
   readonly reporter_identity?: string;
 
   @IsString()
-  @IsOptional()
+  @IsNotEmpty()
   readonly Data_reference?: string;
 
   @IsString()
-  @IsOptional()
+  @IsNotEmpty()
   readonly hirac_process?: string;
 
   @IsString()
-  @IsOptional()
+  @IsNotEmpty()
   readonly initial_probability?: string;
 
   @IsString()
-  @IsOptional()
+  @IsNotEmpty()
   readonly initial_severity?: string;
 
   @IsString()
-  @IsOptional()
+  @IsNotEmpty()
   readonly initial_riskindex?: string;
 }
 
 export class ShowOccurrenceDto {
   @IsString()
+  @IsNotEmpty()
   readonly id_IOR: string;
 }
 
@@ -92,158 +103,86 @@ export class ShowAllOccurrencesDto {
 // DTO for searching IORs
 export class SearchIORDto {
   @IsString()
+  @IsNotEmpty()
   readonly input: string;
 }
 
 // DTO for updating an occurrence
-export class UpdateOccurrenceDto {
+export class UpdateOccurrenceDto extends CreateOccurrenceDto {
   @IsString()
-  readonly id_ior: string;
-
-  @IsString()
-  @IsOptional()
-  readonly subject_ior?: string;
-
-  @IsString()
-  @IsOptional()
-  readonly occur_nbr?: string;
-
-  @IsDate()
-  @IsOptional()
-  readonly occur_date?: Date;
-
-  @IsString()
-  @IsOptional()
-  readonly reference_ior?: string;
-
-  @IsString()
-  @IsOptional()
-  readonly to_uic?: string;
-
-  @IsString()
-  @IsOptional()
-  readonly cc_uic?: string;
-
-  @IsString()
-  @IsOptional()
-  readonly category_occur?: string;
-
-  @IsString()
-  @IsOptional()
-  readonly type_or_pnbr?: string;
-
-  @IsString()
-  @IsOptional()
-  readonly level_type?: string;
-
-  @IsString()
-  @IsOptional()
-  readonly detail_occurance?: string;
-
-  @IsString()
-  @IsOptional()
-  readonly ReportedBy?: string;
-
-  @IsString()
-  @IsOptional()
-  readonly reporter_uic?: string;
-
-  @IsDate()
-  @IsOptional()
-  readonly report_date?: Date;
-
-  @IsString()
-  @IsOptional()
-  readonly reporter_identity?: string;
-
-  @IsString()
-  @IsOptional()
-  readonly Data_reference?: string;
-
-  @IsString()
-  @IsOptional()
-  readonly hirac_process?: string;
-
-  @IsString()
-  @IsOptional()
-  readonly initial_probability?: string;
-
-  @IsString()
-  @IsOptional()
-  readonly initial_severity?: string;
-
-  @IsString()
-  @IsOptional()
-  readonly initial_riskindex?: string;
+  @IsNotEmpty()
+  id_ior: string;
 }
 
 // DTO for deleting an occurrence
 export class DeleteOccurrenceDto {
   @IsString()
+  @IsNotEmpty()
   readonly id_ior: string;
 }
 
-export class AddCategoryIORDto {
-  @IsNotEmpty()
-  @IsString()
-  readonly id_IOR: string;
+// export class AddCategoryIORDto {
+//   @IsNotEmpty()
+//   @IsString()
+//   readonly id_IOR: string;
 
-  @IsOptional()
-  @IsString()
-  readonly number_cat?: string;
+//   @IsOptional()
+//   @IsString()
+//   readonly number_cat?: string;
 
-  @IsOptional()
-  @IsString()
-  readonly occur_nbr?: string;
-}
+//   @IsOptional()
+//   @IsString()
+//   readonly occur_nbr?: string;
+// }
 
 export class AddFollowUpOccurrenceDto {
   @IsNotEmpty()
   @IsString()
   readonly id_IOR: string;
 
-  @IsOptional()
+  @IsNotEmpty()
   @IsString()
   readonly follup_detail?: string;
 
-  @IsOptional()
+  @IsNotEmpty()
   @IsString()
   readonly follupby?: string;
 
-  @IsOptional()
-  @IsString()
-  readonly follup_uic?: string;
+  @IsNotEmpty()
+  @IsEnum(uic)
+  readonly follup_uic?: uic;
 
-  @IsOptional()
+  @IsNotEmpty()
   @IsDate()
   readonly follup_date?: Date;
 
-  @IsOptional()
+  @IsNotEmpty()
   @IsBoolean()
   readonly follup_datarefer?: boolean;
 
-  @IsOptional()
-  @IsString()
-  readonly follup_status?: string;
+  @IsNotEmpty()
+  @IsEnum(follups_status)
+  readonly follup_status?: follups_status;
 
-  @IsOptional()
-  @IsString()
-  readonly nextuic_follup?: string;
+  @IsNotEmpty()
+  @IsEnum(uic)
+  readonly nextuic_follup?: uic;
 
-  @IsOptional()
+  @IsNotEmpty()
   @IsString()
   readonly current_probability?: string;
 
-  @IsOptional()
+  @IsNotEmpty()
   @IsString()
   readonly current_severity?: string;
 
-  @IsOptional()
+  @IsNotEmpty()
   @IsString()
   readonly current_riskindex?: string;
 }
 
 export class ShowFollowUpOccurrenceDto {
+  @IsNotEmpty()
   @IsString()
   readonly id_follup: string;
 }

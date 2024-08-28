@@ -25,7 +25,7 @@ export class NcrController {
   @UseGuards(JwtAuthGuard)
   @Post('add')
   async addNcr(@Body() createNcrDto: CreateNCRDto, @Request() req) {
-    const accountid = req.user.userId; // Ensure this matches `JwtStrategy`
+    const accountid = req.user.userId;
     return this.ncrService.addNcr(createNcrDto, accountid);
   }
 

@@ -14,7 +14,6 @@ import {
   SearchIORDto,
   DeleteOccurrenceDto,
   UpdateOccurrenceDto,
-  AddCategoryIORDto,
   AddFollowUpOccurrenceDto,
   UpdateFollowUpOccurrenceDto,
   ShowFollowUpOccurrenceDto,
@@ -113,17 +112,6 @@ export class IorController {
   async deleteOccurrence(@Body() deleteOccurrenceDto: DeleteOccurrenceDto) {
     const result = await this.iorService.deleteOccurrence(deleteOccurrenceDto);
     return result;
-  }
-
-  @UseGuards(JwtAuthGuard)
-  @Post('category/add')
-  async addCategoryIOR(@Body() dto: AddCategoryIORDto) {
-    const result = await this.iorService.addCategoryIOR(dto);
-    return {
-      status: 200,
-      message: 'Category IOR Created',
-      result,
-    };
   }
 
   @UseGuards(JwtAuthGuard)

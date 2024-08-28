@@ -16,9 +16,9 @@ model account {
   email            String?            @unique @db.VarChar(255)
   ior              String?            @db.VarChar(255)
   ncr              String?            @db.VarChar(255)
-  ncr_followresult ncr_followresult[]
+  ncr_followresult ncr_followresult[] @ignore
   ncr_initial      ncr_initial[]
-  ncr_reply        ncr_reply[]
+  ncr_reply        ncr_reply[]        @ignore
 }
 
 model assignpic {
@@ -102,9 +102,9 @@ model ncr_initial {
   acknowledge_date            DateTime           @db.Date
   status                      enum_stat
   temporarylink               String?
-  ncr_followresult            ncr_followresult[]
+  ncr_followresult            ncr_followresult[] @ignore
   account                     account?           @relation(fields: [accountid], references: [accountid], onDelete: NoAction, onUpdate: NoAction)
-  ncr_reply                   ncr_reply[]
+  ncr_reply                   ncr_reply[]        @ignore
 }
 
 /// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
@@ -144,14 +144,6 @@ model requireddocuments {
   tbl_do_project      tbl_do_project? @relation(fields: [do_project_id], references: [do_project_id], onDelete: NoAction, onUpdate: NoAction)
 }
 
-model tbl_category_ior {
-  id_ior          String?         @db.Uuid
-  id_ior_category String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  number_cat      String?         @db.VarChar(2)
-  occur_nbr       String?         @db.VarChar(60)
-  tbl_occurrence  tbl_occurrence? @relation(fields: [id_ior], references: [id_ior], onDelete: NoAction, onUpdate: NoAction)
-}
-
 /// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
 model tbl_do_project {
   do_project_id              String              @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
@@ -180,11 +172,11 @@ model tbl_follupoccur {
   id_ior              String?         @db.Uuid
   follup_detail       String?
   follupby            String?         @db.VarChar(75)
-  follup_uic          String?         @db.VarChar(4)
+  follup_uic          uic?
   follup_date         DateTime?       @db.Date
   follup_datarefer    Boolean?
-  follup_status       String?         @db.VarChar(8)
-  nextuic_follup      String?         @db.VarChar(4)
+  follup_status       follups_status?
+  nextuic_follup      uic?
   current_probability String?         @db.VarChar(1)
   current_severity    String?         @db.VarChar(1)
   current_riskindex   String?         @db.VarChar(40)
@@ -192,27 +184,26 @@ model tbl_follupoccur {
 }
 
 model tbl_occurrence {
-  id_ior              String             @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id_ior              String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   subject_ior         String?
-  occur_nbr           String?            @db.VarChar(15)
-  occur_date          DateTime?          @db.Date
-  reference_ior       String?            @db.VarChar(80)
-  to_uic              String?            @db.VarChar(4)
-  cc_uic              String?            @db.VarChar(4)
-  category_occur      String?            @db.VarChar(1)
-  type_or_pnbr        String?            @db.VarChar(15)
-  level_type          String?            @db.VarChar(10)
+  occur_nbr           String?           @db.VarChar(15)
+  occur_date          DateTime?         @db.Date
+  reference_ior       String?           @db.VarChar(80)
+  to_uic              uic?
+  cc_uic              uic?
+  category_occur      category_occur?
+  type_or_pnbr        String?           @db.VarChar(15)
+  level_type          level_type?
   detail_occurance    String?
-  reportedby          String?            @db.VarChar(75)
-  reporter_uic        String?            @db.VarChar(4)
-  report_date         DateTime?          @db.Date
-  reporter_identity   String?            @db.VarChar(8)
-  data_reference      String?            @db.VarChar(8)
-  hirac_process       String?            @db.VarChar(8)
-  initial_probability String?            @db.VarChar(1)
-  initial_severity    String?            @db.VarChar(1)
-  initial_riskindex   String?            @db.VarChar(40)
-  tbl_category_ior    tbl_category_ior[]
+  reportedby          String?           @db.VarChar(75)
+  reporter_uic        uic?
+  report_date         DateTime?         @db.Date
+  reporter_identity   String?           @db.VarChar(8)
+  data_reference      String?           @db.VarChar(8)
+  hirac_process       String?           @db.VarChar(8)
+  initial_probability String?           @db.VarChar(1)
+  initial_severity    String?           @db.VarChar(1)
+  initial_riskindex   String?           @db.VarChar(40)
   tbl_follupoccur     tbl_follupoccur[]
 }
 
@@ -329,4 +320,29 @@ enum work_station {
   GF__GMF_AeroAsia           @map("GF: GMF AeroAsia")
   BA__BIFA_Flying_School     @map("BA: BIFA Flying School")
   EL__Elang_Lintas_Indonesia @map("EL: Elang Lintas Indonesia")
+}
+
+enum category_occur {
+  DOA_Management           @map("DOA Management")
+  Procedure
+  Document
+  Personnel
+  Facility
+  Partner_of_Subcontractor @map("Partner of Subcontractor")
+  Material
+  Information_Technology   @map("Information Technology")
+  Training
+  Others
+}
+
+enum follups_status {
+  Open
+  Close
+}
+
+enum level_type {
+  Aircraft
+  Engine
+  APU
+  Others
 }
