@@ -228,3 +228,77 @@ export class ShowNcrReplyDto {
   @IsString()
   ncr_init_id: string;
 }
+
+export class CreateNcrResultDto {
+  @IsNotEmpty()
+  @IsString()
+  accountid: string;
+
+  @IsNotEmpty()
+  @IsString()
+  ncr_init_id: string;
+
+  @IsOptional()
+  @IsString()
+  close_corrective?: string;
+
+  @IsOptional()
+  @IsString()
+  proposed_close_audit?: string;
+
+  @IsOptional()
+  @IsDate()
+  proposed_close_date?: string;
+
+  @IsOptional()
+  @IsString()
+  is_close?: string;
+
+  @IsOptional()
+  @IsString()
+  effective?: string;
+
+  @IsOptional()
+  @IsString()
+  refer_verif?: string;
+
+  @IsOptional()
+  @IsString()
+  sheet_no?: string;
+
+  @IsOptional()
+  @IsString()
+  new_ncr_issue_no?: string;
+
+  @IsOptional()
+  @IsString()
+  close_approvedby?: string;
+
+  @IsOptional()
+  @IsDate()
+  close_approveddate?: string;
+
+  @IsOptional()
+  @IsString()
+  verif_chied?: string;
+
+  @IsOptional()
+  @IsDate()
+  verif_date?: string;
+
+  @IsOptional()
+  @IsString()
+  temporarylink?: string;
+}
+
+export class UpdateNcrResultDto extends CreateNcrResultDto {
+  @IsNotEmpty()
+  @IsString()
+  ncr_init_id: string;
+}
+
+export class ShowNcrResultDto {
+  @IsNotEmpty()
+  @IsString()
+  ncr_init_id: string;
+}
