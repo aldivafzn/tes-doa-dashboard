@@ -6,63 +6,45 @@ import {
   SearchIORDto,
   UpdateOccurrenceDto,
   DeleteOccurrenceDto,
-  AddCategoryIORDto,
   AddFollowUpOccurrenceDto,
   UpdateFollowUpOccurrenceDto,
 } from '../dtos/ior.dto';
+import { uic } from '@prisma/client';
 
 @Injectable()
 export class IorService {
   constructor(private readonly prisma: PrismaService) {}
 
   async createOccurrence(dto: CreateOccurrenceDto) {
-    const {
-      subject_ior,
-      category_occur,
-      occur_nbr,
-      occur_date,
-      reference_ior,
-      type_or_pnbr,
-      to_uic,
-      cc_uic,
-      level_type,
-      detail_occurance,
-      ReportedBy,
-      reporter_uic,
-      report_date,
-      reporter_identity,
-      Data_reference,
-      hirac_process,
-      initial_probability,
-      initial_severity,
-      initial_riskindex,
-    } = dto;
-
-    // Handle Google Docs operations (copy, move, replace text) here
-
-    return this.prisma.tbl_occurrence.create({
-      data: {
-        subject_ior,
-        occur_nbr,
-        occur_date,
-        reference_ior,
-        to_uic,
-        cc_uic,
-        category_occur,
-        type_or_pnbr,
-        level_type,
-        detail_occurance,
-        reportedby: ReportedBy,
-        reporter_uic,
-        report_date,
-        reporter_identity,
-        data_reference: Data_reference,
-        hirac_process,
-        initial_probability,
-        initial_severity,
-        initial_riskindex,
-      },
-    });
+    try {
+      const createdOccurrence = await this.prisma.tbl_occurrence.create({
+        data: {
+          subject_ior: dto.subject_ior,
+          occur_nbr: dto.occur_nbr,
+          occur_date: dto.occur_date,
+          reference_ior: dto.reference_ior,
+          to_uic: dto.to_uic,
+          cc_uic: dto.cc_uic,
+          category_occur: dto.category_occur,
+          type_or_pnbr: dto.type_or_pnbr,
+          level_type: dto.level_type,
+          detail_occurance: dto.detail_occurance,
+          reportedby: dto.ReportedBy,
+          reporter_uic: dto.reporter_uic,
+          report_date: dto.report_date,
+          reporter_identity: dto.reporter_identity,
+          data_reference: dto.Data_reference,
+          hirac_process: dto.hirac_process,
+          initial_probability: dto.initial_probability,
+          initial_severity: dto.initial_severity,
+          initial_riskindex: dto.initial_riskindex,
+        },
+      });
+      return createdOccurrence;
+    } catch (error) {
+      console.error('Error creating occurrence:', error);
+      throw new Error('Error Creating Occurrence');
+    }
   }
 
   async getOccurrence(dto: ShowOccurrenceDto) {
@@ -90,19 +72,28 @@ export class IorService {
   async searchIOR(dto: SearchIORDto) {
     const { input } = dto;
     const numberRegex = /^\d+$/;
-
     let occurrences;
+
     if (numberRegex.test(input)) {
       occurrences = await this.prisma.tbl_occurrence.findMany({
         where: { id_ior: input },
       });
     } else {
+      // Attempt to map input to a uic enum value
+      const toUicValue = Object.keys(uic).find((key) =>
+        uic[key].replace(/_/g, ' ').toLowerCase().includes(input.toLowerCase()),
+      );
+
+      const ccUicValue = Object.keys(uic).find((key) =>
+        uic[key].replace(/_/g, ' ').toLowerCase().includes(input.toLowerCase()),
+      );
+
       occurrences = await this.prisma.tbl_occurrence.findMany({
         where: {
           OR: [
             { subject_ior: { contains: input, mode: 'insensitive' } },
-            { to_uic: { contains: input, mode: 'insensitive' } },
-            { cc_uic: { contains: input, mode: 'insensitive' } },
+            ...(toUicValue ? [{ to_uic: toUicValue as uic }] : []),
+            ...(ccUicValue ? [{ cc_uic: ccUicValue as uic }] : []),
           ],
         },
       });
@@ -181,17 +172,6 @@ export class IorService {
     return deletedOccurrence
       ? { status: 200, message: 'Occurrence deleted' }
       : { status: 404, message: 'Occurrence not found' };
-  }
-
-  async addCategoryIOR(dto: AddCategoryIORDto) {
-    const { id_IOR, number_cat, occur_nbr } = dto;
-    return await this.prisma.tbl_category_ior.create({
-      data: {
-        id_ior: id_IOR,
-        number_cat,
-        occur_nbr,
-      },
-    });
   }
 
   async addFollowUpOccurrence(dto: AddFollowUpOccurrenceDto) {

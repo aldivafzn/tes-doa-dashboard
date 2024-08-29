@@ -19,7 +19,7 @@ export class NcrService {
   ) {
     const ncr = await this.prisma.ncr_initial.create({
       data: {
-        accountid, // Use the accountid directly
+        accountid,
         regulationbased: createNcrDto.regulationbased,
         subject: createNcrDto.subject,
         audit_plan_no: createNcrDto.audit_plan_no,
