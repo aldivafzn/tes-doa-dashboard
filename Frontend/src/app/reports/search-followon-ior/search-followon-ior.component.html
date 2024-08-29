@@ -2,7 +2,7 @@
 <div class="min-h-screen mt-20 md:mt-10 flex items-center justify-center">
   <div class="mx-auto w-11/12 my-8 bg-white shadow-md rounded-lg overflow-hidden">
     <div class="p-6">
-      <h2 class="text-2xl font-semibold text-gray-900 text-center justify-center mb-3 uppercase py-3">Search Internal Occurrence Report</h2>
+      <h2 class="text-2xl font-semibold text-gray-900 text-center justify-center mb-3 uppercase py-3">Search Follow On Internal Occurrence Report</h2>
       <form class="w-full mx-auto" (ngSubmit)="search()">
         <div class="relative flex items-center">
           <!-- Button with filter icon -->
@@ -159,10 +159,8 @@
         </div>
       </form>
       
-      <div class="w-full md:w-1/6 px-1 mb-2">
-        <button (click)="navigateAdd()" class="inline-block bg-[#016299] rounded border-2 border-primary px-4 pb-[6px] pt-2 text-s font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white">
-          <i class="fas fa-plus-square-o" style="font-size: 12px;"></i> Add
-        </button>
+      <div class="w-full md:w-1/4 px-1 mb-2 relative flex">
+        <button (click)="navigateAdd()" class="inline-block bg-[#016299] rounded border-2 border-primary px-4 pb-[6px] pt-2 text-s font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white">Add Follow On</button>
       </div>
 
       <div class="show-table mt-5 border border-gray-500">

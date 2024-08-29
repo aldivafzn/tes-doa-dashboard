@@ -16,11 +16,6 @@ interface JwtPayload {
   exp: number
 }
 
-enum reg_based {
-  DGCA = "DGCA",
-  EASA = "EASA"
-}
-
 enum responoffice {
   AO__Airworthiness_Office = "AO: Airworthiness Office",
   DO__Design_Office = "DO: Design Office",
@@ -31,19 +26,6 @@ enum responoffice {
   GF__GMF_AeroAsia = "GF: GMF AeroAsia",
   BA__BIFA_Flying_School = "BA: BIFA Flying School",
   EL__Elang_Lintas_Indonesia = "EL: Elang Lintas Indonesiaa"
-}
-
-enum audittype {
-  Procedure = "Procedure",
-  Product = "Product",
-  Surveillance = "Surveillance"
-}
-
-enum auditscope {
-  Authority = "Authority",
-  Internal = "Internal",
-  External = "External",
-  Subcontractor = "Subcontractor"
 }
 
 enum uic {
@@ -62,12 +44,6 @@ enum level {
 enum probanalis {
   Required = "Required",
   Not_Required = "Not Required"
-}
-
-enum enum_stat {
-  Open = "Open",
-  Monitor = "Monitor",
-  Closed = "Closed"
 }
 
 interface NCRInitial {
@@ -153,14 +129,10 @@ export class SearchNCRComponent implements OnInit {
       if (response.data.status === 200) {
         this.items = response.data.ncrs;
         for (let i = 0; this.items.length; i++) {
-          this.items[i].regulationbased = this.convertEnumValue(reg_based, this.items[i].regulationbased);
           this.items[i].responsibility_office = this.convertEnumValue(responoffice, this.items[i].responsibility_office);
-          this.items[i].audit_type = this.convertEnumValue(audittype, this.items[i].audit_type);
-          this.items[i].audit_scope = this.convertEnumValue(auditscope, this.items[i].audit_scope);
           this.items[i].to_uic = this.convertEnumValue(uic, this.items[i].to_uic);
           this.items[i].level_finding = this.convertEnumValue(level, this.items[i].level_finding);
           this.items[i].problem_analysis = this.convertEnumValue(probanalis, this.items[i].problem_analysis);
-          this.items[i].status = this.convertEnumValue(enum_stat, this.items[i].status)
           this.items[i].issued_date = this.items[i].issued_date.slice(0, 10);
           this.items[i].answer_due_date = this.items[i].answer_due_date.slice(0, 10);
           this.items[i].audit_date = this.items[i].audit_date.slice(0, 10);
@@ -184,14 +156,10 @@ export class SearchNCRComponent implements OnInit {
       if (response.data.status === 200) {
         this.items = response.data.showProduct;
         for (let i = 0; this.items.length; i++) {
-          this.items[i].regulationbased = this.convertEnumValue(reg_based, this.items[i].regulationbased);
           this.items[i].responsibility_office = this.convertEnumValue(responoffice, this.items[i].responsibility_office);
-          this.items[i].audit_type = this.convertEnumValue(audittype, this.items[i].audit_type);
-          this.items[i].audit_scope = this.convertEnumValue(auditscope, this.items[i].audit_scope);
           this.items[i].to_uic = this.convertEnumValue(uic, this.items[i].to_uic);
           this.items[i].level_finding = this.convertEnumValue(level, this.items[i].level_finding);
           this.items[i].problem_analysis = this.convertEnumValue(probanalis, this.items[i].problem_analysis);
-          this.items[i].status = this.convertEnumValue(enum_stat, this.items[i].status)
           this.items[i].issued_date = this.items[i].issued_date.slice(0, 10);
           this.items[i].answer_due_date = this.items[i].answer_due_date.slice(0, 10);
           this.items[i].audit_date = this.items[i].audit_date.slice(0, 10);

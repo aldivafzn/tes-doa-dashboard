@@ -100,6 +100,8 @@ export class EditIORComponent implements OnInit{
         { id_IOR: this.currentIorID }
       );
       this.iorData = response.data.result;
+      this.iorData.ReportedBy = response.data.result.reportedby;
+      this.iorData.Data_reference = response.data.result.data_reference;
       this.iorData.occur_date = this.iorData.occur_date.toString().slice(0, 10);
       this.iorData.report_date = this.iorData.report_date.toString().slice(0, 10);
     } catch (error) {

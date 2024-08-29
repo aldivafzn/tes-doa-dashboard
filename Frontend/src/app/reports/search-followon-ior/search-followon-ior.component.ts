@@ -8,6 +8,13 @@ import axios from 'axios';
 import * as XLSX from 'xlsx';
 import { FormsModule } from '@angular/forms'; // Ensure FormsModule is imported
 
+enum uic {
+  Chief_Design_Office = "Chief Design Office",
+  Chief_Airworthiness_Office = "Chief Airworthiness Office",
+  Chief_Independent_Monitoring = "Chief Independent Monitoring",
+  Head_of_DOA = "Head of DOA"
+}
+
 interface FollowonIOR {
   id_follup: string,
   id_ior: string,
@@ -15,7 +22,7 @@ interface FollowonIOR {
   follupby: string,
   follup_uic: string,
   follup_date: string,
-  follup_datarefer: string,
+  follup_datarefer: boolean | string,
   follup_status: string,
   nextuic_follup: string,
   current_probability: string,
@@ -99,8 +106,12 @@ export class SearchFollowonIORComponent implements OnInit {
             this.items.push(response.data.result[i]);
           }
         }
+        // this.items = response.data.result;
         for (let i = 0; i < this.items.length; i++) {
+          this.items[i].follup_uic = this.convertEnumValue(uic, this.items[i].follup_uic);
+          this.items[i].nextuic_follup = this.convertEnumValue(uic, this.items[i].nextuic_follup);
           this.items[i].follup_date = this.items[i].follup_date.slice(0, 10);
+          this.items[i].follup_datarefer = this.items[i].follup_datarefer ? "Yes" : "No";
         }
       } else {
         console.error('Error Message:', response.data.message);
@@ -164,5 +175,10 @@ export class SearchFollowonIORComponent implements OnInit {
   navigateEdit(id_follup: string) {
     localStorage.setItem('id_follup_ior', id_follup);
     window.location.href = '/editFollowonIOR';
+  }
+
+  convertEnumValue(enumObj: any, value: string): string {
+    // Convert the value if it's a key in the enum object
+    return enumObj[value] || value;
   }
 }
