@@ -15,6 +15,9 @@ import {
   DeleteNCRDto,
   SearchNCRDto,
   ShowNCRDto,
+  CreateNcrReplyDto,
+  ShowNcrReplyDto,
+  UpdateNcrReplyDto,
 } from '../dtos/ncr.dto';
 import { JwtAuthGuard } from '../auth/jwt.guard';
 
@@ -58,5 +61,25 @@ export class NcrController {
   @Post('show')
   async showNcrById(@Body() showNcrDto: ShowNCRDto) {
     return this.ncrService.showNcrById(showNcrDto);
+  }
+
+  @Post('reply/add')
+  async addNcrReply(@Body() createNcrReplyDto: CreateNcrReplyDto) {
+    return this.ncrService.addNcrReply(createNcrReplyDto);
+  }
+
+  @Delete('reply/delete')
+  async deleteNcrReply(@Body('ncr_init_id') ncr_init_id: string) {
+    return this.ncrService.deleteNcrReply(ncr_init_id);
+  }
+
+  @Put('reply/update')
+  async updateNcrReply(@Body() updateNcrReplyDto: UpdateNcrReplyDto) {
+    return this.ncrService.updateNcrReply(updateNcrReplyDto);
+  }
+
+  @Get('reply/show')
+  async showNcrReply(@Body() showNcrReplyDto: ShowNcrReplyDto) {
+    return this.ncrService.showNcrReply(showNcrReplyDto.ncr_init_id);
   }
 }

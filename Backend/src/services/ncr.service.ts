@@ -6,6 +6,8 @@ import {
   DeleteNCRDto,
   ShowNCRDto,
   SearchNCRDto,
+  UpdateNcrReplyDto,
+  CreateNcrReplyDto,
 } from '../dtos/ncr.dto';
 import { uic } from '@prisma/client';
 
@@ -160,6 +162,86 @@ export class NcrService {
         status: 200,
         message: 'No Data NCR Initial by ID',
         showProduct: [],
+      };
+    }
+  }
+
+  async addNcrReply(data: CreateNcrReplyDto) {
+    const result = await this.prisma.ncr_reply.create({
+      data: {
+        accountid: data.accountid,
+        ncr_init_id: data.ncr_init_id,
+        rca_problem: data.rca_problem,
+        corrective_act: data.corrective_act,
+        preventive_act: data.preventive_act,
+        identified_by: data.identified_by,
+        identified_date: data.identified_date,
+        accept_by: data.accept_by,
+        audit_accept: data.audit_accept,
+        temporarylink: data.temporarylink,
+        recommend_corrective_action: data.recommend_corrective_action,
+      },
+    });
+
+    return {
+      status: 200,
+      message: 'NCR Reply Created',
+      result,
+    };
+  }
+
+  async deleteNcrReply(ncr_init_id: string) {
+    const result = await this.prisma.ncr_reply.delete({
+      where: { ncr_init_id },
+    });
+
+    if (result) {
+      return {
+        message: 'NCR Reply deleted',
+      };
+    } else {
+      return {
+        message: 'NCR Reply not found',
+      };
+    }
+  }
+
+  async updateNcrReply(data: UpdateNcrReplyDto) {
+    const result = await this.prisma.ncr_reply.update({
+      where: { ncr_init_id: data.ncr_init_id },
+      data: {
+        accountid: data.accountid,
+        rca_problem: data.rca_problem,
+        corrective_act: data.corrective_act,
+        preventive_act: data.preventive_act,
+        identified_by: data.identified_by,
+        identified_date: data.identified_date,
+        accept_by: data.accept_by,
+        audit_accept: data.audit_accept,
+        temporarylink: data.temporarylink,
+      },
+    });
+
+    return {
+      status: 200,
+      message: 'Update NCR Reply successful',
+      result,
+    };
+  }
+
+  async showNcrReply(ncr_init_id: string) {
+    const result = await this.prisma.ncr_reply.findUnique({
+      where: { ncr_init_id },
+    });
+
+    if (result) {
+      return {
+        message: 'Showing NCR Reply',
+        showProduct: result,
+      };
+    } else {
+      return {
+        message: 'No NCR Reply',
       };
     }
   }

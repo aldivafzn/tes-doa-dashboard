@@ -15,8 +15,11 @@ import {
   uic,
   level,
   probanalis,
-} from '@prisma/client'; // Adjust import based on your setup
+} from '@prisma/client';
 
+/* 
+    NCR REPLY DTO 
+*/
 export class CreateNCRDto {
   @IsString()
   @IsNotEmpty()
@@ -136,5 +139,92 @@ export class SearchNCRDto {
 export class ShowNCRDto {
   @IsString()
   @IsNotEmpty()
+  ncr_init_id: string;
+}
+
+/* 
+    NCR REPLY DTO 
+*/
+export class CreateNcrReplyDto {
+  @IsString()
+  accountid: string;
+
+  @IsString()
+  ncr_init_id: string;
+
+  @IsString()
+  @IsNotEmpty()
+  rca_problem: string;
+
+  @IsString()
+  @IsNotEmpty()
+  corrective_act: string;
+
+  @IsString()
+  @IsNotEmpty()
+  preventive_act: string;
+
+  @IsString()
+  @IsNotEmpty()
+  identified_by: string;
+
+  @IsDate()
+  @IsNotEmpty()
+  identified_date: Date;
+
+  @IsString()
+  @IsNotEmpty()
+  accept_by?: string;
+
+  @IsDate()
+  @IsNotEmpty()
+  audit_accept?: Date;
+
+  @IsString()
+  @IsOptional()
+  temporarylink?: string;
+
+  @IsString()
+  @IsOptional()
+  recommend_corrective_action?: string;
+}
+
+export class UpdateNcrReplyDto {
+  @IsString()
+  accountid: string;
+
+  @IsString()
+  ncr_init_id: string;
+
+  @IsString()
+  rca_problem: string;
+
+  @IsString()
+  corrective_act: string;
+
+  @IsString()
+  preventive_act: string;
+
+  @IsString()
+  identified_by: string;
+
+  @IsDate()
+  identified_date: Date;
+
+  @IsString()
+  @IsOptional()
+  accept_by?: string;
+
+  @IsDate()
+  @IsOptional()
+  audit_accept?: Date;
+
+  @IsString()
+  @IsOptional()
+  temporarylink?: string;
+}
+
+export class ShowNcrReplyDto {
+  @IsString()
   ncr_init_id: string;
 }

@@ -1,12 +1,23 @@
-import { IsEmail, IsEnum, IsNumber, IsString, Matches } from 'class-validator';
+import {
+  IsEmail,
+  IsEnum,
+  IsNotEmpty,
+  IsNumber,
+  IsString,
+  Matches,
+} from 'class-validator';
 import { user_role, office_code } from '@prisma/client';
 
-// DTO for login
+/* 
+    ACCOUNT DTO 
+*/
 export class LoginDto {
   @IsEmail()
+  @IsNotEmpty()
   email: string;
 
   @IsString()
+  @IsNotEmpty()
   password: string;
 }
 
@@ -16,12 +27,15 @@ export class AddAccountDto {
   accountid: string;
 
   @IsString()
+  @IsNotEmpty()
   name: string;
 
   @IsEnum(office_code)
+  @IsNotEmpty()
   unit: office_code;
 
   @IsString()
+  @IsNotEmpty()
   @Matches(
     /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/,
     {
@@ -32,8 +46,10 @@ export class AddAccountDto {
   password: string;
 
   @IsEnum(user_role)
+  @IsNotEmpty()
   role: user_role;
 
+  @IsNotEmpty()
   @IsEmail({}, { message: 'Email must be a valid GMF AeroAsia email address' })
   @Matches(/^[a-zA-Z0-9._%+-]+@gmf-aeroasia\.co\.id$/, {
     message: 'Email must be a valid GMF AeroAsia email address',
@@ -43,12 +59,15 @@ export class AddAccountDto {
 
 // DTO for updating a password
 export class UpdatePasswordDto {
+  @IsNotEmpty()
   @IsEmail()
   email: string;
 
+  @IsNotEmpty()
   @IsString()
   currentPass: string;
 
+  @IsNotEmpty()
   @IsString()
   @Matches(
     /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/,
@@ -68,9 +87,11 @@ export class ShowAccountDto {
 
 // DTO for deleting an account
 export class DeleteAccountDto {
+  @IsNotEmpty()
   @IsEmail()
   email: string;
 
+  @IsNotEmpty()
   @IsString()
   password: string;
 }
