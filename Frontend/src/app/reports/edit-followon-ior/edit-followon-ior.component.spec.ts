@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EditFollowupIORComponent } from './edit-followup-ior.component';
+import { EditFollowupIORComponent } from './edit-followon-ior.component';
 
 describe('EditFollowupIORComponent', () => {
   let component: EditFollowupIORComponent;

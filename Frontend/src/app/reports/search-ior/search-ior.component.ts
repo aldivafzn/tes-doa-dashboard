@@ -173,4 +173,9 @@ export class SearchIORComponent implements OnInit {
     localStorage.setItem('id_ior', id_ior);
     window.location.href = '/editIOR';
   }
+
+  navigateFollowon(id_ior: string) {
+    localStorage.setItem('id_ior', id_ior);
+    window.location.href = '/searchFollowonIOR';
+  }
 }

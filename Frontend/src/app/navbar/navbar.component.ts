@@ -35,7 +35,9 @@ export class NavbarComponent implements OnInit {
       this.role = role;
       console.log('Retrieved accountid:', this.accountId);
       console.log('Retrieved role:', this.role);
-      if (window.location.href != 'http://localhost:4200/editIOR') {
+      if (window.location.href != 'http://localhost:4200/editIOR' && 
+          window.location.href != 'http://localhost:4200/searchFollowonIOR' &&
+          window.location.href != 'http://localhost:4200/addFollowonIOR') {
         localStorage.removeItem('id_ior');
       }
       if (window.location.href != 'http://localhost:4200/editNCR') {

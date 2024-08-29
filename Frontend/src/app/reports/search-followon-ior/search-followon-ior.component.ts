@@ -2,12 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NavbarComponent } from "../../navbar/navbar.component";
 import { FooterComponent } from "../../footer/footer.component";
+import { ToastService } from '../../toast.service';
 import { AuthService } from '../../auth.service';
 import axios from 'axios';
 import * as XLSX from 'xlsx';
 import { FormsModule } from '@angular/forms'; // Ensure FormsModule is imported
 
-interface FollupIOR {
+interface FollowonIOR {
   id_follup: string,
   id_ior: string,
   follup_detail: string,
@@ -19,8 +20,7 @@ interface FollupIOR {
   nextuic_follup: string,
   current_probability: string,
   current_severity: string,
-  current_riskindex: string,
-  subject_ior: string
+  current_riskindex: string
 }
 
 interface Filters {
@@ -42,13 +42,13 @@ interface Filters {
   selector: 'app-search-ior',
   standalone: true,
   imports: [CommonModule, NavbarComponent, FooterComponent, FormsModule],
-  templateUrl: './search-followup-ior.component.html',
-  styleUrls: ['./search-followup-ior.component.css']
+  templateUrl: './search-followon-ior.component.html',
+  styleUrls: ['./search-followon-ior.component.css']
 })
-export class SearchFollowupIORComponent implements OnInit {
-  constructor(private authService: AuthService) { }
+export class SearchFollowonIORComponent implements OnInit {
+  constructor(private toastService: ToastService, private authService: AuthService) { }
 
-  items: FollupIOR[] = [];
+  items: FollowonIOR[] = [];
   searchTerm: string = '';
   filterBy: Filters = { 
     category_ior : '',
@@ -66,7 +66,7 @@ export class SearchFollowupIORComponent implements OnInit {
   }; // Filter terms
   showFilters: boolean = false;
 
-  role: string | null = null;
+  currentIORId = '';
 
   toggleFilter() {
     this.showFilters = !this.showFilters;
@@ -79,6 +79,14 @@ export class SearchFollowupIORComponent implements OnInit {
   }
 
   ngOnInit() {
+    const id_ior = localStorage.getItem('id_ior');
+    if (id_ior) {
+      this.currentIORId = id_ior;
+      console.log('Retrieved id_ior:', id_ior);
+    } else {
+      this.toastService.failedToast("There was an error fetching IOR Follow On");
+      window.location.href = '/searchIOR';
+    }
     this.fetchDataFromServer();
   }
 
@@ -86,34 +94,22 @@ export class SearchFollowupIORComponent implements OnInit {
     try {
       const response = await axios.get('http://localhost:4040/ior/follow-up/show-all');
       if (response.data.status === 200) {
-        this.items = response.data.result;
+        for (let i = 0; i < response.data.result.length; i++) {
+          if (response.data.result[i].id_ior === this.currentIORId) {
+            this.items.push(response.data.result[i]);
+          }
+        }
         for (let i = 0; i < this.items.length; i++) {
           this.items[i].follup_date = this.items[i].follup_date.slice(0, 10);
-          this.items[i].subject_ior = await this.fetchIORSubject(this.items[i].id_ior);
         }
-
       } else {
         console.error('Error Message:', response.data.message);
+        this.toastService.failedToast("Failed to fetch IOR Follow On");
       }
     } catch (error) {
       console.error('Error:', error);
-    }
-  }
-
-  async fetchIORSubject(id_ior: string) {
-    try{
-      const response = await axios.post('http://localhost:4040/ior/show', {
-        id_IOR: id_ior
-      });
-      if (response.data.status === 200) {
-        return response.data.result.id_ior;
-      } else {
-        console.error('Error Message:', response.data.message);
-        return null;
-      }
-    } catch (error) {
-      console.error('Error:', error);
-      return null;
+      this.toastService.failedToast("There was an error fetching IOR Follow On");
+      window.location.href = '/searchIOR';
     }
   }
 
@@ -145,6 +141,10 @@ export class SearchFollowupIORComponent implements OnInit {
     XLSX.writeFile(wb, fileName);
   }
 
+  async navigateAdd() {
+    window.location.href = '/addFollowonIOR';
+  }
+
   async navigatePreview(documentId: string) {
     try {
       localStorage.setItem('document_id', documentId);
@@ -163,6 +163,6 @@ export class SearchFollowupIORComponent implements OnInit {
 
   navigateEdit(id_follup: string) {
     localStorage.setItem('id_follup_ior', id_follup);
-    window.location.href = '/editFollowupIOR';
+    window.location.href = '/editFollowonIOR';
   }
 }

@@ -14,8 +14,8 @@ import { UserGuideComponent } from './user-guide/user-guide.component';
 import { EditNCRComponent } from './reports/edit-ncr/edit-ncr.component';
 import { EditIORComponent } from './reports/edit-ior/edit-ior.component';
 import { PersonnelComponent } from './personnel/personnel.component';
-import { SearchFollowupIORComponent } from './reports/search-followup-ior/search-followup-ior.component';
-import { EditFollowupIORComponent } from './reports/edit-followup-ior/edit-followup-ior.component';
+import { SearchFollowonIORComponent } from './reports/search-followon-ior/search-followon-ior.component';
+import { EditFollowonIORComponent } from './reports/edit-followon-ior/edit-followon-ior.component';
 
 export const routes: Routes = [
     // Essential routes
@@ -28,14 +28,14 @@ export const routes: Routes = [
     // Report routes
     { path: 'formNCR', component: FormNCRComponent },
     { path: 'searchNCR', component: SearchNCRComponent },
-    { path: 'followNCR', component: FollowonNCRComponent },
+    { path: 'addFollowonNCR', component: FollowonNCRComponent },
     { path: 'editNCR', component: EditNCRComponent },
     { path: 'formIOR', component: FormIORComponent },
     { path: 'searchIOR', component: SearchIORComponent },
-    { path: 'followIOR', component: FollowonIORComponent },
+    { path: 'addFollowonIOR', component: FollowonIORComponent },
     { path: 'editIOR', component: EditIORComponent },
-    { path: 'searchFollowupIOR', component: SearchFollowupIORComponent},
-    { path: 'editFollowupIOR', component: EditFollowupIORComponent },
+    { path: 'searchFollowonIOR', component: SearchFollowonIORComponent},
+    { path: 'editFollowonIOR', component: EditFollowonIORComponent },
     // Redirects
     { path: '', redirectTo: '/login', pathMatch: 'full' },
     { path: '**', redirectTo: '/login', pathMatch: 'full' },
