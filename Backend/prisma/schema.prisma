@@ -18,7 +18,7 @@ model account {
   ncr              String?            @db.VarChar(255)
   ncr_followresult ncr_followresult[] @ignore
   ncr_initial      ncr_initial[]
-  ncr_reply        ncr_reply[]        @ignore
+  ncr_reply        ncr_reply[]       
 }
 
 model assignpic {
@@ -104,26 +104,24 @@ model ncr_initial {
   temporarylink               String?
   ncr_followresult            ncr_followresult[] @ignore
   account                     account?           @relation(fields: [accountid], references: [accountid], onDelete: NoAction, onUpdate: NoAction)
-  ncr_reply                   ncr_reply[]        @ignore
+  ncr_reply                   ncr_reply?         
 }
 
 /// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
 model ncr_reply {
-  accountid                   String?      @db.Uuid
-  ncr_init_id                 String?      @db.Uuid
+  accountid                   String?     @db.Uuid
+  ncr_init_id                 String      @id @db.Uuid
   rca_problem                 String
   corrective_action           String
   preventive_action           String
   identified_by_auditee       String
-  identified_date             DateTime     @db.Date
+  identified_date             DateTime    @db.Date
   accept_by_auditor           String
-  auditor_accept_date         DateTime     @db.Date
+  auditor_accept_date         DateTime    @db.Date
   temporarylink               String?
   recommend_corrective_action String?
-  account                     account?     @relation(fields: [accountid], references: [accountid], onDelete: NoAction, onUpdate: NoAction)
-  ncr_initial                 ncr_initial? @relation(fields: [ncr_init_id], references: [ncr_init_id], onDelete: NoAction, onUpdate: NoAction)
-
-  @@ignore
+  account                     account?    @relation(fields: [accountid], references: [accountid], onDelete: NoAction, onUpdate: NoAction)
+  ncr_initial                 ncr_initial @relation(fields: [ncr_init_id], references: [ncr_init_id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 /// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.

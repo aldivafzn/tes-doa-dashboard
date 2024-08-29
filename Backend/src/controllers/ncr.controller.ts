@@ -63,21 +63,33 @@ export class NcrController {
     return this.ncrService.showNcrById(showNcrDto);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Post('reply/add')
-  async addNcrReply(@Body() createNcrReplyDto: CreateNcrReplyDto) {
-    return this.ncrService.addNcrReply(createNcrReplyDto);
+  async addNcrReply(
+    @Body() createNcrReplyDto: CreateNcrReplyDto,
+    @Request() req,
+  ) {
+    const accountid = req.user.userId;
+    return this.ncrService.addNcrReply(createNcrReplyDto, accountid);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Delete('reply/delete')
   async deleteNcrReply(@Body('ncr_init_id') ncr_init_id: string) {
     return this.ncrService.deleteNcrReply(ncr_init_id);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Put('reply/update')
-  async updateNcrReply(@Body() updateNcrReplyDto: UpdateNcrReplyDto) {
-    return this.ncrService.updateNcrReply(updateNcrReplyDto);
+  async updateNcrReply(
+    @Body() updateNcrReplyDto: UpdateNcrReplyDto,
+    @Request() req,
+  ) {
+    const accountid = req.user.userId;
+    return this.ncrService.updateNcrReply(updateNcrReplyDto, accountid);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get('reply/show')
   async showNcrReply(@Body() showNcrReplyDto: ShowNcrReplyDto) {
     return this.ncrService.showNcrReply(showNcrReplyDto.ncr_init_id);

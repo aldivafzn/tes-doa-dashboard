@@ -166,18 +166,18 @@ export class NcrService {
     }
   }
 
-  async addNcrReply(data: CreateNcrReplyDto) {
+  async addNcrReply(data: CreateNcrReplyDto, accountid: string) {
     const result = await this.prisma.ncr_reply.create({
       data: {
-        accountid: data.accountid,
+        accountid,
         ncr_init_id: data.ncr_init_id,
         rca_problem: data.rca_problem,
-        corrective_act: data.corrective_act,
-        preventive_act: data.preventive_act,
-        identified_by: data.identified_by,
+        corrective_action: data.corrective_action,
+        preventive_action: data.preventive_act,
+        identified_by_auditee: data.identified_by,
         identified_date: data.identified_date,
-        accept_by: data.accept_by,
-        audit_accept: data.audit_accept,
+        accept_by_auditor: data.accept_by,
+        auditor_accept_date: data.audit_accept,
         temporarylink: data.temporarylink,
         recommend_corrective_action: data.recommend_corrective_action,
       },
@@ -206,18 +206,18 @@ export class NcrService {
     }
   }
 
-  async updateNcrReply(data: UpdateNcrReplyDto) {
+  async updateNcrReply(data: UpdateNcrReplyDto, accountid: string) {
     const result = await this.prisma.ncr_reply.update({
       where: { ncr_init_id: data.ncr_init_id },
       data: {
-        accountid: data.accountid,
+        accountid,
         rca_problem: data.rca_problem,
-        corrective_act: data.corrective_act,
-        preventive_act: data.preventive_act,
-        identified_by: data.identified_by,
+        corrective_action: data.corrective_act,
+        preventive_action: data.preventive_act,
+        identified_by_auditee: data.identified_by,
         identified_date: data.identified_date,
-        accept_by: data.accept_by,
-        audit_accept: data.audit_accept,
+        accept_by_auditor: data.accept_by,
+        auditor_accept_date: data.audit_accept,
         temporarylink: data.temporarylink,
       },
     });

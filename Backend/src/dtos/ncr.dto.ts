@@ -158,7 +158,7 @@ export class CreateNcrReplyDto {
 
   @IsString()
   @IsNotEmpty()
-  corrective_act: string;
+  corrective_action: string;
 
   @IsString()
   @IsNotEmpty()
