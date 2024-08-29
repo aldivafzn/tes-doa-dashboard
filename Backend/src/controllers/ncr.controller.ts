@@ -90,7 +90,7 @@ export class NcrController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Get('reply/show')
+  @Post('reply/show')
   async showNcrReply(@Body() showNcrReplyDto: ShowNcrReplyDto) {
     return this.ncrService.showNcrReply(showNcrReplyDto.ncr_init_id);
   }

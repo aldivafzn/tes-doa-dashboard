@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FollowonNcrComponent } from './followon-ncr.component';
+import { ReplyNCRComponent } from './reply-ncr.component';
 
-describe('FollowonNcrComponent', () => {
-  let component: FollowonNcrComponent;
-  let fixture: ComponentFixture<FollowonNcrComponent>;
+describe('ReplyNCRComponent', () => {
+  let component: ReplyNCRComponent;
+  let fixture: ComponentFixture<ReplyNCRComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FollowonNcrComponent]
+      imports: [ReplyNCRComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(FollowonNcrComponent);
+    fixture = TestBed.createComponent(ReplyNCRComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -46,7 +46,7 @@ interface Filters {
 }
 
 @Component({
-  selector: 'app-search-ior',
+  selector: 'app-search-followon-ior',
   standalone: true,
   imports: [CommonModule, NavbarComponent, FooterComponent, FormsModule],
   templateUrl: './search-followon-ior.component.html',

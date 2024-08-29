@@ -17,7 +17,6 @@ interface JwtPayload {
 }
 
 interface NCRData {
-  accountid: string,
   regulationbased: string,
   subject: string,
   audit_plan_no: string,
@@ -54,7 +53,6 @@ export class FormNCRComponent implements OnInit {
   constructor(private toastService: ToastService, private authService: AuthService) { }
   currentAccountID = '';
   ncrData: NCRData = {
-    accountid: '',
     regulationbased: '',
     subject: '',
     audit_plan_no: '',
@@ -112,7 +110,6 @@ export class FormNCRComponent implements OnInit {
     }
   }
   async submitNCR() {
-    this.ncrData.accountid = this.currentAccountID;
     this.ncrData.issued_date = new Date(this.ncrData.issued_date);
     this.ncrData.answer_due_date = new Date(this.ncrData.answer_due_date);
     this.ncrData.audit_date = new Date(this.ncrData.audit_date);

@@ -6,7 +6,6 @@ import { RegisterComponent } from './register/register.component';
 import { AccountComponent } from './account/account.component';
 import { FormNCRComponent } from './reports/form-ncr/form-ncr.component';
 import { SearchNCRComponent } from './reports/search-ncr/search-ncr.component';
-import { FollowonNCRComponent } from './reports/followon-ncr/followon-ncr.component';
 import { FormIORComponent } from './reports/form-ior/form-ior.component';
 import { SearchIORComponent } from './reports/search-ior/search-ior.component';
 import { FollowonIORComponent } from './reports/followon-ior/followon-ior.component';
@@ -16,6 +15,9 @@ import { EditIORComponent } from './reports/edit-ior/edit-ior.component';
 import { PersonnelComponent } from './personnel/personnel.component';
 import { SearchFollowonIORComponent } from './reports/search-followon-ior/search-followon-ior.component';
 import { EditFollowonIORComponent } from './reports/edit-followon-ior/edit-followon-ior.component';
+import { ReplyNCRComponent } from './reports/reply-ncr/reply-ncr.component';
+import { ShowReplyNCRComponent } from './reports/show-reply-ncr/show-reply-ncr.component';
+import { EditReplyNCRComponent } from './reports/edit-reply-ncr/edit-reply-ncr.component';
 
 export const routes: Routes = [
     // Essential routes
@@ -28,7 +30,9 @@ export const routes: Routes = [
     // Report routes
     { path: 'formNCR', component: FormNCRComponent },
     { path: 'searchNCR', component: SearchNCRComponent },
-    { path: 'addFollowonNCR', component: FollowonNCRComponent },
+    { path: 'addReplyNCR', component: ReplyNCRComponent },
+    { path: 'showReplyNCR', component: ShowReplyNCRComponent },
+    { path: 'editReplyNCR', component: EditReplyNCRComponent },
     { path: 'editNCR', component: EditNCRComponent },
     { path: 'formIOR', component: FormIORComponent },
     { path: 'searchIOR', component: SearchIORComponent },

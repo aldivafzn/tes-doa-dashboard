@@ -22,7 +22,7 @@ interface FollowonIOR {
 }
 
 @Component({
-  selector: 'app-edit-ior',
+  selector: 'app-edit-followon-ior',
   standalone: true,
   imports: [NavbarComponent, FooterComponent, FormsModule, CommonModule],
   templateUrl: './edit-followon-ior.component.html',

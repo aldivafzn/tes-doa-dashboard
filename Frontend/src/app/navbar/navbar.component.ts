@@ -40,7 +40,11 @@ export class NavbarComponent implements OnInit {
           window.location.href != 'http://localhost:4200/addFollowonIOR') {
         localStorage.removeItem('id_ior');
       }
-      if (window.location.href != 'http://localhost:4200/editNCR') {
+      if (window.location.href != 'http://localhost:4200/editNCR' &&
+          window.location.href != 'http://localhost:4200/addReplyNCR' &&
+          window.location.href != 'http://localhost:4200/showReplyNCR' &&
+          window.location.href != 'http://localhost:4200/editReplyNCR'
+      ) {
         localStorage.removeItem('ncr_init_id');
       }
     } else {

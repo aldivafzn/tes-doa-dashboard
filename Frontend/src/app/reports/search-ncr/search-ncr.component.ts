@@ -178,6 +178,23 @@ export class SearchNCRComponent implements OnInit {
     }
   }
 
+  async checkReply(ncr_init_id: string) {
+    try {
+      const response = await axios.post('http://localhost:4040/ncr/reply/show', {
+        ncr_init_id: ncr_init_id
+      });
+      if (response.data.message === 'Showing NCR Reply') {
+        return true;
+      } else {
+        console.error('Error message:', response.data.message);
+        return false;
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      return false;
+    }
+  }
+
   exportToExcel(): void {
     const table = document.getElementById('data-table');
     const ws = XLSX.utils.table_to_sheet(table);
@@ -210,6 +227,16 @@ export class SearchNCRComponent implements OnInit {
   navigateEdit(ncr_init_id: string) {
     localStorage.setItem('ncr_init_id', ncr_init_id);
     window.location.href = '/editNCR';
+  }
+
+  async navigateReply(ncr_init_id: string) {
+    localStorage.setItem('ncr_init_id', ncr_init_id);
+    const replyExist = await this.checkReply(ncr_init_id);
+    if (replyExist) {
+      window.location.href = '/showReplyNCR';
+    } else {
+      window.location.href = '/addReplyNCR';
+    }
   }
 
   search() {
