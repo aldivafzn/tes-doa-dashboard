@@ -15,6 +15,7 @@ import {
   uic,
   level,
   probanalis,
+  effective,
 } from '@prisma/client';
 
 /* 
@@ -230,64 +231,64 @@ export class ShowNcrReplyDto {
 }
 
 export class CreateNcrResultDto {
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
-  accountid: string;
+  accountid?: string;
 
-  @IsNotEmpty()
   @IsString()
+  @IsNotEmpty()
   ncr_init_id: string;
 
-  @IsOptional()
   @IsString()
-  close_corrective?: string;
-
   @IsOptional()
+  close_corrective_actions?: string;
+
   @IsString()
-  proposed_close_audit?: string;
+  @IsNotEmpty()
+  proposed_close_auditee: string;
 
-  @IsOptional()
   @IsDate()
-  proposed_close_date?: string;
+  @IsNotEmpty()
+  proposed_close_date: Date;
 
-  @IsOptional()
-  @IsString()
-  is_close?: string;
+  @IsBoolean()
+  @IsNotEmpty()
+  is_close: boolean;
 
-  @IsOptional()
-  @IsString()
-  effective?: string;
+  @IsEnum(effective)
+  @IsNotEmpty()
+  effectiveness: effective;
 
-  @IsOptional()
   @IsString()
-  refer_verif?: string;
+  @IsOptional()
+  refer_verification?: string;
 
-  @IsOptional()
   @IsString()
+  @IsOptional()
   sheet_no?: string;
 
-  @IsOptional()
   @IsString()
-  new_ncr_issue_no?: string;
-
   @IsOptional()
+  new_ncr_issue_nbr?: string;
+
   @IsString()
-  close_approvedby?: string;
+  @IsNotEmpty()
+  close_approved_by: string;
 
-  @IsOptional()
   @IsDate()
-  close_approveddate?: string;
+  @IsNotEmpty()
+  close_approved_date: Date;
 
-  @IsOptional()
   @IsString()
-  verif_chied?: string;
+  @IsNotEmpty()
+  verified_chief_im: string;
 
-  @IsOptional()
   @IsDate()
-  verif_date?: string;
+  @IsNotEmpty()
+  verified_date: Date;
 
-  @IsOptional()
   @IsString()
+  @IsOptional()
   temporarylink?: string;
 }
 

@@ -16,7 +16,7 @@ model account {
   email            String?            @unique @db.VarChar(255)
   ior              String?            @db.VarChar(255)
   ncr              String?            @db.VarChar(255)
-  ncr_followresult ncr_followresult[] @ignore
+  ncr_followresult ncr_followresult[] 
   ncr_initial      ncr_initial[]
   ncr_reply        ncr_reply[]       
 }
@@ -56,7 +56,7 @@ model highlightissue {
 /// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
 model ncr_followresult {
   accountid                String?      @db.Uuid
-  ncr_init_id              String?      @db.Uuid
+  ncr_init_id              String       @id @db.Uuid
   close_corrective_actions String?
   proposed_close_auditee   String
   proposed_close_date      DateTime     @db.Date
@@ -72,8 +72,6 @@ model ncr_followresult {
   temporarylink            String?
   account                  account?     @relation(fields: [accountid], references: [accountid], onDelete: NoAction, onUpdate: NoAction)
   ncr_initial              ncr_initial? @relation(fields: [ncr_init_id], references: [ncr_init_id], onDelete: NoAction, onUpdate: NoAction)
-
-  @@ignore
 }
 
 model ncr_initial {
@@ -102,7 +100,7 @@ model ncr_initial {
   acknowledge_date            DateTime           @db.Date
   status                      enum_stat
   temporarylink               String?
-  ncr_followresult            ncr_followresult[] @ignore
+  ncr_followresult            ncr_followresult[] 
   account                     account?           @relation(fields: [accountid], references: [accountid], onDelete: NoAction, onUpdate: NoAction)
   ncr_reply                   ncr_reply?         
 }
@@ -306,6 +304,7 @@ enum user_role {
   DO
   AO
   IM
+  HDO
 }
 
 enum work_station {
