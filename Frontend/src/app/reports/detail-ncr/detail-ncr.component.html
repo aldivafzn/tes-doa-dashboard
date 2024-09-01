@@ -135,54 +135,70 @@
       </div>
 
       <h2 class="text-2xl font-bold text-gray-900 text-center justify-center my-6 uppercase py-3">Result</h2>
-      <div *ngIf="!replyExist" class="mt-5 text-center">
+      <div *ngIf="!resultExist" class="mt-5 text-center">
         <label>No Result Created Yet</label><br/>
-        <button (click)="navigateAddReply()" class="inline-block bg-[#016299] rounded border-2 border-primary px-3 pb-[6px] items-center pt-2 font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white">Add Reply</button>
+        <button (click)="navigateAddResult()" class="inline-block bg-[#016299] rounded border-2 border-primary px-3 pb-[6px] items-center pt-2 font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white">Add Result</button>
       </div>
-      <div *ngIf="replyExist" class="grid grid-cols-2 gap-4 mb-4">
-        <div>
-          <label class="font-semibold text-black text-left">Root Cause of Problem:</label>
-        </div>
-        <div>
-          <label class="font-semibold text-black text-left">Corrective Action:</label>
-        </div>
-        <div>
-          <p class="text-black text-left">{{replyNCR.rca_problem}}</p>
-        </div>
-        <div>
-          <p class="text-black text-left">{{replyNCR.corrective_action}}</p>
+      <div *ngIf="resultExist" class="grid grid-cols-2 gap-4 mb-4">
+        <div class="space-x-2">
+          <label class="font-semibold text-black text-left">Close Proposed by:</label>
+          <label class="text-black text-left">{{resultNCR.proposed_close_auditee}}</label>
         </div>
         <div class="space-x-2">
-          <label class="font-semibold text-black text-left">Identified by:</label>
-          <label class="text-black text-left">{{replyNCR.identified_by_auditee}}</label>
+          <label class="font-semibold text-black text-left">Close Approved by:</label>
+          <label class="text-black text-left">{{resultNCR.close_approved_by}}</label>
         </div>
         <div class="space-x-2">
-          <label class="font-semibold text-black text-left">Audit Accepted by:</label>
-          <label class="text-black text-left">{{replyNCR.accept_by_auditor}}</label>
+          <label class="font-semibold text-black text-left">Is Close:</label>
+          <label class="text-black text-left">{{resultNCR.is_close}}</label>
         </div>
         <div class="space-x-2">
-          <label class="font-semibold text-black text-left">Identified Date:</label>
-          <label class="text-black text-left">{{replyNCR.identified_date}}</label>
+          <label class="font-semibold text-black text-left">Effectiveness:</label>
+          <label class="text-black text-left">{{resultNCR.effectiveness}}</label>
+        </div>
+        <div>
+          <label class="font-semibold text-black text-left">Close Corrective Action:</label>
+        </div>
+        <div class="col-span-2">
+          <p class="text-black text-left">{{resultNCR.close_corrective_actions}}</p>
         </div>
         <div class="space-x-2">
-          <label class="font-semibold text-black text-left">Audit Accepted Date:</label>
-          <label class="text-black text-left">{{replyNCR.auditor_accept_date}}</label>
+          <label class="font-semibold text-black text-left">Close Approved by:</label>
+          <label class="text-black text-left">{{resultNCR.close_approved_by}}</label>
         </div>
-        <div>
-          <label class="font-semibold text-black text-left">Recommended Corrective Action:</label>
+        <div class="space-x-2">
+          <label class="font-semibold text-black text-left">Verified by:</label>
+          <label class="text-black text-left">{{resultNCR.verified_chief_im}}</label>
         </div>
-        <div>
-          <label class="font-semibold text-black text-left">Preventive Action:</label>
+        <div class="space-x-2">
+          <label class="font-semibold text-black text-left">Close Approved Date:</label>
+          <label class="text-black text-left">{{resultNCR.close_approved_date}}</label>
         </div>
-        <div>
-          <p class="text-black text-left">{{replyNCR.recommend_corrective_action}}</p>
+        <div class="space-x-2">
+          <label class="font-semibold text-black text-left">Verified Date:</label>
+          <label class="text-black text-left">{{resultNCR.verified_date}}</label>
         </div>
-        <div>
-          <p class="text-black text-left">{{replyNCR.preventive_action}}</p>
+        <div class="col-span-2 grid grid-cols-4 gap-4">
+          <div class="space-x-2">
+            <label class="font-semibold text-black text-left">Reference Verification:</label>
+            <label class="text-black text-left">{{resultNCR.refer_verification}}</label>
+          </div>
+          <div class="space-x-2">
+            <label class="font-semibold text-black text-left">New NCR Issue Number:</label>
+            <label class="text-black text-left">{{resultNCR.new_ncr_issue_nbr}}</label>
+          </div>
+          <div class="space-x-2">
+            <label class="font-semibold text-black text-left">Sheet Number:</label>
+            <label class="text-black text-left">{{resultNCR.sheet_no}}</label>
+          </div>
+          <div class="space-x-2">
+            <label class="font-semibold text-black text-left">Temporary Link:</label>
+            <label class="text-black text-left">{{resultNCR.temporarylink}}</label>
+          </div>
         </div>
       </div>
-      <div *ngIf="replyExist" class="text-center">
-        <button (click)="navigateEditReply()" class="inline-block bg-[#016299] rounded border-2 border-primary px-3 pb-[6px] items-center pt-2 font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white">Edit Reply</button>
+      <div *ngIf="resultExist" class="text-center">
+        <button (click)="navigateEditResult()" class="inline-block bg-[#016299] rounded border-2 border-primary px-3 pb-[6px] items-center pt-2 font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white">Edit Result</button>
       </div>
     </div>
   </div>

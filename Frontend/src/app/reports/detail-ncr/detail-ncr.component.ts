@@ -47,6 +47,11 @@ enum probanalis {
   Not_Required = "Not Required"
 }
 
+enum effectiveness {
+  Effective = "Effective",
+  Not_Effective = "Not Effective",
+}
+
 interface NCRInitial {
   accountid: string,
   ncr_init_id: string,
@@ -89,6 +94,23 @@ interface ReplyNCR {
   recommend_corrective_action: string
 }
 
+interface ResultNCR {
+  ncr_init_id: string,
+  close_corrective_actions: string,
+  proposed_close_auditee: string,
+  proposed_close_date: string,
+  is_close: boolean | string,
+  effectiveness: string,
+  refer_verification: string,
+  sheet_no: string,
+  new_ncr_issue_nbr: string,
+  close_approved_by: string,
+  close_approved_date: string,
+  verified_chief_im: string,
+  verified_date: string,
+  temporarylink: string
+}
+
 @Component({
   selector: 'app-detail-ncr',
   standalone: true,
@@ -127,7 +149,7 @@ export class DetailNCRComponent implements OnInit{
     status: '',
     ncr_reply: [],
     documentid: ''
-  }
+  };
   replyNCR: ReplyNCR = {
     ncr_init_id: '',
     rca_problem: '',
@@ -140,9 +162,26 @@ export class DetailNCRComponent implements OnInit{
     temporarylink: '',
     recommend_corrective_action: ''
   };
+  resultNCR: ResultNCR = {
+    ncr_init_id: '',
+    close_corrective_actions: '',
+    proposed_close_auditee: '',
+    proposed_close_date: '',
+    is_close: '',
+    effectiveness: '',
+    refer_verification: '',
+    sheet_no: '',
+    new_ncr_issue_nbr: '',
+    close_approved_by: '',
+    close_approved_date: '',
+    verified_chief_im: '',
+    verified_date: '',
+    temporarylink: ''
+  };
   role: string | null = null;
   currentNCRInitID = '';
   replyExist: boolean = false;
+  resultExist: boolean = false;
 
   ngOnInit() {
     const token = this.authService.getToken();
@@ -158,6 +197,7 @@ export class DetailNCRComponent implements OnInit{
     }
     this.fetchNCR();
     this.fetchReplyNCR();
+    this.fetchResultNCR();
   }
 
   async fetchNCR() {
@@ -201,6 +241,29 @@ export class DetailNCRComponent implements OnInit{
     }
   }
 
+  async fetchResultNCR() {
+    try {
+      const response = await axios.post('http://localhost:4040/ncr/result/show', {
+        ncr_init_id: this.currentNCRInitID
+      });
+      if (response.data.message === 'Showing NCR Follow Result') {
+        this.resultExist = true;
+        this.resultNCR = response.data.result;
+        this.resultNCR.effectiveness = this.convertEnumValue(effectiveness, this.resultNCR.effectiveness);
+        this.resultNCR.proposed_close_date = this.resultNCR.proposed_close_date.slice(0, 10);
+        this.resultNCR.close_approved_date = this.resultNCR.close_approved_date.slice(0, 10);
+        this.resultNCR.verified_date = this.resultNCR.verified_date.slice(0, 10);
+        this.resultNCR.is_close = this.resultNCR.is_close ? "Yes" : "No";
+      } else {
+        console.error('Error message:', response.data.message);
+        this.resultExist = false;
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      this.resultExist = false;
+    }
+  }
+
   async navigatePreview(documentId: string) {
     try {
       sessionStorage.setItem('document_id', documentId);
@@ -227,6 +290,14 @@ export class DetailNCRComponent implements OnInit{
 
   navigateEditReply() {
     window.location.href = '/editReplyNCR';
+  }
+
+  navigateAddResult() {
+    window.location.href = '/addResultNCR';
+  }
+
+  navigateEditResult() {
+    window.location.href = '/editResultNCR';
   }
 
   convertEnumValue(enumObj: any, value: string): string {

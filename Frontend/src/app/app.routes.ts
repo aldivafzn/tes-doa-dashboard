@@ -20,6 +20,7 @@ import { ShowReplyNCRComponent } from './reports/show-reply-ncr/show-reply-ncr.c
 import { EditReplyNCRComponent } from './reports/edit-reply-ncr/edit-reply-ncr.component';
 import { DetailNCRComponent } from './reports/detail-ncr/detail-ncr.component';
 import { DetailIORComponent } from './reports/detail-ior/detail-ior.component';
+import { ResultNCRComponent } from './reports/result-ncr/result-ncr.component';
 
 export const routes: Routes = [
     // Essential routes
@@ -33,10 +34,11 @@ export const routes: Routes = [
     { path: 'formNCR', component: FormNCRComponent },
     { path: 'searchNCR', component: SearchNCRComponent },
     { path: 'detailNCR', component: DetailNCRComponent },
+    { path: 'editNCR', component: EditNCRComponent },
     { path: 'addReplyNCR', component: ReplyNCRComponent },
     { path: 'showReplyNCR', component: ShowReplyNCRComponent },
     { path: 'editReplyNCR', component: EditReplyNCRComponent },
-    { path: 'editNCR', component: EditNCRComponent },
+    { path: 'addResultNCR', component: ResultNCRComponent },
     { path: 'formIOR', component: FormIORComponent },
     { path: 'searchIOR', component: SearchIORComponent },
     { path: 'detailIOR', component: DetailIORComponent},

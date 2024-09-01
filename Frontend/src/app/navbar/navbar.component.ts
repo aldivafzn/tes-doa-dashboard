@@ -74,7 +74,8 @@ export class NavbarComponent implements OnInit {
     if (window.location.href != 'http://localhost:4200/editNCR' &&
         window.location.href != 'http://localhost:4200/detailNCR' &&
         window.location.href != 'http://localhost:4200/addReplyNCR' &&
-        window.location.href != 'http://localhost:4200/editReplyNCR'
+        window.location.href != 'http://localhost:4200/editReplyNCR' &&
+        window.location.href != 'http://localhost:4200/addResultNCR'
       ) {
       localStorage.removeItem('ncr_init_id');
     }
