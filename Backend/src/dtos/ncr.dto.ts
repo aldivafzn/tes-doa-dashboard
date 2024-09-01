@@ -15,6 +15,7 @@ import {
   uic,
   level,
   probanalis,
+  effective,
 } from '@prisma/client';
 
 /* 
@@ -225,6 +226,80 @@ export class UpdateNcrReplyDto {
 }
 
 export class ShowNcrReplyDto {
+  @IsString()
+  ncr_init_id: string;
+}
+
+export class CreateNcrResultDto {
+  @IsOptional()
+  @IsString()
+  accountid?: string;
+
+  @IsString()
+  @IsNotEmpty()
+  ncr_init_id: string;
+
+  @IsString()
+  @IsOptional()
+  close_corrective_actions?: string;
+
+  @IsString()
+  @IsNotEmpty()
+  proposed_close_auditee: string;
+
+  @IsDate()
+  @IsNotEmpty()
+  proposed_close_date: Date;
+
+  @IsBoolean()
+  @IsNotEmpty()
+  is_close: boolean;
+
+  @IsEnum(effective)
+  @IsNotEmpty()
+  effectiveness: effective;
+
+  @IsString()
+  @IsOptional()
+  refer_verification?: string;
+
+  @IsString()
+  @IsOptional()
+  sheet_no?: string;
+
+  @IsString()
+  @IsOptional()
+  new_ncr_issue_nbr?: string;
+
+  @IsString()
+  @IsNotEmpty()
+  close_approved_by: string;
+
+  @IsDate()
+  @IsNotEmpty()
+  close_approved_date: Date;
+
+  @IsString()
+  @IsNotEmpty()
+  verified_chief_im: string;
+
+  @IsDate()
+  @IsNotEmpty()
+  verified_date: Date;
+
+  @IsString()
+  @IsOptional()
+  temporarylink?: string;
+}
+
+export class UpdateNcrResultDto extends CreateNcrResultDto {
+  @IsNotEmpty()
+  @IsString()
+  ncr_init_id: string;
+}
+
+export class ShowNcrResultDto {
+  @IsNotEmpty()
   @IsString()
   ncr_init_id: string;
 }
