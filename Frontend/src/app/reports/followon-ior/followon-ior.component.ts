@@ -98,7 +98,7 @@ export class FollowonIORComponent {
       if (response.data.status === 200) {
         this.toastService.successToast('Follow on NCR added successfully');
         console.log('Follow on NCR added successfully');
-        window.location.href = '/searchFollowonIOR';
+        window.location.href = '/detailIOR';
       } else {
         this.toastService.failedToast('Failed to add Follow on NCR');
         console.error('Failed to add Follow on NCR:', response.data.message);

@@ -69,7 +69,7 @@ export class ReplyNCRComponent implements OnInit {
       if (response.data.status === 200) {
         this.toastService.successToast('NCR Reply added successfully');
         console.log('NCR Reply added successfully');
-        window.location.href = '/showReplyNCR';
+        window.location.href = '/detailNCR';
       } else {
         this.toastService.failedToast('Failed to add NCR Reply');
         console.error('Failed to add NCR Reply:', response.data.message);

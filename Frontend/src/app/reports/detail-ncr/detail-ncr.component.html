@@ -1,0 +1,190 @@
+<app-navbar></app-navbar>
+<div class="min-h-screen mt-24 flex items-center justify-center">
+  <div class="mb-2 mx-auto w-10/12 bg-white shadow-md rounded-lg overflow-hidden">
+    <div class="p-8 px-16">
+      <a href="/searchNCR" class="text-lg text-cyan-600 decoration-inherit hover:text-cyan-800 hover:underline">< Back</a>
+      <h2 class="text-2xl font-bold text-gray-900 text-center justify-center my-6 uppercase py-3">NCR Detail</h2>
+      <div class="grid grid-cols-2 gap-4 mb-4">
+        <div class="space-x-2">
+          <label class="font-semibold text-black text-left">Audit Plan Number:</label>
+          <label class="text-black text-left">{{ncrData.audit_plan_no}}</label>
+        </div>
+        <div class="space-x-2">
+          <label class="font-semibold text-black text-left">NCR Number:</label>
+          <label class="text-black text-left">{{ncrData.ncr_no}}</label>
+        </div>
+        <div class="col-span-2 space-x-2">
+          <label class="font-semibold text-black text-left">Issued Date:</label>
+          <label class="text-black text-left">{{ncrData.issued_date}}</label>
+        </div>
+        <div class="space-x-2">
+          <label class="font-semibold text-black text-left">Audit Type & Scope:</label>
+          <label class="text-black text-left">{{ncrData.audit_type}} / {{ncrData.audit_scope}}</label>
+        </div>
+        <div class="space-x-2">
+          <label class="font-semibold text-black text-left">Sent to:</label>
+          <label class="text-black text-left">{{ncrData.to_uic}}</label>
+        </div>
+        <div class="space-x-2">
+          <label class="font-semibold text-black text-left">Responsible Office:</label>
+          <label class="text-black text-left">{{ncrData.responsibility_office}}</label>
+        </div>
+        <div class="space-x-2">
+          <label class="font-semibold text-black text-left">With Attention to:</label>
+          <label class="text-black text-left">{{ncrData.attention}}</label>
+        </div>
+        <div class="space-x-2">
+          <label class="font-semibold text-black text-left">Regulation Based on:</label>
+          <label class="text-black text-left">{{ncrData.regulationbased}}</label>
+        </div>
+        <div class="col-span-2 space-x-2">
+          <label class="font-semibold text-black text-left">Required Condition Reference:</label>
+          <label class="text-black text-left text-wrap">{{ncrData.require_condition_reference}}</label>
+        </div>
+        <div class="space-x-2">
+          <label class="font-semibold text-black text-left">Level of Finding:</label>
+          <label class="text-black text-left">{{ncrData.level_finding}}</label>
+        </div>
+        <div class="space-x-2">
+          <label class="font-semibold text-black text-left">Problem Analysis:</label>
+          <label class="text-black text-left">{{ncrData.problem_analysis}}</label>
+        </div>
+        <div class="space-x-2">
+          <label class="font-semibold text-black text-left">Answer Due Date:</label>
+          <label class="text-black text-left">{{ncrData.answer_due_date}}</label>
+        </div>
+        <div class="space-x-2">
+          <label class="font-semibold text-black text-left">IAN Number (if there is IAN issued):</label>
+          <label class="text-black text-left">{{ncrData.ian_no}}</label>
+        </div>
+        <div><label class="font-semibold text-black text-left">Encountered Condition:</label></div>
+        <div class="col-span-2"><p class="text-black text-left text-wrap">{{ncrData.encountered_condition}}</p></div>
+        <div class="space-x-2">
+          <label class="font-semibold text-black text-left">Audit by:</label>
+          <label class="text-black text-left">{{ncrData.audit_by}}</label>
+        </div>
+        <div class="space-x-2">
+          <label class="font-semibold text-black text-left">Acknowledged by:</label>
+          <label class="text-black text-left">{{ncrData.acknowledge_by}}</label>
+        </div>
+        <div class="space-x-2">
+          <label class="font-semibold text-black text-left">Audit Date:</label>
+          <label class="text-black text-left">{{ncrData.audit_date}}</label>
+        </div>
+        <div class="space-x-2">
+          <label class="font-semibold text-black text-left">Acknowledged Date:</label>
+          <label class="text-black text-left">{{ncrData.acknowledge_date}}</label>
+        </div>
+      </div>
+      <div class="flex flex-center mb-4 space-x-2">
+        <button (click)="navigatePreview(ncrData.accountid)" class="inline-block bg-[#016299] rounded border-2 border-primary px-3 pb-[6px] pt-2 font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white">Preview</button>
+        <button (click)="navigateEditNCR()" class="inline-block bg-[#016299] rounded border-2 border-primary px-4 pb-[6px] pt-2 font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white" *ngIf="role === 'Admin' || role === 'IM'">
+          <i class="fas fa-edit" style="font-size: 12px;"></i> Edit
+        </button>
+      </div>
+
+      <h2 class="text-2xl font-bold text-gray-900 text-center justify-center my-6 uppercase py-3">Reply</h2>
+      <div *ngIf="!replyExist" class="mt-5 text-center">
+        <label>No Reply Created Yet</label><br/>
+        <button (click)="navigateAddReply()" class="inline-block bg-[#016299] rounded border-2 border-primary px-3 pb-[6px] items-center pt-2 font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white">Add Reply</button>
+      </div>
+      <div *ngIf="replyExist" class="grid grid-cols-2 gap-4 mb-4">
+        <div>
+          <label class="font-semibold text-black text-left">Root Cause of Problem:</label>
+        </div>
+        <div>
+          <label class="font-semibold text-black text-left">Corrective Action:</label>
+        </div>
+        <div>
+          <p class="text-black text-left">{{replyNCR.rca_problem}}</p>
+        </div>
+        <div>
+          <p class="text-black text-left">{{replyNCR.corrective_action}}</p>
+        </div>
+        <div class="space-x-2">
+          <label class="font-semibold text-black text-left">Identified by:</label>
+          <label class="text-black text-left">{{replyNCR.identified_by_auditee}}</label>
+        </div>
+        <div class="space-x-2">
+          <label class="font-semibold text-black text-left">Audit Accepted by:</label>
+          <label class="text-black text-left">{{replyNCR.accept_by_auditor}}</label>
+        </div>
+        <div class="space-x-2">
+          <label class="font-semibold text-black text-left">Identified Date:</label>
+          <label class="text-black text-left">{{replyNCR.identified_date}}</label>
+        </div>
+        <div class="space-x-2">
+          <label class="font-semibold text-black text-left">Audit Accepted Date:</label>
+          <label class="text-black text-left">{{replyNCR.auditor_accept_date}}</label>
+        </div>
+        <div>
+          <label class="font-semibold text-black text-left">Recommended Corrective Action:</label>
+        </div>
+        <div>
+          <label class="font-semibold text-black text-left">Preventive Action:</label>
+        </div>
+        <div>
+          <p class="text-black text-left">{{replyNCR.recommend_corrective_action}}</p>
+        </div>
+        <div>
+          <p class="text-black text-left">{{replyNCR.preventive_action}}</p>
+        </div>
+      </div>
+      <div *ngIf="replyExist" class="text-center">
+        <button (click)="navigateEditReply()" class="inline-block bg-[#016299] rounded border-2 border-primary px-3 pb-[6px] items-center pt-2 font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white">Edit Reply</button>
+      </div>
+
+      <h2 class="text-2xl font-bold text-gray-900 text-center justify-center my-6 uppercase py-3">Result</h2>
+      <div *ngIf="!replyExist" class="mt-5 text-center">
+        <label>No Result Created Yet</label><br/>
+        <button (click)="navigateAddReply()" class="inline-block bg-[#016299] rounded border-2 border-primary px-3 pb-[6px] items-center pt-2 font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white">Add Reply</button>
+      </div>
+      <div *ngIf="replyExist" class="grid grid-cols-2 gap-4 mb-4">
+        <div>
+          <label class="font-semibold text-black text-left">Root Cause of Problem:</label>
+        </div>
+        <div>
+          <label class="font-semibold text-black text-left">Corrective Action:</label>
+        </div>
+        <div>
+          <p class="text-black text-left">{{replyNCR.rca_problem}}</p>
+        </div>
+        <div>
+          <p class="text-black text-left">{{replyNCR.corrective_action}}</p>
+        </div>
+        <div class="space-x-2">
+          <label class="font-semibold text-black text-left">Identified by:</label>
+          <label class="text-black text-left">{{replyNCR.identified_by_auditee}}</label>
+        </div>
+        <div class="space-x-2">
+          <label class="font-semibold text-black text-left">Audit Accepted by:</label>
+          <label class="text-black text-left">{{replyNCR.accept_by_auditor}}</label>
+        </div>
+        <div class="space-x-2">
+          <label class="font-semibold text-black text-left">Identified Date:</label>
+          <label class="text-black text-left">{{replyNCR.identified_date}}</label>
+        </div>
+        <div class="space-x-2">
+          <label class="font-semibold text-black text-left">Audit Accepted Date:</label>
+          <label class="text-black text-left">{{replyNCR.auditor_accept_date}}</label>
+        </div>
+        <div>
+          <label class="font-semibold text-black text-left">Recommended Corrective Action:</label>
+        </div>
+        <div>
+          <label class="font-semibold text-black text-left">Preventive Action:</label>
+        </div>
+        <div>
+          <p class="text-black text-left">{{replyNCR.recommend_corrective_action}}</p>
+        </div>
+        <div>
+          <p class="text-black text-left">{{replyNCR.preventive_action}}</p>
+        </div>
+      </div>
+      <div *ngIf="replyExist" class="text-center">
+        <button (click)="navigateEditReply()" class="inline-block bg-[#016299] rounded border-2 border-primary px-3 pb-[6px] items-center pt-2 font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white">Edit Reply</button>
+      </div>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>

@@ -20,11 +20,11 @@ interface ReplyNCR {
   ncr_init_id: string,
   rca_problem: string,
   corrective_action: string,
-  preventive_act: string,
-  identified_by: string,
+  preventive_action: string,
+  identified_by_auditee: string,
   identified_date: string,
-  accept_by: string,
-  auditor_accept: string,
+  accept_by_auditor: string,
+  auditor_accept_date: string,
   temporarylink: string,
   recommend_corrective_action: string
 }
@@ -55,11 +55,11 @@ export class ShowReplyNCRComponent implements OnInit {
     ncr_init_id: '',
     rca_problem: '',
     corrective_action: '',
-    preventive_act: '',
-    identified_by: '',
+    preventive_action: '',
+    identified_by_auditee: '',
     identified_date: '',
-    accept_by: '',
-    auditor_accept: '',
+    accept_by_auditor: '',
+    auditor_accept_date: '',
     temporarylink: '',
     recommend_corrective_action: ''
   };
@@ -80,12 +80,8 @@ export class ShowReplyNCRComponent implements OnInit {
       });
       if (response.data.message === 'Showing NCR Reply') {
         this.replyNCR = response.data.showProduct;
-        this.replyNCR.identified_by = response.data.showProduct.identified_by_auditee;
-        this.replyNCR.accept_by = response.data.showProduct.accept_by_auditor;
-        this.replyNCR.auditor_accept = response.data.showProduct.auditor_accept_date;
-        this.replyNCR.preventive_act = response.data.showProduct.preventive_action;
         this.replyNCR.identified_date = this.replyNCR.identified_date.slice(0, 10);
-        this.replyNCR.auditor_accept = this.replyNCR.auditor_accept.slice(0, 10);
+        this.replyNCR.auditor_accept_date = this.replyNCR.auditor_accept_date.slice(0, 10);
       } else {
         console.error('Error Message:', response.data.message);
       }

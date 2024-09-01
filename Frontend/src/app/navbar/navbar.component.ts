@@ -35,18 +35,7 @@ export class NavbarComponent implements OnInit {
       this.role = role;
       console.log('Retrieved accountid:', this.accountId);
       console.log('Retrieved role:', this.role);
-      if (window.location.href != 'http://localhost:4200/editIOR' && 
-          window.location.href != 'http://localhost:4200/searchFollowonIOR' &&
-          window.location.href != 'http://localhost:4200/addFollowonIOR') {
-        localStorage.removeItem('id_ior');
-      }
-      if (window.location.href != 'http://localhost:4200/editNCR' &&
-          window.location.href != 'http://localhost:4200/addReplyNCR' &&
-          window.location.href != 'http://localhost:4200/showReplyNCR' &&
-          window.location.href != 'http://localhost:4200/editReplyNCR'
-      ) {
-        localStorage.removeItem('ncr_init_id');
-      }
+      this.checkRoute();
     } else {
       this.toastService.failedToast('Please login again');
       window.location.href = '/login';
@@ -70,5 +59,24 @@ export class NavbarComponent implements OnInit {
 
   isAdmin(): boolean {
     return this.role === 'Admin';
+  }
+
+  checkRoute() {
+    if (window.location.href != 'http://localhost:4200/editIOR' && 
+        window.location.href != 'http://localhost:4200/detailIOR' &&
+        window.location.href != 'http://localhost:4200/addFollowonIOR'
+      ) {
+      localStorage.removeItem('id_ior');
+    }
+    if (window.location.href != 'http://localhost:4200/editFollowonIOR') {
+      localStorage.removeItem('id_follup_ior');
+    }
+    if (window.location.href != 'http://localhost:4200/editNCR' &&
+        window.location.href != 'http://localhost:4200/detailNCR' &&
+        window.location.href != 'http://localhost:4200/addReplyNCR' &&
+        window.location.href != 'http://localhost:4200/editReplyNCR'
+      ) {
+      localStorage.removeItem('ncr_init_id');
+    }
   }
 }

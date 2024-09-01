@@ -5,12 +5,6 @@
       <h2 class="text-2xl font-bold text-gray-900 text-center justify-center mb-3 uppercase py-3">Personnels</h2>
       <form class="w-full mx-auto" (ngSubmit)="search()">  
         <div class="relative flex items-center">
-          <!-- Button with filter icon -->
-          <button type="button" (click)="toggleFilter()" class="p-3 mr-1 bg-gray-200 hover:bg-gray-300 rounded-full focus:outline-none">
-            <svg class="w-6 h-6 text-gray-600" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7C3 6.44772 3.44772 6 4 6H20C20.5523 6 21 6.44772 21 7C21 7.55228 20.5523 8 20 8H4C3.44772 8 3 7.55228 3 7ZM6 12C6 11.4477 6.44772 11 7 11H17C17.5523 11 18 11.4477 18 12C18 12.5523 17.5523 13 17 13H7C6.44772 13 6 12.5523 6 12ZM9 17C9 16.4477 9.44772 16 10 16H14C14.5523 16 15 16.4477 15 17C15 17.5523 14.5523 18 14 18H10C9.44772 18 9 17.5523 9 17Z"/>
-            </svg>
-          </button>
           <div class="relative w-full">
             <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
               <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
@@ -48,7 +42,6 @@
                 <th id="department" class="px-4 py-2 border-r border-gray-500">Department</th>
                 <th id="email" class="px-4 py-2 border-r border-gray-500">Email Address</th>
                 <th id="employment" class="px-4 py-2 border-r border-gray-500">Employment&nbsp;Date</th>
-                <th id="documentId" class="px-4 py-2 border-r border-gray-500">Document ID</th>
                 <th id="action" class="px-4 py-2">Action</th>
               </tr>
             </thead>
@@ -58,7 +51,6 @@
                 <td class="px-4 py-2 border-r border-gray-500">{{ item.name }}</td>
                 <td class="px-4 py-2 border-r border-gray-500">{{ item.department }}</td>
                 <td class="px-4 py-2 border-r border-gray-500">{{ item.email }}</td>
-                <td class="px-4 py-2 border-r border-gray-500">{{ item.documentId }}</td>
                 <td class="px-4 py-2">
                   <button (click)="navigatePreview(item.documentId)" class="inline-block bg-[#016299] rounded border-2 border-primary px-3 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white">Preview</button>
                 </td>
@@ -69,7 +61,6 @@
                 <td class="px-4 py-2 border-r border-gray-500">JKTTEJ-1</td>
                 <td class="px-4 py-2 border-r border-gray-500">test&#64;gmail.com</td>
                 <td class="px-4 py-2 border-r border-gray-500">1993-24-12</td>
-                <td class="px-4 py-2 border-r border-gray-500">adiskf93fjlalwldjdsa112</td>
                 <td class="px-4 py-2 text-center">
                   <button class="inline-block bg-[#016299] rounded border-2 border-primary px-3 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white">Preview</button>
                 </td>
@@ -80,7 +71,6 @@
                 <td class="px-4 py-2 border-r border-gray-500">JKTTEJ-1</td>
                 <td class="px-4 py-2 border-r border-gray-500">jeffri&#64;gmail.com</td>
                 <td class="px-4 py-2 border-r border-gray-500">2013-17-06</td>
-                <td class="px-4 py-2 border-r border-gray-500">adiskf93fjlalwldjdsa112</td>
                 <td class="px-4 py-2 text-center">
                   <button class="inline-block bg-[#016299] rounded border-2 border-primary px-3 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white">Preview</button>
                 </td>
@@ -91,7 +81,6 @@
                 <td class="px-4 py-2 border-r border-gray-500">JKTTEJ-1</td>
                 <td class="px-4 py-2 border-r border-gray-500">mikel&#64;gmail.com</td>
                 <td class="px-4 py-2 border-r border-gray-500">2013-08-11</td>
-                <td class="px-4 py-2 border-r border-gray-500">adiskf93fjlalwldjdsa112</td>
                 <td class="px-4 py-2 text-center">
                   <button class="inline-block bg-[#016299] rounded border-2 border-primary px-3 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white">Preview</button>
                 </td>

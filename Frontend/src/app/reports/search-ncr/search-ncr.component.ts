@@ -60,7 +60,7 @@ interface NCRInitial {
   to_uic: string,
   attention: string,
   require_condition_reference: string,
-  level_finding: string | level,
+  level_finding: string,
   problem_analysis: string,
   answer_due_date: string,
   issue_ian: boolean | string,
@@ -110,6 +110,7 @@ export class SearchNCRComponent implements OnInit {
     status : ''
   }; // Filter terms
   showFilters: boolean = false; // Toggle for filter visibility
+  replyExist: boolean = false;
 
   role: string | null = null;
   
@@ -237,6 +238,10 @@ export class SearchNCRComponent implements OnInit {
     } else {
       window.location.href = '/addReplyNCR';
     }
+  }
+
+  navigateDetail(ncr_init_id: string) {
+    localStorage.setItem('ncr_init_id', ncr_init_id);
   }
 
   search() {

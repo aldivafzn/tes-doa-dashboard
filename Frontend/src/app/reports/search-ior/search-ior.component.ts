@@ -57,9 +57,6 @@ interface Occurence {
   initial_probability: string,
   initial_severity: string,
   initial_riskindex: string,
-  current_probability: string,
-  current_severity: string,
-  current_riskindex: string
   document_id: string
 }
 
@@ -196,6 +193,11 @@ export class SearchIORComponent implements OnInit {
   navigateEdit(id_ior: string) {
     localStorage.setItem('id_ior', id_ior);
     window.location.href = '/editIOR';
+  }
+
+  navigateDetail(id_ior: string) {
+    localStorage.setItem('id_ior', id_ior);
+    window.location.href = '/detailIOR';
   }
 
   navigateFollowon(id_ior: string) {

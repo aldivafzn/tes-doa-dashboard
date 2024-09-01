@@ -18,6 +18,8 @@ import { EditFollowonIORComponent } from './reports/edit-followon-ior/edit-follo
 import { ReplyNCRComponent } from './reports/reply-ncr/reply-ncr.component';
 import { ShowReplyNCRComponent } from './reports/show-reply-ncr/show-reply-ncr.component';
 import { EditReplyNCRComponent } from './reports/edit-reply-ncr/edit-reply-ncr.component';
+import { DetailNCRComponent } from './reports/detail-ncr/detail-ncr.component';
+import { DetailIORComponent } from './reports/detail-ior/detail-ior.component';
 
 export const routes: Routes = [
     // Essential routes
@@ -30,12 +32,14 @@ export const routes: Routes = [
     // Report routes
     { path: 'formNCR', component: FormNCRComponent },
     { path: 'searchNCR', component: SearchNCRComponent },
+    { path: 'detailNCR', component: DetailNCRComponent },
     { path: 'addReplyNCR', component: ReplyNCRComponent },
     { path: 'showReplyNCR', component: ShowReplyNCRComponent },
     { path: 'editReplyNCR', component: EditReplyNCRComponent },
     { path: 'editNCR', component: EditNCRComponent },
     { path: 'formIOR', component: FormIORComponent },
     { path: 'searchIOR', component: SearchIORComponent },
+    { path: 'detailIOR', component: DetailIORComponent},
     { path: 'addFollowonIOR', component: FollowonIORComponent },
     { path: 'editIOR', component: EditIORComponent },
     { path: 'searchFollowonIOR', component: SearchFollowonIORComponent},
