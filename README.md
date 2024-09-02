@@ -135,11 +135,9 @@ To install and set up the project locally, follow these steps:
 6. **Run the Application:**
    - Frontend
      ```bash
-     cd frontend
-     ng serve  
+     ng serve
    - Backend
      ```bash
-     cd backend
      npm run start:dev
 
 ## Usage
