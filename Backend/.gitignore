@@ -55,5 +55,5 @@ pids
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
-Backend/gmf-doa-dev-gdocsapi.json
-Backend/gmf-doa-dev-gdriveapi.json
+gmf-doa-dev-gdocsapi.json
+gmf-doa-dev-gdriveapi.json
