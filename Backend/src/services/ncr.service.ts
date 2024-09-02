@@ -192,9 +192,9 @@ export class NcrService {
     };
   }
 
-  async deleteNcrReply(ncr_init_id: string) {
+  async deleteNcrReply(id_ncr_reply: string) {
     const result = await this.prisma.ncr_reply.delete({
-      where: { ncr_init_id },
+      where: { id_ncr_reply },
     });
 
     if (result) {
@@ -210,7 +210,7 @@ export class NcrService {
 
   async updateNcrReply(data: UpdateNcrReplyDto, accountid: string) {
     const result = await this.prisma.ncr_reply.update({
-      where: { ncr_init_id: data.ncr_init_id },
+      where: { id_ncr_reply: data.id_ncr_reply },
       data: {
         accountid,
         rca_problem: data.rca_problem,
@@ -232,7 +232,7 @@ export class NcrService {
   }
 
   async showNcrReply(ncr_init_id: string) {
-    const result = await this.prisma.ncr_reply.findUnique({
+    const result = await this.prisma.ncr_reply.findMany({
       where: { ncr_init_id },
     });
 
@@ -275,9 +275,9 @@ export class NcrService {
     };
   }
 
-  async deleteNcrResult(ncr_init_id: string) {
+  async deleteNcrResult(id_ncr_result: string) {
     const result = await this.prisma.ncr_followresult.delete({
-      where: { ncr_init_id },
+      where: { id_ncr_result },
     });
     return {
       message: 'NCR Follow Result deleted',
@@ -287,7 +287,7 @@ export class NcrService {
 
   async updateNcrResult(data: UpdateNcrResultDto, accountid: string) {
     const result = await this.prisma.ncr_followresult.update({
-      where: { ncr_init_id: data.ncr_init_id },
+      where: { id_ncr_result: data.id_ncr_result },
       data: {
         accountid,
         close_corrective_actions: data.close_corrective_actions,
@@ -313,10 +313,10 @@ export class NcrService {
   }
 
   async showNcrResult(ncr_init_id: string) {
-    const result = await this.prisma.ncr_followresult.findUnique({
+    const result = await this.prisma.ncr_followresult.findMany({
       where: { ncr_init_id },
     });
-    if (result) {
+    if (result.length > 0) {
       return {
         message: 'Showing NCR Follow Result',
         result,

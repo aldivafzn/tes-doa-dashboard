@@ -195,7 +195,7 @@ export class UpdateNcrReplyDto {
   accountid: string;
 
   @IsString()
-  ncr_init_id: string;
+  id_ncr_reply: string;
 
   @IsString()
   rca_problem: string;
@@ -295,7 +295,7 @@ export class CreateNcrResultDto {
 export class UpdateNcrResultDto extends CreateNcrResultDto {
   @IsNotEmpty()
   @IsString()
-  ncr_init_id: string;
+  id_ncr_result: string;
 }
 
 export class ShowNcrResultDto {

@@ -55,8 +55,9 @@ model highlightissue {
 
 /// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
 model ncr_followresult {
+  id_ncr_result            String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   accountid                String?      @db.Uuid
-  ncr_init_id              String       @id @db.Uuid
+  ncr_init_id              String       @db.Uuid
   close_corrective_actions String?
   proposed_close_auditee   String
   proposed_close_date      DateTime     @db.Date
@@ -71,7 +72,7 @@ model ncr_followresult {
   verified_date            DateTime     @db.Date
   temporarylink            String?
   account                  account?     @relation(fields: [accountid], references: [accountid], onDelete: NoAction, onUpdate: NoAction)
-  ncr_initial              ncr_initial? @relation(fields: [ncr_init_id], references: [ncr_init_id], onDelete: NoAction, onUpdate: NoAction)
+  ncr_initial              ncr_initial? @relation(fields: [ncr_init_id], references: [ncr_init_id])
 }
 
 model ncr_initial {
@@ -102,13 +103,13 @@ model ncr_initial {
   temporarylink               String?
   ncr_followresult            ncr_followresult[] 
   account                     account?           @relation(fields: [accountid], references: [accountid], onDelete: NoAction, onUpdate: NoAction)
-  ncr_reply                   ncr_reply?         
+  ncr_reply                   ncr_reply[]        
 }
 
-/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
 model ncr_reply {
+  id_ncr_reply                String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   accountid                   String?     @db.Uuid
-  ncr_init_id                 String      @id @db.Uuid
+  ncr_init_id                 String      @db.Uuid
   rca_problem                 String
   corrective_action           String
   preventive_action           String
@@ -119,7 +120,7 @@ model ncr_reply {
   temporarylink               String?
   recommend_corrective_action String?
   account                     account?    @relation(fields: [accountid], references: [accountid], onDelete: NoAction, onUpdate: NoAction)
-  ncr_initial                 ncr_initial @relation(fields: [ncr_init_id], references: [ncr_init_id], onDelete: NoAction, onUpdate: NoAction)
+  ncr_initial                 ncr_initial @relation(fields: [ncr_init_id], references: [ncr_init_id])
 }
 
 /// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
