@@ -1,162 +1,162 @@
 <app-navbar></app-navbar>
 <div class="min-h-screen mt-24 flex items-center justify-center">
   <div class="mb-2 mx-auto w-10/12 bg-white shadow-md rounded-lg overflow-hidden">
-    <div class="p-8 px-16">
-      <a href="/searchIOR" class="text-lg text-cyan-600 decoration-inherit hover:text-cyan-800 hover:underline">< Back</a>
-      <h2 class="text-2xl font-bold text-gray-900 text-center justify-center my-6 uppercase py-3">IOR Detail</h2>
-      <div class="grid grid-cols-2 gap-4 mb-4">
-        <div><label class="font-semibold text-black text-left">Subject:</label></div>
-        <div class="col-span-2"><p class="text-black text-left">{{iorData.subject_ior}}</p></div>
-        <div class="space-x-2">
-          <label class="font-semibold text-black text-left">IOR Number:</label>
-          <label class="text-black text-left">{{iorData.occur_nbr}}</label>
-        </div>
-        <div class="space-x-2">
-          <label class="font-semibold text-black text-left">Occurrence Date:</label>
-          <label class="text-black text-left">{{iorData.occur_date}}</label>
-        </div>
-        <div><label class="font-semibold text-black text-left">Reference:</label></div>
-        <div class="col-span-2"><p class="text-black text-left">{{iorData.reference_ior}}</p></div>
-        <div class="space-x-2">
-          <label class="font-semibold text-black text-left">Sent to:</label>
-          <label class="text-black text-left">{{iorData.to_uic}}</label>
-        </div>
-        <div class="space-x-2">
-          <label class="font-semibold text-black text-left">Category:</label>
-          <label class="text-black text-left">{{iorData.category_occur}}</label>
-        </div>
-        <div class="space-x-2">
-          <label class="font-semibold text-black text-left">Copy to:</label>
-          <label class="text-black text-left">{{iorData.cc_uic}}</label>
-        </div>
-        <div class="space-x-2">
-          <label class="font-semibold text-black text-left">Level Type:</label>
-          <label class="text-black text-left">{{iorData.level_type}}</label>
-        </div>
-        <div><label class="font-semibold text-black text-left">Detail of Occurrence:</label></div>
-        <div class="col-span-2"><p class="text-black text-left">{{iorData.detail_occurance}}</p></div>
-        <div class="space-x-2">
-          <label class="font-semibold text-black text-left">Reporter Name:</label>
-          <label class="text-black text-left text-wrap">{{iorData.reportedby}}</label>
-        </div>
-        <div class="space-x-2">
-          <label class="font-semibold text-black text-left">Reporter Identity:</label>
-          <label class="text-black text-left">{{iorData.reporter_identity}}</label>
-        </div>
-        <div class="space-x-2">
-          <label class="font-semibold text-black text-left">Reporter Unit:</label>
-          <label class="text-black text-left">{{iorData.reporter_uic}}</label>
-        </div>
-        <div class="space-x-2">
-          <label class="font-semibold text-black text-left">Data Reference:</label>
-          <label class="text-black text-left">{{iorData.data_reference}}</label>
-        </div>
-        <div class="space-x-2">
-          <label class="font-semibold text-black text-left">Report Date:</label>
-          <label class="text-black text-left">{{iorData.report_date}}</label>
-        </div>
-        <div class="space-x-2">
-          <label class="font-semibold text-black text-left">HIRAC Process:</label>
-          <label class="text-black text-left">{{iorData.hirac_process}}</label>
-        </div>
-        <div class="grid grid-cols-3 col-span-2 gap-4">
-          <div class="space-x-2">
-            <label class="font-semibold text-black text-left">Initial Probability:</label>
-            <label class="text-black text-left">{{iorData.initial_probability}}</label>
-          </div>
-          <div class="space-x-2">
-            <label class="font-semibold text-black text-left">Initial Severity:</label>
-            <label class="text-black text-left">{{iorData.initial_severity}}</label>
-          </div>
-          <div class="space-x-2">
-            <label class="font-semibold text-black text-left">Initial Risk Index:</label>
-            <label class="text-black text-left">{{iorData.initial_riskindex}}</label>
-          </div>
-        </div>
+    <div class="p-8 px-24">
+      <div class="my-4">
+        <a href="/searchIOR" class="text-lg text-cyan-600 decoration-inherit hover:text-cyan-800 hover:underline">< Back</a>
       </div>
-      <div class="flex flex-center mb-4 space-x-2">
-        <button (click)="navigatePreview(iorData.id_ior)" class="inline-block bg-[#016299] rounded border-2 border-primary px-3 pb-[6px] pt-2 font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white">Preview</button>
-        <button (click)="navigateEditIOR()" class="inline-block bg-[#016299] rounded border-2 border-primary px-4 pb-[6px] pt-2 font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white" *ngIf="role === 'Admin' || role === 'IM'">
-          <i class="fas fa-edit" style="font-size: 12px;"></i> Edit
-        </button>
+      <div class="my-8 p-12 rounded-lg shadow-md shadow-black outline outline-1 outline-gray-700">
+        <h2 class="text-2xl font-bold text-gray-900 text-center justify-center mb-8 uppercase">IOR Detail</h2>
+        <div class="grid grid-cols-2 gap-4 mb-4">
+          <div class="space-x-2">
+            <label class="tracking-wide font-semibold text-gray-700 text-left">Subject:</label>
+            <label class="tracking-wide text-gray-600 text-left">{{iorData.subject_ior}}</label>
+          </div>
+          <div class="space-x-2">
+            <label class="tracking-wide font-semibold text-gray-700 text-left">IOR Number:</label>
+            <label class="tracking-wide text-gray-600 text-left">{{iorData.occur_nbr}}</label>
+          </div>
+          <div class="space-x-2">
+            <label class="tracking-wide font-semibold text-gray-700 text-left">Occurrence Date:</label>
+            <label class="tracking-wide text-gray-600 text-left">{{iorData.occur_date}}</label>
+          </div>
+          <div class="space-x-2">
+            <label class="tracking-wide font-semibold text-gray-700 text-left">Reference:</label>
+            <label class="tracking-wide text-gray-600 text-left">{{iorData.reference_ior}}</label>
+          </div>
+          <div class="space-x-2">
+            <label class="tracking-wide font-semibold text-gray-700 text-left">Sent to:</label>
+            <label class="tracking-wide text-gray-600 text-left">{{iorData.to_uic}}</label>
+          </div>
+          <div class="space-x-2">
+            <label class="tracking-wide font-semibold text-gray-700 text-left">Category:</label>
+            <label class="tracking-wide text-gray-600 text-left">{{iorData.category_occur}}</label>
+          </div>
+          <div class="space-x-2">
+            <label class="tracking-wide font-semibold text-gray-700 text-left">Copy to:</label>
+            <label class="tracking-wide text-gray-600 text-left">{{iorData.cc_uic}}</label>
+          </div>
+          <div class="space-x-2">
+            <label class="tracking-wide font-semibold text-gray-700 text-left">Level Type:</label>
+            <label class="tracking-wide text-gray-600 text-left">{{iorData.level_type}}</label>
+          </div>
+          <div><label class="block tracking-wide font-semibold text-gray-700 text-left">Detail of Occurrence:</label></div>
+          <div class="col-span-2"><p class="tracking-wide text-gray-600 text-left">{{iorData.detail_occurance}}</p></div>
+          <div class="space-x-2">
+            <label class="tracking-wide font-semibold text-gray-700 text-left">Reporter Name:</label>
+            <label class="tracking-wide text-gray-600 text-left text-wrap">{{iorData.reportedby}}</label>
+          </div>
+          <div class="space-x-2">
+            <label class="tracking-wide font-semibold text-gray-700 text-left">Reporter Identity:</label>
+            <label class="text-gray-600 text-left">{{iorData.reporter_identity}}</label>
+          </div>
+          <div class="space-x-2">
+            <label class="tracking-wide font-semibold text-gray-700 text-left">Reporter Unit:</label>
+            <label class="tracking-wide text-gray-600 text-left">{{iorData.reporter_uic}}</label>
+          </div>
+          <div class="space-x-2">
+            <label class="tracking-wide font-semibold text-gray-700 text-left">Report Date:</label>
+            <label class="tracking-wide text-gray-600 text-left">{{iorData.report_date}}</label>
+          </div>
+          <div class="space-x-2">
+            <label class="tracking-wide font-semibold text-gray-700 text-left">Data Reference:</label>
+            <label class="tracking-wide text-gray-600 text-left">{{iorData.data_reference}}</label>
+          </div>
+          <div class="space-x-2">
+            <label class="tracking-wide font-semibold text-gray-700 text-left">HIRAC Process:</label>
+            <label class="tracking-wide text-gray-600 text-left">{{iorData.hirac_process}}</label>
+          </div>
+          <div class="col-span-2 space-x-2">
+            <label class="tracking-wide font-semibold text-gray-700 text-left">Initial Probability:</label>
+            <label class="tracking-wide text-gray-600 text-left">{{iorData.initial_probability}}</label>
+          </div>
+          <div class="col-span-2 space-x-2">
+            <label class="tracking-wide font-semibold text-gray-700 text-left">Initial Severity:</label>
+            <label class="tracking-wide text-gray-600 text-left">{{iorData.initial_severity}}</label>
+          </div>
+          <div class="col-span-2 space-x-2">
+            <label class="tracking-wide font-semibold text-gray-700 text-left">Initial Risk Index:</label>
+            <label class="tracking-wide text-gray-600 text-left">{{iorData.initial_riskindex}}</label>
+          </div>
+        </div>
+        <div class="flex flex-center space-x-2">
+          <button (click)="navigatePreview(iorData.id_ior)" class="inline-block bg-[#016299] rounded border-2 border-primary px-3 pb-[6px] pt-2 font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white">Preview</button>
+          <button (click)="navigateEditIOR()" class="inline-block bg-[#016299] rounded border-2 border-primary px-4 pb-[6px] pt-2 font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white" *ngIf="role === 'Admin' || role === 'IM'">
+            <i class="fas fa-edit" style="font-size: 12px;"></i> Edit
+          </button>
+        </div>
       </div>
 
-      <h2 class="text-2xl font-bold text-gray-900 text-center justify-center my-6 uppercase py-3">Follow On</h2>
-      <div class="mt-5">
-        <button (click)="navigateAddFollowon()" class="inline-block bg-[#016299] rounded border-2 border-primary px-3 pb-[6px] items-center pt-2 font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white">Add Follow On</button>
-      </div>
-      <div class="show-table mt-5 border border-gray-500">
-        <div class="table-responsive overflow-auto" style="max-height: 600px; min-height: 200px;">
-          <table class="table w-full bg-white overflow-y-scroll" id="data-table">
-            <thead class="bg-blue-100 font-medium">
-              <tr class="border-b border-gray-500">
-                <th id="follupby" class="px-4 py-2 border-r border-gray-500">Follow&nbsp;On&nbsp;By</th>
-                <th id="follup_uic" class="px-4 py-2 border-r border-gray-500">Follow&nbsp;On&nbsp;UIC</th>
-                <th id="follup_date" class="px-4 py-2 border-r border-gray-500">Follow&nbsp;On&nbsp;Date</th>
-                <th id="follup_datarefer" class="px-4 py-2 border-r border-gray-500">Follow&nbsp;On&nbsp;Reference</th>
-                <!-- <th id="current_probability" class="px-4 py-2 border-r border-gray-500">Current Probability</th>
-                <th id="current_severity" class="px-4 py-2 border-r border-gray-500">Current Severity</th>
-                <th id="current_riskindex" class="px-4 py-2 border-r border-gray-500">Current Risk Index</th>
-                <th id="follup_detail" class="px-4 py-2 border-r border-gray-500">Follow&nbsp;On&nbsp;Detail</th> -->
-                <th id="follup_status" class="px-4 py-2 border-r border-gray-500">Follow&nbsp;On&nbsp;Status</th>
-                <th id="nextuic_follup" class="px-4 py-2 border-r border-gray-500">Next&nbsp;Follow&nbsp;On&nbsp;UIC</th>
-                <th id="follup_detail" class="px-4 py-2 border-r border-gray-500 text-center">Details</th>
-                <th id="action" class="px-4 py-2">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let item of followons" class="border-b border-gray-500">
-                <td class="px-4 py-2 border-r border-gray-500">{{ item.follupby }}</td>
-                <td class="px-4 py-2 border-r border-gray-500">{{ item.follup_uic }}</td>
-                <td class="px-4 py-2 border-r border-gray-500">{{ item.follup_date }}</td>
-                <td class="px-4 py-2 border-r border-gray-500">{{ item.follup_datarefer }}</td>
-                <!-- <td class="px-4 py-2 border-r border-gray-500">{{ item.current_probability }}</td>
-                <td class="px-4 py-2 border-r border-gray-500">{{ item.current_severity }}</td>
-                <td class="px-4 py-2 border-r border-gray-500">{{ item.current_riskindex }}</td>
-                <td class="px-4 py-2 border-r border-gray-500">{{ item.follup_detail }}</td> -->
-                <td class="px-4 py-2 border-r border-gray-500">{{ item.follup_status }}</td>
-                <td class="px-4 py-2 border-r border-gray-500">{{ item.nextuic_follup }}</td>
-                <td class="px-4 py-2 border-r border-gray-500 text-center">
-                  <details id="follup_details_{{item.id_follup}}" class="open">
-                    <summary class="inline-block bg-[#016299] rounded border-2 border-primary px-4 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 cursor-pointer focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white">
-                      Details
-                    </summary>
+      <div class="my-8 p-12 rounded-lg shadow-md shadow-black outline outline-1 outline-gray-700">
+        <h2 class="text-2xl font-bold text-gray-900 text-center justify-center mb-8 uppercase">Follow On</h2>
+        <div class="mt-5">
+          <button (click)="navigateAddFollowon()" class="inline-block bg-[#016299] rounded border-2 border-primary px-3 pb-[6px] items-center pt-2 font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white">Add Follow On</button>
+        </div>
+        <div class="show-table mt-5 border border-gray-500">
+          <div class="table-responsive overflow-auto" style="max-height: 600px; min-height: 200px;">
+            <table class="table w-full bg-white overflow-y-scroll" id="data-table">
+              <thead class="bg-blue-100 font-medium">
+                <tr class="border-b border-gray-500">
+                  <th id="follupby" class="px-4 py-2 border-r border-gray-500">Follow&nbsp;On&nbsp;By</th>
+                  <th id="follup_uic" class="px-4 py-2 border-r border-gray-500">Follow&nbsp;On&nbsp;UIC</th>
+                  <th id="follup_date" class="px-4 py-2 border-r border-gray-500">Follow&nbsp;On&nbsp;Date</th>
+                  <th id="follup_datarefer" class="px-4 py-2 border-r border-gray-500">Follow&nbsp;On&nbsp;Reference</th>
+                  <th id="follup_status" class="px-4 py-2 border-r border-gray-500">Follow&nbsp;On&nbsp;Status</th>
+                  <th id="nextuic_follup" class="px-4 py-2 border-r border-gray-500">Next&nbsp;Follow&nbsp;On&nbsp;UIC</th>
+                  <th id="follup_detail" class="px-4 py-2 border-r border-gray-500 text-center">Details</th>
+                  <th id="action" class="px-4 py-2">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of followons" class="border-b border-gray-500">
+                  <td class="px-4 py-2 border-r border-gray-500">{{ item.follupby }}</td>
+                  <td class="px-4 py-2 border-r border-gray-500">{{ item.follup_uic }}</td>
+                  <td class="px-4 py-2 border-r border-gray-500">{{ item.follup_date }}</td>
+                  <td class="px-4 py-2 border-r border-gray-500">{{ item.follup_datarefer }}</td>
+                  <td class="px-4 py-2 border-r border-gray-500">{{ item.follup_status }}</td>
+                  <td class="px-4 py-2 border-r border-gray-500">{{ item.nextuic_follup }}</td>
+                  <td class="px-4 py-2 border-r border-gray-500 text-center">
+                    <details id="follup_details_{{item.id_follup}}" class="open">
+                      <summary class="inline-block bg-[#016299] rounded border-2 border-primary px-4 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 cursor-pointer focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white">
+                        Details
+                      </summary>
 
-                    <div class="bg-white shadow-md rounded-lg w-fit max-w-[60%] h-fit my-auto mx-auto fixed inset-0 text-gray-600 p-16">
-                      <span (ngOnClick)="closeDetails(item.id_follup)"
-                          class="bg-gray-400 rounded-full flex items-center justify-center text-3xl font-bold uppercase absolute -right-4 -top-4 w-10 h-10 text-white hover:bg-blue-200 hover:duration-200 cursor-pointer">
-                          X
-                      </span>
-                      <div class="grid cols-3 gap-4">
-                        <div class="col-span-3 space-y-2">
-                          <label class="block tracking-wide text-gray-700 text-base font-semibold text-left">Follow On Detail:</label>
-                          <p class="tracking-wide text-gray-600 text-base text-left">{{item.follup_detail}}</p>
+                      <div class="bg-white outline outline-1 outline-gray-700 rounded-lg w-fit max-w-[60%] h-fit my-auto mx-auto fixed inset-0 text-gray-600 p-16">
+                        <span (click)="closeDetails(item.id_follup)"
+                            class="bg-gray-400 rounded-full flex items-center justify-center text-3xl font-bold uppercase absolute -right-4 -top-4 w-10 h-10 text-white hover:bg-blue-200 hover:duration-200 cursor-pointer">
+                            X
+                        </span>
+                        <div class="grid grid-rows-auto gap-4">
+                          <div class="space-y-2">
+                            <label class="block tracking-wide text-gray-700 text-base font-semibold text-left">Follow On Detail:</label>
+                            <p class="tracking-wide text-gray-600 text-base text-left">{{item.follup_detail}}</p>
+                          </div>
+                          <div class="space-x-2 text-left">
+                            <label class="tracking-wide text-gray-700 text-base font-semibold text-left">Current Probability:</label>
+                            <label class="tracking-wide text-gray-600 text-base text-left">{{item.current_probability}}</label>
+                          </div>
+                          <div class="space-x-2 text-left">
+                            <label class="tracking-wide text-gray-700 text-base font-semibold text-left">Current Severity:</label>
+                            <label class="tracking-wide text-gray-600 text-base text-left">{{item.current_severity}}</label>
+                          </div>
+                          <div class="space-x-2 text-left">
+                            <label class="tracking-wide text-gray-700 text-base font-semibold text-left">Current Risk Index:</label>
+                            <label class="tracking-wide text-gray-600 text-base text-left">{{item.current_riskindex}}</label>
+                          </div>
                         </div>
-                        <div class="space-x-2 text-left">
-                          <label class="tracking-wide text-gray-700 text-base font-semibold text-left">Current Probability:</label>
-                          <label class="text-gray-600 text-base text-left">{{item.current_probability}}</label>
-                        </div>
-                        <div class="space-x-2 text-left">
-                          <label class="tracking-wide text-gray-700 text-base font-semibold text-left">Current Severity:</label>
-                          <label class="text-gray-600 text-base text-left">{{item.current_severity}}</label>
-                        </div>
-                        <div class="space-x-2 text-left">
-                          <label class="tracking-wide text-gray-700 text-base font-semibold text-left">Current Risk Index:</label>
-                          <label class="text-gray-600 text-base text-left">{{item.current_riskindex}}</label>
-                        </div>
-                      </div>
-                  </div>
-                  </details>
-                </td>
-                <td class="px-4 py-2 text-center">
-                  <!-- <button (click)="navigatePreview(item.document_id)" class="inline-block bg-[#016299] rounded border-2 border-primary px-3 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white">Preview</button> -->
-                  <button (click)="navigateEditFollowon(item.id_follup)" class="inline-block bg-[#016299] rounded border-2 border-primary px-4 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white">
-                    <i class="fas fa-edit" style="font-size: 12px;"></i> Edit
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+                    </div>
+                    </details>
+                  </td>
+                  <td class="px-4 py-2 text-center">
+                    <!-- <button (click)="navigatePreview(item.document_id)" class="inline-block bg-[#016299] rounded border-2 border-primary px-3 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white">Preview</button> -->
+                    <button (click)="navigateEditFollowon(item.id_follup)" class="inline-block bg-[#016299] rounded border-2 border-primary px-4 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white">
+                      <i class="fas fa-edit" style="font-size: 12px;"></i> Edit
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
