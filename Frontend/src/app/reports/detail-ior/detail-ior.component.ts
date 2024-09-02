@@ -204,4 +204,12 @@ export class DetailIORComponent implements OnInit{
     // Convert the value if it's a key in the enum object
     return enumObj[value] || value;
   }
+
+  closeDetails(id_follup: string) {
+    const element_id = 'follup_details_' + id_follup;
+    const element = document.getElementById(element_id);
+    if (element) {
+      element.removeAttribute('open');
+    }
+  }
 }

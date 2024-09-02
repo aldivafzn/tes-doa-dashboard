@@ -64,7 +64,8 @@ export class NavbarComponent implements OnInit {
   checkRoute() {
     if (window.location.href != 'http://localhost:4200/editIOR' && 
         window.location.href != 'http://localhost:4200/detailIOR' &&
-        window.location.href != 'http://localhost:4200/addFollowonIOR'
+        window.location.href != 'http://localhost:4200/addFollowonIOR' &&
+        window.location.href != 'http://localhost:4200/editFollowonIOR'
       ) {
       localStorage.removeItem('id_ior');
     }
@@ -75,9 +76,16 @@ export class NavbarComponent implements OnInit {
         window.location.href != 'http://localhost:4200/detailNCR' &&
         window.location.href != 'http://localhost:4200/addReplyNCR' &&
         window.location.href != 'http://localhost:4200/editReplyNCR' &&
-        window.location.href != 'http://localhost:4200/addResultNCR'
+        window.location.href != 'http://localhost:4200/addResultNCR' &&
+        window.location.href != 'http://localhost:4200/editResultNCR'
       ) {
       localStorage.removeItem('ncr_init_id');
+    }
+    if (window.location.href != 'http://localhost:4200/editReplyNCR') {
+      localStorage.removeItem('id_ncr_reply');
+    }
+    if (window.location.href != 'http://localhost:4200/editResultNCR') {
+      localStorage.removeItem('id_ncr_result');
     }
   }
 }

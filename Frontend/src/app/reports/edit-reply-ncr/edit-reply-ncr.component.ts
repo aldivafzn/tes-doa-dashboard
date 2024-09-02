@@ -25,8 +25,7 @@ interface ReplyNCR {
   identified_date: Date | string,
   accept_by: string,
   audit_accept: Date | string,
-  temporarylink: string,
-  recommend_corrective_action: string
+  temporarylink: string
 }
 
 @Component({
@@ -38,7 +37,7 @@ interface ReplyNCR {
 })
 export class EditReplyNCRComponent implements OnInit {
   constructor(private toastService: ToastService, private authService: AuthService) { }
-  currentNCRInitId = '';
+  currentReplyID = '';
   replyNCRData: ReplyNCR = {
     ncr_init_id: '',
     rca_problem: '',
@@ -49,13 +48,12 @@ export class EditReplyNCRComponent implements OnInit {
     accept_by: '',
     audit_accept: '',
     temporarylink: '',
-    recommend_corrective_action: ''
   }
 
   ngOnInit() { 
-    const ncr_init_id = localStorage.getItem('ncr_init_id');
-    if (ncr_init_id) {
-      this.currentNCRInitId = ncr_init_id;
+    const id_ncr_reply = localStorage.getItem('id_ncr_reply');
+    if (id_ncr_reply) {
+      this.currentReplyID = id_ncr_reply;
     }
     this.fetchReply();
   }
@@ -63,7 +61,7 @@ export class EditReplyNCRComponent implements OnInit {
   async fetchReply() {
     try {
       const response = await axios.post('http://localhost:4040/ncr/reply/show', {
-        ncr_init_id: this.currentNCRInitId
+        id_ncr_reply: this.currentReplyID
       });
       if (response.data.message === 'Showing NCR Reply') {
         this.replyNCRData = response.data.showProduct;
@@ -91,7 +89,7 @@ export class EditReplyNCRComponent implements OnInit {
       if (response.data.status === 200) {
         this.toastService.successToast('NCR Reply updated successfully');
         console.log('NCR Reply updated successfully');
-        window.location.href = '/showReplyNCR';
+        window.location.href = '/detailNCR';
       } else {
         this.toastService.failedToast('Failed to update NCR Reply');
         console.error('Failed to update NCR Reply:', response.data.message);
