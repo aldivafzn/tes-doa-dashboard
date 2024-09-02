@@ -12,7 +12,8 @@ import { FollowonIORComponent } from './reports/followon-ior/followon-ior.compon
 import { UserGuideComponent } from './user-guide/user-guide.component';
 import { EditNCRComponent } from './reports/edit-ncr/edit-ncr.component';
 import { EditIORComponent } from './reports/edit-ior/edit-ior.component';
-import { PersonnelComponent } from './personnel/personnel.component';
+import { SearchPersonnelComponent } from './personnel/search-personnel/search-personnel.component';
+import { AddPersonnelComponent } from './personnel/add-personnel/add-personnel.component';
 import { SearchFollowonIORComponent } from './reports/search-followon-ior/search-followon-ior.component';
 import { EditFollowonIORComponent } from './reports/edit-followon-ior/edit-followon-ior.component';
 import { ReplyNCRComponent } from './reports/reply-ncr/reply-ncr.component';
@@ -29,7 +30,6 @@ export const routes: Routes = [
     { path: 'register', component: RegisterComponent },
     { path: 'account', component: AccountComponent },
     { path: 'userGuide', component: UserGuideComponent},
-    { path: 'personnel', component: PersonnelComponent},
     // Report routes
     { path: 'formNCR', component: FormNCRComponent },
     { path: 'searchNCR', component: SearchNCRComponent },
@@ -46,6 +46,9 @@ export const routes: Routes = [
     { path: 'editIOR', component: EditIORComponent },
     { path: 'searchFollowonIOR', component: SearchFollowonIORComponent},
     { path: 'editFollowonIOR', component: EditFollowonIORComponent },
+    // Personnel routes
+    { path: 'searchPersonnel', component: SearchPersonnelComponent},
+    { path: 'addPersonnel', component: AddPersonnelComponent},
     // Redirects
     { path: '', redirectTo: '/login', pathMatch: 'full' },
     { path: '**', redirectTo: '/login', pathMatch: 'full' },
