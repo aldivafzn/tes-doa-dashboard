@@ -12,10 +12,14 @@ import {
   UpdateNcrResultDto,
 } from '../dtos/ncr.dto';
 import { uic } from '@prisma/client';
+import { GoogleApiService } from './gdocs.service';
 
 @Injectable()
 export class NcrService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private readonly googleApiService: GoogleApiService,
+  ) {}
 
   async addNcr(
     createNcrDto: Omit<CreateNCRDto, 'accountid'>,
