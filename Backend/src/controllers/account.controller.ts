@@ -19,7 +19,7 @@ export class AccountController {
     return this.accountService.login(loginDto);
   }
 
-  //@UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @Post('add')
   async addAccount(@Body() addAccountDto: AddAccountDto) {
     return this.accountService.addAccount(addAccountDto);
