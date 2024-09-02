@@ -16,9 +16,9 @@ model account {
   email            String?            @unique @db.VarChar(255)
   ior              String?            @db.VarChar(255)
   ncr              String?            @db.VarChar(255)
-  ncr_followresult ncr_followresult[] 
+  ncr_followresult ncr_followresult[]
   ncr_initial      ncr_initial[]
-  ncr_reply        ncr_reply[]       
+  ncr_reply        ncr_reply[]
 }
 
 model assignpic {
@@ -55,24 +55,24 @@ model highlightissue {
 
 /// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
 model ncr_followresult {
-  id_ncr_result            String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  accountid                String?      @db.Uuid
-  ncr_init_id              String       @db.Uuid
+  accountid                String?     @db.Uuid
+  ncr_init_id              String      @db.Uuid
   close_corrective_actions String?
   proposed_close_auditee   String
-  proposed_close_date      DateTime     @db.Date
+  proposed_close_date      DateTime    @db.Date
   is_close                 Boolean
   effectiveness            effective
-  refer_verification       String?      @db.VarChar(10)
-  sheet_no                 String?      @db.VarChar(50)
-  new_ncr_issue_nbr        String?      @db.VarChar(10)
+  refer_verification       String?     @db.VarChar(10)
+  sheet_no                 String?     @db.VarChar(50)
+  new_ncr_issue_nbr        String?     @db.VarChar(10)
   close_approved_by        String
-  close_approved_date      DateTime     @db.Date
+  close_approved_date      DateTime    @db.Date
   verified_chief_im        String
-  verified_date            DateTime     @db.Date
+  verified_date            DateTime    @db.Date
   temporarylink            String?
-  account                  account?     @relation(fields: [accountid], references: [accountid], onDelete: NoAction, onUpdate: NoAction)
-  ncr_initial              ncr_initial? @relation(fields: [ncr_init_id], references: [ncr_init_id])
+  id_ncr_result            String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  account                  account?    @relation(fields: [accountid], references: [accountid], onDelete: NoAction, onUpdate: NoAction)
+  ncr_initial              ncr_initial @relation(fields: [ncr_init_id], references: [ncr_init_id])
 }
 
 model ncr_initial {
@@ -101,13 +101,13 @@ model ncr_initial {
   acknowledge_date            DateTime           @db.Date
   status                      enum_stat
   temporarylink               String?
-  ncr_followresult            ncr_followresult[] 
+  document_id                 String?            @db.VarChar(65)
+  ncr_followresult            ncr_followresult[]
   account                     account?           @relation(fields: [accountid], references: [accountid], onDelete: NoAction, onUpdate: NoAction)
-  ncr_reply                   ncr_reply[]        
+  ncr_reply                   ncr_reply[]
 }
 
 model ncr_reply {
-  id_ncr_reply                String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   accountid                   String?     @db.Uuid
   ncr_init_id                 String      @db.Uuid
   rca_problem                 String
@@ -119,6 +119,7 @@ model ncr_reply {
   auditor_accept_date         DateTime    @db.Date
   temporarylink               String?
   recommend_corrective_action String?
+  id_ncr_reply                String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   account                     account?    @relation(fields: [accountid], references: [accountid], onDelete: NoAction, onUpdate: NoAction)
   ncr_initial                 ncr_initial @relation(fields: [ncr_init_id], references: [ncr_init_id])
 }
@@ -201,6 +202,7 @@ model tbl_occurrence {
   initial_probability String?           @db.VarChar(1)
   initial_severity    String?           @db.VarChar(1)
   initial_riskindex   String?           @db.VarChar(40)
+  document_id         String?           @db.VarChar(65)
   tbl_follupoccur     tbl_follupoccur[]
 }
 
