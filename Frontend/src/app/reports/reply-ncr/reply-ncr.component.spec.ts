@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EditFollowupIORComponent } from './edit-followup-ior.component';
+import { ReplyNCRComponent } from './reply-ncr.component';
 
-describe('EditFollowupIORComponent', () => {
-  let component: EditFollowupIORComponent;
-  let fixture: ComponentFixture<EditFollowupIORComponent>;
+describe('ReplyNCRComponent', () => {
+  let component: ReplyNCRComponent;
+  let fixture: ComponentFixture<ReplyNCRComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [EditFollowupIORComponent]
+      imports: [ReplyNCRComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(EditFollowupIORComponent);
+    fixture = TestBed.createComponent(ReplyNCRComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

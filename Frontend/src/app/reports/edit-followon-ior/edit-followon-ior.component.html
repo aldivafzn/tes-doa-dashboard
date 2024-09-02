@@ -21,7 +21,7 @@
             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
               Follow Up By
             </label>
-            <input [value]="follupData.follupby" name="follupBy" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 leading-tight" type="text" readonly>
+            <input [value]="followonData.follupby" name="follupBy" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 leading-tight" type="text" readonly>
           </div>
           <!-- Follow Up UIC -->
           <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
@@ -29,12 +29,12 @@
               Follow Up UIC
             </label>
             <div class="relative">
-              <select [(ngModel)]="follupData.follup_uic" name="follupUIC" class="block appearance-none w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 leading-tight" placeholder="Select" required>
+              <select [(ngModel)]="followonData.follup_uic" name="follupUIC" class="block appearance-none w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 leading-tight" placeholder="Select" required>
                 <option value="" disabled selected>Select your data</option>
-                <option [value]="'DO'">Chief Design Office</option>
-                <option [value]="'AO'">Chief Airworthiness Office</option>
-                <option [value]="'IM'">Chief Independent Monitoring</option>
-                <option [value]="'HDO'">Head of DOA</option>
+                <option value="Chief_Design_Office">Chief Design Office</option>
+                <option value="Chief_Airworthiness_Office">Chief Airworthiness Office</option>
+                <option value="Chief_Independent_Monitoring">Chief Independent Monitoring</option>
+                <option value="Head_of_DOA">Head of DOA</option>
               </select>
               <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                 <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
@@ -46,7 +46,7 @@
             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
               Follow Up Date
             </label>
-            <input [(ngModel)]="follupData.follup_date" name="follupDate" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 leading-tight" type="date" required>
+            <input [(ngModel)]="followonData.follup_date" name="follupDate" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 leading-tight" type="date" required>
           </div>
         </div>
         
@@ -57,7 +57,7 @@
             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-password">
               Follow up Detail Occurance
             </label>
-            <textarea [(ngModel)]="follupData.follup_detail" name="follupDetail" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 leading-tight" placeholder="Enter your data" required></textarea>
+            <textarea [(ngModel)]="followonData.follup_detail" name="follupDetail" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 leading-tight" placeholder="Enter your data" required></textarea>
           </div> 
         </div>
         
@@ -69,7 +69,7 @@
               Follow Up Data reference
             </label>
             <div class="relative">
-              <select [(ngModel)]="follupData.follup_datarefer" name="follupDataRefer" class="block appearance-none w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 leading-tight" placeholder="Select" required>
+              <select [(ngModel)]="followonData.follup_datarefer" name="followonDataRefer" class="block appearance-none w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 leading-tight" placeholder="Select" required>
                 <option value="" disabled selected>Select</option>
                 <option [ngValue]="true">Yes</option>
                 <option [ngValue]="false">No</option>
@@ -85,10 +85,10 @@
               Follow Up Status
             </label>
             <div class="relative">
-              <select [(ngModel)]="follupData.follup_status" name="follupStatus" class="block appearance-none w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 leading-tight" placeholder="Select" required>
+              <select [(ngModel)]="followonData.follup_status" name="follupStatus" class="block appearance-none w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 leading-tight" placeholder="Select" required>
                 <option value="" disabled selected>Select</option>
-                <option [value]="'open'">Open</option>
-                <option [value]="'close'">Close</option>
+                <option value="Open">Open</option>
+                <option value="Close">Close</option>
                 <!-- <option [value]="'monitor'">Monitor</option> -->
               </select>
               <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
@@ -102,12 +102,12 @@
               Next Follow Up UIC
             </label>
             <div class="relative">
-              <select [(ngModel)]="follupData.nextuic_follup" name="nextFollupUIC" class="block appearance-none w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 leading-tight" placeholder="Select" required>
+              <select [(ngModel)]="followonData.nextuic_follup" name="nextFollupUIC" class="block appearance-none w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 leading-tight" placeholder="Select" required>
                 <option value="" disabled selected>Select your data</option>
-                <option [value]="'DO'">Chief Design Office</option>
-                <option [value]="'AO'">Chief Airworthiness Office</option>
-                <option [value]="'IM'">Chief Independent Monitoring</option>
-                <option [value]="'HDO'">Head of DOA</option>
+                <option value="Chief_Design_Office">Chief Design Office</option>
+                <option value="Chief_Airworthiness_Office">Chief Airworthiness Office</option>
+                <option value="Chief_Independent_Monitoring">Chief Independent Monitoring</option>
+                <option value="Head_of_DOA">Head of DOA</option>
               </select>
               <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                 <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
@@ -123,21 +123,21 @@
             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
               Current Probability
             </label>
-            <input [(ngModel)]="follupData.current_probability" name="currentProbability" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 leading-tight" type="text" placeholder="Enter Your Data" required>
+            <input [(ngModel)]="followonData.current_probability" name="currentProbability" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 leading-tight" type="text" placeholder="Enter Your Data" required>
           </div>
           <!-- initial Severity -->
           <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
               Current Severity
             </label>
-            <input [(ngModel)]="follupData.current_severity" name="currentSeverity" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 leading-tight" type="text" placeholder="Enter Your Data" required>
+            <input [(ngModel)]="followonData.current_severity" name="currentSeverity" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 leading-tight" type="text" placeholder="Enter Your Data" required>
           </div>
           <!-- initial Risk index -->
           <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
               Current Risk index
             </label>
-            <input [(ngModel)]="follupData.current_riskindex" name="currentRiskIndex" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 leading-tight" type="text" placeholder="Enter Your Data" required>
+            <input [(ngModel)]="followonData.current_riskindex" name="currentRiskIndex" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 leading-tight" type="text" placeholder="Enter Your Data" required>
           </div>
         </div>
         <!-- Submit Button -->

@@ -54,10 +54,10 @@
             <div class="relative">
               <select [(ngModel)]="iorData.to_uic" name="to_uic" class="block appearance-none w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 pr-8 leading-tight" required>
                 <option value="" disabled selected>Select your data</option>
-                <option [value]="'DO'">Chief Design Office</option>
-                <option [value]="'AO'">Chief Airworthiness Office</option>
-                <option [value]="'IM'">Chief Independent Monitoring</option>
-                <option [value]="'HDO'">Head of DOA</option>
+                <option value="Chief_Design_Office">Chief Design Office</option>
+                <option value="Chief_Airworthiness_Office">Chief Airworthiness Office</option>
+                <option value="Chief_Independent_Monitoring">Chief Independent Monitoring</option>
+                <option value="Head_of_DOA">Head of DOA</option>
               </select>
               <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                 <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
@@ -72,10 +72,10 @@
             <div class="relative">
               <select [(ngModel)]="iorData.cc_uic" name="cc_uic" class="block appearance-none w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 pr-8 leading-tight" required>
                 <option value="" disabled selected>Select your data</option>
-                <option [value]="'DO'">Chief Design Office</option>
-                <option [value]="'AO'">Chief Airworthiness Office</option>
-                <option [value]="'IM'">Chief Independent Monitoring</option>
-                <option [value]="'DOA'">Head of DOA</option>
+                <option value="Chief_Design_Office">Chief Design Office</option>
+                <option value="Chief_Airworthiness_Office">Chief Airworthiness Office</option>
+                <option value="Chief_Independent_Monitoring">Chief Independent Monitoring</option>
+                <option value="Head_of_DOA">Head of DOA</option>
               </select>
               <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                 <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
@@ -90,16 +90,16 @@
             <div class="relative">
               <select [(ngModel)]="iorData.category_occur" name="categoryOccur" class="block appearance-none w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 pr-8 leading-tight" >
                 <option value="" disabled selected>Select your data</option>
-                <option [value]="'DOA Management'">DOA Management</option>
-                <option [value]="'Procedure'">Procedure</option>
-                <option [value]="'Document'">Document</option>
-                <option [value]="'Personnel'">Personnel</option>
-                <option [value]="'Facility'">Facility</option>
-                <option [value]="'Partner or Subcontractor'">Partner or Subcontractor</option>
-                <option [value]="'Material'">Material</option>
-                <option [value]="'Information Technology'">Information Technology</option>
-                <option [value]="'Training'">Training</option>
-                <option [value]="'Others'">Others</option>
+                <option value="DOA_Management">DOA Management</option>
+                <option value="Procedure">Procedure</option>
+                <option value="Document">Document</option>
+                <option value="Personnel">Personnel</option>
+                <option value="Facility">Facility</option>
+                <option value="Partner_of_Subcontractor">Partner or Subcontractor</option>
+                <option value="Material">Material</option>
+                <option value="Information_Technology">Information Technology</option>
+                <option value="Training">Training</option>
+                <option value="Others">Others</option>
               </select>
               <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                 <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
@@ -126,10 +126,10 @@
             <div class="relative">
               <select [(ngModel)]="iorData.level_type" name="levelType" class="block appearance-none w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 pr-8 leading-tight" required>
                 <option value="" disabled selected>Select your data</option>
-                <option [value]="'Aircraft'">Aircraft</option>
-                <option [value]="'Engine'">Engine</option>
-                <option [value]="'APU'">APU</option>
-                <option [value]="'Others'">Others</option>
+                <option value="Aircraft">Aircraft</option>
+                <option value="Engine">Engine</option>
+                <option value="APU">APU</option>
+                <option value="Others">Others</option>
               </select>
               <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                 <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
@@ -150,10 +150,10 @@
             </label>
             <select [(ngModel)]="iorData.reporter_uic" name="cc_uic" class="block appearance-none w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 pr-8 leading-tight" required>
               <option value="" disabled selected>Select your data</option>
-              <option [value]="'DO'">Chief Design Office</option>
-              <option [value]="'AO'">Chief Airworthiness Office</option>
-              <option [value]="'IM'">Chief Independent Monitoring</option>
-              <option [value]="'DOA'">Head of DOA</option>
+              <option value="Chief_Design_Office">Chief Design Office</option>
+              <option value="Chief_Airworthiness_Office">Chief Airworthiness Office</option>
+              <option value="Chief_Independent_Monitoring">Chief Independent Monitoring</option>
+              <option value="Head_of_DOA">Head of DOA</option>
             </select>
           </div>
           <!-- Report Date -->

@@ -8,6 +8,26 @@ import axios from 'axios';
 import * as XLSX from 'xlsx';
 import { FormsModule } from '@angular/forms'; // Ensure FormsModule is imported
 
+enum uic {
+  Chief_Design_Office = "Chief Design Office",
+  Chief_Airworthiness_Office = "Chief Airworthiness Office",
+  Chief_Independent_Monitoring = "Chief Independent Monitoring",
+  Head_of_DOA = "Head of DOA"
+}
+
+enum category_occur {
+  DOA_Management = "DOA Management",
+  Procedure = "Procedure",
+  Document = "Document",
+  Personnel = "Personnel",
+  Facility = "Facility",
+  Partner_of_Subcontractor = "Partner or Subcontractor",
+  Material = "Material",
+  Information_Technology = "Information Technology",
+  Training = "Training",
+  Others = "Others"
+}
+
 interface JwtPayload {
   email: string,
   userId: string,
@@ -37,9 +57,6 @@ interface Occurence {
   initial_probability: string,
   initial_severity: string,
   initial_riskindex: string,
-  current_probability: string,
-  current_severity: string,
-  current_riskindex: string
   document_id: string
 }
 
@@ -114,6 +131,10 @@ export class SearchIORComponent implements OnInit {
       if (response.data.status === 200) {
         this.items = response.data.result;
         for (let i = 0; i < this.items.length; i++) {
+          this.items[i].to_uic = this.convertEnumValue(uic, this.items[i].to_uic);
+          this.items[i].cc_uic = this.convertEnumValue(uic, this.items[i].cc_uic);
+          this.items[i].category_occur = this.convertEnumValue(category_occur, this.items[i].category_occur);
+          this.items[i].reporter_uic = this.convertEnumValue(uic, this.items[i].reporter_uic);
           this.items[i].occur_date = this.items[i].occur_date.slice(0, 10);
           this.items[i].report_date = this.items[i].report_date.slice(0, 10);
         }
@@ -172,5 +193,20 @@ export class SearchIORComponent implements OnInit {
   navigateEdit(id_ior: string) {
     localStorage.setItem('id_ior', id_ior);
     window.location.href = '/editIOR';
+  }
+
+  navigateDetail(id_ior: string) {
+    localStorage.setItem('id_ior', id_ior);
+    window.location.href = '/detailIOR';
+  }
+
+  navigateFollowon(id_ior: string) {
+    localStorage.setItem('id_ior', id_ior);
+    window.location.href = '/searchFollowonIOR';
+  }
+
+  convertEnumValue(enumObj: any, value: string): string {
+    // Convert the value if it's a key in the enum object
+    return enumObj[value] || value;
   }
 }

@@ -6,6 +6,10 @@ import {
   DeleteNCRDto,
   ShowNCRDto,
   SearchNCRDto,
+  UpdateNcrReplyDto,
+  CreateNcrReplyDto,
+  CreateNcrResultDto,
+  UpdateNcrResultDto,
 } from '../dtos/ncr.dto';
 import { uic } from '@prisma/client';
 
@@ -160,6 +164,166 @@ export class NcrService {
         status: 200,
         message: 'No Data NCR Initial by ID',
         showProduct: [],
+      };
+    }
+  }
+
+  async addNcrReply(data: CreateNcrReplyDto, accountid: string) {
+    const result = await this.prisma.ncr_reply.create({
+      data: {
+        accountid,
+        ncr_init_id: data.ncr_init_id,
+        rca_problem: data.rca_problem,
+        corrective_action: data.corrective_action,
+        preventive_action: data.preventive_act,
+        identified_by_auditee: data.identified_by,
+        identified_date: data.identified_date,
+        accept_by_auditor: data.accept_by,
+        auditor_accept_date: data.audit_accept,
+        temporarylink: data.temporarylink,
+        recommend_corrective_action: data.recommend_corrective_action,
+      },
+    });
+
+    return {
+      status: 200,
+      message: 'NCR Reply Created',
+      result,
+    };
+  }
+
+  async deleteNcrReply(id_ncr_reply: string) {
+    const result = await this.prisma.ncr_reply.delete({
+      where: { id_ncr_reply },
+    });
+
+    if (result) {
+      return {
+        message: 'NCR Reply deleted',
+      };
+    } else {
+      return {
+        message: 'NCR Reply not found',
+      };
+    }
+  }
+
+  async updateNcrReply(data: UpdateNcrReplyDto, accountid: string) {
+    const result = await this.prisma.ncr_reply.update({
+      where: { id_ncr_reply: data.id_ncr_reply },
+      data: {
+        accountid,
+        rca_problem: data.rca_problem,
+        corrective_action: data.corrective_act,
+        preventive_action: data.preventive_act,
+        identified_by_auditee: data.identified_by,
+        identified_date: data.identified_date,
+        accept_by_auditor: data.accept_by,
+        auditor_accept_date: data.audit_accept,
+        temporarylink: data.temporarylink,
+      },
+    });
+
+    return {
+      status: 200,
+      message: 'Update NCR Reply successful',
+      result,
+    };
+  }
+
+  async showNcrReply(ncr_init_id: string) {
+    const result = await this.prisma.ncr_reply.findMany({
+      where: { ncr_init_id },
+    });
+
+    if (result) {
+      return {
+        message: 'Showing NCR Reply',
+        showProduct: result,
+      };
+    } else {
+      return {
+        message: 'No NCR Reply',
+      };
+    }
+  }
+
+  async createNcrResult(data: CreateNcrResultDto, accountid: string) {
+    const result = await this.prisma.ncr_followresult.create({
+      data: {
+        accountid,
+        ncr_init_id: data.ncr_init_id,
+        close_corrective_actions: data.close_corrective_actions,
+        proposed_close_auditee: data.proposed_close_auditee,
+        proposed_close_date: data.proposed_close_date,
+        is_close: data.is_close,
+        effectiveness: data.effectiveness,
+        refer_verification: data.refer_verification,
+        sheet_no: data.sheet_no,
+        new_ncr_issue_nbr: data.new_ncr_issue_nbr,
+        close_approved_by: data.close_approved_by,
+        close_approved_date: data.close_approved_date,
+        verified_chief_im: data.verified_chief_im,
+        verified_date: data.verified_date,
+        temporarylink: data.temporarylink,
+      },
+    });
+    return {
+      status: 200,
+      message: 'NCR Follow Result Created',
+      result,
+    };
+  }
+
+  async deleteNcrResult(id_ncr_result: string) {
+    const result = await this.prisma.ncr_followresult.delete({
+      where: { id_ncr_result },
+    });
+    return {
+      message: 'NCR Follow Result deleted',
+      result,
+    };
+  }
+
+  async updateNcrResult(data: UpdateNcrResultDto, accountid: string) {
+    const result = await this.prisma.ncr_followresult.update({
+      where: { id_ncr_result: data.id_ncr_result },
+      data: {
+        accountid,
+        close_corrective_actions: data.close_corrective_actions,
+        proposed_close_auditee: data.proposed_close_auditee,
+        proposed_close_date: data.proposed_close_date,
+        is_close: data.is_close,
+        effectiveness: data.effectiveness,
+        refer_verification: data.refer_verification,
+        sheet_no: data.sheet_no,
+        new_ncr_issue_nbr: data.new_ncr_issue_nbr,
+        close_approved_by: data.close_approved_by,
+        close_approved_date: data.close_approved_date,
+        verified_chief_im: data.verified_chief_im,
+        verified_date: data.verified_date,
+        temporarylink: data.temporarylink,
+      },
+    });
+    return {
+      status: 200,
+      message: 'Update NCR Follow Result successful',
+      result,
+    };
+  }
+
+  async showNcrResult(ncr_init_id: string) {
+    const result = await this.prisma.ncr_followresult.findMany({
+      where: { ncr_init_id },
+    });
+    if (result.length > 0) {
+      return {
+        message: 'Showing NCR Follow Result',
+        result,
+      };
+    } else {
+      return {
+        message: 'No NCR Follow Result',
       };
     }
   }

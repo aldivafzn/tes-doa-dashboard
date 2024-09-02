@@ -1,0 +1,60 @@
+<app-navbar></app-navbar>
+<div class="min-h-screen mt-20 md:mt-10 flex items-center justify-center">
+  <div class="mx-auto w-11/12 my-8 bg-white shadow-md rounded-lg overflow-hidden">
+    <div class="p-6">
+      <h2 class="text-2xl font-semibold text-gray-900 text-center justify-center mb-3 uppercase py-3">Search Follow On Internal Occurrence Report</h2>
+      <div class="w-full md:w-1/4 px-1 mb-2 relative flex">
+        <button (click)="navigateAdd()" class="inline-block bg-[#016299] rounded border-2 border-primary px-4 pb-[6px] pt-2 text-s font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white">Add Follow On</button>
+      </div>
+
+      <div class="show-table mt-5 border border-gray-500">
+        <div class="table-responsive overflow-auto" style="max-height: 600px; min-height: 200px;">
+          <table class="table w-full bg-white overflow-y-scroll" id="data-table">
+            <thead class="bg-blue-100 font-medium">
+              <tr class="border-b border-gray-500">
+                <th id="follupby" class="px-4 py-2 border-r border-gray-500">Follow&nbsp;On&nbsp;By</th>
+                <th id="follup_uic" class="px-4 py-2 border-r border-gray-500">Follow&nbsp;On&nbsp;UIC</th>
+                <th id="follup_date" class="px-4 py-2 border-r border-gray-500">Follow&nbsp;On&nbsp;Date</th>
+                <th id="follup_datarefer" class="px-4 py-2 border-r border-gray-500">Follow&nbsp;On&nbsp;Reference</th>
+                <th id="follup_status" class="px-4 py-2 border-r border-gray-500">Follow&nbsp;On&nbsp;Status</th>
+                <th id="follup_detail" class="px-4 py-2 border-r border-gray-500">Follow&nbsp;On&nbsp;Detail</th>
+                <th id="current_probability" class="px-4 py-2 border-r border-gray-500">Current Probability</th>
+                <th id="current_severity" class="px-4 py-2 border-r border-gray-500">Current Severity</th>
+                <th id="current_riskindex" class="px-4 py-2 border-r border-gray-500">Current Risk Index</th>
+                <th id="nextuic_follup" class="px-4 py-2 border-r border-gray-500">Next&nbsp;Follow&nbsp;On&nbsp;UIC</th>
+                <th id="action" class="px-4 py-2">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of items" class="border-b border-gray-500">
+                <td class="px-4 py-2 border-r border-gray-500">{{ item.follupby }}</td>
+                <td class="px-4 py-2 border-r border-gray-500">{{ item.follup_uic }}</td>
+                <td class="px-4 py-2 border-r border-gray-500">{{ item.follup_date }}</td>
+                <td class="px-4 py-2 border-r border-gray-500">{{ item.follup_datarefer }}</td>
+                <td class="px-4 py-2 border-r border-gray-500">{{ item.follup_status }}</td>
+                <td class="px-4 py-2 border-r border-gray-500">{{ item.follup_detail }}</td>
+                <td class="px-4 py-2 border-r border-gray-500">{{ item.current_probability }}</td>
+                <td class="px-4 py-2 border-r border-gray-500">{{ item.current_severity }}</td>
+                <td class="px-4 py-2 border-r border-gray-500">{{ item.current_riskindex }}</td>
+                <td class="px-4 py-2 border-r border-gray-500">{{ item.nextuic_follup }}</td>
+                <td class="px-4 py-2 text-center">
+                  <!-- <button (click)="navigatePreview(item.document_id)" class="inline-block bg-[#016299] rounded border-2 border-primary px-3 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white">Preview</button> -->
+                  <button (click)="navigateEdit(item.id_follup)" class="inline-block bg-[#016299] rounded border-2 border-primary px-4 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white">
+                    <i class="fas fa-edit" style="font-size: 12px;"></i> Edit
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="flex justify-center mt-5">
+        <button class="text-white justify-center bg-[#107c41] hover:bg-[#185c37] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-4 py-2" (click)="exportToExcel()">
+          <i class="fas fa-file-excel text-white mr-2"></i>Export to Excel
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>
+

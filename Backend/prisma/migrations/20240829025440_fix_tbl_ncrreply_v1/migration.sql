@@ -1,9 +1,3 @@
-/*
-  Warnings:
-
-  - You are about to drop the `Account` table. If the table is not empty, all the data it contains will be lost.
-
-*/
 -- CreateEnum
 CREATE TYPE "audit_type" AS ENUM ('Procedure Audit', 'Product Audit');
 
@@ -43,8 +37,14 @@ CREATE TYPE "user_role" AS ENUM ('Admin', 'DO', 'AO', 'IM');
 -- CreateEnum
 CREATE TYPE "work_station" AS ENUM ('AO: Airworthiness Office', 'DO: Design Office', 'IM: Independent Monitoring', 'PR: Partner', 'SC: Subcontractor', 'BR: BRIN', 'GF: GMF AeroAsia', 'BA: BIFA Flying School', 'EL: Elang Lintas Indonesia');
 
--- DropTable
-DROP TABLE "Account";
+-- CreateEnum
+CREATE TYPE "category_occur" AS ENUM ('DOA Management', 'Procedure', 'Document', 'Personnel', 'Facility', 'Partner of Subcontractor', 'Material', 'Information Technology', 'Training', 'Others');
+
+-- CreateEnum
+CREATE TYPE "follups_status" AS ENUM ('Open', 'Close');
+
+-- CreateEnum
+CREATE TYPE "level_type" AS ENUM ('Aircraft', 'Engine', 'APU', 'Others');
 
 -- CreateTable
 CREATE TABLE "account" (
@@ -159,7 +159,9 @@ CREATE TABLE "ncr_reply" (
     "accept_by_auditor" TEXT NOT NULL,
     "auditor_accept_date" DATE NOT NULL,
     "temporarylink" TEXT,
-    "recommend_corrective_action" TEXT
+    "recommend_corrective_action" TEXT,
+
+    CONSTRAINT "ncr_reply_pkey" PRIMARY KEY ("ncr_init_id")
 );
 
 -- CreateTable
@@ -179,16 +181,6 @@ CREATE TABLE "requireddocuments" (
     "remark" TEXT,
 
     CONSTRAINT "requireddocuments_pkey" PRIMARY KEY ("doc_id")
-);
-
--- CreateTable
-CREATE TABLE "tbl_category_ior" (
-    "id_ior" UUID,
-    "id_ior_category" UUID NOT NULL DEFAULT gen_random_uuid(),
-    "number_cat" VARCHAR(2),
-    "occur_nbr" VARCHAR(60),
-
-    CONSTRAINT "tbl_category_ior_pkey" PRIMARY KEY ("id_ior_category")
 );
 
 -- CreateTable
@@ -215,16 +207,16 @@ CREATE TABLE "tbl_do_project" (
 -- CreateTable
 CREATE TABLE "tbl_follupoccur" (
     "id_follup" UUID NOT NULL DEFAULT gen_random_uuid(),
-    "id_ior" TEXT,
+    "id_ior" UUID,
     "follup_detail" TEXT,
     "follupby" VARCHAR(75),
-    "follup_uic" VARCHAR(4),
+    "follup_uic" "uic",
     "follup_date" DATE,
     "follup_datarefer" BOOLEAN,
-    "follup_status" VARCHAR(30),
-    "nextuic_follup" VARCHAR(30),
-    "current_probability" VARCHAR(30),
-    "current_severity" VARCHAR(30),
+    "follup_status" "follups_status",
+    "nextuic_follup" "uic",
+    "current_probability" VARCHAR(1),
+    "current_severity" VARCHAR(1),
     "current_riskindex" VARCHAR(40),
 
     CONSTRAINT "tbl_follupoccur_pkey" PRIMARY KEY ("id_follup")
@@ -237,14 +229,14 @@ CREATE TABLE "tbl_occurrence" (
     "occur_nbr" VARCHAR(15),
     "occur_date" DATE,
     "reference_ior" VARCHAR(80),
-    "to_uic" VARCHAR(4),
-    "cc_uic" VARCHAR(4),
-    "category_occur" VARCHAR(30),
+    "to_uic" "uic",
+    "cc_uic" "uic",
+    "category_occur" "category_occur",
     "type_or_pnbr" VARCHAR(15),
-    "level_type" VARCHAR(10),
+    "level_type" "level_type",
     "detail_occurance" TEXT,
     "reportedby" VARCHAR(75),
-    "reporter_uic" VARCHAR(4),
+    "reporter_uic" "uic",
     "report_date" DATE,
     "reporter_identity" VARCHAR(8),
     "data_reference" VARCHAR(8),
@@ -285,9 +277,6 @@ ALTER TABLE "ncr_reply" ADD CONSTRAINT "ncr_reply_ncr_init_id_fkey" FOREIGN KEY 
 
 -- AddForeignKey
 ALTER TABLE "requireddocuments" ADD CONSTRAINT "requireddocuments_do_project_id_fkey" FOREIGN KEY ("do_project_id") REFERENCES "tbl_do_project"("do_project_id") ON DELETE NO ACTION ON UPDATE NO ACTION;
-
--- AddForeignKey
-ALTER TABLE "tbl_category_ior" ADD CONSTRAINT "tbl_category_ior_id_ior_fkey" FOREIGN KEY ("id_ior") REFERENCES "tbl_occurrence"("id_ior") ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 -- AddForeignKey
 ALTER TABLE "tbl_follupoccur" ADD CONSTRAINT "tbl_follupoccur_id_ior_fkey" FOREIGN KEY ("id_ior") REFERENCES "tbl_occurrence"("id_ior") ON DELETE NO ACTION ON UPDATE NO ACTION;

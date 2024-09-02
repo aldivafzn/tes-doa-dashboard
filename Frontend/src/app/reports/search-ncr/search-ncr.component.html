@@ -130,56 +130,62 @@
       
       <div class="show-table mt-5 border border-gray-500">
         <div class="table-responsive overflow-auto "style="max-height: 600px; min-height: 200px;">
-          <table class="table w-full bg-white overflow-y-scroll text-sm" id="data-table">
+          <table class="table-auto w-full bg-white overflow-y-scroll text-sm" id="data-table">
             <thead class="bg-blue-100 font-medium">
               <tr class="border-b border-gray-500">
-                <th id="subject" class="px-4 py-2 border-r border-gray-500">Subject</th>
-                <th id="regulationbased" class="px-4 py-2 border-r border-gray-500">Regulation Based</th>
                 <th id="audit_plan_no" class="px-4 py-2 border-r border-gray-500">Audit&nbsp;Plan&nbsp;No</th>
+                <th id="regulationbased" class="px-4 py-2 border-r border-gray-500">Regulation Based</th>
                 <th id="ncr_no" class="px-10 py-2 border-r border-gray-500">NCR&nbsp;No</th>
+                <!-- <th id="subject" class="px-4 py-2 border-r border-gray-500">Subject</th> -->
                 <th id="issued_date" class="px-4 py-2 border-r border-gray-500">Issued Date</th>
                 <th id="responsibility_office" class="px-4 py-2 border-r border-gray-500">Responsibility&nbsp;Office</th>
-                <th id="audit_type" class="px-4 py-2 border-r border-gray-500">Audit&nbsp;Type</th>
-                <th id="to_uic" class="px-16 py-2 border-r border-gray-500">To&nbsp;UIC</th>
-                <th id="require_condition_reference" class="px-4 py-2 border-r border-gray-500">Require&nbsp;Condition&nbsp;Reference</th>
-                <th id="level_finding" class="px-4 py-2 border-r border-gray-500">Level Finding</th>
-                <th id="problem_analis" class="px-8 py-2 border-r border-gray-500">Problem Analysis</th>
+                <!-- <th id="audit_type" class="px-4 py-2 border-r border-gray-500">Audit&nbsp;Type</th> -->
+                <!-- <th id="to_uic" class="px-16 py-2 border-r border-gray-500">To&nbsp;UIC</th> -->
+                <th id="require_condition_reference" class="px-4 py-2 border-r border-gray-500">Required&nbsp;Condition&nbsp;Reference</th>
+                <!-- <th id="level_finding" class="px-4 py-2 border-r border-gray-500">Level Finding</th> -->
+                <!-- <th id="problem_analis" class="px-8 py-2 border-r border-gray-500">Problem Analysis</th> -->
                 <th id="answer_due_date" class="px-4 py-2 border-r border-gray-500">Answer&nbsp;Due&nbsp;Date</th>
-                <th id="issued_ian" class="px-4 py-2 border-r border-gray-500">Issued&nbsp;IAN</th>
-                <th id="ian_no" class="px-10 py-2 border-r border-gray-500">IAN&nbsp;No</th>
-                <th id="encountered_condition" class="px-4 py-2 border-r border-gray-500">Encountered Condition</th>
-                <th id="audit_by" class="px-4 py-2 border-r border-gray-500">Audit By</th>
-                <th id="audit_date" class="px-4 py-2 border-r border-gray-500">Audit Date</th>
-                <th id="acknowledge_by" class="px-4 py-2 border-r border-gray-500">Acknowledge&nbsp;By</th>
-                <th id="acknowledge_date" class="px-4 py-2 border-r border-gray-500">Acknowledge&nbsp;Date</th>
+                <!-- <th id="issued_ian" class="px-4 py-2 border-r border-gray-500">Issued&nbsp;IAN</th> -->
+                <!-- <th id="ian_no" class="px-10 py-2 border-r border-gray-500">IAN&nbsp;No</th> -->
+                <!-- <th id="encountered_condition" class="px-4 py-2 border-r border-gray-500">Encountered Condition</th> -->
+                <!-- <th id="audit_by" class="px-4 py-2 border-r border-gray-500">Audit By</th> -->
+                <!-- <th id="audit_date" class="px-4 py-2 border-r border-gray-500">Audit Date</th> -->
+                <!-- <th id="acknowledge_by" class="px-4 py-2 border-r border-gray-500">Acknowledge&nbsp;By</th> -->
+                <!-- <th id="acknowledge_date" class="px-4 py-2 border-r border-gray-500">Acknowledge&nbsp;Date</th> -->
                 <th id="status" class="px-4 py-2 border-r border-gray-500">Status</th>
+                <!-- <th id="reply" class="px-4 py-2 border-r border-gray-500">Reply</th> -->
                 <th id="action" class="px-4 py-2">Action</th>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let item of items" class="border-b border-gray-500">
-                <td class="px-4 py-2 border-r border-gray-500">{{ item.subject }}</td>
-                <td class="px-4 py-2 border-r border-gray-500">{{ item.regulationbased }}</td>
                 <td class="px-4 py-2 border-r border-gray-500">{{ item.audit_plan_no }}</td>
-                <td class="px-4 py-2 border-r border-gray-500">{{ item.ncr_no }}</td>
+                <td class="px-4 py-2 border-r border-gray-500">{{ item.regulationbased }}</td>
+                <td class="px-4 py-2 border-r border-gray-500">
+                  <a href="/detailNCR" (click)="navigateDetail(item.ncr_init_id)" class="text-cyan-600 underline decoration-inherit hover:text-cyan-800">{{ item.ncr_no }}</a>
+                </td>
+                <!-- <td class="px-4 py-2 border-r border-gray-500">{{ item.subject }}</td> -->
                 <td class="px-4 py-2 border-r border-gray-500">{{ item.issued_date }}</td>
                 <td class="px-4 py-2 border-r border-gray-500">{{ item.responsibility_office }}</td>
-                <td class="px-4 py-2 border-r border-gray-500">{{ item.audit_type }}</td>
-                <td class="px-4 py-2 border-r border-gray-500">{{ item.to_uic }}</td>
+                <!-- <td class="px-4 py-2 border-r border-gray-500">{{ item.audit_type }}</td> -->
+                <!-- <td class="px-4 py-2 border-r border-gray-500">{{ item.to_uic }}</td> -->
                 <td class="px-4 py-2 border-r border-gray-500">{{ item.require_condition_reference }}</td>
-                <td class="px-4 py-2 border-r border-gray-500">{{ item.level_finding }}</td>
-                <td class="px-4 py-2 border-r border-gray-500">{{ item.problem_analysis }}</td>
+                <!-- <td class="px-4 py-2 border-r border-gray-500">{{ item.level_finding }}</td> -->
+                <!-- <td class="px-4 py-2 border-r border-gray-500">{{ item.problem_analysis }}</td> -->
                 <td class="px-4 py-2 border-r border-gray-500">{{ item.answer_due_date }}</td>
-                <td class="px-4 py-2 border-r border-gray-500">{{ item.issue_ian }}</td>
-                <td class="px-4 py-2 border-r border-gray-500">{{ item.ian_no }}</td>
-                <td class="px-4 py-2 border-r border-gray-500">{{ item.encountered_condition }}</td>
-                <td class="px-4 py-2 border-r border-gray-500">{{ item.audit_by }}</td>
-                <td class="px-4 py-2 border-r border-gray-500">{{ item.audit_date }}</td>
-                <td class="px-4 py-2 border-r border-gray-500">{{ item.acknowledge_by }}</td>
-                <td class="px-4 py-2 border-r border-gray-500">{{ item.acknowledge_date }}</td>
+                <!-- <td class="px-4 py-2 border-r border-gray-500">{{ item.issue_ian }}</td> -->
+                <!-- <td class="px-4 py-2 border-r border-gray-500">{{ item.ian_no }}</td> -->
+                <!-- <td class="px-4 py-2 border-r border-gray-500">{{ item.encountered_condition }}</td> -->
+                <!-- <td class="px-4 py-2 border-r border-gray-500">{{ item.audit_by }}</td> -->
+                <!-- <td class="px-4 py-2 border-r border-gray-500">{{ item.audit_date }}</td> -->
+                <!-- <td class="px-4 py-2 border-r border-gray-500">{{ item.acknowledge_by }}</td> -->
+                <!-- <td class="px-4 py-2 border-r border-gray-500">{{ item.acknowledge_date }}</td> -->
                 <td class="px-4 py-2 border-r border-gray-500">{{ item.status }}</td>
+                <!-- <td class="px-4 py-2 border-r border-gray-500">
+                  <button (click)="navigateReply(item.ncr_init_id)" class="inline-block bg-[#016299] rounded border-2 border-primary px-3 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white">Add/Show</button>
+                </td> -->
                 <td class="px-4 py-2 text-center">
-                  <button (click)="navigatePreview(item.documentid)" class="inline-block bg-[#016299] rounded border-2 border-primary px-3 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white">Preview</button>
+                  <!-- <button (click)="navigatePreview(item.documentid)" class="inline-block bg-[#016299] rounded border-2 border-primary px-3 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white">Preview</button> -->
                   <button (click)="navigateEdit(item.ncr_init_id)" class="inline-block bg-[#016299] rounded border-2 border-primary px-4 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white" *ngIf="role === 'Admin' || role === 'IM'">
                     <i class="fas fa-edit" style="font-size: 12px;"></i> Edit
                   </button>

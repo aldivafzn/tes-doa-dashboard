@@ -9,32 +9,25 @@
         </div>
         <!-- First Row -->
         <div class="flex flex-wrap -mx-3 mb-6">
-          <!-- IOR Subject -->
-          <div class="w-full md:w-1/4 px-3 mb-6 md:mb-0">
+          <!-- Follow On by -->
+          <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
-              IOR Subject
+              Follow On By
             </label>
-            <input [(ngModel)]="subjectIOR" name="subjectIOR" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 leading-tight" type="text" placeholder="Enter Your Data" required>
+            <input [value]="account.name" name="follupBy" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 leading-tight" type="text" readonly>
           </div>
-          <!-- Follow Up by -->
-          <div class="w-full md:w-1/4 px-3 mb-6 md:mb-0">
-            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
-              Follow Up By
-            </label>
-            <input [value]="followIORData.follupby" name="follupBy" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 leading-tight" type="text" readonly>
-          </div>
-          <!-- Follow Up UIC -->
-          <div class="w-full md:w-1/4 px-3 mb-6 md:mb-0">
+          <!-- Follow On UIC -->
+          <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-state">
-              Follow Up UIC
+              Follow On UIC
             </label>
             <div class="relative">
               <select [(ngModel)]="followIORData.follup_uic" name="follupUIC" class="block appearance-none w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 leading-tight" placeholder="Select" required>
                 <option value="" disabled selected>Select your data</option>
-                <option [value]="'DO'">Chief Design Office</option>
-                <option [value]="'AO'">Chief Airworthiness Office</option>
-                <option [value]="'IM'">Chief Independent Monitoring</option>
-                <option [value]="'HDO'">Head of DOA</option>
+                <option value="Chief_Design_Office">Chief Design Office</option>
+                <option value="Chief_Airworthiness_Office">Chief Airworthiness Office</option>
+                <option value="Chief_Independent_Monitoring">Chief Independent Monitoring</option>
+                <option value="Head_of_DOA">Head of DOA</option>
               </select>
               <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                 <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
@@ -42,7 +35,7 @@
             </div>
           </div>
           <!-- Report Date -->
-          <div class="w-full md:w-1/4 px-3 mb-6 md:mb-0">
+          <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
               Follow Up Date
             </label>
@@ -87,8 +80,8 @@
             <div class="relative">
               <select [(ngModel)]="followIORData.follup_status" name="follupStatus" class="block appearance-none w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 leading-tight" placeholder="Select" required>
                 <option value="" disabled selected>Select</option>
-                <option [value]="'open'">Open</option>
-                <option [value]="'close'">Close</option>
+                <option value="Open">Open</option>
+                <option value="Close">Close</option>
                 <!-- <option [value]="'monitor'">Monitor</option> -->
               </select>
               <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
@@ -104,10 +97,10 @@
             <div class="relative">
               <select [(ngModel)]="followIORData.nextuic_follup" name="nextFollupUIC" class="block appearance-none w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 leading-tight" placeholder="Select" required>
                 <option value="" disabled selected>Select your data</option>
-                <option [value]="'DO'">Chief Design Office</option>
-                <option [value]="'AO'">Chief Airworthiness Office</option>
-                <option [value]="'IM'">Chief Independent Monitoring</option>
-                <option [value]="'HDO'">Head of DOA</option>
+                <option value="Chief_Design_Office">Chief Design Office</option>
+                <option value="Chief_Airworthiness_Office">Chief Airworthiness Office</option>
+                <option value="Chief_Independent_Monitoring">Chief Independent Monitoring</option>
+                <option value="Head_of_DOA">Head of DOA</option>
               </select>
               <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                 <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>

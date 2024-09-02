@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FollowonNcrComponent } from './followon-ncr.component';
+import { EditFollowupIORComponent } from './edit-followon-ior.component';
 
-describe('FollowonNcrComponent', () => {
-  let component: FollowonNcrComponent;
-  let fixture: ComponentFixture<FollowonNcrComponent>;
+describe('EditFollowupIORComponent', () => {
+  let component: EditFollowupIORComponent;
+  let fixture: ComponentFixture<EditFollowupIORComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FollowonNcrComponent]
+      imports: [EditFollowupIORComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(FollowonNcrComponent);
+    fixture = TestBed.createComponent(EditFollowupIORComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

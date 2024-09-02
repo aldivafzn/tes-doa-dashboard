@@ -54,7 +54,6 @@ export class FollowonIORComponent {
     current_severity: '',
     current_riskindex: ''
   };
-  subjectIOR: string = '';
   currentAccountID: string = '';
 
   account: any = {}
@@ -68,7 +67,11 @@ export class FollowonIORComponent {
     }
     if (this.currentAccountID) {
       this.getAccountInfo();
-      this.followIORData.follupby = this.account.name;
+    }
+
+    const id_ior = localStorage.getItem('id_ior');
+    if (id_ior) {
+      this.followIORData.id_IOR = id_ior;
     }
   }
 
@@ -85,27 +88,8 @@ export class FollowonIORComponent {
     }
   }
 
-  async fetchDataBySubject() {
-    try {
-      const response = await axios.post('http://localhost:4040/ior/search', { input: this.subjectIOR });
-      if (response.data.status === 200) {
-        const ior_id = response.data.showProduct[0].id_ior;
-        return ior_id;
-      } else {
-        this.toastService.failedToast('No IOR of that subject is found');
-        console.error('Error Message:', response.data.message);
-      }
-    } catch (error) {
-      console.error('Error:', error);
-    }
-  }
-
   async submitFollowIOR() {
-    this.followIORData.id_IOR = await this.fetchDataBySubject();
-    if (!this.followIORData.id_IOR) {
-      this.toastService.failedToast('There was an error adding Follow on NCR');
-      return;
-    }
+    this.followIORData.follupby = this.account.name;
     this.followIORData.follup_date = new Date(this.followIORData.follup_date);
     console.log("Sending data:", this.followIORData);
     try {
@@ -114,6 +98,7 @@ export class FollowonIORComponent {
       if (response.data.status === 200) {
         this.toastService.successToast('Follow on NCR added successfully');
         console.log('Follow on NCR added successfully');
+        window.location.href = '/detailIOR';
       } else {
         this.toastService.failedToast('Failed to add Follow on NCR');
         console.error('Failed to add Follow on NCR:', response.data.message);

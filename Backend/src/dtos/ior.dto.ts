@@ -12,6 +12,9 @@ import {
   IsEnum,
 } from 'class-validator';
 
+/* 
+    IOR DTO 
+*/
 export class CreateOccurrenceDto {
   @IsNotEmpty()
   @IsString()
@@ -121,20 +124,9 @@ export class DeleteOccurrenceDto {
   readonly id_ior: string;
 }
 
-// export class AddCategoryIORDto {
-//   @IsNotEmpty()
-//   @IsString()
-//   readonly id_IOR: string;
-
-//   @IsOptional()
-//   @IsString()
-//   readonly number_cat?: string;
-
-//   @IsOptional()
-//   @IsString()
-//   readonly occur_nbr?: string;
-// }
-
+/* 
+    IOR Follow Up DTO 
+*/
 export class AddFollowUpOccurrenceDto {
   @IsNotEmpty()
   @IsString()
