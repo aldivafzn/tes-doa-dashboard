@@ -179,7 +179,7 @@ export class DetailIORComponent implements OnInit{
   
     const date = new Date();
     const formattedDate = date.toISOString().slice(0, 10);
-    const fileName = `Follow_On_IOR_${this.iorData.occur_nbr}_${formattedDate}.xlsx`;
+    const fileName = `Follow_On_${this.iorData.occur_nbr}_${formattedDate}.xlsx`;
   
     XLSX.writeFile(wb, fileName);
   }

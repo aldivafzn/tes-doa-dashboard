@@ -151,6 +151,46 @@
             </table>
           </div>
         </div>
+        <div class="flex mt-4 justify-center">
+          <details id="export_excel_result" class="w-fit open">
+            <summary (click)="exportToExcel('export-reply-table')" class="inline-block text-white justify-center bg-[#107c41] hover:bg-[#185c37] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-4 py-2 motion-reduce:transition-none cursor-pointer">
+              <i class="fas fa-file-excel text-white mr-2"></i>Export to Excel
+            </summary>
+  
+            <div class="hidden bg-white outline outline-1 outline-gray-700 rounded-lg w-fit max-w-[80%] h-fit my-auto mx-auto fixed inset-0 text-gray-600 p-16">
+              <div class="show-table mt-5 border border-gray-500">
+                <div class="table-responsive overflow-auto" style="max-height: 600px; min-height: 200px;">
+                  <table class="table w-full bg-white overflow-y-scroll" id="export-reply-table">
+                    <thead class="bg-blue-100 font-medium">
+                      <tr class="border-b border-gray-500">
+                        <th id="rca_problem" class="px-4 py-2 border-r border-gray-500">Root Cause of Problem</th>
+                        <th id="identified_by" class="px-4 py-2 border-r border-gray-500">Identified by</th>
+                        <th id="identified_date" class="px-4 py-2 border-r border-gray-500">Identified Date</th>
+                        <th id="corrective_action" class="px-4 py-2 border-r border-gray-500">Corrective Actions</th>
+                        <th id="preventive_action" class="px-4 py-2 border-r border-gray-500">Preventive Actions</th>
+                        <th id="accept_by" class="px-4 py-2 border-r border-gray-500">Accepted by</th>
+                        <th id="accept_date" class="px-4 py-2 border-r border-gray-500">Accepted Date</th>
+                        <th id="temporarylink" class="px-4 py-2">Temporary Link</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of replyNCR" class="border-b border-gray-500">
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.rca_problem }}</td>
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.identified_by_auditee }}</td>
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.identified_date }}</td>
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.corrective_action }}</td>
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.preventive_action }}</td>
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.accept_by_auditor }}</td>
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.auditor_accept_date }}</td>
+                        <td class="px-4 py-2">{{ item.temporarylink }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </details>
+        </div>
       </div>
 
       <div class="my-8 p-12 rounded-lg shadow-md shadow-black outline outline-1 outline-gray-700">
@@ -225,7 +265,7 @@
                   </td>
                   <td class="px-4 py-2 text-center">
                     <!-- <button (click)="navigatePreview(replyNCR.documentid)" class="inline-block bg-[#016299] rounded border-2 border-primary px-3 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white">Preview</button> -->
-                    <button (click)="navigateEditReply(item.id_ncr_result)" class="inline-block bg-[#016299] rounded border-2 border-primary px-4 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white">
+                    <button (click)="navigateEditResult(item.id_ncr_result)" class="inline-block bg-[#016299] rounded border-2 border-primary px-4 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white">
                       <i class="fas fa-edit" style="font-size: 12px;"></i> Edit
                     </button>
                   </td>
@@ -233,6 +273,56 @@
               </tbody>
             </table>
           </div>
+        </div>
+        <div class="flex mt-4 justify-center">
+          <details id="export_excel_result" class="w-fit open">
+            <summary (click)="exportToExcel('export-result-table')" class="inline-block text-white justify-center bg-[#107c41] hover:bg-[#185c37] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-4 py-2 motion-reduce:transition-none cursor-pointer">
+              <i class="fas fa-file-excel text-white mr-2"></i>Export to Excel
+            </summary>
+  
+            <div class="hidden bg-white outline outline-1 outline-gray-700 rounded-lg w-fit max-w-[80%] h-fit my-auto mx-auto fixed inset-0 text-gray-600 p-16">
+              <div class="show-table mt-5 border border-gray-500">
+                <div class="table-responsive overflow-auto" style="max-height: 600px; min-height: 200px;">
+                  <table class="table w-full bg-white overflow-y-scroll" id="export-result-table">
+                    <thead class="bg-blue-100 font-medium">
+                      <tr class="border-b border-gray-500">
+                        <th id="proposed_close_auditee" class="px-4 py-2 border-r border-gray-500">Close Proposed by</th>
+                        <th id="proposed_close_date" class="px-4 py-2 border-r border-gray-500">Close Proposed Date</th>
+                        <th id="close_corrective_actions" class="px-4 py-2 border-r border-gray-500">Close Corrective Actions</th>
+                        <th id="refer_verification" class="px-4 py-2 border-r border-gray-500">Reference Verification</th>
+                        <th id="is_close" class="px-4 py-2 border-r border-gray-500">Close</th>
+                        <th id="effectiveness" class="px-4 py-2 border-r border-gray-500">Effectiveness</th>
+                        <th id="close_approved_by" class="px-4 py-2 border-r border-gray-500">Approved by</th>
+                        <th id="close_approved_date" class="px-4 py-2 border-r border-gray-500">Approved Date</th>
+                        <th id="verified_chief_im" class="px-4 py-2 border-r border-gray-500">Verified by</th>
+                        <th id="verified_date" class="px-4 py-2 border-r border-gray-500">Verified Date</th>
+                        <th id="new_ncr_issue_nbr" class="px-4 py-2">New NCR Issue Number</th>
+                        <th id="sheet_no" class="px-4 py-2">Sheet Number</th>
+                        <th id="temporarylink" class="px-4 py-2">Temporary Link</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of resultNCR" class="border-b border-gray-500">
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.proposed_close_auditee }}</td>
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.proposed_close_date }}</td>
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.close_corrective_actions }}</td>
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.refer_verification }}</td>
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.is_close }}</td>
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.effectiveness }}</td>
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.close_approved_by }}</td>
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.close_approved_date }}</td>
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.verified_chief_im }}</td>
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.verified_date }}</td>
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.new_ncr_issue_nbr }}</td>
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.sheet_no }}</td>
+                        <td class="px-4 py-2">{{ item.temporarylink }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </details>
         </div>
       </div>
     </div>

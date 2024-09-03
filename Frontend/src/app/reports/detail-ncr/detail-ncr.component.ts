@@ -238,6 +238,23 @@ export class DetailNCRComponent implements OnInit{
     }
   }
 
+  exportToExcel(element_id: string): void {
+    const table = document.getElementById(element_id);
+    const ws = XLSX.utils.table_to_sheet(table);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+  
+    const date = new Date();
+    const formattedDate = date.toISOString().slice(0, 10);
+    if (element_id === 'export-reply-table') {
+      const fileName = `Reply_${this.ncrData.ncr_no}_${formattedDate}.xlsx`;
+      XLSX.writeFile(wb, fileName);
+    } else if (element_id === 'export-result-table') {
+      const fileName = `Result_${this.ncrData.ncr_no}_${formattedDate}.xlsx`;
+      XLSX.writeFile(wb, fileName);
+    }
+  }
+
   async navigatePreview(documentId: string) {
     try {
       sessionStorage.setItem('document_id', documentId);
