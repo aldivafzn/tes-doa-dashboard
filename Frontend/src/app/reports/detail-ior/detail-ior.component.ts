@@ -171,6 +171,19 @@ export class DetailIORComponent implements OnInit{
     }
   }
 
+  exportToExcel(): void {
+    const table = document.getElementById('export-table');
+    const ws = XLSX.utils.table_to_sheet(table);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+  
+    const date = new Date();
+    const formattedDate = date.toISOString().slice(0, 10);
+    const fileName = `Follow_On_IOR_${this.iorData.occur_nbr}_${formattedDate}.xlsx`;
+  
+    XLSX.writeFile(wb, fileName);
+  }
+
   async navigatePreview(documentId: string) {
     try {
       sessionStorage.setItem('document_id', documentId);

@@ -197,7 +197,7 @@ export class SearchNCRComponent implements OnInit {
   }
 
   exportToExcel(): void {
-    const table = document.getElementById('data-table');
+    const table = document.getElementById('export-table');
     const ws = XLSX.utils.table_to_sheet(table);
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');

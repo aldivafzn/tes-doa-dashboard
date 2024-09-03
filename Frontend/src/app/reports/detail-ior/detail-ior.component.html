@@ -144,7 +144,7 @@
                             <label class="tracking-wide text-gray-600 text-base text-left">{{item.current_riskindex}}</label>
                           </div>
                         </div>
-                    </div>
+                      </div>
                     </details>
                   </td>
                   <td class="px-4 py-2 text-center">
@@ -157,6 +157,50 @@
               </tbody>
             </table>
           </div>
+        </div>
+        <div class="flex mt-4 justify-center">
+          <details id="export_excel" class="w-fit open">
+            <summary (click)="exportToExcel()" class="inline-block text-white justify-center bg-[#107c41] hover:bg-[#185c37] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-4 py-2 motion-reduce:transition-none cursor-pointer">
+              <i class="fas fa-file-excel text-white mr-2"></i>Export to Excel
+            </summary>
+  
+            <div class="hidden bg-white outline outline-1 outline-gray-700 rounded-lg w-fit max-w-[80%] h-fit my-auto mx-auto fixed inset-0 text-gray-600 p-16">
+              <div class="show-table mt-5 border border-gray-500">
+                <div class="table-responsive overflow-auto" style="max-height: 600px; min-height: 200px;">
+                  <table class="table w-full bg-white overflow-y-scroll" id="export-table">
+                    <thead class="bg-blue-100 font-medium">
+                      <tr class="border-b border-gray-500">
+                        <th id="follupby" class="px-4 py-2 border-r border-gray-500">Follow&nbsp;On&nbsp;By</th>
+                        <th id="follup_uic" class="px-4 py-2 border-r border-gray-500">Follow&nbsp;On&nbsp;UIC</th>
+                        <th id="follup_date" class="px-4 py-2 border-r border-gray-500">Follow&nbsp;On&nbsp;Date</th>
+                        <th id="follup_datarefer" class="px-4 py-2 border-r border-gray-500">Follow&nbsp;On&nbsp;Reference</th>
+                        <th id="follup_detail" class="px-4 py-2 border-r border-gray-500">Follow&nbsp;On&nbsp;Details</th>
+                        <th id="current_probability" class="px-4 py-2 border-r border-gray-500">Current&nbsp;Probability</th>
+                        <th id="current_severity" class="px-4 py-2 border-r border-gray-500">Current&nbsp;Severity</th>
+                        <th id="current_riskindex" class="px-4 py-2 border-r border-gray-500">Current&nbsp;Risk&nbsp;Index</th>
+                        <th id="follup_status" class="px-4 py-2 border-r border-gray-500">Follow&nbsp;On&nbsp;Status</th>
+                        <th id="nextuic_follup" class="px-4 py-2">Next&nbsp;Follow&nbsp;On&nbsp;UIC</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of followons" class="border-b border-gray-500">
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.follupby }}</td>
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.follup_uic }}</td>
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.follup_date }}</td>
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.follup_datarefer }}</td>
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.follup_detail }}</td>
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.current_probability }}</td>
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.current_severity }}</td>
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.current_riskindex }}</td>
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.follup_status }}</td>
+                        <td class="px-4 py-2">{{ item.nextuic_follup }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </details>
         </div>
       </div>
     </div>
