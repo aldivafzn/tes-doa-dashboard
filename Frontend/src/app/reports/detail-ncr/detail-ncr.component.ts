@@ -77,7 +77,7 @@ interface NCRInitial {
   acknowledge_by: string,
   acknowledge_date: string,
   status: string,
-  documentid: string
+  document_id: string
 }
 
 interface ReplyNCR {
@@ -148,7 +148,7 @@ export class DetailNCRComponent implements OnInit{
     acknowledge_by: '',
     acknowledge_date: '',
     status: '',
-    documentid: ''
+    document_id: ''
   };
   replyNCR: ReplyNCR[] = [];
   resultNCR: ResultNCR[] = [];
@@ -255,19 +255,14 @@ export class DetailNCRComponent implements OnInit{
     }
   }
 
-  async navigatePreview(documentId: string) {
-    try {
-      sessionStorage.setItem('document_id', documentId);
-      console.log(documentId);
-      const response = await axios.post('http://localhost:3000/getPDFDrive', { documentId });
-      console.log(response.data.message);
-      if (response.data.status === 200) {
-        window.location.href = response.data.message;
-      } else {
-        console.error('Error Message:', response.data.message);
-      }
-    } catch (error) {
-      console.error('Error:', error);
+  async navigatePreviewNCR(url: string) {
+    if (!url) {
+      this.toastService.failedToast('No PDF link is found!');
+      return;
+    }
+    const preview = window.open(url, '_blank');
+    if (preview) {
+      preview.focus();
     }
   }
 
