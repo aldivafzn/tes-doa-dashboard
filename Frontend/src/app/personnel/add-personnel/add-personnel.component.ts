@@ -54,7 +54,10 @@ export class AddPersonnelComponent implements OnInit {
       const { role } = jwtDecode<JwtPayload>(token);
       this.role = role;
     }
-
+    if (this.role !== 'Admin' && this.role !== 'AO') {
+      this.toastService.failedToast('Unauthorized to access page');
+      window.location.href ='/searchPersonnel';
+    }
   }
 
   async submitPersonnel() {

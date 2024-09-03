@@ -5,19 +5,23 @@ import { FooterComponent } from "../../footer/footer.component";
 import axios from 'axios';
 // import * as XLSX from 'xlsx';
 import { FormsModule } from '@angular/forms'; // Ensure FormsModule is imported
+import { AuthService } from '../../auth.service';
+import { jwtDecode } from 'jwt-decode';
+
+interface JwtPayload {
+  email: string,
+  userId: string,
+  role: string,
+  iat: number,
+  exp: number
+}
 
 interface PersonnelData {
   personnelNo: number,
   name: string,
   department: string,
   email: string,
-  employmentDate: string,
-  documentId: string
-}
-
-interface Filters {
-  employment_lower: string,
-  employment_upper: string
+  employmentDate: string
 }
 
 @Component({
@@ -29,11 +33,20 @@ interface Filters {
 })
 
 export class SearchPersonnelComponent implements OnInit {
+  constructor(private authService: AuthService) { }
+
   items: PersonnelData[] = [];
   searchData = { input: '' };
   searchTerm: string = ''; // Define searchTerm here
 
+  role: string | null = null;
+
   ngOnInit() {
+    const token = this.authService.getToken();
+    if (token) {
+      const { role } = jwtDecode<JwtPayload>(token);
+      this.role = role;
+    }
     //this.fetchDataFromServer();
   }
 
