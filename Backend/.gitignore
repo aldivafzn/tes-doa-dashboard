@@ -55,5 +55,5 @@ pids
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
-gmf-doa-dev-serviceacc.json
+gmf-doa-serviceacc.json
 
