@@ -101,7 +101,7 @@ model ncr_initial {
   acknowledge_date            DateTime           @db.Date
   status                      enum_stat
   temporarylink               String?
-  document_id                 String?            @db.VarChar(65)
+  document_id                 String?            @db.VarChar(255)
   ncr_followresult            ncr_followresult[]
   account                     account?           @relation(fields: [accountid], references: [accountid], onDelete: NoAction, onUpdate: NoAction)
   ncr_reply                   ncr_reply[]
@@ -202,7 +202,7 @@ model tbl_occurrence {
   initial_probability String?           @db.VarChar(1)
   initial_severity    String?           @db.VarChar(1)
   initial_riskindex   String?           @db.VarChar(40)
-  document_id         String?           @db.VarChar(65)
+  document_id         String?           @db.VarChar(255)
   tbl_follupoccur     tbl_follupoccur[]
 }
 

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { PrismaService } from './prisma.service';
 import {
   CreateNCRDto,
@@ -12,10 +12,11 @@ import {
   UpdateNcrResultDto,
 } from '../dtos/ncr.dto';
 import { uic } from '@prisma/client';
-import { GoogleApiService } from './gdocs.service';
-
+import { GoogleApiService } from './googleapi.service';
 @Injectable()
 export class NcrService {
+  private readonly logger = new Logger(NcrService.name);
+
   constructor(
     private prisma: PrismaService,
     private readonly googleApiService: GoogleApiService,
@@ -53,10 +54,100 @@ export class NcrService {
         temporarylink: createNcrDto.temporarylink,
       },
     });
+
+    this.logger.log(`NCR initial record created with ID: ${ncr.ncr_init_id}`);
+
+    const templateDocId = process.env.TEMPLATE_DOCUMENT; // Replace with your actual template document ID
+    const documentTitle = `NCR_${ncr.ncr_no}`;
+    const userEmailAddress = process.env.USER_EMAIL;
+
+    const copiedDocumentId = await this.googleApiService.copyGoogleDoc(
+      templateDocId,
+      documentTitle,
+      userEmailAddress,
+    );
+
+    this.logger.log(
+      `Google Doc copied successfully with ID: ${copiedDocumentId}`,
+    );
+
+    const placeholders = {
+      '{AuditPlan}': ncr.audit_plan_no || '',
+      '{NCR_No}': ncr.ncr_no || '',
+      '{IssuedDate}': ncr.issued_date.toISOString().split('T')[0] || '',
+      '{Responsibility_Office}': ncr.responsibility_office || '',
+      '{Audit_Type}': ncr.audit_type || '',
+      '{to_uic}': ncr.to_uic || '',
+      '{attention}': ncr.attention || '',
+      '{regulationbased}': ncr.regulationbased || '',
+      '{Level_Finding}': ncr.level_finding || '',
+      '{Problem_Analysis}': ncr.problem_analysis || '',
+      '{Due_Date}': ncr.answer_due_date.toISOString().split('T')[0] || '',
+      '{IAN}': ncr.issue_ian ? 'Yes' : 'No',
+      '{No}': ncr.ian_no || '',
+      '{Encountered_Condition}': ncr.encountered_condition || '',
+      '{Audit_by}': ncr.audit_by || '',
+      '{Audit_Date}': ncr.audit_date.toISOString().split('T')[0] || '',
+      '{Acknowledge_by}': ncr.acknowledge_by || '',
+      '{Acknowledge_date}':
+        ncr.acknowledge_date.toISOString().split('T')[0] || '',
+      // Add more placeholders if needed
+    };
+
+    // 4. Replace placeholders in the document
+    for (const [placeholder, value] of Object.entries(placeholders)) {
+      await this.googleApiService.replaceTextInGoogleDocs(
+        copiedDocumentId,
+        placeholder,
+        value,
+      );
+    }
+
+    this.logger.log(
+      `Placeholders replaced successfully in document ID: ${copiedDocumentId}`,
+    );
+
+    // 5. Move the document to a specific folder in Google Drive
+    const targetFolderId = process.env.TARGET_FOLDER; // Replace with your actual folder ID
+    await this.googleApiService.moveFileToFolder(
+      copiedDocumentId,
+      targetFolderId,
+    );
+
+    this.logger.log(
+      `Document ID: ${copiedDocumentId} moved to folder ID: ${targetFolderId}`,
+    );
+
+    // 6. Export the document as PDF and upload to Google Drive
+    const pdfResult = await this.googleApiService.getPDFDrive(
+      copiedDocumentId,
+      targetFolderId,
+    );
+
+    if (pdfResult.status !== 200) {
+      throw new Error('Failed to generate and upload PDF to Google Drive');
+    }
+
+    this.logger.log(
+      `PDF generated and uploaded successfully: ${pdfResult.message}`,
+    );
+
+    // 7. Update the NCR entry with document IDs and links
+    const updatedNcr = await this.prisma.ncr_initial.update({
+      where: { ncr_init_id: ncr.ncr_init_id },
+      data: {
+        document_id: pdfResult.message, // Storing PDF link
+      },
+    });
+
+    this.logger.log(
+      `NCR initial record updated with document links for ID: ${ncr.ncr_init_id}`,
+    );
+
     return {
       status: 200,
-      message: 'NCR Initial Created',
-      ncr,
+      message: 'NCR Initial Created and Documents Generated Successfully',
+      data: updatedNcr,
     };
   }
 
@@ -77,7 +168,7 @@ export class NcrService {
     const ncr = await this.prisma.ncr_initial.update({
       where: { ncr_init_id: updateNcrDto.ncr_init_id },
       data: {
-        accountid, // Use the accountid directly
+        accountid,
         regulationbased: updateNcrDto.regulationbased,
         subject: updateNcrDto.subject,
         audit_plan_no: updateNcrDto.audit_plan_no,
