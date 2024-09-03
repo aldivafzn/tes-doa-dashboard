@@ -71,7 +71,7 @@ interface NCRInitial {
   acknowledge_by: string,
   acknowledge_date: string,
   status: string,
-  documentid: string
+  document_id: string
 }
 
 interface Filters {
@@ -211,8 +211,6 @@ export class SearchNCRComponent implements OnInit {
 
   async navigatePreview(documentId: string) {
     try {
-      sessionStorage.setItem('document_id', documentId);
-      console.log(documentId);
       const response = await axios.post('http://localhost:3000/getPDFDrive', { documentId });
       console.log(response.data.message);
       if (response.data.status === 200) {
