@@ -24,7 +24,17 @@ interface Personnel {
   department: string,
   email: string,
   birth_date: string,
-  employ_date: string
+  employ_date: string,
+  job_desc: string,
+  design_exp: string
+}
+
+interface Education {
+  university: string,
+  major: string,
+  grad_year: Date | string,
+  remark: string,
+  person_id: string
 }
 
 @Component({
@@ -44,9 +54,18 @@ export class AddPersonnelComponent implements OnInit {
     department: '',
     email: '',
     birth_date: '',
-    employ_date: ''
+    employ_date: '',
+    job_desc: '',
+    design_exp: ''
   }
   role: string | null = null;
+  educations: Education[] = [{
+    university: '',
+    major: '',
+    grad_year: '',
+    remark: '',
+    person_id: ''
+  }];
 
   ngOnInit() {
     const token = localStorage.getItem('token')
@@ -62,5 +81,19 @@ export class AddPersonnelComponent implements OnInit {
 
   async submitPersonnel() {
 
+  }
+
+  addEduOptions() {
+    this.educations.push({
+      university: '',
+      major: '',
+      grad_year: '',
+      remark: '',
+      person_id: ''
+    });
+  }
+
+  removeEduOptions() {
+    this.educations.pop();
   }
 }

@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FollowonIorComponent } from './followon-ior.component';
+import { FollowonIORComponent } from './followon-ior.component';
 
-describe('FollowonIorComponent', () => {
-  let component: FollowonIorComponent;
-  let fixture: ComponentFixture<FollowonIorComponent>;
+describe('FollowonIORComponent', () => {
+  let component: FollowonIORComponent;
+  let fixture: ComponentFixture<FollowonIORComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FollowonIorComponent]
+      imports: [FollowonIORComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(FollowonIorComponent);
+    fixture = TestBed.createComponent(FollowonIORComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

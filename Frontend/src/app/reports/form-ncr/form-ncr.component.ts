@@ -109,6 +109,7 @@ export class FormNCRComponent implements OnInit {
       console.error('There was an error fetching account info!', error);
     }
   }
+
   async submitNCR() {
     this.ncrData.issued_date = new Date(this.ncrData.issued_date);
     this.ncrData.answer_due_date = new Date(this.ncrData.answer_due_date);
