@@ -77,11 +77,11 @@ interface NCRInitial {
   acknowledge_by: string,
   acknowledge_date: string,
   status: string,
-  ncr_reply: any[],
-  documentid: string
+  document_id: string
 }
 
 interface ReplyNCR {
+  id_ncr_reply: string,
   ncr_init_id: string,
   rca_problem: string,
   corrective_action: string,
@@ -95,6 +95,7 @@ interface ReplyNCR {
 }
 
 interface ResultNCR {
+  id_ncr_result: string,
   ncr_init_id: string,
   close_corrective_actions: string,
   proposed_close_auditee: string,
@@ -147,41 +148,12 @@ export class DetailNCRComponent implements OnInit{
     acknowledge_by: '',
     acknowledge_date: '',
     status: '',
-    ncr_reply: [],
-    documentid: ''
+    document_id: ''
   };
-  replyNCR: ReplyNCR = {
-    ncr_init_id: '',
-    rca_problem: '',
-    corrective_action: '',
-    preventive_action: '',
-    identified_by_auditee: '',
-    identified_date: '',
-    accept_by_auditor: '',
-    auditor_accept_date: '',
-    temporarylink: '',
-    recommend_corrective_action: ''
-  };
-  resultNCR: ResultNCR = {
-    ncr_init_id: '',
-    close_corrective_actions: '',
-    proposed_close_auditee: '',
-    proposed_close_date: '',
-    is_close: '',
-    effectiveness: '',
-    refer_verification: '',
-    sheet_no: '',
-    new_ncr_issue_nbr: '',
-    close_approved_by: '',
-    close_approved_date: '',
-    verified_chief_im: '',
-    verified_date: '',
-    temporarylink: ''
-  };
+  replyNCR: ReplyNCR[] = [];
+  resultNCR: ResultNCR[] = [];
   role: string | null = null;
   currentNCRInitID = '';
-  replyExist: boolean = false;
-  resultExist: boolean = false;
 
   ngOnInit() {
     const token = this.authService.getToken();
@@ -227,17 +199,18 @@ export class DetailNCRComponent implements OnInit{
         ncr_init_id: this.currentNCRInitID
       });
       if (response.data.message === 'Showing NCR Reply') {
-        this.replyExist = true;
         this.replyNCR = response.data.showProduct;
-        this.replyNCR.identified_date = this.replyNCR.identified_date.slice(0, 10);
-        this.replyNCR.auditor_accept_date = this.replyNCR.auditor_accept_date.slice(0, 10);
+        for (let i = 0; i < this.replyNCR.length; i++) {
+          this.replyNCR[i].identified_date = this.replyNCR[i].identified_date.slice(0, 10);
+          this.replyNCR[i].auditor_accept_date = this.replyNCR[i].auditor_accept_date.slice(0, 10);
+        }
       } else {
         console.error('Error message:', response.data.message);
-        this.replyExist = false;
+        this.replyNCR = [];
       }
     } catch (error) {
       console.error('Error:', error);
-      this.replyExist = false;
+      this.replyNCR = [];
     }
   }
 
@@ -247,36 +220,49 @@ export class DetailNCRComponent implements OnInit{
         ncr_init_id: this.currentNCRInitID
       });
       if (response.data.message === 'Showing NCR Follow Result') {
-        this.resultExist = true;
         this.resultNCR = response.data.result;
-        this.resultNCR.effectiveness = this.convertEnumValue(effectiveness, this.resultNCR.effectiveness);
-        this.resultNCR.proposed_close_date = this.resultNCR.proposed_close_date.slice(0, 10);
-        this.resultNCR.close_approved_date = this.resultNCR.close_approved_date.slice(0, 10);
-        this.resultNCR.verified_date = this.resultNCR.verified_date.slice(0, 10);
-        this.resultNCR.is_close = this.resultNCR.is_close ? "Yes" : "No";
+        for (let i = 0; i < this.resultNCR.length; i++) {
+          this.resultNCR[i].effectiveness = this.convertEnumValue(effectiveness, this.resultNCR[i].effectiveness);
+          this.resultNCR[i].proposed_close_date = this.resultNCR[i].proposed_close_date.slice(0, 10);
+          this.resultNCR[i].close_approved_date = this.resultNCR[i].close_approved_date.slice(0, 10);
+          this.resultNCR[i].verified_date = this.resultNCR[i].verified_date.slice(0, 10);
+          this.resultNCR[i].is_close = this.resultNCR[i].is_close ? "Yes" : "No";
+        }
       } else {
         console.error('Error message:', response.data.message);
-        this.resultExist = false;
+        this.resultNCR = [];
       }
     } catch (error) {
       console.error('Error:', error);
-      this.resultExist = false;
+      this.resultNCR = [];
     }
   }
 
-  async navigatePreview(documentId: string) {
-    try {
-      sessionStorage.setItem('document_id', documentId);
-      console.log(documentId);
-      const response = await axios.post('http://localhost:3000/getPDFDrive', { documentId });
-      console.log(response.data.message);
-      if (response.data.status === 200) {
-        window.location.href = response.data.message;
-      } else {
-        console.error('Error Message:', response.data.message);
-      }
-    } catch (error) {
-      console.error('Error:', error);
+  exportToExcel(element_id: string): void {
+    const table = document.getElementById(element_id);
+    const ws = XLSX.utils.table_to_sheet(table);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+  
+    const date = new Date();
+    const formattedDate = date.toISOString().slice(0, 10);
+    if (element_id === 'export-reply-table') {
+      const fileName = `Reply_${this.ncrData.ncr_no}_${formattedDate}.xlsx`;
+      XLSX.writeFile(wb, fileName);
+    } else if (element_id === 'export-result-table') {
+      const fileName = `Result_${this.ncrData.ncr_no}_${formattedDate}.xlsx`;
+      XLSX.writeFile(wb, fileName);
+    }
+  }
+
+  async navigatePreviewNCR(url: string) {
+    if (!url) {
+      this.toastService.failedToast('No PDF link is found!');
+      return;
+    }
+    const preview = window.open(url, '_blank');
+    if (preview) {
+      preview.focus();
     }
   }
 
@@ -288,7 +274,8 @@ export class DetailNCRComponent implements OnInit{
     window.location.href = '/addReplyNCR';
   }
 
-  navigateEditReply() {
+  navigateEditReply(id_ncr_reply: string) {
+    localStorage.setItem('id_ncr_reply', id_ncr_reply);
     window.location.href = '/editReplyNCR';
   }
 
@@ -296,12 +283,29 @@ export class DetailNCRComponent implements OnInit{
     window.location.href = '/addResultNCR';
   }
 
-  navigateEditResult() {
+  navigateEditResult(id_ncr_result: string) {
+    localStorage.setItem('id_ncr_result', id_ncr_result);
     window.location.href = '/editResultNCR';
   }
 
   convertEnumValue(enumObj: any, value: string): string {
     // Convert the value if it's a key in the enum object
     return enumObj[value] || value;
+  }
+
+  closeReplyDetails(id_ncr_reply: string) {
+    const element_id = 'reply_details_' + id_ncr_reply;
+    const element = document.getElementById(element_id);
+    if (element) {
+      element.removeAttribute('open');
+    }
+  }
+
+  closeResultDetails(id_ncr_result: string) {
+    const element_id = 'result_details_' + id_ncr_result;
+    const element = document.getElementById(element_id);
+    if (element) {
+      element.removeAttribute('open');
+    }
   }
 }

@@ -6,6 +6,34 @@ import { CommonModule } from '@angular/common';
 import { ToastService } from '../../toast.service';
 import axios from 'axios';
 
+
+interface NCRInitData {
+  ncr_init_id: string,
+  regulationbased: string,
+  subject: string,
+  audit_plan_no: string,
+  ncr_no: string,
+  issued_date: Date | string,
+  responsibility_office: string,
+  audit_type: string,
+  audit_scope: string,
+  to_uic: string,
+  attention: string,
+  require_condition_reference: string,
+  level_finding: string,
+  problem_analysis: string,
+  answer_due_date: Date | string,
+  issue_ian: string | boolean,
+  ian_no: string,
+  encountered_condition: string,
+  audit_by: string,
+  audit_date: Date | string,
+  acknowledge_by: string,
+  acknowledge_date: Date | string,
+  status: string,
+  temporarylink: string
+}
+
 interface ResultNCR {
   ncr_init_id: string,
   close_corrective_actions: string,
@@ -49,11 +77,50 @@ export class ResultNCRComponent implements OnInit {
     verified_date: '',
     temporarylink: ''
   }
+  ncrData: NCRInitData = {
+    ncr_init_id: '',
+    regulationbased: '',
+    subject: '',
+    audit_plan_no: '',
+    ncr_no: '',
+    issued_date: '',
+    responsibility_office: '',
+    audit_type: '',
+    audit_scope: '',
+    to_uic: '',
+    attention: '',
+    require_condition_reference: '',
+    level_finding: '',
+    problem_analysis: '',
+    answer_due_date: '',
+    issue_ian: '',
+    ian_no: '',
+    encountered_condition: '',
+    audit_by: '',
+    audit_date: '',
+    acknowledge_by: '',
+    acknowledge_date: '',
+    status: '',
+    temporarylink: ''
+  };
 
   ngOnInit() { 
     const ncr_init_id = localStorage.getItem('ncr_init_id');
     if (ncr_init_id) {
       this.currentNCRInitId = ncr_init_id;
+    }
+    this.fetchNCR();
+  }
+
+  async fetchNCR() {
+    try {
+      const response = await axios.post('http://localhost:4040/ncr/show',
+        { ncr_init_id: this.currentNCRInitId }
+      );
+      this.ncrData = response.data.showProduct[0];
+    } catch (error) {
+      this.toastService.failedToast('There was an error fetching NCR');
+      console.error('There was an error fetching NCR:', error);
     }
   }
 
@@ -68,6 +135,8 @@ export class ResultNCRComponent implements OnInit {
       if (response.data.status === 200) {
         this.toastService.successToast('NCR Follow Result added successfully');
         console.log('NCR Follow Result added successfully');
+        this.ncrData.status = "Closed";
+        await axios.put('http://localhost:4040/ncr/update', this.ncrData);
         window.location.href = '/detailNCR';
       } else {
         this.toastService.failedToast('Failed to add NCR Follow Result');

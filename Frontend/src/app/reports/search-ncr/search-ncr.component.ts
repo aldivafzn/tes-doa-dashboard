@@ -71,7 +71,7 @@ interface NCRInitial {
   acknowledge_by: string,
   acknowledge_date: string,
   status: string,
-  documentid: string
+  document_id: string
 }
 
 interface Filters {
@@ -197,7 +197,7 @@ export class SearchNCRComponent implements OnInit {
   }
 
   exportToExcel(): void {
-    const table = document.getElementById('data-table');
+    const table = document.getElementById('export-table');
     const ws = XLSX.utils.table_to_sheet(table);
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
@@ -211,8 +211,6 @@ export class SearchNCRComponent implements OnInit {
 
   async navigatePreview(documentId: string) {
     try {
-      sessionStorage.setItem('document_id', documentId);
-      console.log(documentId);
       const response = await axios.post('http://localhost:3000/getPDFDrive', { documentId });
       console.log(response.data.message);
       if (response.data.status === 200) {

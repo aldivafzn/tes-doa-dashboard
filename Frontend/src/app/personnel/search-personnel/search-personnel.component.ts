@@ -1,44 +1,52 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NavbarComponent } from "../navbar/navbar.component";
-import { FooterComponent } from "../footer/footer.component";
+import { NavbarComponent } from "../../navbar/navbar.component";
+import { FooterComponent } from "../../footer/footer.component";
 import axios from 'axios';
 // import * as XLSX from 'xlsx';
 import { FormsModule } from '@angular/forms'; // Ensure FormsModule is imported
+import { AuthService } from '../../auth.service';
+import { jwtDecode } from 'jwt-decode';
+
+interface JwtPayload {
+  email: string,
+  userId: string,
+  role: string,
+  iat: number,
+  exp: number
+}
 
 interface PersonnelData {
   personnelNo: number,
   name: string,
   department: string,
   email: string,
-  employmentDate: string,
-  documentId: string
-}
-
-interface Filters {
-  employment_lower: string,
-  employment_upper: string
+  employmentDate: string
 }
 
 @Component({
-  selector: 'app-personnel',
+  selector: 'app-search-personnel',
   standalone: true,
   imports: [CommonModule, NavbarComponent, FooterComponent, FormsModule],
-  templateUrl: './personnel.component.html',
-  styleUrls: ['./personnel.component.css']
+  templateUrl: './search-personnel.component.html',
+  styleUrls: ['./search-personnel.component.css']
 })
 
-export class PersonnelComponent implements OnInit {
+export class SearchPersonnelComponent implements OnInit {
+  constructor(private authService: AuthService) { }
+
   items: PersonnelData[] = [];
   searchData = { input: '' };
   searchTerm: string = ''; // Define searchTerm here
-  filterBy: Filters = {
-    employment_lower: '',
-    employment_upper: ''
-  }
-  showFilters: boolean = false; // Toggle for filter visibility
+
+  role: string | null = null;
 
   ngOnInit() {
+    const token = this.authService.getToken();
+    if (token) {
+      const { role } = jwtDecode<JwtPayload>(token);
+      this.role = role;
+    }
     //this.fetchDataFromServer();
   }
 
@@ -61,8 +69,7 @@ export class PersonnelComponent implements OnInit {
   async fetchDataBySearchTerm() {
     try {
       const response = await axios.post('http://localhost:3000/searchPersonnel', {
-        ...this.searchData,
-        filterBy: this.filterBy // Include filter criteria in the request
+        ...this.searchData
       });
       if (response.data.status === 200) {
         this.items = response.data.showProduct;
@@ -96,7 +103,7 @@ export class PersonnelComponent implements OnInit {
     this.fetchDataBySearchTerm();
   }
 
-  toggleFilter() {
-    this.showFilters = !this.showFilters;
+  navigateAdd() {
+    window.location.href = '/addPersonnel';
   }
 }

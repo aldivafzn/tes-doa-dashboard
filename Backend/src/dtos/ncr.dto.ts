@@ -117,6 +117,10 @@ export class CreateNCRDto {
   @IsString()
   @IsOptional()
   temporarylink?: string;
+
+  @IsString()
+  @IsNotEmpty()
+  document_id: string;
 }
 
 export class UpdateNCRDto extends CreateNCRDto {

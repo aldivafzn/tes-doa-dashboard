@@ -2,7 +2,7 @@
 <div class="min-h-screen mt-20 md:mt-10 flex items-center justify-center">
   <div class="mx-auto w-11/12 bg-white shadow-md rounded-lg overflow-hidden">
     <div class="p-6">
-      <h2 class="text-2xl font-bold text-gray-900 text-center justify-center mb-3 uppercase py-3">Personnels</h2>
+      <h2 class="text-2xl font-bold text-gray-900 text-center justify-center mb-3 uppercase py-3">Search Personnel</h2>
       <form class="w-full mx-auto" (ngSubmit)="search()">  
         <div class="relative flex items-center">
           <div class="relative w-full">
@@ -15,23 +15,10 @@
             <button type="submit" class="text-white absolute right-2.5 bottom-2.5 bg-[#016299] hover:bg-[#015581] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2">Search</button>
           </div>
         </div>
-        <div *ngIf="showFilters" class="mt-2">
-          <label for="filter" class="p-2 block text-lg font-bold text-gray-700">Filter By</label>
-          <div class="p-2 flex flex-wrap">
-            <!-- <h2 class="text-lg font-semibold">Filter</h2> -->
-            <!-- Employment Date Lower Bound -->
-            <div class="w-full md:w-1/2 px-1 mb-2">
-              <label for="employment_lower" class="text-md font-semibold">Employment Date From</label>
-              <input type="date" [(ngModel)]="filterBy.employment_lower" id="employment_lower" class="block w-full mt-2 p-2 border border-gray-300 rounded-md"/>
-            </div>
-            <!-- Employment Date Upper Bound -->
-            <div class="w-full md:w-1/2 px-1 mb-2">
-              <label for="employment_upper" class="text-md font-semibold">Employment Date To</label>
-              <input type="date" [(ngModel)]="filterBy.employment_upper" id="employment_upper" class="block w-full mt-2 p-2 border border-gray-300 rounded-md"/>
-            </div>
-          </div>
-        </div>
       </form>
+      <div *ngIf="role === 'Admin' || role === 'AO'" class="w-full md:w-1/4 px-1 mb-2 relative flex">
+        <button (click)="navigateAdd()" class="inline-block bg-[#016299] rounded border-2 border-primary px-4 pb-[6px] pt-2 text-s font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white">Add Personnel</button>
+      </div>
       <div class="show-table mt-5 border border-gray-500">
         <div class="table-responsive overflow-auto "style="max-height: 600px; min-height: 200px;">
           <table class="table w-full bg-white overflow-y-scroll text-sm" id="data-table">
