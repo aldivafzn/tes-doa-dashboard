@@ -37,6 +37,39 @@ interface Education {
   person_id: string
 }
 
+interface Training {
+  training_title: string,
+  training_category: string,
+  start_date: Date | string,
+  finish_date: Date | string,
+  interval_recurrent: string,
+  next_date: Date | string,
+  place: string,
+  result: string,
+  remark: string,
+  person_id: string
+}
+
+interface Experience {
+  job_title: string,
+  since_date: Date | string,
+  until_date: Date | string,
+  assignment: string,
+  remark: string,
+  person_id: string
+}
+
+interface Certification {
+  regulation_based: string,
+  cert_type: string,
+  cert_number: string,
+  cert_first_date: Date | string,
+  cert_expire_date: Date | string,
+  cert_letter_nbr: string,
+  cert_scope: string,
+  person_id: string
+}
+
 @Component({
   selector: 'app-add-personnel',
   standalone: true,
@@ -64,6 +97,36 @@ export class AddPersonnelComponent implements OnInit {
     major: '',
     grad_year: '',
     remark: '',
+    person_id: ''
+  }];
+  trainingRecords: Training[] = [{
+    training_title: '',
+    training_category: '',
+    start_date: '',
+    finish_date: '',
+    interval_recurrent: '',
+    next_date: '',
+    place: '',
+    result: '',
+    remark: '',
+    person_id: ''
+  }];
+  experienceRecords: Experience[] = [{
+    job_title: '',
+    since_date: '',
+    until_date: '',
+    assignment: '',
+    remark: '',
+    person_id: ''
+  }];
+  certifications: Certification[] = [{
+    regulation_based: '',
+    cert_type: '',
+    cert_number: '',
+    cert_first_date: '',
+    cert_expire_date: '',
+    cert_letter_nbr: '',
+    cert_scope: '',
     person_id: ''
   }];
 
@@ -95,5 +158,56 @@ export class AddPersonnelComponent implements OnInit {
 
   removeEduOptions() {
     this.educations.pop();
+  }
+
+  addTrainingOptions() {
+    this.trainingRecords.push({
+      training_title: '',
+      training_category: '',
+      start_date: '',
+      finish_date: '',
+      interval_recurrent: '',
+      next_date: '',
+      place: '',
+      result: '',
+      remark: '',
+      person_id: ''
+    });
+  }
+
+  removeTrainingOptions() {
+    this.trainingRecords.pop();
+  }
+
+  addExperienceOptions() {
+    this.experienceRecords.push({
+      job_title: '',
+      since_date: '',
+      until_date: '',
+      assignment: '',
+      remark: '',
+      person_id: ''
+    });
+  }
+
+  removeExperienceOptions() {
+    this.experienceRecords.pop();
+  }
+
+  addCertificationOptions() {
+    this.certifications.push({
+      regulation_based: '',
+      cert_type: '',
+      cert_number: '',
+      cert_first_date: '',
+      cert_expire_date: '',
+      cert_letter_nbr: '',
+      cert_scope: '',
+      person_id: ''
+    });
+  }
+
+  removeCertificationOptions() {
+    this.certifications.pop();
   }
 }
