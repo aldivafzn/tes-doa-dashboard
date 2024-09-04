@@ -1,7 +1,7 @@
 <app-navbar></app-navbar>
 <script src="https://cdn.tailwindcss.com"></script>
 <div class="min-h-screen mt-24 flex items-center justify-center">
-  <div class="mb-2 mx-auto w-10/12 bg-white shadow-md rounded-lg overflow-hidden">
+  <div class="my-4 mx-auto w-10/12 bg-white shadow-md rounded-lg overflow-hidden">
     <div class="p-8 px-24">
       <div class="my-4">
         <a href="/searchNCR" class="text-lg text-cyan-600 decoration-inherit hover:text-cyan-800 hover:underline">< Back</a>
@@ -78,6 +78,10 @@
           <div class="space-x-2">
             <label class="tracking-wide font-semibold text-gray-700 text-left">Acknowledged Date:</label>
             <label class="tracking-wide text-gray-600 text-left">{{ncrData.acknowledge_date}}</label>
+          </div>
+          <div class="col-span-2 space-x-2">
+            <label class="tracking-wide font-semibold text-gray-700 text-left">Status:</label>
+            <label class="tracking-wide text-gray-600 text-left">{{ncrData.status}}</label>
           </div>
         </div>
         <div class="flex flex-center mb-4 space-x-2">

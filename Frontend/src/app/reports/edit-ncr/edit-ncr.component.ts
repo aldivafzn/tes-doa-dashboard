@@ -131,8 +131,7 @@ export class EditNCRComponent implements OnInit {
       if (response.data.status === 200) {
         this.toastService.successToast('NCR updated successfully');
         console.log('NCR updated successfully');
-        localStorage.removeItem('ncr_init_id');
-        window.location.href = '/searchNCR';
+        window.location.href = '/detailNCR';
       } else {
         this.toastService.failedToast('Failed to update NCR');
         console.error('Failed to update NCR:', response.data.message);

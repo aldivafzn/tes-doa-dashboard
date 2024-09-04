@@ -119,8 +119,7 @@ export class EditIORComponent implements OnInit{
       if (response.data.status === 200) {
         this.toastService.successToast('IOR updated successfully');
         console.log('IOR updated successfully');
-        localStorage.removeItem('id_ior');
-        window.location.href = '/searchIOR';
+        window.location.href = '/detailIOR';
       } else {
         this.toastService.failedToast('Failed to update IOR');
         console.error('Failed to update IOR:', response.data.message);
