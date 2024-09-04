@@ -80,8 +80,8 @@ model ncr_initial {
   ncr_init_id                 String             @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   regulationbased             reg_based
   subject                     String
-  audit_plan_no               String             @db.VarChar(10)
-  ncr_no                      String             @db.VarChar(11)
+  audit_plan_no               String             @db.VarChar(50)
+  ncr_no                      String             @db.VarChar(50)
   issued_date                 DateTime           @db.Date
   responsibility_office       responoffice
   audit_type                  audittype
