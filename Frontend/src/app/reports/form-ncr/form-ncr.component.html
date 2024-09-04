@@ -47,7 +47,7 @@
             <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2">
               Audit Plan No
             </label>
-            <input [(ngModel)]="ncrData.audit_plan_no" name="audit_plan_no" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 leading-tight" type="text" placeholder="AP-01-2022" required>
+            <input [(ngModel)]="ncrData.audit_plan_no" name="audit_plan_no" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 leading-tight" type="text" placeholder="01-2022 (DGCA) / 001 (EASA)" required>
           </div>
           <!-- Issued Date -->
           <div class="w-full md:w-1/4 px-3 mb-6 md:mb-0">
@@ -188,7 +188,7 @@
               Problem Analysis
             </label>
             <div class="relative">
-              <select [(ngModel)]="ncrData.problem_analysis" name="problem_analysis" class="block appearance-none w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 pr-8 leading-tight" required>
+              <select [(ngModel)]="ncrData.pa_req" name="pa_req" class="block appearance-none w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 pr-8 leading-tight" required>
                 <option value="" disabled selected>Select your data</option>
                 <option value="Required">Required</option>
                 <option value="Not_Required">Not required</option>

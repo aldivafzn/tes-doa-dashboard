@@ -41,7 +41,7 @@ enum level {
   THREE = "3"
 }
 
-enum probanalis {
+enum pa_req {
   Required = "Required",
   Not_Required = "Not Required"
 }
@@ -61,7 +61,7 @@ interface NCRInitial {
   attention: string,
   require_condition_reference: string,
   level_finding: string,
-  problem_analysis: string,
+  pa_req: string,
   answer_due_date: string,
   issue_ian: boolean | string,
   ian_no: string,
@@ -133,7 +133,7 @@ export class SearchNCRComponent implements OnInit {
           this.items[i].responsibility_office = this.convertEnumValue(responoffice, this.items[i].responsibility_office);
           this.items[i].to_uic = this.convertEnumValue(uic, this.items[i].to_uic);
           this.items[i].level_finding = this.convertEnumValue(level, this.items[i].level_finding);
-          this.items[i].problem_analysis = this.convertEnumValue(probanalis, this.items[i].problem_analysis);
+          this.items[i].pa_req = this.convertEnumValue(pa_req, this.items[i].pa_req);
           this.items[i].issued_date = this.items[i].issued_date.slice(0, 10);
           this.items[i].answer_due_date = this.items[i].answer_due_date.slice(0, 10);
           this.items[i].audit_date = this.items[i].audit_date.slice(0, 10);
@@ -160,7 +160,7 @@ export class SearchNCRComponent implements OnInit {
           this.items[i].responsibility_office = this.convertEnumValue(responoffice, this.items[i].responsibility_office);
           this.items[i].to_uic = this.convertEnumValue(uic, this.items[i].to_uic);
           this.items[i].level_finding = this.convertEnumValue(level, this.items[i].level_finding);
-          this.items[i].problem_analysis = this.convertEnumValue(probanalis, this.items[i].problem_analysis);
+          this.items[i].pa_req = this.convertEnumValue(pa_req, this.items[i].pa_req);
           this.items[i].issued_date = this.items[i].issued_date.slice(0, 10);
           this.items[i].answer_due_date = this.items[i].answer_due_date.slice(0, 10);
           this.items[i].audit_date = this.items[i].audit_date.slice(0, 10);

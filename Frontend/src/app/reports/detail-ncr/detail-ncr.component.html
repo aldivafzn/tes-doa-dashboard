@@ -7,7 +7,7 @@
       </div>
       <div class="mb-8 p-12 rounded-lg shadow-md shadow-black outline outline-1 outline-gray-700">
         <h2 class="text-2xl font-bold text-gray-900 text-center justify-center mb-8 uppercase">NCR Detail</h2>
-        <div class="grid grid-cols-2 gap-4 mb-4">
+        <div *ngIf="ncrData.regulationbased === 'DGCA'" class="grid grid-cols-2 gap-4 mb-4">
           <div class="space-x-2">
             <label class="tracking-wide font-semibold text-gray-700 text-left">Audit Plan Number:</label>
             <label class="tracking-wide text-gray-600 text-left">{{ncrData.audit_plan_no}}</label>
@@ -50,7 +50,7 @@
           </div>
           <div class="space-x-2">
             <label class="tracking-wide font-semibold text-gray-700 text-left">Problem Analysis:</label>
-            <label class="tracking-wide text-gray-600 text-left">{{ncrData.problem_analysis}}</label>
+            <label class="tracking-wide text-gray-600 text-left">{{ncrData.pa_req}}</label>
           </div>
           <div class="space-x-2">
             <label class="tracking-wide font-semibold text-gray-700 text-left">Answer Due Date:</label>
@@ -60,7 +60,83 @@
             <label class="tracking-wide font-semibold text-gray-700 text-left">IAN Number (if there is IAN issued):</label>
             <label class="tracking-wide text-gray-600 text-left">{{ncrData.ian_no}}</label>
           </div>
-          <div><label class="tracking-wide font-semibold text-gray-700 text-left">Encountered Condition:</label></div>
+          <div class="col-span-2"><label class="tracking-wide font-semibold text-gray-700 text-left">Encountered Condition:</label></div>
+          <div class="col-span-2"><p class="tracking-wide text-gray-600 text-left text-wrap">{{ncrData.encountered_condition}}</p></div>
+          <div class="space-x-2">
+            <label class="tracking-wide font-semibold text-gray-700 text-left">Audit by:</label>
+            <label class="tracking-wide text-gray-600 text-left">{{ncrData.audit_by}}</label>
+          </div>
+          <div class="space-x-2">
+            <label class="tracking-wide font-semibold text-gray-700 text-left">Acknowledged by:</label>
+            <label class="tracking-wide text-gray-600 text-left">{{ncrData.acknowledge_by}}</label>
+          </div>
+          <div class="space-x-2">
+            <label class="tracking-wide font-semibold text-gray-700 text-left">Audit Date:</label>
+            <label class="tracking-wide text-gray-600 text-left">{{ncrData.audit_date}}</label>
+          </div>
+          <div class="space-x-2">
+            <label class="tracking-wide font-semibold text-gray-700 text-left">Acknowledged Date:</label>
+            <label class="tracking-wide text-gray-600 text-left">{{ncrData.acknowledge_date}}</label>
+          </div>
+          <div class="col-span-2 space-x-2">
+            <label class="tracking-wide font-semibold text-gray-700 text-left">Status:</label>
+            <label class="tracking-wide text-gray-600 text-left">{{ncrData.status}}</label>
+          </div>
+        </div>
+        <div *ngIf="ncrData.regulationbased === 'EASA'" class="grid grid-cols-2 gap-4 mb-4">
+          <div class="space-x-2">
+            <label class="tracking-wide font-semibold text-gray-700 text-left">Audit Plan Number:</label>
+            <label class="tracking-wide text-gray-600 text-left">{{ncrData.audit_plan_no}}</label>
+          </div>
+          <div class="space-x-2">
+            <label class="tracking-wide font-semibold text-gray-700 text-left">Regulation Based on:</label>
+            <label class="tracking-wide text-gray-600 text-left">{{ncrData.regulationbased}}</label>
+          </div>
+          <div class="space-x-2">
+            <label class="tracking-wide font-semibold text-gray-700 text-left">NCR Number:</label>
+            <label class="tracking-wide text-gray-600 text-left">{{ncrData.ncr_no}}</label>
+          </div>
+          <div class="space-x-2">
+            <label class="tracking-wide font-semibold text-gray-700 text-left">Issued Date:</label>
+            <label class="tracking-wide text-gray-600 text-left">{{ncrData.issued_date}}</label>
+          </div>
+          <div class="space-x-2">
+            <label class="tracking-wide font-semibold text-gray-700 text-left">Audit Type & Scope:</label>
+            <label class="tracking-wide text-gray-600 text-left">{{ncrData.audit_type}} / {{ncrData.audit_scope}}</label>
+          </div>
+          <!-- <div class="space-x-2">
+            <label class="tracking-wide font-semibold text-gray-700 text-left">Sent to:</label>
+            <label class="tracking-wide text-gray-600 text-left">{{ncrData.to_uic}}</label>
+          </div> -->
+          <div class="space-x-2">
+            <label class="tracking-wide font-semibold text-gray-700 text-left">Responsible Office:</label>
+            <label class="tracking-wide text-gray-600 text-left">{{ncrData.responsibility_office}}</label>
+          </div>
+          <!-- <div class="space-x-2">
+            <label class="tracking-wide font-semibold text-gray-700 text-left">With Attention to:</label>
+            <label class="tracking-wide text-gray-600 text-left">{{ncrData.attention}}</label>
+          </div> -->
+          <div class="col-span-2 space-x-2">
+            <label class="tracking-wide font-semibold text-gray-700 text-left">Required Condition Reference:</label>
+            <label class="tracking-wide text-gray-600 text-left text-wrap">{{ncrData.require_condition_reference}}</label>
+          </div>
+          <div class="space-x-2">
+            <label class="tracking-wide font-semibold text-gray-700 text-left">Level of Finding:</label>
+            <label class="tracking-wide text-gray-600 text-left">{{ncrData.level_finding}}</label>
+          </div>
+          <div class="space-x-2">
+            <label class="tracking-wide font-semibold text-gray-700 text-left">Problem Analysis:</label>
+            <label class="tracking-wide text-gray-600 text-left">{{ncrData.pa_req}}</label>
+          </div>
+          <div class="space-x-2">
+            <label class="tracking-wide font-semibold text-gray-700 text-left">Answer Due Date:</label>
+            <label class="tracking-wide text-gray-600 text-left">{{ncrData.answer_due_date}}</label>
+          </div>
+          <!-- <div class="space-x-2">
+            <label class="tracking-wide font-semibold text-gray-700 text-left">IAN Number (if there is IAN issued):</label>
+            <label class="tracking-wide text-gray-600 text-left">{{ncrData.ian_no}}</label>
+          </div> -->
+          <div class="col-span-2"><label class="tracking-wide font-semibold text-gray-700 text-left">Encountered Condition:</label></div>
           <div class="col-span-2"><p class="tracking-wide text-gray-600 text-left text-wrap">{{ncrData.encountered_condition}}</p></div>
           <div class="space-x-2">
             <label class="tracking-wide font-semibold text-gray-700 text-left">Audit by:</label>

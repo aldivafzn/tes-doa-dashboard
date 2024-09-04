@@ -83,16 +83,16 @@ export class EditResultNCRComponent implements OnInit {
     try {
       const response = await axios.post('http://localhost:4040/ncr/result/update', this.resultNCRData);
       if (response.data.status === 200) {
-        this.toastService.successToast('NCR Follow Result updated successfully');
-        console.log('NCR Follow Result updated successfully');
+        this.toastService.successToast('NCR Follow Up Result updated successfully');
+        console.log('NCR Follow Up Result updated successfully');
         window.location.href = '/detailNCR';
       } else {
-        this.toastService.failedToast('Failed to update NCR Follow Result');
-        console.error('Failed to update NCR Follow Result:', response.data.message);
+        this.toastService.failedToast('Failed to update NCR Follow Up Result');
+        console.error('Failed to update NCR Follow Up Result:', response.data.message);
       }
     } catch (error) {
-      this.toastService.failedToast('There was an error updating NCR Follow Result');
-      console.error('There was an error updating NCR Follow Result', error);
+      this.toastService.failedToast('There was an error updating NCR Follow Up Result');
+      console.error('There was an error updating NCR Follow Up Result', error);
     }
   }
 }

@@ -42,7 +42,7 @@ enum level {
   THREE = "3"
 }
 
-enum probanalis {
+enum pa_req {
   Required = "Required",
   Not_Required = "Not Required"
 }
@@ -67,7 +67,7 @@ interface NCRInitial {
   attention: string,
   require_condition_reference: string,
   level_finding: string,
-  problem_analysis: string,
+  pa_req: string,
   answer_due_date: string,
   issue_ian: boolean | string,
   ian_no: string,
@@ -138,7 +138,7 @@ export class DetailNCRComponent implements OnInit{
     attention: '',
     require_condition_reference: '',
     level_finding: '',
-    problem_analysis: '',
+    pa_req: '',
     answer_due_date: '',
     issue_ian: '',
     ian_no: '',
@@ -181,7 +181,7 @@ export class DetailNCRComponent implements OnInit{
       this.ncrData.responsibility_office = this.convertEnumValue(responoffice, this.ncrData.responsibility_office);
       this.ncrData.to_uic = this.convertEnumValue(uic, this.ncrData.to_uic);
       this.ncrData.level_finding = this.convertEnumValue(level, this.ncrData.level_finding);
-      this.ncrData.problem_analysis = this.convertEnumValue(probanalis, this.ncrData.problem_analysis);
+      this.ncrData.pa_req = this.convertEnumValue(pa_req, this.ncrData.pa_req);
       this.ncrData.issued_date = this.ncrData.issued_date.slice(0, 10);
       this.ncrData.answer_due_date = this.ncrData.answer_due_date.slice(0, 10);
       this.ncrData.audit_date = this.ncrData.audit_date.slice(0, 10);
