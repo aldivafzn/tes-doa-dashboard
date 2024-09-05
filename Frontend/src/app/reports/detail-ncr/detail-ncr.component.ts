@@ -67,7 +67,7 @@ interface NCRInitial {
   attention: string,
   require_condition_reference: string,
   level_finding: string,
-  pa_req: string,
+  pa_requirement: string,
   answer_due_date: string,
   issue_ian: boolean | string,
   ian_no: string,
@@ -138,7 +138,7 @@ export class DetailNCRComponent implements OnInit{
     attention: '',
     require_condition_reference: '',
     level_finding: '',
-    pa_req: '',
+    pa_requirement: '',
     answer_due_date: '',
     issue_ian: '',
     ian_no: '',
@@ -154,6 +154,7 @@ export class DetailNCRComponent implements OnInit{
   resultNCR: ResultNCR[] = [];
   role: string | null = null;
   currentNCRInitID = '';
+  isInitialized: boolean = false;
 
   ngOnInit() {
     const token = this.authService.getToken();
@@ -181,7 +182,7 @@ export class DetailNCRComponent implements OnInit{
       this.ncrData.responsibility_office = this.convertEnumValue(responoffice, this.ncrData.responsibility_office);
       this.ncrData.to_uic = this.convertEnumValue(uic, this.ncrData.to_uic);
       this.ncrData.level_finding = this.convertEnumValue(level, this.ncrData.level_finding);
-      this.ncrData.pa_req = this.convertEnumValue(pa_req, this.ncrData.pa_req);
+      this.ncrData.pa_requirement = this.convertEnumValue(pa_req, this.ncrData.pa_requirement);
       this.ncrData.issued_date = this.ncrData.issued_date.slice(0, 10);
       this.ncrData.answer_due_date = this.ncrData.answer_due_date.slice(0, 10);
       this.ncrData.audit_date = this.ncrData.audit_date.slice(0, 10);
@@ -236,6 +237,7 @@ export class DetailNCRComponent implements OnInit{
       console.error('Error:', error);
       this.resultNCR = [];
     }
+    this.isInitialized = true;
   }
 
   exportToExcel(element_id: string): void {

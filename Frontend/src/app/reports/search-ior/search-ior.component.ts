@@ -103,6 +103,7 @@ export class SearchIORComponent implements OnInit {
   }; // Filter terms
   showFilters: boolean = false;
 
+  isInitialized: boolean = false;
   role: string | null = null;
 
   toggleFilter() {
@@ -144,6 +145,7 @@ export class SearchIORComponent implements OnInit {
     } catch (error) {
       console.error('Error:', error);
     }
+    this.isInitialized = true;
   }
 
   async fetchDataBySearchTerm() {

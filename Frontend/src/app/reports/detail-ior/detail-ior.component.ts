@@ -113,6 +113,7 @@ export class DetailIORComponent implements OnInit{
   followons: FollowonIOR[] = [];
   role: string | null = null;
   currentIORID = '';
+  isInitialized: boolean = false;
 
   ngOnInit() {
     const token = this.authService.getToken();
@@ -169,6 +170,7 @@ export class DetailIORComponent implements OnInit{
     } catch (error) {
       console.error('Error:', error);
     }
+    this.isInitialized = true;
   }
 
   exportToExcel(): void {

@@ -167,27 +167,27 @@
                 <th id="subject_ior" class="px-4 py-2 border-r border-gray-500">Subject&nbsp;IOR</th>
                 <th id="occur_nbr" class="px-4 py-2 border-r border-gray-500">IOR&nbsp;Number</th>
                 <th id="occur_date" class="px-4 py-2 border-r border-gray-500">IOR&nbsp;Date</th>
-                <!-- <th id="reference_ior" class="px-4 py-2 border-r border-gray-500">Reference&nbsp;IOR</th> -->
                 <th id="to_uic" class="px-4 py-2 border-r border-gray-500">To&nbsp;UIC</th>
-                <!-- <th id="cc_uic" class="px-4 py-2 border-r border-gray-500">CC&nbsp;UIC</th> -->
                 <th id="category_ior" class="px-4 py-2 border-r border-gray-500">Category&nbsp;IOR</th>
-                <!-- <th id="type_or_phone_number" class="px-4 py-2 border-r border-gray-500">Type&nbsp;OR&nbsp;Phone&nbsp;Number</th> -->
                 <th id="level_type" class="px-4 py-2 border-r border-gray-500">Level&nbsp;Type</th>
-                <!-- <th id="detail_occurrence" class="px-4 py-2 border-r border-gray-500">Detail&nbsp;Occurrence</th> -->
                 <th id="reported_by" class="px-4 py-2 border-r border-gray-500">Reported&nbsp;By</th>
-                <!-- <th id="reporter_uic" class="px-4 py-2 border-r border-gray-500">Reporter&nbsp;UIC</th> -->
-                <!-- <th id="report_date" class="px-4 py-2 border-r border-gray-500">Report&nbsp;Date</th> -->
-                <!-- <th id="report_identify" class="px-4 py-2 border-r border-gray-500">Report Identify</th> -->
-                <!-- <th id="data_reference" class="px-4 py-2 border-r border-gray-500">Data Reference</th> -->
-                <!-- <th id="hirac_process" class="px-4 py-2 border-r border-gray-500">Hirac Process</th> -->
                 <th id="initial_probability" class="px-4 py-2 border-r border-gray-500">Initial Probability</th>
                 <th id="initial_severity" class="px-4 py-2 border-r border-gray-500">Initial Severity</th>
                 <th id="initial_riskindex" class="px-4 py-2 border-r border-gray-500">Initial Risk index</th>
-                <!-- <th id="followon" class="px-4 py-2 border-r border-gray-500">Follow On</th> -->
-                <!-- <th id="action" class="px-4 py-2">Action</th> -->
               </tr>
             </thead>
-            <tbody>
+            <tbody *ngIf="!isInitialized">
+              <tr class="border-b border-gray-500">
+                <td colspan="10" class="px-4 py-2">
+                  <div class="flex place-items-center">
+                    <div class="py-4 w-full text-center">
+                      <i class="animate-spin text-gray-300 fa-solid fa-circle-notch" style="font-size: 36px;"></i>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+            <tbody *ngIf="isInitialized">
               <tr *ngFor="let item of items" class="border-b border-gray-500">
                 <td class="px-4 py-2 border-r border-gray-500">{{ item.subject_ior }}</td>
                 <td class="px-4 py-2 border-r border-gray-500">
