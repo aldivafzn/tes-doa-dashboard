@@ -44,6 +44,7 @@ export class IorService {
           initial_probability: dto.initial_probability,
           initial_severity: dto.initial_severity,
           initial_riskindex: dto.initial_riskindex,
+          attachment: dto.attachment,
         },
       });
       return createdOccurrence;
