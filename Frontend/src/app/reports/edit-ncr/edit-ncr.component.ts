@@ -94,7 +94,7 @@ export class EditNCRComponent implements OnInit {
       }
     }
 
-    const ncr_init_id = localStorage.getItem('ncr_init_id');
+    const ncr_init_id = sessionStorage.getItem('ncr_init_id');
     if (ncr_init_id) {
       this.currentNCRinitID = ncr_init_id;
       console.log('Retrieved ncr_init_id:', ncr_init_id);

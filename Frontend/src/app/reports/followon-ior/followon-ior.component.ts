@@ -69,7 +69,7 @@ export class FollowonIORComponent {
       this.getAccountInfo();
     }
 
-    const id_ior = localStorage.getItem('id_ior');
+    const id_ior = sessionStorage.getItem('id_ior');
     if (id_ior) {
       this.followIORData.id_IOR = id_ior;
     }

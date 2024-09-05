@@ -51,7 +51,7 @@ export class EditResultNCRComponent implements OnInit {
   }
 
   ngOnInit() { 
-    const id_ncr_result = localStorage.getItem('id_ncr_result');
+    const id_ncr_result = sessionStorage.getItem('id_ncr_result');
     if (id_ncr_result) {
       this.currentResultId = id_ncr_result;
     }

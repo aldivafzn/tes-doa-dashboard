@@ -46,7 +46,7 @@ export class EditFollowonIORComponent implements OnInit{
   };
 
   ngOnInit() {
-    const id_follup_ior = localStorage.getItem('id_follup_ior');
+    const id_follup_ior = sessionStorage.getItem('id_follup_ior');
     if (id_follup_ior) {
       this.currentFollowonIorID = id_follup_ior;
       console.log('Retrieved id_follup_ior:', id_follup_ior);
@@ -78,7 +78,7 @@ export class EditFollowonIORComponent implements OnInit{
       if (response.data.status === 200) {
         this.toastService.successToast('IOR Follow On updated successfully');
         console.log('IOR Follow On updated successfully');
-        localStorage.removeItem('id_follup_ior');
+        sessionStorage.removeItem('id_follup_ior');
         window.location.href = '/searchFollowonIOR';
       } else {
         this.toastService.failedToast('Failed to update IOR Follow On');

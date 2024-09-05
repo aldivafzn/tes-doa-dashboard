@@ -12,17 +12,17 @@ export class AuthService {
 
   // Store authentication token
   setToken(token: string): void {
-    localStorage.setItem('token', token);
+    sessionStorage.setItem('token', token);
   }
 
   // Get authentication token
   getToken(): string | null {
-    return localStorage.getItem('token');
+    return sessionStorage.getItem('token');
   }
 
   // Remove authentication token
   removeToken(): void {
-    localStorage.removeItem('token');
+    sessionStorage.removeItem('token');
   }
 
   initializeInterceptor() {

@@ -84,7 +84,7 @@ export class EditIORComponent implements OnInit{
       }
     }
 
-    const id_ior = localStorage.getItem('id_ior');
+    const id_ior = sessionStorage.getItem('id_ior');
     if (id_ior) {
       this.currentIorID = id_ior;
       console.log('Retrieved id_ior:', id_ior);

@@ -86,7 +86,7 @@ export class SearchFollowonIORComponent implements OnInit {
   }
 
   ngOnInit() {
-    const id_ior = localStorage.getItem('id_ior');
+    const id_ior = sessionStorage.getItem('id_ior');
     if (id_ior) {
       this.currentIORId = id_ior;
       console.log('Retrieved id_ior:', id_ior);
@@ -158,7 +158,7 @@ export class SearchFollowonIORComponent implements OnInit {
 
   async navigatePreview(documentId: string) {
     try {
-      localStorage.setItem('document_id', documentId);
+      sessionStorage.setItem('document_id', documentId);
       console.log(documentId);
       const response = await axios.post('http://localhost:4040/getPDFDrive', {documentId});
       console.log(response.data.message);
@@ -173,7 +173,7 @@ export class SearchFollowonIORComponent implements OnInit {
   }
 
   navigateEdit(id_follup: string) {
-    localStorage.setItem('id_follup_ior', id_follup);
+    sessionStorage.setItem('id_follup_ior', id_follup);
     window.location.href = '/editFollowonIOR';
   }
 

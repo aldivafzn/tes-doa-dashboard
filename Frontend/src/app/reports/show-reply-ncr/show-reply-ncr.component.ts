@@ -66,7 +66,7 @@ export class ShowReplyNCRComponent implements OnInit {
   currentNCRInitId = '';
   
   ngOnInit() {
-    const ncrInitId = localStorage.getItem('ncr_init_id');
+    const ncrInitId = sessionStorage.getItem('ncr_init_id');
     if (ncrInitId) {
       this.currentNCRInitId = ncrInitId;
     }

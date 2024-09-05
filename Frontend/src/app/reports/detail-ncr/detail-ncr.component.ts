@@ -164,7 +164,7 @@ export class DetailNCRComponent implements OnInit{
       console.log('Retrieved role:', this.role);
     }
 
-    const ncr_init_id = localStorage.getItem('ncr_init_id');
+    const ncr_init_id = sessionStorage.getItem('ncr_init_id');
     if (ncr_init_id) {
       this.currentNCRInitID = ncr_init_id;
     }
@@ -277,7 +277,7 @@ export class DetailNCRComponent implements OnInit{
   }
 
   navigateEditReply(id_ncr_reply: string) {
-    localStorage.setItem('id_ncr_reply', id_ncr_reply);
+    sessionStorage.setItem('id_ncr_reply', id_ncr_reply);
     window.location.href = '/editReplyNCR';
   }
 
@@ -286,7 +286,7 @@ export class DetailNCRComponent implements OnInit{
   }
 
   navigateEditResult(id_ncr_result: string) {
-    localStorage.setItem('id_ncr_result', id_ncr_result);
+    sessionStorage.setItem('id_ncr_result', id_ncr_result);
     window.location.href = '/editResultNCR';
   }
 

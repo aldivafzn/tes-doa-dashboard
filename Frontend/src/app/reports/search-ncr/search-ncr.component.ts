@@ -3,18 +3,9 @@ import { CommonModule } from '@angular/common';
 import { NavbarComponent } from "../../navbar/navbar.component";
 import { FooterComponent } from "../../footer/footer.component";
 import { AuthService } from '../../auth.service';
-import { jwtDecode } from 'jwt-decode';
 import axios from 'axios';
 import * as XLSX from 'xlsx';
 import { FormsModule } from '@angular/forms'; // Ensure FormsModule is imported
-
-interface JwtPayload {
-  email: string,
-  userId: string,
-  role: string,
-  iat: number,
-  exp: number
-}
 
 enum responoffice {
   AO__Airworthiness_Office = "AO: Airworthiness Office",
@@ -113,15 +104,8 @@ export class SearchNCRComponent implements OnInit {
   replyExist: boolean = false;
 
   isInitialized: boolean = false;
-  role: string | null = null;
   
   ngOnInit() {
-    const token = this.authService.getToken();
-    if (token) {
-      const { role } = jwtDecode<JwtPayload>(token);
-      this.role = role;
-      console.log('Retrieved role:', this.role);
-    }
     this.fetchDataFromServer();
   }
 
@@ -212,12 +196,12 @@ export class SearchNCRComponent implements OnInit {
   }
 
   navigateEdit(ncr_init_id: string) {
-    localStorage.setItem('ncr_init_id', ncr_init_id);
+    sessionStorage.setItem('ncr_init_id', ncr_init_id);
     window.location.href = '/editNCR';
   }
 
   navigateDetail(ncr_init_id: string) {
-    localStorage.setItem('ncr_init_id', ncr_init_id);
+    sessionStorage.setItem('ncr_init_id', ncr_init_id);
   }
 
   search() {

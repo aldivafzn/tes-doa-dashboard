@@ -105,7 +105,7 @@ export class ResultNCRComponent implements OnInit {
   };
 
   ngOnInit() { 
-    const ncr_init_id = localStorage.getItem('ncr_init_id');
+    const ncr_init_id = sessionStorage.getItem('ncr_init_id');
     if (ncr_init_id) {
       this.currentNCRInitId = ncr_init_id;
     }
