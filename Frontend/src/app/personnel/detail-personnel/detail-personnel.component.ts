@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { NavbarComponent } from "../../navbar/navbar.component";
 import { FooterComponent } from "../../footer/footer.component";
 import axios from 'axios';
-// import * as XLSX from 'xlsx';
+import * as XLSX from 'xlsx';
 import { FormsModule } from '@angular/forms'; // Ensure FormsModule is imported
 import { ToastService } from '../../toast.service';
 import { AuthService } from '../../auth.service';
@@ -18,6 +18,7 @@ interface JwtPayload {
 }
 
 interface Personnel {
+  person_id: string,
   name: string,
   personnel_no: string,
   title: string,
@@ -30,6 +31,7 @@ interface Personnel {
 }
 
 interface Education {
+  edu_id: string,
   university: string,
   major: string,
   grad_year: Date | string,
@@ -38,6 +40,7 @@ interface Education {
 }
 
 interface Training {
+  training_id: string,
   training_title: string,
   training_category: string,
   start_date: Date | string,
@@ -51,6 +54,7 @@ interface Training {
 }
 
 interface Experience {
+  experience_id: string,
   job_title: string,
   since_date: Date | string,
   until_date: Date | string,
@@ -60,6 +64,7 @@ interface Experience {
 }
 
 interface Certification {
+  cert_id: string,
   regulation_based: string,
   cert_type: string,
   cert_number: string,
@@ -71,16 +76,18 @@ interface Certification {
 }
 
 @Component({
-  selector: 'app-add-personnel',
+  selector: 'app-detail-personnel',
   standalone: true,
   imports: [CommonModule, NavbarComponent, FooterComponent, FormsModule],
-  templateUrl: './add-personnel.component.html',
-  styleUrls: ['./add-personnel.component.css']
+  templateUrl: './detail-personnel.component.html',
+  styleUrls: ['./detail-personnel.component.css']
 })
 
-export class AddPersonnelComponent implements OnInit {
+export class DetailPersonnelComponent implements OnInit {
   constructor(private toastService: ToastService, private authService: AuthService) { }
-  personnelData: Personnel = {
+
+  personnel: Personnel = {
+    person_id: '',
     name: '',
     personnel_no: '',
     title: '',
@@ -91,11 +98,38 @@ export class AddPersonnelComponent implements OnInit {
     job_desc: '',
     design_exp: ''
   }
-  role: string | null = null;
-  educations: Education[] = [];
+  educations: Education[] = [
+    {
+      edu_id: '',
+      university: 'Universitas Indonesia',
+      major: '(S1) Teknik Komputer',
+      grad_year: '2024',
+      remark: '',
+      person_id: ''
+    },
+    {
+      edu_id: '',
+      university: 'Universitas Indonesia',
+      major: '(S1) Teknik Komputer',
+      grad_year: '2024',
+      remark: '',
+      person_id: ''
+    },
+    {
+      edu_id: '',
+      university: 'Universitas Indonesia',
+      major: '(S1) Teknik Komputer',
+      grad_year: '2024',
+      remark: '',
+      person_id: ''
+    }
+  ];
   trainingRecords: Training[] = [];
   experienceRecords: Experience[] = [];
   certifications: Certification[] = [];
+
+  role: string | null = null;
+  isInitialized: boolean = false;
 
   ngOnInit() {
     const token = this.authService.getToken();
@@ -103,78 +137,49 @@ export class AddPersonnelComponent implements OnInit {
       const { role } = jwtDecode<JwtPayload>(token);
       this.role = role;
     }
-    if (this.role !== 'Admin' && this.role !== 'AO') {
-      this.toastService.failedToast('Unauthorized to access page');
-      window.location.href ='/searchPersonnel';
+    this.fetchPersonnel();
+    this.isInitialized = true;
+  }
+
+  async fetchPersonnel() {
+    try {
+
+    } catch (error) {
+      this.toastService.failedToast('There was an error fetching personnel data');
+      console.error('There was an error fetching personnel data:', error);
+    }
+    this.isInitialized = true;
+  }
+
+  exportToExcel(element_id: string): void {
+    const table = document.getElementById(element_id);
+    const ws = XLSX.utils.table_to_sheet(table);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+  
+    const date = new Date();
+    const formattedDate = date.toISOString().slice(0, 10);
+    const fileName = `Personnel_${formattedDate}.xlsx`;
+    XLSX.writeFile(wb, fileName);
+  }
+
+  async navigatePreview(url: string) {
+    if (!url) {
+      this.toastService.failedToast('No PDF link is found!');
+      return;
+    }
+    const preview = window.open(url, '_blank');
+    if (preview) {
+      preview.focus();
     }
   }
 
-  async submitPersonnel() {
-
+  navigateEdit() {
+    window.location.href = '/editPersonnel';
   }
 
-  addEduOptions() {
-    this.educations.push({
-      university: '',
-      major: '',
-      grad_year: '',
-      remark: '',
-      person_id: ''
-    });
-  }
-
-  removeEduOptions() {
-    this.educations.pop();
-  }
-
-  addTrainingOptions() {
-    this.trainingRecords.push({
-      training_title: '',
-      training_category: '',
-      start_date: '',
-      finish_date: '',
-      interval_recurrent: '',
-      next_date: '',
-      place: '',
-      result: '',
-      remark: '',
-      person_id: ''
-    });
-  }
-
-  removeTrainingOptions() {
-    this.trainingRecords.pop();
-  }
-
-  addExperienceOptions() {
-    this.experienceRecords.push({
-      job_title: '',
-      since_date: '',
-      until_date: '',
-      assignment: '',
-      remark: '',
-      person_id: ''
-    });
-  }
-
-  removeExperienceOptions() {
-    this.experienceRecords.pop();
-  }
-
-  addCertificationOptions() {
-    this.certifications.push({
-      regulation_based: '',
-      cert_type: '',
-      cert_number: '',
-      cert_first_date: '',
-      cert_expire_date: '',
-      cert_letter_nbr: '',
-      cert_scope: '',
-      person_id: ''
-    });
-  }
-
-  removeCertificationOptions() {
-    this.certifications.pop();
+  convertEnumValue(enumObj: any, value: string): string {
+    // Convert the value if it's a key in the enum object
+    return enumObj[value] || value;
   }
 }

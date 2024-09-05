@@ -16,12 +16,17 @@ interface JwtPayload {
   exp: number
 }
 
-interface PersonnelData {
-  personnelNo: number,
+interface Personnel {
+  person_id: string,
   name: string,
+  personnel_no: string,
+  title: string,
   department: string,
   email: string,
-  employmentDate: string
+  birth_date: string,
+  employ_date: string,
+  job_desc: string,
+  design_exp: string
 }
 
 @Component({
@@ -35,8 +40,7 @@ interface PersonnelData {
 export class SearchPersonnelComponent implements OnInit {
   constructor(private authService: AuthService) { }
 
-  items: PersonnelData[] = [];
-  searchData = { input: '' };
+  items: Personnel[] = [];
   searchTerm: string = ''; // Define searchTerm here
 
   role: string | null = null;
@@ -52,11 +56,11 @@ export class SearchPersonnelComponent implements OnInit {
 
   async fetchDataFromServer() {
     try {
-      const response = await axios.get('http://localhost:3000/showPersonnelAll');
+      const response = await axios.get('http://localhost:4040/personnel/show-all');
       if (response.data.status === 200) {
         this.items = response.data.showProduct;
         for (let i = 0; i < this.items.length; i++) {
-          this.items[i].employmentDate = this.items[i].employmentDate.slice(0, 10)
+          this.items[i].employ_date = this.items[i].employ_date.slice(0, 10)
         }
       } else {
         console.error('Error Message:', response.data.message);
@@ -68,8 +72,8 @@ export class SearchPersonnelComponent implements OnInit {
 
   async fetchDataBySearchTerm() {
     try {
-      const response = await axios.post('http://localhost:3000/searchPersonnel', {
-        ...this.searchData
+      const response = await axios.post('http://localhost:4040/personnel/search', {
+        input: this.searchTerm
       });
       if (response.data.status === 200) {
         this.items = response.data.showProduct;
@@ -105,5 +109,9 @@ export class SearchPersonnelComponent implements OnInit {
 
   navigateAdd() {
     window.location.href = '/addPersonnel';
+  }
+
+  navigateDetail(person_id: string) {
+    // sessionStorage.setItem('person_id', person_id);
   }
 }

@@ -71,14 +71,14 @@ interface Certification {
 }
 
 @Component({
-  selector: 'app-add-personnel',
+  selector: 'app-edit-personnel',
   standalone: true,
   imports: [CommonModule, NavbarComponent, FooterComponent, FormsModule],
-  templateUrl: './add-personnel.component.html',
-  styleUrls: ['./add-personnel.component.css']
+  templateUrl: './edit-personnel.component.html',
+  styleUrls: ['./edit-personnel.component.css']
 })
 
-export class AddPersonnelComponent implements OnInit {
+export class EditPersonnelComponent implements OnInit {
   constructor(private toastService: ToastService, private authService: AuthService) { }
   personnelData: Personnel = {
     name: '',
@@ -105,12 +105,27 @@ export class AddPersonnelComponent implements OnInit {
     }
     if (this.role !== 'Admin' && this.role !== 'AO') {
       this.toastService.failedToast('Unauthorized to access page');
-      window.location.href ='/searchPersonnel';
+      window.location.href ='/detailPersonnel';
+    }
+    this.fetchPersonnel();
+  }
+
+  async fetchPersonnel() {
+    try {
+
+    } catch (error) {
+      this.toastService.failedToast('There was an error fetching personnel data');
+      console.error('There was an error fetching personnel data:', error);
     }
   }
 
-  async submitPersonnel() {
+  async updatePersonnel() {
+    try {
 
+    } catch (error) {
+      this.toastService.failedToast('There was an error updating personnel data');
+      console.error('There was an error updating personnel data:', error);
+    }
   }
 
   addEduOptions() {

@@ -36,16 +36,21 @@
             </thead>
             <tbody>
               <!-- <tr *ngFor="let item of items" class="border-b border-gray-500">
-                <td class="px-4 py-2 border-r border-gray-500">{{ item.personnelNo }}</td>
+                <td class="px-4 py-2 border-r border-gray-500">
+                  <a href="/detailPersonnel" (click)="navigateDetail(item.person_id)" class="text-cyan-600 underline decoration-inherit hover:text-cyan-800">{{ item.personnelNo }}</a>
+                </td>
                 <td class="px-4 py-2 border-r border-gray-500">{{ item.name }}</td>
                 <td class="px-4 py-2 border-r border-gray-500">{{ item.department }}</td>
                 <td class="px-4 py-2 border-r border-gray-500">{{ item.email }}</td>
+                <td class="px-4 py-2 border-r border-gray-500">{{ item.employ_date }}</td>
                 <td class="px-4 py-2">
                   <button (click)="navigatePreview(item.documentId)" class="inline-block bg-[#016299] rounded border-2 border-primary px-3 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white">Preview</button>
                 </td>
               </tr> -->
               <tr class="border-b border-gray-500">
-                <td class="px-4 py-2 border-r border-gray-500">5749293512</td>
+                <td class="px-4 py-2 border-r border-gray-500">
+                  <a href="/detailPersonnel" (click)="navigateDetail('')" class="text-cyan-600 underline decoration-inherit hover:text-cyan-800">5749293512</a>
+                </td>
                 <td class="px-4 py-2 border-r border-gray-500">Kilroy</td>
                 <td class="px-4 py-2 border-r border-gray-500">JKTTEJ-1</td>
                 <td class="px-4 py-2 border-r border-gray-500">test&#64;gmail.com</td>
@@ -55,7 +60,9 @@
                 </td>
               </tr>
               <tr class="border-b border-gray-500">
-                <td class="px-4 py-2 border-r border-gray-500">7395739283</td>
+                <td class="px-4 py-2 border-r border-gray-500">
+                  <a href="/detailPersonnel" (click)="navigateDetail('')" class="text-cyan-600 underline decoration-inherit hover:text-cyan-800">7395739283</a>
+                </td>
                 <td class="px-4 py-2 border-r border-gray-500">Jeffri</td>
                 <td class="px-4 py-2 border-r border-gray-500">JKTTEJ-1</td>
                 <td class="px-4 py-2 border-r border-gray-500">jeffri&#64;gmail.com</td>
@@ -65,7 +72,9 @@
                 </td>
               </tr>
               <tr class="border-b border-gray-500">
-                <td class="px-4 py-2 border-r border-gray-500">90838598492</td>
+                <td class="px-4 py-2 border-r border-gray-500">
+                  <a href="/detailPersonnel" (click)="navigateDetail('')" class="text-cyan-600 underline decoration-inherit hover:text-cyan-800">90838598492</a>
+                </td>
                 <td class="px-4 py-2 border-r border-gray-500">Mikel</td>
                 <td class="px-4 py-2 border-r border-gray-500">JKTTEJ-1</td>
                 <td class="px-4 py-2 border-r border-gray-500">mikel&#64;gmail.com</td>
