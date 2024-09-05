@@ -105,7 +105,7 @@ export class ResultNCRComponent implements OnInit {
   };
 
   ngOnInit() { 
-    const ncr_init_id = localStorage.getItem('ncr_init_id');
+    const ncr_init_id = sessionStorage.getItem('ncr_init_id');
     if (ncr_init_id) {
       this.currentNCRInitId = ncr_init_id;
     }
@@ -133,18 +133,18 @@ export class ResultNCRComponent implements OnInit {
     try {
       const response = await axios.post('http://localhost:4040/ncr/result/add', this.resultNCRData);
       if (response.data.status === 200) {
-        this.toastService.successToast('NCR Follow Result added successfully');
-        console.log('NCR Follow Result added successfully');
+        this.toastService.successToast('NCR Follow Up Result added successfully');
+        console.log('NCR Follow Up Result added successfully');
         this.ncrData.status = "Closed";
         await axios.put('http://localhost:4040/ncr/update', this.ncrData);
         window.location.href = '/detailNCR';
       } else {
-        this.toastService.failedToast('Failed to add NCR Follow Result');
-        console.error('Failed to add NCR Follow Result:', response.data.message);
+        this.toastService.failedToast('Failed to add NCR Follow Up Result');
+        console.error('Failed to add NCR Follow Up Result:', response.data.message);
       }
     } catch (error) {
-      this.toastService.failedToast('There was an error adding NCR Follow Result');
-      console.error('There was an error adding NCR Follow Result', error);
+      this.toastService.failedToast('There was an error adding NCR Follow Up Result');
+      console.error('There was an error adding NCR Follow Up Result', error);
     }
   }
 }

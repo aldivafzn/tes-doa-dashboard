@@ -29,7 +29,7 @@ interface NCRData {
   attention: string,
   require_condition_reference: string,
   level_finding: string,
-  problem_analysis: string,
+  pa_requirement: string,
   answer_due_date: Date | string,
   issue_ian: string | boolean,
   ian_no: string,
@@ -65,7 +65,7 @@ export class FormNCRComponent implements OnInit {
     attention: '',
     require_condition_reference: '',
     level_finding: '',
-    problem_analysis: '',
+    pa_requirement: '',
     answer_due_date: '',
     issue_ian: '',
     ian_no: '',
@@ -109,7 +109,18 @@ export class FormNCRComponent implements OnInit {
       console.error('There was an error fetching account info!', error);
     }
   }
+
   async submitNCR() {
+    switch (this.ncrData.regulationbased) {
+      case 'DGCA':
+        this.ncrData.audit_plan_no.padStart(7, '0');
+        this.ncrData.audit_plan_no = 'AP-' + this.ncrData.audit_plan_no;
+        break;
+      case 'EASA':
+        this.ncrData.audit_plan_no.padStart(3, '0');
+        this.ncrData.audit_plan_no = 'AP/E-' + this.ncrData.audit_plan_no;
+        break;
+    }
     this.ncrData.issued_date = new Date(this.ncrData.issued_date);
     this.ncrData.answer_due_date = new Date(this.ncrData.answer_due_date);
     this.ncrData.audit_date = new Date(this.ncrData.audit_date);

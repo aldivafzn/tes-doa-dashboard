@@ -30,7 +30,7 @@ interface NCRInitData {
   attention: string,
   require_condition_reference: string,
   level_finding: string,
-  problem_analysis: string,
+  pa_requirement: string,
   answer_due_date: Date | string,
   issue_ian: string | boolean,
   ian_no: string,
@@ -68,7 +68,7 @@ export class EditNCRComponent implements OnInit {
     attention: '',
     require_condition_reference: '',
     level_finding: '',
-    problem_analysis: '',
+    pa_requirement: '',
     answer_due_date: '',
     issue_ian: '',
     ian_no: '',
@@ -94,7 +94,7 @@ export class EditNCRComponent implements OnInit {
       }
     }
 
-    const ncr_init_id = localStorage.getItem('ncr_init_id');
+    const ncr_init_id = sessionStorage.getItem('ncr_init_id');
     if (ncr_init_id) {
       this.currentNCRinitID = ncr_init_id;
       console.log('Retrieved ncr_init_id:', ncr_init_id);

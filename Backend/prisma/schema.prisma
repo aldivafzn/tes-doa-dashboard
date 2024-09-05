@@ -71,6 +71,7 @@ model ncr_followresult {
   verified_date            DateTime    @db.Date
   temporarylink            String?
   id_ncr_result            String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  implementation_date      DateTime    @db.Date
   account                  account?    @relation(fields: [accountid], references: [accountid], onDelete: NoAction, onUpdate: NoAction)
   ncr_initial              ncr_initial @relation(fields: [ncr_init_id], references: [ncr_init_id])
 }
@@ -80,8 +81,8 @@ model ncr_initial {
   ncr_init_id                 String             @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   regulationbased             reg_based
   subject                     String
-  audit_plan_no               String             @db.VarChar(10)
-  ncr_no                      String             @db.VarChar(11)
+  audit_plan_no               String             @db.VarChar(50)
+  ncr_no                      String             @db.VarChar(50)
   issued_date                 DateTime           @db.Date
   responsibility_office       responoffice
   audit_type                  audittype
@@ -90,7 +91,6 @@ model ncr_initial {
   attention                   String
   require_condition_reference String
   level_finding               level
-  problem_analysis            probanalis
   answer_due_date             DateTime           @db.Date
   issue_ian                   Boolean
   ian_no                      String
@@ -102,6 +102,7 @@ model ncr_initial {
   status                      enum_stat
   temporarylink               String?
   document_id                 String?            @db.VarChar(255)
+  pa_requirement              pa_req?
   ncr_followresult            ncr_followresult[]
   account                     account?           @relation(fields: [accountid], references: [accountid], onDelete: NoAction, onUpdate: NoAction)
   ncr_reply                   ncr_reply[]
@@ -203,6 +204,7 @@ model tbl_occurrence {
   initial_severity    String?           @db.VarChar(1)
   initial_riskindex   String?           @db.VarChar(40)
   document_id         String?           @db.VarChar(255)
+  attachment          String?
   tbl_follupoccur     tbl_follupoccur[]
 }
 
@@ -239,6 +241,11 @@ enum level {
   ONE   @map("1")
   TWO   @map("2")
   THREE @map("3")
+}
+
+enum pa_req {
+  Required
+  Not_Required @map("Not Required")
 }
 
 enum office_code {
@@ -328,7 +335,7 @@ enum category_occur {
   Document
   Personnel
   Facility
-  Partner_of_Subcontractor @map("Partner of Subcontractor")
+  Partner_or_Subcontractor @map("Partner or Subcontractor")
   Material
   Information_Technology   @map("Information Technology")
   Training

@@ -91,6 +91,10 @@ export class CreateOccurrenceDto {
   @IsString()
   @IsNotEmpty()
   readonly initial_riskindex?: string;
+
+  @IsNotEmpty()
+  @IsString()
+  readonly attachment: string;
 }
 
 export class ShowOccurrenceDto {

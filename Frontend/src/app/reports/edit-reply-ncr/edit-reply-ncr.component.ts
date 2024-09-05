@@ -51,7 +51,7 @@ export class EditReplyNCRComponent implements OnInit {
   }
 
   ngOnInit() { 
-    const id_ncr_reply = localStorage.getItem('id_ncr_reply');
+    const id_ncr_reply = sessionStorage.getItem('id_ncr_reply');
     if (id_ncr_reply) {
       this.currentReplyID = id_ncr_reply;
     }

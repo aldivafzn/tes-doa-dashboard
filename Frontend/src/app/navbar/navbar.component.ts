@@ -67,10 +67,10 @@ export class NavbarComponent implements OnInit {
         window.location.href != 'http://localhost:4200/addFollowonIOR' &&
         window.location.href != 'http://localhost:4200/editFollowonIOR'
       ) {
-      localStorage.removeItem('id_ior');
+      sessionStorage.removeItem('id_ior');
     }
     if (window.location.href != 'http://localhost:4200/editFollowonIOR') {
-      localStorage.removeItem('id_follup_ior');
+      sessionStorage.removeItem('id_follup_ior');
     }
     if (window.location.href != 'http://localhost:4200/editNCR' &&
         window.location.href != 'http://localhost:4200/detailNCR' &&
@@ -79,13 +79,13 @@ export class NavbarComponent implements OnInit {
         window.location.href != 'http://localhost:4200/addResultNCR' &&
         window.location.href != 'http://localhost:4200/editResultNCR'
       ) {
-      localStorage.removeItem('ncr_init_id');
+      sessionStorage.removeItem('ncr_init_id');
     }
     if (window.location.href != 'http://localhost:4200/editReplyNCR') {
-      localStorage.removeItem('id_ncr_reply');
+      sessionStorage.removeItem('id_ncr_reply');
     }
     if (window.location.href != 'http://localhost:4200/editResultNCR') {
-      localStorage.removeItem('id_ncr_result');
+      sessionStorage.removeItem('id_ncr_result');
     }
   }
 }

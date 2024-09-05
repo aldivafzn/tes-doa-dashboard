@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { PrismaService } from './prisma.service';
 import {
   CreateOccurrenceDto,
@@ -10,10 +10,16 @@ import {
   UpdateFollowUpOccurrenceDto,
 } from '../dtos/ior.dto';
 import { uic } from '@prisma/client';
+import { GoogleApiService } from './googleapi.service';
 
 @Injectable()
 export class IorService {
-  constructor(private readonly prisma: PrismaService) {}
+  private readonly logger = new Logger(IorService.name);
+
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly googleApiService: GoogleApiService,
+  ) {}
 
   async createOccurrence(dto: CreateOccurrenceDto) {
     try {
@@ -38,6 +44,7 @@ export class IorService {
           initial_probability: dto.initial_probability,
           initial_severity: dto.initial_severity,
           initial_riskindex: dto.initial_riskindex,
+          attachment: dto.attachment,
         },
       });
       return createdOccurrence;
@@ -47,18 +54,220 @@ export class IorService {
     }
   }
 
+  // async getOccurrence(dto: ShowOccurrenceDto) {
+  //   const { id_IOR } = dto;
+  //   // Validate id_IOR
+  //   if (!id_IOR) {
+  //     throw new Error('id_IOR is required');
+  //   }
+
+  //   try {
+  //     const occurrence = await this.prisma.tbl_occurrence.findUnique({
+  //       where: { id_ior: id_IOR },
+  //     });
+  //     return occurrence;
+  //   } catch (error) {
+  //     console.error('Error fetching occurrence:', error);
+  //     throw new Error('Error Fetching Occurrence');
+  //   }
+  // }
+
   async getOccurrence(dto: ShowOccurrenceDto) {
     const { id_IOR } = dto;
-    // Validate id_IOR
+
     if (!id_IOR) {
       throw new Error('id_IOR is required');
     }
 
     try {
-      const occurrence = await this.prisma.tbl_occurrence.findUnique({
+      // Step 1: Retrieve data from tbl_occurrence and tbl_follupoccur
+      let occurrence = await this.prisma.tbl_occurrence.findUnique({
         where: { id_ior: id_IOR },
+        include: {
+          tbl_follupoccur: true, // Include sub-table data
+        },
       });
-      return occurrence;
+
+      if (!occurrence) {
+        throw new Error('Occurrence record not found');
+      }
+
+      const firstFollowUp = occurrence.tbl_follupoccur[0];
+
+      // Step 2: Copy the Google Doc Template
+      const templateDocId = process.env.TEMPLATE_DOCUMENT_IOR;
+      const documentTitle = `IOR_${occurrence.occur_nbr}`;
+      const userEmailAddress = process.env.USER_EMAIL;
+
+      const copiedDocumentId = await this.googleApiService.copyGoogleDoc(
+        templateDocId,
+        documentTitle,
+        userEmailAddress,
+      );
+
+      // Step 3: Prepare Placeholders including categories, level types, and other fields
+      const categories = [
+        '{DOA Management}',
+        '{Partner or Subcontractor}',
+        '{Procedure}',
+        '{Material}',
+        '{Document}',
+        '{Information Technology}',
+        '{Personnel}',
+        '{Training}',
+        '{Facility}',
+        '{Others}',
+      ];
+
+      const levelTypes = ['{Aircraft}', '{Engine}', '{APU}', '{Others}'];
+
+      const categoryReplacements = categories.reduce((acc, placeholder) => {
+        // Normalize both the placeholder and occurrence category for comparison
+        const normalizedCategory = placeholder
+          .replace(/[{}]/g, '') // Remove curly braces
+          .toLowerCase(); // Convert to lowercase
+
+        const normalizedOccurrenceCategory = occurrence.category_occur
+          .replace(/_/g, ' ') // Replace underscores with spaces in the input
+          .toLowerCase(); // Convert to lowercase
+
+        const isMatched = normalizedCategory === normalizedOccurrenceCategory;
+
+        // Add the result to the accumulator
+        acc[placeholder] = isMatched
+          ? `☑ ${occurrence.category_occur.replace(/_/g, ' ')}` // Mark as checked, replacing underscores with spaces
+          : `☐ ${normalizedCategory}`; // Keep unchecked placeholder as is
+
+        return acc;
+      }, {});
+
+      const levelTypeReplacement = levelTypes.reduce((acc, placeholder) => {
+        const normalizedLevelType = placeholder
+          .replace(/[{}]/g, '')
+          .toLowerCase();
+        const isMatched =
+          normalizedLevelType === occurrence.level_type.toLowerCase();
+        acc[placeholder] = isMatched
+          ? `☑ ${occurrence.level_type}`
+          : `☐ ${normalizedLevelType}`;
+        return acc;
+      }, {});
+
+      const reporterIdentityReplacement = {
+        '{Shown}':
+          occurrence.reporter_identity === 'Shown' ? '☑ Shown' : '☐ Shown',
+        '{Hidden}':
+          occurrence.reporter_identity === 'Hidden' ? '☑ Hidden' : '☐ Hidden',
+      };
+
+      const dataRefReplacement = {
+        '{RefYes}': occurrence.data_reference ? '☑ Yes' : '☐ No',
+        '{RefNo}': !occurrence.data_reference ? '☑ No' : '☐ No',
+      };
+
+      const hiracProcessReplacement = {
+        '{HIRACYes}': occurrence.hirac_process === 'Yes' ? '☑ Yes' : '☐ No',
+        '{HIRACNo}': occurrence.hirac_process === 'No' ? '☑ No' : '☐ No',
+      };
+
+      // Additional placeholders for other template fields
+      const additionalReplacements = {
+        '{Subject}': occurrence.subject_ior || '',
+        '{OccurenceReport}': occurrence.occur_nbr || '',
+        '{OccurenceDate}':
+          occurrence.occur_date.toISOString().split('T')[0] || '',
+        '{Ref}': occurrence.reference_ior || '',
+        '{Type}': occurrence.type_or_pnbr || '',
+        '{To}': occurrence.to_uic || '',
+        '{Copy}': occurrence.cc_uic || '',
+        '{Detail}': occurrence.detail_occurance || '',
+        '{NameID}': occurrence.reportedby || '',
+        '{Unit}': occurrence.reporter_uic || '',
+        '{Date}': occurrence.report_date.toISOString().split('T')[0] || '',
+        '{Init_Prob}': occurrence.initial_probability || '',
+        '{Init_Severity}': occurrence.initial_severity || '',
+        '{Init_Risk}': occurrence.initial_riskindex || '',
+        // Additional placeholders for follow-up data
+        '{FollowUp_Action}': firstFollowUp?.follup_detail || '',
+        '{FollowUp_Date}':
+          firstFollowUp?.follup_date.toISOString().split('T')[0] || '',
+        '{FollowOn1}': firstFollowUp?.follup_detail || '',
+        '{NameFollow1}': firstFollowUp?.follupby || '',
+        '{Ref1Yes}':
+          firstFollowUp?.follup_datarefer === true ? '☑ Yes' : '☐ No',
+        '{Ref1No}':
+          firstFollowUp?.follup_datarefer === false ? '☑ No' : '☐ No',
+        '{UnitFollow1}': firstFollowUp?.follup_uic || '',
+        '{Open1}':
+          firstFollowUp?.follup_status === 'Open' ? '☑ Open' : '☐ Open',
+        '{Close1}':
+          firstFollowUp?.follup_status === 'Close' ? '☑ Close' : '☐ Close',
+        '{DateFollow1}': firstFollowUp?.follup_date || '',
+        '{NextUnit}': firstFollowUp?.nextuic_follup || '',
+        '{Curr_Prob}': firstFollowUp?.current_probability || '',
+        '{Curr_Severity}': firstFollowUp?.current_severity || '',
+        '{Curr_Risk}': firstFollowUp?.current_riskindex || '',
+      };
+
+      // Combine all the replacements into one object
+      const allReplacements = {
+        ...categoryReplacements,
+        ...levelTypeReplacement,
+        ...reporterIdentityReplacement,
+        ...dataRefReplacement,
+        ...hiracProcessReplacement,
+        ...additionalReplacements,
+      };
+
+      // Step 4: Replace placeholders in the document
+      for (const [placeholder, value] of Object.entries(allReplacements)) {
+        const formattedValue =
+          value instanceof Date ? value.toISOString().split('T')[0] : value;
+        await this.googleApiService.replaceTextInGoogleDocs(
+          copiedDocumentId,
+          placeholder,
+          formattedValue,
+        );
+      }
+
+      // Step 5: Move the document to a specific folder and generate PDF
+      const targetFolderId = process.env.TARGET_FOLDER_IOR;
+      await this.googleApiService.moveFileToFolder(
+        copiedDocumentId,
+        targetFolderId,
+      );
+
+      const pdfResult = await this.googleApiService.getPDFDrive(
+        copiedDocumentId,
+        targetFolderId,
+      );
+
+      if (pdfResult.status !== 200) {
+        throw new Error('Failed to generate and upload PDF to Google Drive');
+      }
+
+      // Step 6: Update tbl_occurrence with the PDF link
+      await this.prisma.tbl_occurrence.update({
+        where: { id_ior: occurrence.id_ior },
+        data: {
+          document_id: pdfResult.message,
+        },
+      });
+
+      // Step 7: Re-fetch the updated Occurrence data to include the new document_id
+      occurrence = await this.prisma.tbl_occurrence.findUnique({
+        where: { id_ior: id_IOR },
+        include: {
+          tbl_follupoccur: true,
+        },
+      });
+
+      // Step 8: Return the final response
+      return {
+        status: 200,
+        message: 'Occurrence Retrieved and Documents Generated Successfully',
+        data: occurrence,
+      };
     } catch (error) {
       console.error('Error fetching occurrence:', error);
       throw new Error('Error Fetching Occurrence');

@@ -3,18 +3,9 @@ import { CommonModule } from '@angular/common';
 import { NavbarComponent } from "../../navbar/navbar.component";
 import { FooterComponent } from "../../footer/footer.component";
 import { AuthService } from '../../auth.service';
-import { jwtDecode } from 'jwt-decode';
 import axios from 'axios';
 import * as XLSX from 'xlsx';
 import { FormsModule } from '@angular/forms'; // Ensure FormsModule is imported
-
-interface JwtPayload {
-  email: string,
-  userId: string,
-  role: string,
-  iat: number,
-  exp: number
-}
 
 enum responoffice {
   AO__Airworthiness_Office = "AO: Airworthiness Office",
@@ -41,7 +32,7 @@ enum level {
   THREE = "3"
 }
 
-enum probanalis {
+enum pa_req {
   Required = "Required",
   Not_Required = "Not Required"
 }
@@ -61,7 +52,7 @@ interface NCRInitial {
   attention: string,
   require_condition_reference: string,
   level_finding: string,
-  problem_analysis: string,
+  pa_requirement: string,
   answer_due_date: string,
   issue_ian: boolean | string,
   ian_no: string,
@@ -112,15 +103,9 @@ export class SearchNCRComponent implements OnInit {
   showFilters: boolean = false; // Toggle for filter visibility
   replyExist: boolean = false;
 
-  role: string | null = null;
+  isInitialized: boolean = false;
   
   ngOnInit() {
-    const token = this.authService.getToken();
-    if (token) {
-      const { role } = jwtDecode<JwtPayload>(token);
-      this.role = role;
-      console.log('Retrieved role:', this.role);
-    }
     this.fetchDataFromServer();
   }
 
@@ -133,22 +118,25 @@ export class SearchNCRComponent implements OnInit {
           this.items[i].responsibility_office = this.convertEnumValue(responoffice, this.items[i].responsibility_office);
           this.items[i].to_uic = this.convertEnumValue(uic, this.items[i].to_uic);
           this.items[i].level_finding = this.convertEnumValue(level, this.items[i].level_finding);
-          this.items[i].problem_analysis = this.convertEnumValue(probanalis, this.items[i].problem_analysis);
+          this.items[i].pa_requirement = this.convertEnumValue(pa_req, this.items[i].pa_requirement);
           this.items[i].issued_date = this.items[i].issued_date.slice(0, 10);
           this.items[i].answer_due_date = this.items[i].answer_due_date.slice(0, 10);
           this.items[i].audit_date = this.items[i].audit_date.slice(0, 10);
           this.items[i].acknowledge_date = this.items[i].acknowledge_date.slice(0, 10);
           this.items[i].issue_ian = this.items[i].issue_ian ? "Yes" : "No";
         }
+        this.isInitialized = true;
       } else {
         console.error('Error Message:', response.data.message);
       }
     } catch (error) {
       console.error('Error:', error);
     }
+    this.isInitialized = true;
   }
 
   async fetchDataBySearchTerm() {
+    this.isInitialized = false;
     try {
       const response = await axios.post('http://localhost:4040/ncr/search', {
         input: this.searchTerm
@@ -160,7 +148,7 @@ export class SearchNCRComponent implements OnInit {
           this.items[i].responsibility_office = this.convertEnumValue(responoffice, this.items[i].responsibility_office);
           this.items[i].to_uic = this.convertEnumValue(uic, this.items[i].to_uic);
           this.items[i].level_finding = this.convertEnumValue(level, this.items[i].level_finding);
-          this.items[i].problem_analysis = this.convertEnumValue(probanalis, this.items[i].problem_analysis);
+          this.items[i].pa_requirement = this.convertEnumValue(pa_req, this.items[i].pa_requirement);
           this.items[i].issued_date = this.items[i].issued_date.slice(0, 10);
           this.items[i].answer_due_date = this.items[i].answer_due_date.slice(0, 10);
           this.items[i].audit_date = this.items[i].audit_date.slice(0, 10);
@@ -177,23 +165,7 @@ export class SearchNCRComponent implements OnInit {
       this.items = [];
       window.location.href = '/login';
     }
-  }
-
-  async checkReply(ncr_init_id: string) {
-    try {
-      const response = await axios.post('http://localhost:4040/ncr/reply/show', {
-        ncr_init_id: ncr_init_id
-      });
-      if (response.data.message === 'Showing NCR Reply') {
-        return true;
-      } else {
-        console.error('Error message:', response.data.message);
-        return false;
-      }
-    } catch (error) {
-      console.error('Error:', error);
-      return false;
-    }
+    this.isInitialized = true;
   }
 
   exportToExcel(): void {
@@ -224,22 +196,12 @@ export class SearchNCRComponent implements OnInit {
   }
 
   navigateEdit(ncr_init_id: string) {
-    localStorage.setItem('ncr_init_id', ncr_init_id);
+    sessionStorage.setItem('ncr_init_id', ncr_init_id);
     window.location.href = '/editNCR';
   }
 
-  async navigateReply(ncr_init_id: string) {
-    localStorage.setItem('ncr_init_id', ncr_init_id);
-    const replyExist = await this.checkReply(ncr_init_id);
-    if (replyExist) {
-      window.location.href = '/showReplyNCR';
-    } else {
-      window.location.href = '/addReplyNCR';
-    }
-  }
-
   navigateDetail(ncr_init_id: string) {
-    localStorage.setItem('ncr_init_id', ncr_init_id);
+    sessionStorage.setItem('ncr_init_id', ncr_init_id);
   }
 
   search() {

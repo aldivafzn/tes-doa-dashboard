@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EditFollowonIORComponent } from './edit-followon-ior.component';
+import { EditPersonnelComponent } from './edit-personnel.component';
 
-describe('EditFollowonIORComponent', () => {
-  let component: EditFollowonIORComponent;
-  let fixture: ComponentFixture<EditFollowonIORComponent>;
+describe('EditPersonnelComponent', () => {
+  let component: EditPersonnelComponent;
+  let fixture: ComponentFixture<EditPersonnelComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [EditFollowonIORComponent]
+      imports: [EditPersonnelComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(EditFollowonIORComponent);
+    fixture = TestBed.createComponent(EditPersonnelComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

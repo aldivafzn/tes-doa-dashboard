@@ -21,6 +21,7 @@ export class LoginComponent {
   constructor(private router: Router, private toastService: ToastService, private authService: AuthService) { }
 
   async login() {
+    const loggingInToastElement = this.toastService.generatingToast('Logging In');
     try {
       const response = await axios.post<{ status: number, message: string, token: string }>('http://localhost:4040/account/login', {
         email: this.email,
@@ -39,5 +40,6 @@ export class LoginComponent {
     } catch (error) {
       console.error('There was an error!', error);
     }
+    document.body.removeChild(loggingInToastElement);
   }
 }

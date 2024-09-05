@@ -113,6 +113,7 @@ export class DetailIORComponent implements OnInit{
   followons: FollowonIOR[] = [];
   role: string | null = null;
   currentIORID = '';
+  isInitialized: boolean = false;
 
   ngOnInit() {
     const token = this.authService.getToken();
@@ -122,7 +123,7 @@ export class DetailIORComponent implements OnInit{
       console.log('Retrieved role:', this.role);
     }
 
-    const id_ior = localStorage.getItem('id_ior');
+    const id_ior = sessionStorage.getItem('id_ior');
     if (id_ior) {
       this.currentIORID = id_ior;
     }
@@ -169,6 +170,7 @@ export class DetailIORComponent implements OnInit{
     } catch (error) {
       console.error('Error:', error);
     }
+    this.isInitialized = true;
   }
 
   exportToExcel(): void {
@@ -209,7 +211,7 @@ export class DetailIORComponent implements OnInit{
   }
 
   navigateEditFollowon(id_follup: string) {
-    localStorage.setItem('id_follup_ior', id_follup);
+    sessionStorage.setItem('id_follup_ior', id_follup);
     window.location.href = '/editFollowonIOR';
   }
 

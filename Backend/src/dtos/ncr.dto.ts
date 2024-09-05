@@ -14,7 +14,7 @@ import {
   auditscope,
   uic,
   level,
-  probanalis,
+  pa_req,
   effective,
 } from '@prisma/client';
 
@@ -74,9 +74,9 @@ export class CreateNCRDto {
   @IsNotEmpty()
   level_finding: level;
 
-  @IsEnum(probanalis)
+  @IsEnum(pa_req)
   @IsNotEmpty()
-  problem_analysis: probanalis;
+  pa_requirement: pa_req;
 
   @IsDate()
   @IsNotEmpty()
@@ -254,6 +254,10 @@ export class CreateNcrResultDto {
   @IsDate()
   @IsNotEmpty()
   proposed_close_date: Date;
+
+  @IsDate()
+  @IsNotEmpty()
+  implementation_date: Date;
 
   @IsBoolean()
   @IsNotEmpty()

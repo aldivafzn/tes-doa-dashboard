@@ -103,7 +103,7 @@ export class SearchIORComponent implements OnInit {
   }; // Filter terms
   showFilters: boolean = false;
 
-  role: string | null = null;
+  isInitialized: boolean = false;
 
   toggleFilter() {
     this.showFilters = !this.showFilters;
@@ -116,12 +116,6 @@ export class SearchIORComponent implements OnInit {
   }
 
   ngOnInit() {
-    const token = this.authService.getToken();
-    if (token) {
-      const { role } = jwtDecode<JwtPayload>(token);
-      this.role = role;
-      console.log('Retrieved role:', this.role);
-    }
     this.fetchDataFromServer();
   }
 
@@ -144,6 +138,7 @@ export class SearchIORComponent implements OnInit {
     } catch (error) {
       console.error('Error:', error);
     }
+    this.isInitialized = true;
   }
 
   async fetchDataBySearchTerm() {
@@ -176,7 +171,7 @@ export class SearchIORComponent implements OnInit {
 
   async navigatePreview(documentId: string) {
     try {
-      localStorage.setItem('document_id', documentId);
+      sessionStorage.setItem('document_id', documentId);
       console.log(documentId);
       const response = await axios.post('http://localhost:4040/getPDFDrive', {documentId});
       console.log(response.data.message);
@@ -191,17 +186,17 @@ export class SearchIORComponent implements OnInit {
   }
 
   navigateEdit(id_ior: string) {
-    localStorage.setItem('id_ior', id_ior);
+    sessionStorage.setItem('id_ior', id_ior);
     window.location.href = '/editIOR';
   }
 
   navigateDetail(id_ior: string) {
-    localStorage.setItem('id_ior', id_ior);
+    sessionStorage.setItem('id_ior', id_ior);
     window.location.href = '/detailIOR';
   }
 
   navigateFollowon(id_ior: string) {
-    localStorage.setItem('id_ior', id_ior);
+    sessionStorage.setItem('id_ior', id_ior);
     window.location.href = '/searchFollowonIOR';
   }
 

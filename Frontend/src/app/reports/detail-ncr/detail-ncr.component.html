@@ -1,14 +1,18 @@
 <app-navbar></app-navbar>
-<script src="https://cdn.tailwindcss.com"></script>
 <div class="min-h-screen mt-24 flex items-center justify-center">
   <div class="my-4 mx-auto w-10/12 bg-white shadow-md rounded-lg overflow-hidden">
-    <div class="p-8 px-24">
-      <div class="my-4">
+    <div *ngIf="!isInitialized" class="p-12">
+      <div class="w-full text-center">
+        <i class="animate-spin text-gray-300 fa-solid fa-circle-notch" style="font-size: 36px;"></i>
+      </div>
+    </div>
+    <div *ngIf="isInitialized" class="p-12">
+      <div class="mb-4">
         <a href="/searchNCR" class="text-lg text-cyan-600 decoration-inherit hover:text-cyan-800 hover:underline">< Back</a>
       </div>
-      <div class="my-8 p-12 rounded-lg shadow-md shadow-black outline outline-1 outline-gray-700">
+      <div class="mb-8 p-12 rounded-lg shadow-md shadow-black outline outline-1 outline-gray-700">
         <h2 class="text-2xl font-bold text-gray-900 text-center justify-center mb-8 uppercase">NCR Detail</h2>
-        <div class="grid grid-cols-2 gap-4 mb-4">
+        <div *ngIf="ncrData.regulationbased === 'DGCA'" class="grid grid-cols-2 gap-4 mb-4">
           <div class="space-x-2">
             <label class="tracking-wide font-semibold text-gray-700 text-left">Audit Plan Number:</label>
             <label class="tracking-wide text-gray-600 text-left">{{ncrData.audit_plan_no}}</label>
@@ -51,7 +55,7 @@
           </div>
           <div class="space-x-2">
             <label class="tracking-wide font-semibold text-gray-700 text-left">Problem Analysis:</label>
-            <label class="tracking-wide text-gray-600 text-left">{{ncrData.problem_analysis}}</label>
+            <label class="tracking-wide text-gray-600 text-left">{{ncrData.pa_requirement}}</label>
           </div>
           <div class="space-x-2">
             <label class="tracking-wide font-semibold text-gray-700 text-left">Answer Due Date:</label>
@@ -61,7 +65,83 @@
             <label class="tracking-wide font-semibold text-gray-700 text-left">IAN Number (if there is IAN issued):</label>
             <label class="tracking-wide text-gray-600 text-left">{{ncrData.ian_no}}</label>
           </div>
-          <div><label class="tracking-wide font-semibold text-gray-700 text-left">Encountered Condition:</label></div>
+          <div class="col-span-2"><label class="tracking-wide font-semibold text-gray-700 text-left">Encountered Condition:</label></div>
+          <div class="col-span-2"><p class="tracking-wide text-gray-600 text-left text-wrap">{{ncrData.encountered_condition}}</p></div>
+          <div class="space-x-2">
+            <label class="tracking-wide font-semibold text-gray-700 text-left">Audit by:</label>
+            <label class="tracking-wide text-gray-600 text-left">{{ncrData.audit_by}}</label>
+          </div>
+          <div class="space-x-2">
+            <label class="tracking-wide font-semibold text-gray-700 text-left">Acknowledged by:</label>
+            <label class="tracking-wide text-gray-600 text-left">{{ncrData.acknowledge_by}}</label>
+          </div>
+          <div class="space-x-2">
+            <label class="tracking-wide font-semibold text-gray-700 text-left">Audit Date:</label>
+            <label class="tracking-wide text-gray-600 text-left">{{ncrData.audit_date}}</label>
+          </div>
+          <div class="space-x-2">
+            <label class="tracking-wide font-semibold text-gray-700 text-left">Acknowledged Date:</label>
+            <label class="tracking-wide text-gray-600 text-left">{{ncrData.acknowledge_date}}</label>
+          </div>
+          <div class="col-span-2 space-x-2">
+            <label class="tracking-wide font-semibold text-gray-700 text-left">Status:</label>
+            <label class="tracking-wide text-gray-600 text-left">{{ncrData.status}}</label>
+          </div>
+        </div>
+        <div *ngIf="ncrData.regulationbased === 'EASA'" class="grid grid-cols-2 gap-4 mb-4">
+          <div class="space-x-2">
+            <label class="tracking-wide font-semibold text-gray-700 text-left">Audit Plan Number:</label>
+            <label class="tracking-wide text-gray-600 text-left">{{ncrData.audit_plan_no}}</label>
+          </div>
+          <div class="space-x-2">
+            <label class="tracking-wide font-semibold text-gray-700 text-left">Regulation Based on:</label>
+            <label class="tracking-wide text-gray-600 text-left">{{ncrData.regulationbased}}</label>
+          </div>
+          <div class="space-x-2">
+            <label class="tracking-wide font-semibold text-gray-700 text-left">NCR Number:</label>
+            <label class="tracking-wide text-gray-600 text-left">{{ncrData.ncr_no}}</label>
+          </div>
+          <div class="space-x-2">
+            <label class="tracking-wide font-semibold text-gray-700 text-left">Issued Date:</label>
+            <label class="tracking-wide text-gray-600 text-left">{{ncrData.issued_date}}</label>
+          </div>
+          <div class="space-x-2">
+            <label class="tracking-wide font-semibold text-gray-700 text-left">Audit Type & Scope:</label>
+            <label class="tracking-wide text-gray-600 text-left">{{ncrData.audit_type}} / {{ncrData.audit_scope}}</label>
+          </div>
+          <!-- <div class="space-x-2">
+            <label class="tracking-wide font-semibold text-gray-700 text-left">Sent to:</label>
+            <label class="tracking-wide text-gray-600 text-left">{{ncrData.to_uic}}</label>
+          </div> -->
+          <div class="space-x-2">
+            <label class="tracking-wide font-semibold text-gray-700 text-left">Responsible Office:</label>
+            <label class="tracking-wide text-gray-600 text-left">{{ncrData.responsibility_office}}</label>
+          </div>
+          <!-- <div class="space-x-2">
+            <label class="tracking-wide font-semibold text-gray-700 text-left">With Attention to:</label>
+            <label class="tracking-wide text-gray-600 text-left">{{ncrData.attention}}</label>
+          </div> -->
+          <div class="col-span-2 space-x-2">
+            <label class="tracking-wide font-semibold text-gray-700 text-left">Required Condition Reference:</label>
+            <label class="tracking-wide text-gray-600 text-left text-wrap">{{ncrData.require_condition_reference}}</label>
+          </div>
+          <div class="space-x-2">
+            <label class="tracking-wide font-semibold text-gray-700 text-left">Level of Finding:</label>
+            <label class="tracking-wide text-gray-600 text-left">{{ncrData.level_finding}}</label>
+          </div>
+          <div class="space-x-2">
+            <label class="tracking-wide font-semibold text-gray-700 text-left">Problem Analysis:</label>
+            <label class="tracking-wide text-gray-600 text-left">{{ncrData.pa_requirement}}</label>
+          </div>
+          <div class="space-x-2">
+            <label class="tracking-wide font-semibold text-gray-700 text-left">Answer Due Date:</label>
+            <label class="tracking-wide text-gray-600 text-left">{{ncrData.answer_due_date}}</label>
+          </div>
+          <!-- <div class="space-x-2">
+            <label class="tracking-wide font-semibold text-gray-700 text-left">IAN Number (if there is IAN issued):</label>
+            <label class="tracking-wide text-gray-600 text-left">{{ncrData.ian_no}}</label>
+          </div> -->
+          <div class="col-span-2"><label class="tracking-wide font-semibold text-gray-700 text-left">Encountered Condition:</label></div>
           <div class="col-span-2"><p class="tracking-wide text-gray-600 text-left text-wrap">{{ncrData.encountered_condition}}</p></div>
           <div class="space-x-2">
             <label class="tracking-wide font-semibold text-gray-700 text-left">Audit by:</label>
@@ -85,17 +165,21 @@
           </div>
         </div>
         <div class="flex flex-center mb-4 space-x-2">
-          <button (click)="navigatePreviewNCR(ncrData.document_id)" class="inline-block bg-[#016299] rounded border-2 border-primary px-3 pb-[6px] pt-2 font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white">Preview</button>
+          <button (click)="navigatePreviewNCR(ncrData.document_id)" class="inline-block bg-[#016299] rounded border-2 border-primary px-3 pb-[6px] pt-2 font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white">
+            <i class="far fa-file-pdf pr-2" style="font-size: 16px;"></i>Preview
+          </button>
           <button (click)="navigateEditNCR()" class="inline-block bg-[#016299] rounded border-2 border-primary px-4 pb-[6px] pt-2 font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white" *ngIf="role === 'Admin' || role === 'IM'">
-            <i class="fas fa-edit" style="font-size: 12px;"></i> Edit
+            <i class="fas fa-edit pr-2" style="font-size: 16px;"></i> Edit
           </button>
         </div>
       </div>
 
-      <div class="my-8 p-12 rounded-lg shadow-md shadow-black outline outline-1 outline-gray-700">
+      <div class="mb-8 p-12 rounded-lg shadow-md shadow-black outline outline-1 outline-gray-700">
         <h2 class="text-2xl font-bold text-gray-900 text-center justify-center mb-8 uppercase">Reply</h2>
         <div class="mt-5">
-          <button (click)="navigateAddReply()" class="inline-block bg-[#016299] rounded border-2 border-primary px-3 pb-[6px] items-center pt-2 font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white">Add Reply</button>
+          <button (click)="navigateAddReply()" class="inline-block bg-[#016299] rounded border-2 border-primary px-3 pb-[6px] items-center pt-2 font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white">
+            <i class="fa-solid fa-plus pr-2"></i>Add Reply
+          </button>
         </div>
         <div class="show-table mt-5 border border-gray-500">
           <div class="table-responsive overflow-auto "style="max-height: 600px; min-height: 200px;">
@@ -164,7 +248,7 @@
             <div class="hidden bg-white outline outline-1 outline-gray-700 rounded-lg w-fit max-w-[80%] h-fit my-auto mx-auto fixed inset-0 text-gray-600 p-16">
               <div class="show-table mt-5 border border-gray-500">
                 <div class="table-responsive overflow-auto" style="max-height: 600px; min-height: 200px;">
-                  <table class="table w-full bg-white overflow-y-scroll" id="export-reply-table">
+                  <table class="table w-full bg-white overflow-y-scroll text-sm" id="export-reply-table">
                     <thead class="bg-blue-100 font-medium">
                       <tr class="border-b border-gray-500">
                         <th id="rca_problem" class="px-4 py-2 border-r border-gray-500">Root Cause of Problem</th>
@@ -197,10 +281,12 @@
         </div>
       </div>
 
-      <div class="my-8 p-12 rounded-lg shadow-md shadow-black outline outline-1 outline-gray-700">
+      <div class="mb-8 p-12 rounded-lg shadow-md shadow-black outline outline-1 outline-gray-700">
         <h2 class="text-2xl font-bold text-gray-900 text-center justify-center my-6 uppercase py-3">Result</h2>
         <div class="mt-5">
-          <button (click)="navigateAddResult()" class="inline-block bg-[#016299] rounded border-2 border-primary px-3 pb-[6px] items-center pt-2 font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white">Add Result</button>
+          <button (click)="navigateAddResult()" class="inline-block bg-[#016299] rounded border-2 border-primary px-3 pb-[6px] items-center pt-2 font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white">
+            <i class="fa-solid fa-plus pr-2"></i>Add Result
+          </button>
         </div>
         <div class="show-table mt-5 border border-gray-500">
           <div class="table-responsive overflow-auto "style="max-height: 600px; min-height: 200px;">
@@ -287,7 +373,7 @@
             <div class="hidden bg-white outline outline-1 outline-gray-700 rounded-lg w-fit max-w-[80%] h-fit my-auto mx-auto fixed inset-0 text-gray-600 p-16">
               <div class="show-table mt-5 border border-gray-500">
                 <div class="table-responsive overflow-auto" style="max-height: 600px; min-height: 200px;">
-                  <table class="table w-full bg-white overflow-y-scroll" id="export-result-table">
+                  <table class="table w-full bg-white overflow-y-scroll text-sm" id="export-result-table">
                     <thead class="bg-blue-100 font-medium">
                       <tr class="border-b border-gray-500">
                         <th id="proposed_close_auditee" class="px-4 py-2 border-r border-gray-500">Close Proposed by</th>

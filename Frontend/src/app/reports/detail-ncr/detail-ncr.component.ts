@@ -42,7 +42,7 @@ enum level {
   THREE = "3"
 }
 
-enum probanalis {
+enum pa_req {
   Required = "Required",
   Not_Required = "Not Required"
 }
@@ -67,7 +67,7 @@ interface NCRInitial {
   attention: string,
   require_condition_reference: string,
   level_finding: string,
-  problem_analysis: string,
+  pa_requirement: string,
   answer_due_date: string,
   issue_ian: boolean | string,
   ian_no: string,
@@ -138,7 +138,7 @@ export class DetailNCRComponent implements OnInit{
     attention: '',
     require_condition_reference: '',
     level_finding: '',
-    problem_analysis: '',
+    pa_requirement: '',
     answer_due_date: '',
     issue_ian: '',
     ian_no: '',
@@ -154,6 +154,7 @@ export class DetailNCRComponent implements OnInit{
   resultNCR: ResultNCR[] = [];
   role: string | null = null;
   currentNCRInitID = '';
+  isInitialized: boolean = false;
 
   ngOnInit() {
     const token = this.authService.getToken();
@@ -163,7 +164,7 @@ export class DetailNCRComponent implements OnInit{
       console.log('Retrieved role:', this.role);
     }
 
-    const ncr_init_id = localStorage.getItem('ncr_init_id');
+    const ncr_init_id = sessionStorage.getItem('ncr_init_id');
     if (ncr_init_id) {
       this.currentNCRInitID = ncr_init_id;
     }
@@ -181,7 +182,7 @@ export class DetailNCRComponent implements OnInit{
       this.ncrData.responsibility_office = this.convertEnumValue(responoffice, this.ncrData.responsibility_office);
       this.ncrData.to_uic = this.convertEnumValue(uic, this.ncrData.to_uic);
       this.ncrData.level_finding = this.convertEnumValue(level, this.ncrData.level_finding);
-      this.ncrData.problem_analysis = this.convertEnumValue(probanalis, this.ncrData.problem_analysis);
+      this.ncrData.pa_requirement = this.convertEnumValue(pa_req, this.ncrData.pa_requirement);
       this.ncrData.issued_date = this.ncrData.issued_date.slice(0, 10);
       this.ncrData.answer_due_date = this.ncrData.answer_due_date.slice(0, 10);
       this.ncrData.audit_date = this.ncrData.audit_date.slice(0, 10);
@@ -236,6 +237,7 @@ export class DetailNCRComponent implements OnInit{
       console.error('Error:', error);
       this.resultNCR = [];
     }
+    this.isInitialized = true;
   }
 
   exportToExcel(element_id: string): void {
@@ -275,7 +277,7 @@ export class DetailNCRComponent implements OnInit{
   }
 
   navigateEditReply(id_ncr_reply: string) {
-    localStorage.setItem('id_ncr_reply', id_ncr_reply);
+    sessionStorage.setItem('id_ncr_reply', id_ncr_reply);
     window.location.href = '/editReplyNCR';
   }
 
@@ -284,7 +286,7 @@ export class DetailNCRComponent implements OnInit{
   }
 
   navigateEditResult(id_ncr_result: string) {
-    localStorage.setItem('id_ncr_result', id_ncr_result);
+    sessionStorage.setItem('id_ncr_result', id_ncr_result);
     window.location.href = '/editResultNCR';
   }
 

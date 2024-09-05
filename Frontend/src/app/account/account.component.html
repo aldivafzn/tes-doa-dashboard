@@ -1,6 +1,14 @@
 <app-navbar></app-navbar>
 <div class="min-h-screen flex items-center justify-center">
-  <div class="max-w-5xl mx-auto w-full md:w-1/2 p-3 bg-white shadow-md rounded-lg">
+  <div *ngIf="!isInitialized" class="flex place-items-center max-w-5xl min-h-[464px] mx-auto w-full md:w-1/2 p-4 bg-white shadow-md rounded-lg">
+    <div class="w-full text-center">
+      <i class="animate-spin text-gray-300 fa-solid fa-circle-notch" style="font-size: 36px;"></i>
+    </div>
+  </div>
+  <div *ngIf="isInitialized" class="max-w-5xl mx-auto w-full md:w-1/2 p-4 bg-white shadow-md rounded-lg">
+    <div class="pl-2 my-3">
+      <a href="/home" class="text-base text-cyan-600 decoration-inherit hover:text-cyan-800 hover:underline">< Back</a>
+    </div>
     <div class="md:flex">
       <ul class="flex flex-col md:me-3 space-y-4 text-sm font-medium text-gray-500 mb-4 md:mb-0 md:w-1/4">
         <li (click)="selectTab('account-info')">
@@ -55,15 +63,15 @@
   <form id="change-password" *ngIf="selectedTab === 'change-password'" (ngSubmit)="changePassword()">
     <div class="mb-4">
       <label class="block text-gray-700 text-sm font-bold mb-2" for="email">Email</label>
-      <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" type="text" [(ngModel)]="ChangePass.email" name="email " placeholder="name@gmf-aeroasia.co.id" required>
+      <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" type="text" [(ngModel)]="changePass.email" name="email " placeholder="name@gmf-aeroasia.co.id" required>
     </div>
     <div class="mb-4">
       <label class="block text-gray-700 text-sm font-bold mb-2" for="currentPass">Current password</label>
-      <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="currentPass" type="password" [(ngModel)]="ChangePass.currentPass" placeholder="••••••••" name="currentPass" onclick="togglePasswordVisibility" required>
+      <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="currentPass" type="password" [(ngModel)]="changePass.currentPass" placeholder="••••••••" name="currentPass" onclick="togglePasswordVisibility" required>
     </div>
     <div class="mb-4">
       <label class="block text-gray-700 text-sm font-bold mb-2" for="newPass">New password</label>
-      <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"id="newPass" type="password" placeholder="••••••••" [(ngModel)]="ChangePass.newPass" name="newPass" onclick="togglePasswordVisibility" required>
+      <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"id="newPass" type="password" placeholder="••••••••" [(ngModel)]="changePass.newPass" name="newPass" onclick="togglePasswordVisibility" required>
     </div>
     <button type="submit" class="w-full text-white bg-[#016299] hover:bg-[#015581] focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center">Change Password</button>
   </form>
@@ -94,11 +102,11 @@
   <form id="delete-account" *ngIf="selectedTab === 'delete-account'" (ngSubmit)="deleteAccount()">
     <div class="mb-4">
       <label class="block text-gray-700 text-sm font-bold mb-2">Email</label>
-      <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" type="text" placeholder="name@gmf-aeroasia.co.id" [(ngModel)]="DeleteAccount.email" name="email" required>
+      <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" type="text" placeholder="name@gmf-aeroasia.co.id" [(ngModel)]="deleteCont.email" name="email" required>
     </div>
     <div class="mb-4">
       <label class="block text-gray-700 text-sm font-bold mb-2">Password</label>
-      <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="password" type="password" placeholder="••••••••" [(ngModel)]="DeleteAccount.password" name="password" onclick="togglePasswordVisibility" required>
+      <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="password" type="password" placeholder="••••••••" [(ngModel)]="deleteCont.password" name="password" onclick="togglePasswordVisibility" required>
     </div>
     <button type="submit" class="w-full text-white bg-[#016299] hover:bg-[#015581] focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 items-center text-center">Delete Account</button>
   </form>

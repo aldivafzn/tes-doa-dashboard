@@ -7,6 +7,7 @@ import { ToastService } from '../toast.service';
 import { AuthService } from '../auth.service';
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
+import { throws } from 'assert';
 
 interface JwtPayload {
   email: string,
@@ -16,7 +17,7 @@ interface JwtPayload {
   exp: number
 }
 
-interface AccountData {
+interface Account {
   name: string;
   email: string;
   unit: string;
@@ -75,25 +76,24 @@ export class AccountComponent implements OnInit {
 
   accountid: string | null = null;
   role: string | null = null;
-  account: any = {};
 
-  currentAccountID = '';
-  Account_data: AccountData = {
+  account: Account = {
     name: '',
     email: '',
     unit: '',
     role: ''
   };
   allAccounts: any[] = [];
-  ChangePass = {
+  changePass = {
     email: '',
     currentPass: '',
     newPass: ''
   };
-  DeleteAccount = {
+  deleteCont = {
     email: '',
     password: ''
   };
+  isInitialized: boolean = false;
 
   ngOnInit() {
     const token = this.authService.getToken();
@@ -126,6 +126,7 @@ export class AccountComponent implements OnInit {
     } catch (error) {
       console.error('There was an error fetching account info!', error);
     }
+    this.isInitialized = true;
   }
 
   async fetchAllAccounts() {
@@ -143,9 +144,9 @@ export class AccountComponent implements OnInit {
   async changePassword() {
     try {
         const response = await axios.post('http://localhost:4040/account/update-password', {
-            email: this.ChangePass.email,
-            currentPass: this.ChangePass.currentPass,
-            newPass: this.ChangePass.newPass
+            email: this.changePass.email,
+            currentPass: this.changePass.currentPass,
+            newPass: this.changePass.newPass
         });
 
         if (response.data.status === 200) {
@@ -165,8 +166,8 @@ export class AccountComponent implements OnInit {
   async deleteAccount() {
     try {
         const response = await axios.post('http://localhost:4040/account/delete', {
-          email: this.DeleteAccount.email,
-          password: this.DeleteAccount.password
+          email: this.deleteCont.email,
+          password: this.deleteCont.password
         });
 
         console.log("Delete Password :", response.data.account);
