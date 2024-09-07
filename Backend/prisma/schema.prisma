@@ -210,7 +210,7 @@ model tbl_occurrence {
 
 /// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
 model certification {
-  cert_id          String         @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  cert_id          String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   regulation_based reg_based
   cert_type        cert_type
   cert_number      String         @db.VarChar(255)
@@ -220,26 +220,22 @@ model certification {
   cert_scope       String         @db.VarChar(255)
   person_id        String?        @db.Uuid
   tbl_personnel    tbl_personnel? @relation(fields: [person_id], references: [person_id], onDelete: NoAction, onUpdate: NoAction)
-
-  @@ignore
 }
 
 /// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
 model education {
-  edu_id          String         @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  edu_id          String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   university      String         @db.VarChar(255)
   major           String         @db.VarChar(50)
   graduation_year Int
   remark          String
   person_id       String?        @db.Uuid
   tbl_personnel   tbl_personnel? @relation(fields: [person_id], references: [person_id], onDelete: NoAction, onUpdate: NoAction)
-
-  @@ignore
 }
 
 /// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
 model experience_record {
-  experience_id String         @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  experience_id String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   job_title     String         @db.VarChar(255)
   since_date    DateTime       @db.Date
   until_date    DateTime       @db.Date
@@ -247,8 +243,6 @@ model experience_record {
   remark        String
   person_id     String?        @db.Uuid
   tbl_personnel tbl_personnel? @relation(fields: [person_id], references: [person_id], onDelete: NoAction, onUpdate: NoAction)
-
-  @@ignore
 }
 
 model tbl_personnel {
@@ -262,15 +256,15 @@ model tbl_personnel {
   employment_date   DateTime            @db.Date
   job_desc          String
   design_exp        String
-  certification     certification[]     @ignore
-  education         education[]         @ignore
-  experience_record experience_record[] @ignore
-  training_record   training_record[]   @ignore
+  certification     certification[]     
+  education         education[]            
+  experience_record experience_record[] 
+  training_record   training_record[]  
 }
 
 /// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
 model training_record {
-  training_id        String            @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  training_id        String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   training_title     String            @db.VarChar(255)
   training_category  training_category
   start_date         DateTime          @db.Date
@@ -278,12 +272,10 @@ model training_record {
   interval_recurrent Int
   next_date          DateTime          @db.Date
   place              String            @db.VarChar(255)
-  result             String            @db.VarChar(255)
-  remark             String            @db.VarChar(255)
+  result             String
+  remark             String
   person_id          String?           @db.Uuid
   tbl_personnel      tbl_personnel?    @relation(fields: [person_id], references: [person_id], onDelete: NoAction, onUpdate: NoAction)
-
-  @@ignore
 }
 
 enum audit_type {

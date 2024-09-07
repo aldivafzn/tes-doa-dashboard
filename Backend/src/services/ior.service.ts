@@ -22,36 +22,35 @@ export class IorService {
   ) {}
 
   async createOccurrence(dto: CreateOccurrenceDto) {
-    try {
-      const createdOccurrence = await this.prisma.tbl_occurrence.create({
-        data: {
-          subject_ior: dto.subject_ior,
-          occur_nbr: dto.occur_nbr,
-          occur_date: dto.occur_date,
-          reference_ior: dto.reference_ior,
-          to_uic: dto.to_uic,
-          cc_uic: dto.cc_uic,
-          category_occur: dto.category_occur,
-          type_or_pnbr: dto.type_or_pnbr,
-          level_type: dto.level_type,
-          detail_occurance: dto.detail_occurance,
-          reportedby: dto.ReportedBy,
-          reporter_uic: dto.reporter_uic,
-          report_date: dto.report_date,
-          reporter_identity: dto.reporter_identity,
-          data_reference: dto.Data_reference,
-          hirac_process: dto.hirac_process,
-          initial_probability: dto.initial_probability,
-          initial_severity: dto.initial_severity,
-          initial_riskindex: dto.initial_riskindex,
-          attachment: dto.attachment,
-        },
-      });
-      return createdOccurrence;
-    } catch (error) {
-      console.error('Error creating occurrence:', error);
-      throw new Error('Error Creating Occurrence');
-    }
+    const createdOccurrence = await this.prisma.tbl_occurrence.create({
+      data: {
+        subject_ior: dto.subject_ior,
+        occur_nbr: dto.occur_nbr,
+        occur_date: dto.occur_date,
+        reference_ior: dto.reference_ior,
+        to_uic: dto.to_uic,
+        cc_uic: dto.cc_uic,
+        category_occur: dto.category_occur,
+        type_or_pnbr: dto.type_or_pnbr,
+        level_type: dto.level_type,
+        detail_occurance: dto.detail_occurance,
+        reportedby: dto.ReportedBy,
+        reporter_uic: dto.reporter_uic,
+        report_date: dto.report_date,
+        reporter_identity: dto.reporter_identity,
+        data_reference: dto.Data_reference,
+        hirac_process: dto.hirac_process,
+        initial_probability: dto.initial_probability,
+        initial_severity: dto.initial_severity,
+        initial_riskindex: dto.initial_riskindex,
+        attachment: dto.attachment,
+      },
+    });
+    return {
+      status: 200,
+      message: 'Personnel Record Created',
+      createdOccurrence,
+    };
   }
 
   async getOccurrence(dto: ShowOccurrenceDto) {

@@ -1,4 +1,9 @@
-import { office_code } from '@prisma/client';
+import {
+  cert_type,
+  office_code,
+  reg_based,
+  training_category,
+} from '@prisma/client';
 import { IsString, IsDate, IsNotEmpty, IsEnum, IsInt } from 'class-validator';
 
 /* 
@@ -7,39 +12,39 @@ import { IsString, IsDate, IsNotEmpty, IsEnum, IsInt } from 'class-validator';
 export class CreatePersonnelDto {
   @IsNotEmpty()
   @IsString()
-  readonly person_name: string;
+  person_name: string;
 
   @IsNotEmpty()
   @IsString()
-  readonly person_no: string;
+  person_no: string;
 
   @IsNotEmpty()
   @IsString()
-  readonly job_title: string;
+  job_title: string;
 
   @IsNotEmpty()
   @IsEnum(office_code)
-  readonly department: office_code;
+  department: office_code;
 
   @IsNotEmpty()
   @IsString()
-  readonly email_address: string;
+  email_address: string;
 
   @IsDate()
   @IsNotEmpty()
-  readonly birth_date: Date;
+  birth_date: Date;
 
   @IsDate()
   @IsNotEmpty()
-  readonly employment_date: Date;
+  employment_date: Date;
 
   @IsString()
   @IsNotEmpty()
-  readonly job_desc: string;
+  job_desc: string;
 
   @IsString()
   @IsNotEmpty()
-  readonly design_exp: string;
+  design_exp: string;
 }
 
 export class ShowAllPersonnelDto {}
@@ -78,7 +83,7 @@ export class AddEducationDto {
 
   @IsNotEmpty()
   @IsString()
-  readonly edu_id: string;
+  readonly university: string;
 
   @IsNotEmpty()
   @IsString()
@@ -87,6 +92,10 @@ export class AddEducationDto {
   @IsNotEmpty()
   @IsInt()
   readonly graduation_year: number;
+
+  @IsNotEmpty()
+  @IsString()
+  readonly remark: string;
 }
 
 export class UpdateEducationDto extends AddEducationDto {
@@ -100,8 +109,6 @@ export class DeleteEducationDto {
   @IsNotEmpty()
   readonly edu_id: string;
 }
-
-export class ShowAllEducationDto {}
 
 export class ShowEducationByIdDto {
   @IsString()
@@ -119,30 +126,36 @@ export class AddExperienceDto {
 
   @IsNotEmpty()
   @IsString()
-  readonly edu_id: string;
+  readonly job_title: string;
+
+  @IsDate()
+  @IsNotEmpty()
+  readonly since_date: Date;
+
+  @IsDate()
+  @IsNotEmpty()
+  readonly until_date: Date;
 
   @IsNotEmpty()
   @IsString()
-  readonly major: string;
+  readonly assignment: string;
 
   @IsNotEmpty()
-  @IsInt()
-  readonly graduation_year: number;
+  @IsString()
+  readonly remark: string;
 }
 
 export class UpdateExperienceDto extends AddExperienceDto {
   @IsString()
   @IsNotEmpty()
-  edu_id: string;
+  experience_id: string;
 }
 
 export class DeleteExperienceDto {
   @IsString()
   @IsNotEmpty()
-  readonly edu_id: string;
+  readonly experience_id: string;
 }
-
-export class ShowAllExperienceDto {}
 
 export class ShowExperienceByIdDto {
   @IsString()
@@ -153,7 +166,117 @@ export class ShowExperienceByIdDto {
 /* 
     Personnel Training Records
 */
+export class AddTrainingDto {
+  @IsNotEmpty()
+  @IsString()
+  readonly person_id: string;
+
+  @IsNotEmpty()
+  @IsString()
+  readonly training_title: string;
+
+  @IsNotEmpty()
+  @IsEnum(training_category)
+  readonly training_category: training_category;
+
+  @IsDate()
+  @IsNotEmpty()
+  readonly start_date: Date;
+
+  @IsDate()
+  @IsNotEmpty()
+  readonly finish_date: Date;
+
+  @IsNotEmpty()
+  @IsInt()
+  readonly interval_recurrent: number;
+
+  @IsDate()
+  @IsNotEmpty()
+  readonly next_date: Date;
+
+  @IsNotEmpty()
+  @IsString()
+  readonly place: string;
+
+  @IsNotEmpty()
+  @IsString()
+  readonly result: string;
+
+  @IsNotEmpty()
+  @IsString()
+  readonly remark: string;
+}
+
+export class UpdateTrainingDto extends AddTrainingDto {
+  @IsString()
+  @IsNotEmpty()
+  training_id: string;
+}
+
+export class DeleteTrainingDto {
+  @IsString()
+  @IsNotEmpty()
+  readonly training_id: string;
+}
+
+export class ShowTrainingByIdDto {
+  @IsString()
+  @IsNotEmpty()
+  person_id: string;
+}
 
 /* 
     Personnel Certification Records
 */
+export class AddCertDto {
+  @IsNotEmpty()
+  @IsString()
+  readonly person_id: string;
+
+  @IsNotEmpty()
+  @IsEnum(reg_based)
+  readonly regulation_based: reg_based;
+
+  @IsNotEmpty()
+  @IsEnum(cert_type)
+  readonly cert_type: cert_type;
+
+  @IsNotEmpty()
+  @IsString()
+  readonly cert_number: string;
+
+  @IsDate()
+  @IsNotEmpty()
+  readonly cert_first_date: Date;
+
+  @IsDate()
+  @IsNotEmpty()
+  readonly cert_expire_date: Date;
+
+  @IsNotEmpty()
+  @IsString()
+  readonly cert_letter_nbr: string;
+
+  @IsNotEmpty()
+  @IsString()
+  readonly cert_scope: string;
+}
+
+export class UpdateCertDto extends AddCertDto {
+  @IsString()
+  @IsNotEmpty()
+  cert_id: string;
+}
+
+export class DeleteCertDto {
+  @IsString()
+  @IsNotEmpty()
+  readonly cert_id: string;
+}
+
+export class ShowCertByIdDto {
+  @IsString()
+  @IsNotEmpty()
+  person_id: string;
+}
