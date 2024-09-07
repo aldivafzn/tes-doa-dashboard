@@ -54,25 +54,25 @@ export class IorService {
     }
   }
 
-  // async getOccurrence(dto: ShowOccurrenceDto) {
-  //   const { id_IOR } = dto;
-  //   // Validate id_IOR
-  //   if (!id_IOR) {
-  //     throw new Error('id_IOR is required');
-  //   }
-
-  //   try {
-  //     const occurrence = await this.prisma.tbl_occurrence.findUnique({
-  //       where: { id_ior: id_IOR },
-  //     });
-  //     return occurrence;
-  //   } catch (error) {
-  //     console.error('Error fetching occurrence:', error);
-  //     throw new Error('Error Fetching Occurrence');
-  //   }
-  // }
-
   async getOccurrence(dto: ShowOccurrenceDto) {
+    const { id_IOR } = dto;
+    // Validate id_IOR
+    if (!id_IOR) {
+      throw new Error('id_IOR is required');
+    }
+
+    try {
+      const occurrence = await this.prisma.tbl_occurrence.findUnique({
+        where: { id_ior: id_IOR },
+      });
+      return occurrence;
+    } catch (error) {
+      console.error('Error fetching occurrence:', error);
+      throw new Error('Error Fetching Occurrence');
+    }
+  }
+
+  async getPDFOccurrence(dto: ShowOccurrenceDto) {
     const { id_IOR } = dto;
 
     if (!id_IOR) {

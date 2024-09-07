@@ -190,135 +190,25 @@ export class NcrService {
     };
   }
 
-  // async showNcrById(showNcrDto: ShowNCRDto) {
-  //   const { ncr_init_id } = showNcrDto;
-  //   // Step 1: Retrieve data from ncr_initial, ncr_reply, and ncr_followresult
-  //   let ncrInitial = await this.prisma.ncr_initial.findUnique({
-  //     where: { ncr_init_id },
-  //     include: {
-  //       ncr_reply: true,
-  //       ncr_followresult: true,
-  //     },
-  //   });
+  async showNcrById(dto: ShowNCRDto) {
+    const { ncr_init_id } = dto;
+    // Validate id_IOR
+    if (!ncr_init_id) {
+      throw new Error('id_IOR is required');
+    }
 
-  //   if (!ncrInitial) {
-  //     throw new Error('NCR Initial record not found');
-  //   }
+    try {
+      const ncr = await this.prisma.ncr_initial.findUnique({
+        where: { ncr_init_id: ncr_init_id },
+      });
+      return ncr;
+    } catch (error) {
+      console.error('Error fetching occurrence:', error);
+      throw new Error('Error Fetching Occurrence');
+    }
+  }
 
-  //   const firstNcrReply = ncrInitial.ncr_reply[0];
-  //   const firstFollowResult = ncrInitial.ncr_followresult[0];
-
-  //   // Step 2: Copy the Google Doc Template
-  //   const templateDocId = process.env.TEMPLATE_DOCUMENT_NCR; // Replace with your actual template document ID
-  //   const documentTitle = `NCR_${ncrInitial.ncr_no}`;
-  //   const userEmailAddress = process.env.USER_EMAIL;
-
-  //   const copiedDocumentId = await this.googleApiService.copyGoogleDoc(
-  //     templateDocId,
-  //     documentTitle,
-  //     userEmailAddress,
-  //   );
-
-  //   // Step 3: Prepare Placeholders
-  //   const placeholders = {
-  //     '{AuditPlan}': ncrInitial.audit_plan_no || '',
-  //     '{NCR_No}': ncrInitial.ncr_no || '',
-  //     '{IssuedDate}': ncrInitial.issued_date.toISOString().split('T')[0] || '',
-  //     '{Responsibility_Office}': ncrInitial.responsibility_office || '',
-  //     '{Audit_Type}': ncrInitial.audit_type || '',
-  //     '{to_uic}': ncrInitial.to_uic || '',
-  //     '{attention}': ncrInitial.attention || '',
-  //     '{regulationbased}': ncrInitial.regulationbased || '',
-  //     '{Level_Finding}': ncrInitial.level_finding || '',
-  //     '{Problem_Analysis}': ncrInitial.pa_requirement || '',
-  //     '{Due_Date}':
-  //       ncrInitial.answer_due_date.toISOString().split('T')[0] || '',
-  //     '{IAN}': ncrInitial.issue_ian ? 'Yes' : 'No',
-  //     '{No}': ncrInitial.ian_no || '',
-  //     '{Encountered_Condition}': ncrInitial.encountered_condition || '',
-  //     '{Audit_by}': ncrInitial.audit_by || '',
-  //     '{Audit_Date}': ncrInitial.audit_date.toISOString().split('T')[0] || '',
-  //     '{Acknowledge_by}': ncrInitial.acknowledge_by || '',
-  //     '{Acknowledge_date}':
-  //       ncrInitial.acknowledge_date.toISOString().split('T')[0] || '',
-  //     // Additional placeholders for the reply section
-  //     '{Root_Cause}': firstNcrReply?.rca_problem || '',
-  //     '{Identified_by}': firstNcrReply?.identified_by_auditee || '',
-  //     '{Identified_Date}':
-  //       firstNcrReply?.identified_date?.toISOString().split('T')[0] || '',
-  //     '{Accept_by}': firstNcrReply?.accept_by_auditor || '',
-  //     '{Accept_date}':
-  //       firstNcrReply?.auditor_accept_date?.toISOString().split('T')[0] || '',
-  //     '{Recommended_Action}': firstNcrReply?.recommend_corrective_action || '',
-  //     '{Auditee_by}': firstFollowResult?.proposed_close_auditee || '',
-  //     '{Auditee_Date}':
-  //       firstFollowResult?.proposed_close_date.toISOString().split('T')[0] ||
-  //       '',
-  //     '{Accepted_IM}': firstFollowResult?.verified_chief_im || '',
-  //     '{Accepted_IM_Date}':
-  //       firstFollowResult?.verified_date.toISOString().split('T')[0] || '',
-  //     // Additional placeholders for follow-up results
-  //     '{Close_Corrective_Action}':
-  //       firstFollowResult?.close_corrective_actions || '',
-  //     '{Close_Approved_Date}':
-  //       firstFollowResult?.close_approved_date?.toISOString().split('T')[0] ||
-  //       '',
-  //     '{Verified_by}': firstFollowResult?.verified_chief_im || '',
-  //     '{Verified_Date}':
-  //       firstFollowResult?.verified_date?.toISOString().split('T')[0] || '',
-  //   };
-
-  //   // Step 4: Replace placeholders in the document
-  //   for (const [placeholder, value] of Object.entries(placeholders)) {
-  //     await this.googleApiService.replaceTextInGoogleDocs(
-  //       copiedDocumentId,
-  //       placeholder,
-  //       value,
-  //     );
-  //   }
-
-  //   // Step 5: Move the document to a specific folder and generate PDF
-  //   const targetFolderId = process.env.TARGET_FOLDER;
-  //   await this.googleApiService.moveFileToFolder(
-  //     copiedDocumentId,
-  //     targetFolderId,
-  //   );
-
-  //   const pdfResult = await this.googleApiService.getPDFDrive(
-  //     copiedDocumentId,
-  //     targetFolderId,
-  //   );
-
-  //   if (pdfResult.status !== 200) {
-  //     throw new Error('Failed to generate and upload PDF to Google Drive');
-  //   }
-
-  //   // Step 6: Update ncr_initial with the PDF link
-  //   await this.prisma.ncr_initial.update({
-  //     where: { ncr_init_id: ncrInitial.ncr_init_id },
-  //     data: {
-  //       document_id: pdfResult.message,
-  //     },
-  //   });
-
-  //   // Step 7: Re-fetch the updated NCR data to include the new document_id
-  //   ncrInitial = await this.prisma.ncr_initial.findUnique({
-  //     where: { ncr_init_id },
-  //     include: {
-  //       ncr_reply: true,
-  //       ncr_followresult: true,
-  //     },
-  //   });
-
-  //   // Step 8: Return the final response including the updated NCR data
-  //   return {
-  //     status: 200,
-  //     message: 'NCR Retrieved and Documents Generated Successfully',
-  //     data: ncrInitial,
-  //   };
-  // }
-
-  async showNcrById(showNcrDto: ShowNCRDto) {
+  async getPDFNcr(showNcrDto: ShowNCRDto) {
     const { ncr_init_id } = showNcrDto;
     // Step 1: Retrieve data from ncr_initial, ncr_reply, and ncr_followresult
     let ncrInitial = await this.prisma.ncr_initial.findUnique({
