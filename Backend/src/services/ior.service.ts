@@ -44,6 +44,7 @@ export class IorService {
           initial_probability: dto.initial_probability,
           initial_severity: dto.initial_severity,
           initial_riskindex: dto.initial_riskindex,
+          attachment: dto.attachment,
         },
       });
       return createdOccurrence;
@@ -121,18 +122,24 @@ export class IorService {
       const levelTypes = ['{Aircraft}', '{Engine}', '{APU}', '{Others}'];
 
       const categoryReplacements = categories.reduce((acc, placeholder) => {
+        // Normalize both the placeholder and occurrence category for comparison
         const normalizedCategory = placeholder
-          .replace(/[{}]/g, '')
-          .toLowerCase();
-        const isMatched =
-          normalizedCategory === occurrence.category_occur.toLowerCase();
+          .replace(/[{}]/g, '') // Remove curly braces
+          .toLowerCase(); // Convert to lowercase
+
+        const normalizedOccurrenceCategory = occurrence.category_occur
+          .replace(/_/g, ' ') // Replace underscores with spaces in the input
+          .toLowerCase(); // Convert to lowercase
+
+        const isMatched = normalizedCategory === normalizedOccurrenceCategory;
+
+        // Add the result to the accumulator
         acc[placeholder] = isMatched
-          ? `☑ ${occurrence.category_occur}`
-          : `☐ ${normalizedCategory}`;
+          ? `☑ ${occurrence.category_occur.replace(/_/g, ' ')}` // Mark as checked, replacing underscores with spaces
+          : `☐ ${normalizedCategory}`; // Keep unchecked placeholder as is
+
         return acc;
       }, {});
-
-      console.log('Category Replacements:', categoryReplacements); // Debugging output
 
       const levelTypeReplacement = levelTypes.reduce((acc, placeholder) => {
         const normalizedLevelType = placeholder
@@ -154,7 +161,7 @@ export class IorService {
       };
 
       const dataRefReplacement = {
-        '{RefYes}': occurrence.data_reference ? '☑ Yes' : '☐ Yes',
+        '{RefYes}': occurrence.data_reference ? '☑ Yes' : '☐ No',
         '{RefNo}': !occurrence.data_reference ? '☑ No' : '☐ No',
       };
 
@@ -170,6 +177,7 @@ export class IorService {
         '{OccurenceDate}':
           occurrence.occur_date.toISOString().split('T')[0] || '',
         '{Ref}': occurrence.reference_ior || '',
+        '{Type}': occurrence.type_or_pnbr || '',
         '{To}': occurrence.to_uic || '',
         '{Copy}': occurrence.cc_uic || '',
         '{Detail}': occurrence.detail_occurance || '',

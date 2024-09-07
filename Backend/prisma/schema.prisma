@@ -204,6 +204,7 @@ model tbl_occurrence {
   initial_severity    String?           @db.VarChar(1)
   initial_riskindex   String?           @db.VarChar(40)
   document_id         String?           @db.VarChar(255)
+  attachment          String?
   tbl_follupoccur     tbl_follupoccur[]
 }
 

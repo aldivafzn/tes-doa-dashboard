@@ -190,6 +190,134 @@ export class NcrService {
     };
   }
 
+  // async showNcrById(showNcrDto: ShowNCRDto) {
+  //   const { ncr_init_id } = showNcrDto;
+  //   // Step 1: Retrieve data from ncr_initial, ncr_reply, and ncr_followresult
+  //   let ncrInitial = await this.prisma.ncr_initial.findUnique({
+  //     where: { ncr_init_id },
+  //     include: {
+  //       ncr_reply: true,
+  //       ncr_followresult: true,
+  //     },
+  //   });
+
+  //   if (!ncrInitial) {
+  //     throw new Error('NCR Initial record not found');
+  //   }
+
+  //   const firstNcrReply = ncrInitial.ncr_reply[0];
+  //   const firstFollowResult = ncrInitial.ncr_followresult[0];
+
+  //   // Step 2: Copy the Google Doc Template
+  //   const templateDocId = process.env.TEMPLATE_DOCUMENT_NCR; // Replace with your actual template document ID
+  //   const documentTitle = `NCR_${ncrInitial.ncr_no}`;
+  //   const userEmailAddress = process.env.USER_EMAIL;
+
+  //   const copiedDocumentId = await this.googleApiService.copyGoogleDoc(
+  //     templateDocId,
+  //     documentTitle,
+  //     userEmailAddress,
+  //   );
+
+  //   // Step 3: Prepare Placeholders
+  //   const placeholders = {
+  //     '{AuditPlan}': ncrInitial.audit_plan_no || '',
+  //     '{NCR_No}': ncrInitial.ncr_no || '',
+  //     '{IssuedDate}': ncrInitial.issued_date.toISOString().split('T')[0] || '',
+  //     '{Responsibility_Office}': ncrInitial.responsibility_office || '',
+  //     '{Audit_Type}': ncrInitial.audit_type || '',
+  //     '{to_uic}': ncrInitial.to_uic || '',
+  //     '{attention}': ncrInitial.attention || '',
+  //     '{regulationbased}': ncrInitial.regulationbased || '',
+  //     '{Level_Finding}': ncrInitial.level_finding || '',
+  //     '{Problem_Analysis}': ncrInitial.pa_requirement || '',
+  //     '{Due_Date}':
+  //       ncrInitial.answer_due_date.toISOString().split('T')[0] || '',
+  //     '{IAN}': ncrInitial.issue_ian ? 'Yes' : 'No',
+  //     '{No}': ncrInitial.ian_no || '',
+  //     '{Encountered_Condition}': ncrInitial.encountered_condition || '',
+  //     '{Audit_by}': ncrInitial.audit_by || '',
+  //     '{Audit_Date}': ncrInitial.audit_date.toISOString().split('T')[0] || '',
+  //     '{Acknowledge_by}': ncrInitial.acknowledge_by || '',
+  //     '{Acknowledge_date}':
+  //       ncrInitial.acknowledge_date.toISOString().split('T')[0] || '',
+  //     // Additional placeholders for the reply section
+  //     '{Root_Cause}': firstNcrReply?.rca_problem || '',
+  //     '{Identified_by}': firstNcrReply?.identified_by_auditee || '',
+  //     '{Identified_Date}':
+  //       firstNcrReply?.identified_date?.toISOString().split('T')[0] || '',
+  //     '{Accept_by}': firstNcrReply?.accept_by_auditor || '',
+  //     '{Accept_date}':
+  //       firstNcrReply?.auditor_accept_date?.toISOString().split('T')[0] || '',
+  //     '{Recommended_Action}': firstNcrReply?.recommend_corrective_action || '',
+  //     '{Auditee_by}': firstFollowResult?.proposed_close_auditee || '',
+  //     '{Auditee_Date}':
+  //       firstFollowResult?.proposed_close_date.toISOString().split('T')[0] ||
+  //       '',
+  //     '{Accepted_IM}': firstFollowResult?.verified_chief_im || '',
+  //     '{Accepted_IM_Date}':
+  //       firstFollowResult?.verified_date.toISOString().split('T')[0] || '',
+  //     // Additional placeholders for follow-up results
+  //     '{Close_Corrective_Action}':
+  //       firstFollowResult?.close_corrective_actions || '',
+  //     '{Close_Approved_Date}':
+  //       firstFollowResult?.close_approved_date?.toISOString().split('T')[0] ||
+  //       '',
+  //     '{Verified_by}': firstFollowResult?.verified_chief_im || '',
+  //     '{Verified_Date}':
+  //       firstFollowResult?.verified_date?.toISOString().split('T')[0] || '',
+  //   };
+
+  //   // Step 4: Replace placeholders in the document
+  //   for (const [placeholder, value] of Object.entries(placeholders)) {
+  //     await this.googleApiService.replaceTextInGoogleDocs(
+  //       copiedDocumentId,
+  //       placeholder,
+  //       value,
+  //     );
+  //   }
+
+  //   // Step 5: Move the document to a specific folder and generate PDF
+  //   const targetFolderId = process.env.TARGET_FOLDER;
+  //   await this.googleApiService.moveFileToFolder(
+  //     copiedDocumentId,
+  //     targetFolderId,
+  //   );
+
+  //   const pdfResult = await this.googleApiService.getPDFDrive(
+  //     copiedDocumentId,
+  //     targetFolderId,
+  //   );
+
+  //   if (pdfResult.status !== 200) {
+  //     throw new Error('Failed to generate and upload PDF to Google Drive');
+  //   }
+
+  //   // Step 6: Update ncr_initial with the PDF link
+  //   await this.prisma.ncr_initial.update({
+  //     where: { ncr_init_id: ncrInitial.ncr_init_id },
+  //     data: {
+  //       document_id: pdfResult.message,
+  //     },
+  //   });
+
+  //   // Step 7: Re-fetch the updated NCR data to include the new document_id
+  //   ncrInitial = await this.prisma.ncr_initial.findUnique({
+  //     where: { ncr_init_id },
+  //     include: {
+  //       ncr_reply: true,
+  //       ncr_followresult: true,
+  //     },
+  //   });
+
+  //   // Step 8: Return the final response including the updated NCR data
+  //   return {
+  //     status: 200,
+  //     message: 'NCR Retrieved and Documents Generated Successfully',
+  //     data: ncrInitial,
+  //   };
+  // }
+
   async showNcrById(showNcrDto: ShowNCRDto) {
     const { ncr_init_id } = showNcrDto;
     // Step 1: Retrieve data from ncr_initial, ncr_reply, and ncr_followresult
@@ -208,11 +336,23 @@ export class NcrService {
     const firstNcrReply = ncrInitial.ncr_reply[0];
     const firstFollowResult = ncrInitial.ncr_followresult[0];
 
-    // Step 2: Copy the Google Doc Template
-    const templateDocId = process.env.TEMPLATE_DOCUMENT_NCR; // Replace with your actual template document ID
-    const documentTitle = `NCR_${ncrInitial.ncr_no}`;
+    // Determine the template to use based on regulationbased value
+    let templateDocId;
+    let documentTitle;
+
+    if (ncrInitial.regulationbased === 'DGCA') {
+      templateDocId = process.env.TEMPLATE_DOCUMENT_NCR_DGCA;
+      documentTitle = `NCR_${ncrInitial.ncr_no}`;
+    } else if (ncrInitial.regulationbased === 'EASA') {
+      templateDocId = process.env.TEMPLATE_DOCUMENT_NCR_EASA;
+      documentTitle = `NCR_${ncrInitial.ncr_no}`;
+    } else {
+      throw new Error('Unknown regulationbased value');
+    }
+
     const userEmailAddress = process.env.USER_EMAIL;
 
+    // Step 2: Copy the Google Doc Template
     const copiedDocumentId = await this.googleApiService.copyGoogleDoc(
       templateDocId,
       documentTitle,
@@ -228,19 +368,20 @@ export class NcrService {
       '{Audit_Type}': ncrInitial.audit_type || '',
       '{to_uic}': ncrInitial.to_uic || '',
       '{attention}': ncrInitial.attention || '',
-      '{regulationbased}': ncrInitial.regulationbased || '',
+      '{require_condition_reference}':
+        ncrInitial.require_condition_reference || '',
       '{Level_Finding}': ncrInitial.level_finding || '',
       '{Problem_Analysis}': ncrInitial.pa_requirement || '',
       '{Due_Date}':
-        ncrInitial.answer_due_date.toISOString().split('T')[0] || '',
+        ncrInitial.answer_due_date?.toISOString().split('T')[0] || '',
       '{IAN}': ncrInitial.issue_ian ? 'Yes' : 'No',
       '{No}': ncrInitial.ian_no || '',
       '{Encountered_Condition}': ncrInitial.encountered_condition || '',
       '{Audit_by}': ncrInitial.audit_by || '',
-      '{Audit_Date}': ncrInitial.audit_date.toISOString().split('T')[0] || '',
+      '{Audit_Date}': ncrInitial.audit_date?.toISOString().split('T')[0] || '',
       '{Acknowledge_by}': ncrInitial.acknowledge_by || '',
       '{Acknowledge_date}':
-        ncrInitial.acknowledge_date.toISOString().split('T')[0] || '',
+        ncrInitial.acknowledge_date?.toISOString().split('T')[0] || '',
       // Additional placeholders for the reply section
       '{Root_Cause}': firstNcrReply?.rca_problem || '',
       '{Identified_by}': firstNcrReply?.identified_by_auditee || '',
@@ -252,12 +393,11 @@ export class NcrService {
       '{Recommended_Action}': firstNcrReply?.recommend_corrective_action || '',
       '{Auditee_by}': firstFollowResult?.proposed_close_auditee || '',
       '{Auditee_Date}':
-        firstFollowResult?.proposed_close_date.toISOString().split('T')[0] ||
+        firstFollowResult?.proposed_close_date?.toISOString().split('T')[0] ||
         '',
       '{Accepted_IM}': firstFollowResult?.verified_chief_im || '',
       '{Accepted_IM_Date}':
-        firstFollowResult?.verified_date.toISOString().split('T')[0] || '',
-      // Additional placeholders for follow-up results
+        firstFollowResult?.verified_date?.toISOString().split('T')[0] || '',
       '{Close_Corrective_Action}':
         firstFollowResult?.close_corrective_actions || '',
       '{Close_Approved_Date}':
@@ -267,6 +407,114 @@ export class NcrService {
       '{Verified_Date}':
         firstFollowResult?.verified_date?.toISOString().split('T')[0] || '',
     };
+
+    // Add DGCA-specific placeholders
+    if (ncrInitial.regulationbased === 'DGCA') {
+      Object.assign(placeholders, {
+        '{audit_plan_no}': ncrInitial.audit_plan_no || '',
+        '{ncr_no}': ncrInitial.ncr_no || '',
+        '{issued_date}':
+          ncrInitial.issued_date.toISOString().split('T')[0] || '',
+        '{responsibility_Office}': ncrInitial.responsibility_office || '',
+        '{audit_type}': ncrInitial.audit_type || '',
+        '{to_uic}': ncrInitial.to_uic || '',
+        '{attention}': ncrInitial.attention || '',
+        '{require_condition_reference}':
+          ncrInitial.require_condition_reference || '',
+        '{level_Finding}': ncrInitial.level_finding || '',
+        '{pa_requirement}': ncrInitial.pa_requirement || '',
+        '{ncr_due_date}':
+          ncrInitial.answer_due_date?.toISOString().split('T')[0] || '',
+        '{issue_ian}': ncrInitial.issue_ian ? 'Yes' : 'No',
+        '{ian_no}': ncrInitial.ian_no || '',
+        '{encountered_condition}': ncrInitial.encountered_condition || '',
+        '{audit_by}': ncrInitial.audit_by || '',
+        '{audit_Date}':
+          ncrInitial.audit_date?.toISOString().split('T')[0] || '',
+        '{implementation_date}':
+          firstFollowResult?.implementation_date?.toISOString().split('T')[0] ||
+          '',
+        '{acknowledge_by}': ncrInitial.acknowledge_by || '',
+        '{acknowledge_date}':
+          ncrInitial.acknowledge_date?.toISOString().split('T')[0] || '',
+        '{rca_problem}': firstNcrReply?.rca_problem || '',
+        '{identified_Date}':
+          firstNcrReply?.identified_date?.toISOString().split('T')[0] || '',
+        '{identified_by}': firstNcrReply?.identified_by_auditee || '',
+        '{accept_by_auditor}': firstNcrReply?.accept_by_auditor || '',
+        '{auditor_accept_date}':
+          firstNcrReply?.auditor_accept_date?.toISOString().split('T')[0] || '',
+        '{recommend_corrective_action}':
+          firstNcrReply?.recommend_corrective_action || '',
+        '{proposed_close_auditee}':
+          firstFollowResult?.proposed_close_auditee || '',
+        '{proposed_close_date}':
+          firstFollowResult?.proposed_close_date?.toISOString().split('T')[0] ||
+          '',
+        '{close_approved_by}': firstFollowResult?.close_approved_by || '',
+        '{close_approved_date}':
+          firstFollowResult?.proposed_close_date?.toISOString().split('T')[0] ||
+          '',
+        '{close_corrective_action}':
+          firstFollowResult?.close_corrective_actions || '',
+        '{verified_chief_im}': firstFollowResult?.verified_chief_im || '',
+        '{verified_date}':
+          firstFollowResult?.verified_date?.toISOString().split('T')[0] || '',
+      });
+    }
+
+    // Add EASA-specific placeholders
+    if (ncrInitial.regulationbased === 'EASA') {
+      Object.assign(placeholders, {
+        '{audit_plan_no}': ncrInitial.audit_plan_no || '',
+        '{ncr_no}': ncrInitial.ncr_no || '',
+        '{issued_date}':
+          ncrInitial.issued_date.toISOString().split('T')[0] || '',
+        '{responsibility_Office}': ncrInitial.responsibility_office || '',
+        '{audit_type}': ncrInitial.audit_type || '',
+        '{require_condition_reference}':
+          ncrInitial.require_condition_reference || '',
+        '{level_finding}': ncrInitial.level_finding || '',
+        '{pa_requirement}': ncrInitial.pa_requirement || '',
+        '{answer_due_date}':
+          ncrInitial.answer_due_date?.toISOString().split('T')[0] || '',
+        '{encountered_condition}': ncrInitial.encountered_condition || '',
+        '{audit_by}': ncrInitial.audit_by || '',
+        '{audit_date}':
+          ncrInitial.audit_date?.toISOString().split('T')[0] || '',
+        '{acknowledge_by}': ncrInitial.acknowledge_by || '',
+        '{acknowledge_date}':
+          ncrInitial.acknowledge_date?.toISOString().split('T')[0] || '',
+        '{rca_problem}': firstNcrReply?.rca_problem || '',
+        '{corrective_action}': firstNcrReply?.corrective_action || '',
+        '{preventive_action}': firstNcrReply?.preventive_action || '',
+        '{identified_date}':
+          firstNcrReply?.identified_date?.toISOString().split('T')[0] || '',
+        '{identified_by_auditee}': firstNcrReply?.identified_by_auditee || '',
+        '{accept_by_auditor}': firstNcrReply?.accept_by_auditor || '',
+        '{auditor_accept_date}':
+          firstNcrReply?.auditor_accept_date?.toISOString().split('T')[0] || '',
+        '{yes_close}':
+          firstFollowResult?.is_close === true ? '☑ Close' : '☐ Open',
+        '{no_close}':
+          firstFollowResult?.is_close === false ? '☑ Open' : '☐ Open',
+        '{yes_effective}':
+          firstFollowResult?.effectiveness === 'Effective'
+            ? '☑ Effective'
+            : '☐ Not Effective',
+        '{no_effective}':
+          firstFollowResult?.effectiveness === 'Not_Effective'
+            ? '☑ No Effective'
+            : '☐ No Effective',
+        '{refer_verification}': firstFollowResult?.refer_verification || '',
+        '{sheet_no}': firstFollowResult?.sheet_no || '',
+        '{new_ncr_issue_nbr}': firstFollowResult?.new_ncr_issue_nbr || '',
+        '{close_approved_by}': firstFollowResult?.close_approved_by || '',
+        '{close_approved_date}':
+          firstFollowResult?.close_approved_date?.toISOString().split('T')[0] ||
+          '',
+      });
+    }
 
     // Step 4: Replace placeholders in the document
     for (const [placeholder, value] of Object.entries(placeholders)) {
@@ -278,7 +526,7 @@ export class NcrService {
     }
 
     // Step 5: Move the document to a specific folder and generate PDF
-    const targetFolderId = process.env.TARGET_FOLDER;
+    const targetFolderId = process.env.TARGET_FOLDER_NCR;
     await this.googleApiService.moveFileToFolder(
       copiedDocumentId,
       targetFolderId,
