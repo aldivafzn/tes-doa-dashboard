@@ -35,7 +35,8 @@ interface IORData {
   hirac_process: string,
   initial_probability: string,
   initial_severity: string,
-  initial_riskindex: string
+  initial_riskindex: string,
+  attachment: File | null
 }
 
 @Component({
@@ -67,7 +68,8 @@ export class FormIORComponent implements OnInit {
     hirac_process: '',
     initial_probability: '',
     initial_severity: '',
-    initial_riskindex: ''
+    initial_riskindex: '',
+    attachment: null
   };
 
   ngOnInit() {
