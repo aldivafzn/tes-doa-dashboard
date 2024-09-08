@@ -18,15 +18,47 @@ interface JwtPayload {
 
 interface Personnel {
   person_id: string,
-  name: string,
-  personnel_no: string,
-  title: string,
+  person_name: string,
+  person_no: string,
+  job_title: string,
   department: string,
-  email: string,
+  email_address: string,
   birth_date: string,
-  employ_date: string,
+  employment_date: string,
   job_desc: string,
   design_exp: string
+}
+
+enum OfficeCode {
+  TE = "TE",
+  TEC_1 = "TEC-1",
+  TEA = "TEA",
+  TEA_1 = "TEA-1",
+  TEA_2 = "TEA-2",
+  TEA_3 = "TEA-3",
+  TEA_4 = "TEA-4",
+  TED = "TED",
+  TED_1 = "TED-1",
+  TED_2 = "TED-2",
+  TED_3 = "TED-3",
+  TED_4 = "TED-4",
+  TER = "TER",
+  TER_1 = "TER-1",
+  TER_2 = "TER-2",
+  TER_3 = "TER-3",
+  TER_4 = "TER-4",
+  TER_5 = "TER-5",
+  TEL = "TEL",
+  TEL_1 = "TEL-1",
+  TEL_2 = "TEL-2",
+  TEJ = "TEJ",
+  TEJ_1 = "TEJ-1",
+  TEJ_2 = "TEJ-2",
+  TEJ_3 = "TEJ-3",
+  TEM = "TEM",
+  TEM_1 = "TEM-1",
+  TEM_2 = "TEM-2",
+  TEM_3 = "TEM-3"
 }
 
 @Component({
@@ -44,6 +76,7 @@ export class SearchPersonnelComponent implements OnInit {
   searchTerm: string = ''; // Define searchTerm here
 
   role: string | null = null;
+  isInitialized: boolean = false;
 
   ngOnInit() {
     const token = this.authService.getToken();
@@ -51,7 +84,7 @@ export class SearchPersonnelComponent implements OnInit {
       const { role } = jwtDecode<JwtPayload>(token);
       this.role = role;
     }
-    //this.fetchDataFromServer();
+    this.fetchDataFromServer();
   }
 
   async fetchDataFromServer() {
@@ -60,7 +93,9 @@ export class SearchPersonnelComponent implements OnInit {
       if (response.data.status === 200) {
         this.items = response.data.showProduct;
         for (let i = 0; i < this.items.length; i++) {
-          this.items[i].employ_date = this.items[i].employ_date.slice(0, 10)
+          this.items[i].department = this.convertEnumValue(OfficeCode, this.items[i].department);
+          this.items[i].birth_date = this.items[i].birth_date.slice(0, 10);
+          this.items[i].employment_date = this.items[i].employment_date.slice(0, 10);
         }
       } else {
         console.error('Error Message:', response.data.message);
@@ -68,6 +103,7 @@ export class SearchPersonnelComponent implements OnInit {
     } catch (error) {
       console.error('Error:', error);
     }
+    this.isInitialized = true;
   }
 
   async fetchDataBySearchTerm() {
@@ -77,6 +113,11 @@ export class SearchPersonnelComponent implements OnInit {
       });
       if (response.data.status === 200) {
         this.items = response.data.showProduct;
+        for (let i = 0; i < this.items.length; i++) {
+          this.items[i].department = this.convertEnumValue(OfficeCode, this.items[i].department);
+          this.items[i].birth_date = this.items[i].birth_date.slice(0, 10);
+          this.items[i].employment_date = this.items[i].employment_date.slice(0, 10);
+        }
       } else {
         console.error('Error Message:', response.data.message);
         this.items = [];
@@ -112,6 +153,11 @@ export class SearchPersonnelComponent implements OnInit {
   }
 
   navigateDetail(person_id: string) {
-    // sessionStorage.setItem('person_id', person_id);
+    sessionStorage.setItem('person_id', person_id);
+  }
+
+  convertEnumValue(enumObj: any, value: string): string {
+    // Convert the value if it's a key in the enum object
+    return enumObj[value] || value;
   }
 }
