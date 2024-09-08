@@ -13,7 +13,7 @@
       <div class="mb-8 p-12 rounded-lg shadow-md shadow-black outline outline-1 outline-gray-700">
         <h2 class="text-2xl font-bold text-gray-900 text-center justify-center mb-8 uppercase">IOR Detail</h2>
         <div class="grid grid-cols-2 gap-4 mb-4">
-          <div class="space-x-2">
+          <div class="col-span-2 space-x-2">
             <label class="tracking-wide font-semibold text-gray-700 text-left">Subject:</label>
             <label class="tracking-wide text-gray-600 text-left">{{iorData.subject_ior}}</label>
           </div>
@@ -30,12 +30,16 @@
             <label class="tracking-wide text-gray-600 text-left">{{iorData.reference_ior}}</label>
           </div>
           <div class="space-x-2">
+            <label class="tracking-wide font-semibold text-gray-700 text-left">Category:</label>
+            <label class="tracking-wide text-gray-600 text-left">{{iorData.category_occur}}</label>
+          </div>
+          <div class="space-x-2">
             <label class="tracking-wide font-semibold text-gray-700 text-left">Sent to:</label>
             <label class="tracking-wide text-gray-600 text-left">{{iorData.to_uic}}</label>
           </div>
           <div class="space-x-2">
-            <label class="tracking-wide font-semibold text-gray-700 text-left">Category:</label>
-            <label class="tracking-wide text-gray-600 text-left">{{iorData.category_occur}}</label>
+            <label class="tracking-wide font-semibold text-gray-700 text-left">Type or Part Number Related Data:</label>
+            <label class="tracking-wide text-gray-600 text-left">{{iorData.type_or_pnbr}}</label>
           </div>
           <div class="space-x-2">
             <label class="tracking-wide font-semibold text-gray-700 text-left">Copy to:</label>
@@ -85,7 +89,7 @@
           </div>
         </div>
         <div class="flex flex-center space-x-2">
-          <button (click)="navigatePreview(iorData.id_ior)" class="inline-block bg-[#016299] rounded border-2 border-primary px-3 pb-[6px] pt-2 font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white">
+          <button (click)="navigatePreview()" class="inline-block bg-[#016299] rounded border-2 border-primary px-3 pb-[6px] pt-2 font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white">
             <i class="far fa-file-pdf pr-2" style="font-size: 16px;"></i>Preview
           </button>
           <button (click)="navigateEditIOR()" class="inline-block bg-[#016299] rounded border-2 border-primary px-4 pb-[6px] pt-2 font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white" *ngIf="role === 'Admin' || role === 'IM'">

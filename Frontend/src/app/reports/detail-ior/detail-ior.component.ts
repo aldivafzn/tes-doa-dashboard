@@ -186,21 +186,42 @@ export class DetailIORComponent implements OnInit{
     XLSX.writeFile(wb, fileName);
   }
 
-  async navigatePreview(documentId: string) {
+  async navigatePreview() {
+    const generatePDFToastElement = this.toastService.generatingToast('Generating PDF');
     try {
-      sessionStorage.setItem('document_id', documentId);
-      console.log(documentId);
-      const response = await axios.post('http://localhost:3000/getPDFDrive', { documentId });
-      console.log(response.data.message);
+      const response = await axios.post('http://localhost:4040/ior/getPDF', 
+        { id_IOR: this.currentIORID }
+      );
       if (response.data.status === 200) {
-        window.location.href = response.data.message;
+        this.toastService.successToast('PDF generated successfully! Redirecting...');
+        const preview = window.open(response.data.result.data.document_id, '_blank');
+        if (preview) {
+          preview.focus();
+        }
       } else {
+        this.toastService.failedToast('There was an error while generating PDF');
         console.error('Error Message:', response.data.message);
       }
     } catch (error) {
+      this.toastService.failedToast('Failed to generate PDF');
       console.error('Error:', error);
     }
+    document.body.removeChild(generatePDFToastElement);
   }
+
+  // async navigatePreview(documentId: string) {
+  //   try {
+  //     const response = await axios.post('http://localhost:4040/ior/getPDF', { documentId });
+  //     console.log(response.data.message);
+  //     if (response.data.status === 200) {
+  //       window.location.href = response.data.message;
+  //     } else {
+  //       console.error('Error Message:', response.data.message);
+  //     }
+  //   } catch (error) {
+  //     console.error('Error:', error);
+  //   }
+  // }
 
   navigateEditIOR() {
     window.location.href = '/editIOR';
