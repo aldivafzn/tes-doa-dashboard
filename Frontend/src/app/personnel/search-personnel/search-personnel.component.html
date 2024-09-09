@@ -26,12 +26,12 @@
           <table class="table w-full bg-white overflow-y-scroll" id="data-table">
             <thead class="bg-blue-100 font-medium">
               <tr class="border-b border-gray-500">
-                <th id="personnelNo" class="px-4 py-2 border-r border-gray-500">Personnel&nbsp;Number</th>
+                <th id="personnelNo" class="px-4 py-2 border-r border-gray-500">Personnel Number</th>
                 <th id="name" class="px-4 py-2 border-r border-gray-500">Name</th>
                 <th id="department" class="px-4 py-2 border-r border-gray-500">Department</th>
                 <th id="title" class="px-4 py-2 border-r border-gray-500">Current Title(s)</th>
                 <th id="email" class="px-4 py-2 border-r border-gray-500">Email Address</th>
-                <th id="employment" class="px-4 py-2">Employment&nbsp;Date</th>
+                <th id="employment" class="px-4 py-2">Employment Date</th>
               </tr>
             </thead>
             <tbody *ngIf="!isInitialized">
@@ -59,6 +59,48 @@
             </tbody>
           </table>
         </div>
+      </div>
+      <div class="flex mt-4 justify-center">
+        <details id="export_excel_result" class="w-fit open">
+          <summary (click)="exportToExcel('export-table')" class="inline-block text-white justify-center bg-[#107c41] hover:bg-[#185c37] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-4 py-2 motion-reduce:transition-none cursor-pointer">
+            <i class="fas fa-file-excel text-white mr-2"></i>Export to Excel
+          </summary>
+
+          <div class="hidden bg-white outline outline-1 outline-gray-700 rounded-lg w-fit max-w-[80%] h-fit my-auto mx-auto fixed inset-0 text-gray-600 p-16">
+            <div class="show-table mt-5 border border-gray-500">
+              <div class="table-responsive overflow-auto" style="max-height: 600px; min-height: 200px;">
+                <table class="table w-full bg-white overflow-y-scroll text-sm" id="export-table">
+                  <thead class="bg-blue-100 font-medium">
+                    <tr class="border-b border-gray-500">
+                      <th id="personnelNo" class="px-4 py-2 border-r border-gray-500">Personnel Number</th>
+                      <th id="name" class="px-4 py-2 border-r border-gray-500">Name</th>
+                      <th id="title" class="px-4 py-2 border-r border-gray-500">Current Title(s)</th>
+                      <th id="department" class="px-4 py-2 border-r border-gray-500">Department</th>
+                      <th id="birth" class="px-4 py-2 border-r border-gray-500">Birth Date</th>
+                      <th id="employment" class="px-4 py-2">Employment Date</th>
+                      <th id="email" class="px-4 py-2 border-r border-gray-500">Email Address</th>
+                      <th id="job_desc" class="px-4 py-2 border-r border-gray-500">Job Description</th>
+                      <th id="design_exp" class="px-4 py-2">Design Experience</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of items" class="border-b border-gray-500">
+                      <td class="px-4 py-2 border-r border-gray-500">{{ item.person_no }}</td>
+                      <td class="px-4 py-2 border-r border-gray-500">{{ item.person_name }}</td>
+                      <td class="px-4 py-2 border-r border-gray-500">{{ item.job_title }}</td>
+                      <td class="px-4 py-2 border-r border-gray-500">{{ item.department }}</td>
+                      <td class="px-4 py-2 border-r border-gray-500">{{ item.birth_date }}</td>
+                      <td class="px-4 py-2 border-r border-gray-500">{{ item.employment_date }}</td>
+                      <td class="px-4 py-2 border-r border-gray-500">{{ item.email_address }}</td>
+                      <td class="px-4 py-2 border-r border-gray-500">{{ item.job_desc }}</td>
+                      <td class="px-4 py-2">{{ item.design_exp }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </details>
       </div>
     </div>
   </div>

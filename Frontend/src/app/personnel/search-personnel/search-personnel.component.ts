@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { NavbarComponent } from "../../navbar/navbar.component";
 import { FooterComponent } from "../../footer/footer.component";
 import axios from 'axios';
-// import * as XLSX from 'xlsx';
+import * as XLSX from 'xlsx';
 import { FormsModule } from '@angular/forms'; // Ensure FormsModule is imported
 import { AuthService } from '../../auth.service';
 import { jwtDecode } from 'jwt-decode';
@@ -126,6 +126,18 @@ export class SearchPersonnelComponent implements OnInit {
       console.error('Error:', error);
       this.items = [];
     }
+  }
+
+  exportToExcel(element_id: string): void {
+    const table = document.getElementById(element_id);
+    const ws = XLSX.utils.table_to_sheet(table);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+  
+    const date = new Date();
+    const formattedDate = date.toISOString().slice(0, 10);
+    const fileName = `Personnel_${formattedDate}.xlsx`;
+    XLSX.writeFile(wb, fileName);
   }
 
   async navigatePreview(documentId: string) {

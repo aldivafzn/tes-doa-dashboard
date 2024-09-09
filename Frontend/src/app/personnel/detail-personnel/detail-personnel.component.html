@@ -43,9 +43,9 @@
           <div class="col-span-2"><p class="tracking-wide text-gray-600 text-left text-wrap">{{personnel.job_desc}}</p></div>
         </div>
         <div class="flex flex-center mb-4 space-x-2">
-          <button (click)="navigatePreview(personnel.person_id)" class="inline-block bg-[#016299] rounded border-2 border-primary px-3 pb-[6px] pt-2 font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white">
+          <!-- <button class="inline-block bg-[#016299] rounded border-2 border-primary px-3 pb-[6px] pt-2 font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white">
             <i class="far fa-file-pdf pr-2" style="font-size: 16px;"></i>Preview
-          </button>
+          </button> -->
           <button (click)="navigateEdit()" class="inline-block bg-[#016299] rounded border-2 border-primary px-4 pb-[6px] pt-2 font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white" *ngIf="role === 'Admin' || role === 'IM'">
             <i class="fas fa-edit pr-2" style="font-size: 16px;"></i> Edit
           </button>
@@ -185,7 +185,7 @@
             </table>
           </div>
         </div>
-        <!-- <div class="flex mt-4 justify-center">
+        <div class="flex mt-4 justify-center">
           <details id="export_excel_result" class="w-fit open">
             <summary (click)="exportToExcel('export-edu-table')" class="inline-block text-white justify-center bg-[#107c41] hover:bg-[#185c37] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-4 py-2 motion-reduce:transition-none cursor-pointer">
               <i class="fas fa-file-excel text-white mr-2"></i>Export to Excel
@@ -207,7 +207,7 @@
                       <tr *ngFor="let item of educations" class="border-b border-gray-500">
                         <td class="px-4 py-2 border-r border-gray-500">{{ item.university }}</td>
                         <td class="px-4 py-2 border-r border-gray-500">{{ item.major }}</td>
-                        <td class="px-4 py-2 border-r border-gray-500">{{ item.grad_year }}</td>
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.graduation_year }}</td>
                         <td class="px-4 py-2">{{ item.remark }}</td>
                       </tr>
                     </tbody>
@@ -216,7 +216,7 @@
               </div>
             </div>
           </details>
-        </div> -->
+        </div>
       </div>
 
       <!-- Training Records-->
@@ -434,29 +434,39 @@
             </table>
           </div>
         </div>
-        <!-- <div class="flex mt-4 justify-center">
+        <div class="flex mt-4 justify-center">
           <details id="export_excel_result" class="w-fit open">
-            <summary (click)="exportToExcel('export-edu-table')" class="inline-block text-white justify-center bg-[#107c41] hover:bg-[#185c37] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-4 py-2 motion-reduce:transition-none cursor-pointer">
+            <summary (click)="exportToExcel('export-train-table')" class="inline-block text-white justify-center bg-[#107c41] hover:bg-[#185c37] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-4 py-2 motion-reduce:transition-none cursor-pointer">
               <i class="fas fa-file-excel text-white mr-2"></i>Export to Excel
             </summary>
   
             <div class="hidden bg-white outline outline-1 outline-gray-700 rounded-lg w-fit max-w-[80%] h-fit my-auto mx-auto fixed inset-0 text-gray-600 p-16">
               <div class="show-table mt-5 border border-gray-500">
                 <div class="table-responsive overflow-auto" style="max-height: 600px; min-height: 200px;">
-                  <table class="table w-full bg-white overflow-y-scroll text-sm" id="export-edu-table">
+                  <table class="table w-full bg-white overflow-y-scroll text-sm" id="export-train-table">
                     <thead class="bg-blue-100 font-medium">
                       <tr class="border-b border-gray-500">
-                        <th id="university" class="px-4 py-2 border-r border-gray-500">University</th>
-                        <th id="major" class="px-4 py-2 border-r border-gray-500">Major</th>
-                        <th id="grad_year" class="px-4 py-2 border-r border-gray-500">Graduation Year</th>
-                        <th id="edu_remark" class="px-4 py-2">Remark</th>
+                        <th id="training_title" class="px-4 py-2 border-r border-gray-500">Type of Training</th>
+                        <th id="training_category" class="px-4 py-2 border-r border-gray-500">Category</th>
+                        <th id="start_date" class="px-4 py-2 border-r border-gray-500">Start</th>
+                        <th id="finish_date" class="px-4 py-2 border-r border-gray-500">Finish</th>
+                        <th id="place" class="px-4 py-2 border-r border-gray-500">Place</th>
+                        <th id="result" class="px-4 py-2 border-r border-gray-500">Result</th>
+                        <th id="interval_recurrent" class="px-4 py-2 border-r border-gray-500">Interval Recurrent</th>
+                        <th id="next_date" class="px-4 py-2 border-r border-gray-500">Next Training</th>
+                        <th id="remark" class="px-4 py-2">Remark</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr *ngFor="let item of educations" class="border-b border-gray-500">
-                        <td class="px-4 py-2 border-r border-gray-500">{{ item.university }}</td>
-                        <td class="px-4 py-2 border-r border-gray-500">{{ item.major }}</td>
-                        <td class="px-4 py-2 border-r border-gray-500">{{ item.grad_year }}</td>
+                      <tr *ngFor="let item of trainingRecords; let i = index" class="border-b border-gray-500">
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.training_title }}</td>
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.training_category }}</td>
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.start_date }}</td>
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.finish_date }}</td>
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.place }}</td>
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.result }}</td>
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.interval_recurrent }}</td>
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.next_date }}</td>
                         <td class="px-4 py-2">{{ item.remark }}</td>
                       </tr>
                     </tbody>
@@ -465,7 +475,7 @@
               </div>
             </div>
           </details>
-        </div> -->
+        </div>
       </div>
 
       <!-- Experience Records-->
@@ -615,8 +625,8 @@
             </table>
           </div>
         </div>
-        <!-- <div class="flex mt-4 justify-center">
-          <details id="export_excel_result" class="w-fit open">
+        <div class="flex mt-4 justify-center">
+          <details id="export_exp_table" class="w-fit open">
             <summary (click)="exportToExcel('export-edu-table')" class="inline-block text-white justify-center bg-[#107c41] hover:bg-[#185c37] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-4 py-2 motion-reduce:transition-none cursor-pointer">
               <i class="fas fa-file-excel text-white mr-2"></i>Export to Excel
             </summary>
@@ -624,20 +634,22 @@
             <div class="hidden bg-white outline outline-1 outline-gray-700 rounded-lg w-fit max-w-[80%] h-fit my-auto mx-auto fixed inset-0 text-gray-600 p-16">
               <div class="show-table mt-5 border border-gray-500">
                 <div class="table-responsive overflow-auto" style="max-height: 600px; min-height: 200px;">
-                  <table class="table w-full bg-white overflow-y-scroll text-sm" id="export-edu-table">
+                  <table class="table w-full bg-white overflow-y-scroll text-sm" id="export-exp-table">
                     <thead class="bg-blue-100 font-medium">
                       <tr class="border-b border-gray-500">
-                        <th id="university" class="px-4 py-2 border-r border-gray-500">University</th>
-                        <th id="major" class="px-4 py-2 border-r border-gray-500">Major</th>
-                        <th id="grad_year" class="px-4 py-2 border-r border-gray-500">Graduation Year</th>
-                        <th id="edu_remark" class="px-4 py-2">Remark</th>
+                        <th id="job_title" class="px-4 py-2 border-r border-gray-500">Position</th>
+                        <th id="since_date" class="px-4 py-2 border-r border-gray-500">Since</th>
+                        <th id="until_date" class="px-4 py-2 border-r border-gray-500">Until</th>
+                        <th id="assignment" class="px-4 py-2 border-r border-gray-500">Assignment Address</th>
+                        <th id="remark" class="px-4 py-2">Remark</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr *ngFor="let item of educations" class="border-b border-gray-500">
-                        <td class="px-4 py-2 border-r border-gray-500">{{ item.university }}</td>
-                        <td class="px-4 py-2 border-r border-gray-500">{{ item.major }}</td>
-                        <td class="px-4 py-2 border-r border-gray-500">{{ item.grad_year }}</td>
+                      <tr *ngFor="let item of experienceRecords; let i = index" class="border-b border-gray-500">
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.job_title }}</td>
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.since_date }}</td>
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.until_date }}</td>
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.assignment }}</td>
                         <td class="px-4 py-2">{{ item.remark }}</td>
                       </tr>
                     </tbody>
@@ -646,7 +658,7 @@
               </div>
             </div>
           </details>
-        </div> -->
+        </div>
       </div>
 
       <!-- Certifications -->
@@ -840,7 +852,7 @@
             </table>
           </div>
         </div>
-        <!-- <div class="flex mt-4 justify-center">
+        <div class="flex mt-4 justify-center">
           <details id="export_excel_result" class="w-fit open">
             <summary (click)="exportToExcel('export-edu-table')" class="inline-block text-white justify-center bg-[#107c41] hover:bg-[#185c37] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-4 py-2 motion-reduce:transition-none cursor-pointer">
               <i class="fas fa-file-excel text-white mr-2"></i>Export to Excel
@@ -852,18 +864,24 @@
                   <table class="table w-full bg-white overflow-y-scroll text-sm" id="export-edu-table">
                     <thead class="bg-blue-100 font-medium">
                       <tr class="border-b border-gray-500">
-                        <th id="university" class="px-4 py-2 border-r border-gray-500">University</th>
-                        <th id="major" class="px-4 py-2 border-r border-gray-500">Major</th>
-                        <th id="grad_year" class="px-4 py-2 border-r border-gray-500">Graduation Year</th>
-                        <th id="edu_remark" class="px-4 py-2">Remark</th>
+                        <th id="regulation_based" class="px-4 py-2 border-r border-gray-500">Based on Regulation</th>
+                        <th id="cert_type" class="px-4 py-2 border-r border-gray-500">Certification Type</th>
+                        <th id="cert_number" class="px-4 py-2 border-r border-gray-500">Certification No.</th>
+                        <th id="cert_first_date" class="px-4 py-2 border-r border-gray-500">First Issue</th>
+                        <th id="cert_expire_date" class="px-4 py-2 border-r border-gray-500">Date of Expire</th>
+                        <th id="cert_letter_nbr" class="px-4 py-2 border-r border-gray-500">Certification Letter Number</th>
+                        <th id="cert_scope" class="px-4 py-2 border-r border-gray-500">Scope</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr *ngFor="let item of educations" class="border-b border-gray-500">
-                        <td class="px-4 py-2 border-r border-gray-500">{{ item.university }}</td>
-                        <td class="px-4 py-2 border-r border-gray-500">{{ item.major }}</td>
-                        <td class="px-4 py-2 border-r border-gray-500">{{ item.grad_year }}</td>
-                        <td class="px-4 py-2">{{ item.remark }}</td>
+                      <tr *ngFor="let item of certifications; let i = index" class="border-b border-gray-500">
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.regulation_based }}</td>
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.cert_type }}</td>
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.cert_number }}</td>
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.cert_first_date }}</td>
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.cert_expire_date }}</td>
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.cert_letter_nbr }}</td>
+                        <td class="px-4 py-2">{{ item.cert_scope }}</td>
                       </tr>
                     </tbody>
                   </table>
@@ -871,7 +889,7 @@
               </div>
             </div>
           </details>
-        </div> -->
+        </div>
       </div>
     </div>
   </div>
