@@ -307,16 +307,7 @@ export class DetailNCRComponent implements OnInit{
     return enumObj[value] || value;
   }
 
-  closeReplyDetails(id_ncr_reply: string) {
-    const element_id = 'reply_details_' + id_ncr_reply;
-    const element = document.getElementById(element_id);
-    if (element) {
-      element.removeAttribute('open');
-    }
-  }
-
-  closeResultDetails(id_ncr_result: string) {
-    const element_id = 'result_details_' + id_ncr_result;
+  closeDetails(element_id: string) {
     const element = document.getElementById(element_id);
     if (element) {
       element.removeAttribute('open');

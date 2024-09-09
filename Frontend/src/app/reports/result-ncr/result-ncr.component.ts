@@ -130,6 +130,7 @@ export class ResultNCRComponent implements OnInit {
     this.resultNCRData.close_approved_date = new Date(this.resultNCRData.close_approved_date);
     this.resultNCRData.verified_date = new Date(this.resultNCRData.verified_date);
     console.log("Sending data:", this.resultNCRData);
+    const generatingToastElement = this.toastService.generatingToast('Generating NCR Follow Up Result...');
     try {
       const response = await axios.post('http://localhost:4040/ncr/result/add', this.resultNCRData);
       if (response.data.status === 200) {
@@ -146,5 +147,6 @@ export class ResultNCRComponent implements OnInit {
       this.toastService.failedToast('There was an error adding NCR Follow Up Result');
       console.error('There was an error adding NCR Follow Up Result', error);
     }
+    document.removeChild(generatingToastElement);
   }
 }

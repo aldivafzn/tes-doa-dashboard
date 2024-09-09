@@ -92,6 +92,7 @@ export class FollowonIORComponent {
     this.followIORData.follupby = this.account.name;
     this.followIORData.follup_date = new Date(this.followIORData.follup_date);
     console.log("Sending data:", this.followIORData);
+    const generatingToastElement = this.toastService.generatingToast('Generating IOR Follow On...');
     try {
       const response = await axios.post('http://localhost:4040/ior/follow-up/add', this.followIORData);
 
@@ -107,5 +108,6 @@ export class FollowonIORComponent {
       this.toastService.failedToast('There was an error adding Follow on NCR');
       console.error('There was an error adding Follow on NCR', error);
     }
+    document.removeChild(generatingToastElement);
   }
 }

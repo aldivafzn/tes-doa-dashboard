@@ -133,8 +133,9 @@ export class AddPersonnelComponent implements OnInit {
         console.error('Failed to submit Personnel form:', response.data.message);
       }
     } catch (error) {
+      this.toastService.failedToast('There was an error submitting Personnel form');
+      console.error('There was an error submitting Personnel form:', error);
     }
-    
     document.body.removeChild(generatingToastElement);
   }
 

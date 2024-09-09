@@ -209,20 +209,6 @@ export class DetailIORComponent implements OnInit{
     document.body.removeChild(generatePDFToastElement);
   }
 
-  // async navigatePreview(documentId: string) {
-  //   try {
-  //     const response = await axios.post('http://localhost:4040/ior/getPDF', { documentId });
-  //     console.log(response.data.message);
-  //     if (response.data.status === 200) {
-  //       window.location.href = response.data.message;
-  //     } else {
-  //       console.error('Error Message:', response.data.message);
-  //     }
-  //   } catch (error) {
-  //     console.error('Error:', error);
-  //   }
-  // }
-
   navigateEditIOR() {
     window.location.href = '/editIOR';
   }
@@ -241,8 +227,7 @@ export class DetailIORComponent implements OnInit{
     return enumObj[value] || value;
   }
 
-  closeDetails(id_follup: string) {
-    const element_id = 'follup_details_' + id_follup;
+  closeDetails(element_id: string) {
     const element = document.getElementById(element_id);
     if (element) {
       element.removeAttribute('open');

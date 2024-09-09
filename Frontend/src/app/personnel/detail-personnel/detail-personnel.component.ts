@@ -227,27 +227,18 @@ export class DetailPersonnelComponent implements OnInit {
     XLSX.writeFile(wb, fileName);
   }
 
-  async navigatePreview(url: string) {
-    if (!url) {
-      this.toastService.failedToast('No PDF link is found!');
-      return;
-    }
-    const preview = window.open(url, '_blank');
-    if (preview) {
-      preview.focus();
-    }
-  }
-
   navigateEdit() {
     window.location.href = '/editPersonnel';
   }
 
   async addEducation() {
+    const generatingToastElement = this.toastService.generatingToast('Adding education...');
     try {
       this.newEducation.person_id = this.currentPersonId;
       this.newEducation.graduation_year = Number(this.newEducation.graduation_year);
       const response = await axios.post('http://localhost:4040/personnel/education/add', this.newEducation);
       if (response.data.status === 200) {
+        this.toastService.successToast('Education added successfully');
         window.location.href = '/detailPersonnel';
       } else {
         this.toastService.failedToast('Failed to submit Education form');
@@ -257,13 +248,16 @@ export class DetailPersonnelComponent implements OnInit {
       this.toastService.failedToast('There was an error adding Education form');
       console.error('There was an error adding Education form', error);
     }
+    document.removeChild(generatingToastElement);
   }
 
   async editEducation(education: Education) {
+    const generatingToastElement = this.toastService.generatingToast('Updating education...');
     try {
       education.graduation_year = Number(education.graduation_year);
       const response = await axios.put('http://localhost:4040/personnel/education/update', education);
       if (response.data.status === 200) {
+        this.toastService.successToast('Education updated successfully')
         window.location.href = '/detailPersonnel';
       } else {
         this.toastService.failedToast('Failed to update education');
@@ -273,9 +267,11 @@ export class DetailPersonnelComponent implements OnInit {
       this.toastService.failedToast('There was an error updating education');
       console.error('There was an error updating education', error);
     }
+    document.removeChild(generatingToastElement);
   }
 
   async addTraining() {
+    const generatingToastElement = this.toastService.generatingToast('Adding training...');
     try {
       this.newTraining.person_id = this.currentPersonId;
       this.newTraining.start_date = new Date(this.newTraining.start_date);
@@ -284,6 +280,7 @@ export class DetailPersonnelComponent implements OnInit {
       this.newTraining.interval_recurrent = Number(this.newTraining.interval_recurrent);
       const response = await axios.post('http://localhost:4040/personnel/training/add', this.newTraining);
       if (response.data.status === 200) {
+        this.toastService.successToast('Training added successfully');
         window.location.href = '/detailPersonnel';
       } else {
         this.toastService.failedToast('Failed to submit Training form');
@@ -293,9 +290,11 @@ export class DetailPersonnelComponent implements OnInit {
       this.toastService.failedToast('There was an error adding Training form');
       console.error('There was an error adding Training form', error);
     }
+    document.removeChild(generatingToastElement);
   }
 
   async editTraining(training: Training) {
+    const generatingToastElement = this.toastService.generatingToast('Updating training...');
     try {
       training.start_date = new Date(training.start_date);
       training.finish_date = new Date(training.finish_date);
@@ -303,6 +302,7 @@ export class DetailPersonnelComponent implements OnInit {
       training.interval_recurrent = Number(training.interval_recurrent);
       const response = await axios.put('http://localhost:4040/personnel/training/update', training);
       if (response.data.status === 200) {
+        this.toastService.successToast('Training updated successfully');
         window.location.href = '/detailPersonnel';
       } else {
         this.toastService.failedToast('Failed to update training');
@@ -312,15 +312,18 @@ export class DetailPersonnelComponent implements OnInit {
       this.toastService.failedToast('There was an error updating training');
       console.error('There was an error updating training', error);
     }
+    document.removeChild(generatingToastElement);
   }
 
   async addExperience() {
+    const generatingToastElement = this.toastService.generatingToast('Adding experience...');
     try {
       this.newExperience.person_id = this.currentPersonId;
       this.newExperience.since_date = new Date(this.newExperience.since_date);
       this.newExperience.until_date = new Date(this.newExperience.until_date);
       const response = await axios.post('http://localhost:4040/personnel/experience/add', this.newExperience);
       if (response.data.status === 200) {
+        this.toastService.successToast('Experience added successfully');
         window.location.href = '/detailPersonnel';
       } else {
         this.toastService.failedToast('Failed to submit Experience form');
@@ -330,14 +333,17 @@ export class DetailPersonnelComponent implements OnInit {
       this.toastService.failedToast('There was an error adding Experience form');
       console.error('There was an error adding Experience form', error);
     }
+    document.removeChild(generatingToastElement);
   }
 
   async editExperience(experience: Experience) {
+    const generatingToastElement = this.toastService.generatingToast('Updating experience...');
     try {
       experience.since_date = new Date(experience.since_date);
       experience.until_date = new Date(experience.until_date);
       const response = await axios.put('http://localhost:4040/personnel/experience/update', experience);
       if (response.data.status === 200) {
+        this.toastService.successToast('Experience updated successfully');
         window.location.href = '/detailPersonnel';
       } else {
         this.toastService.failedToast('Failed to update experience');
@@ -350,12 +356,14 @@ export class DetailPersonnelComponent implements OnInit {
   }
 
   async addCert() {
+    const generatingToastElement = this.toastService.generatingToast('Adding certification...');
     try {
       this.newCert.person_id = this.currentPersonId;
       this.newCert.cert_first_date = new Date(this.newCert.cert_first_date);
       this.newCert.cert_expire_date = new Date(this.newCert.cert_expire_date);
       const response = await axios.post('http://localhost:4040/personnel/cert/add', this.newCert);
       if (response.data.status === 200) {
+        this.toastService.successToast('Certification added successfully');
         window.location.href = '/detailPersonnel';
       } else {
         this.toastService.failedToast('Failed to submit Certification form');
@@ -365,14 +373,17 @@ export class DetailPersonnelComponent implements OnInit {
       this.toastService.failedToast('There was an error adding Certification form');
       console.error('There was an error adding Certification form', error);
     }
+    document.removeChild(generatingToastElement);
   }
 
   async editCert(cert: Certification) {
+    const generatingToastElement = this.toastService.generatingToast('Updating certification...');
     try {
       cert.cert_first_date = new Date(cert.cert_first_date);
       cert.cert_expire_date = new Date(cert.cert_expire_date);
       const response = await axios.put('http://localhost:4040/personnel/cert/update', cert);
       if (response.data.status === 200) {
+        this.toastService.successToast('Certification updated successfully');
         window.location.href = '/detailPersonnel';
       } else {
         this.toastService.failedToast('Failed to update certification');
@@ -382,6 +393,7 @@ export class DetailPersonnelComponent implements OnInit {
       this.toastService.failedToast('There was an error updating certification');
       console.error('There was an error updating certification', error);
     }
+    document.removeChild(generatingToastElement);
   }
 
   reformat() {

@@ -84,6 +84,7 @@ export class EditReplyNCRComponent implements OnInit {
     this.replyNCRData.identified_date = new Date(this.replyNCRData.identified_date);
     this.replyNCRData.audit_accept = new Date(this.replyNCRData.audit_accept);
     console.log("Sending data:", this.replyNCRData);
+    const generatingToastElement = this.toastService.generatingToast('Updating NCR Reply...');
     try {
       const response = await axios.put('http://localhost:4040/ncr/reply/update', this.replyNCRData);
       if (response.data.status === 200) {
@@ -98,5 +99,6 @@ export class EditReplyNCRComponent implements OnInit {
       this.toastService.failedToast('There was an error updating NCR Reply');
       console.error('There was an error updating NCR Reply', error);
     }
+    document.removeChild(generatingToastElement);
   }
 }

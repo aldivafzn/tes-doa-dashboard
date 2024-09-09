@@ -100,6 +100,7 @@ export class EditPersonnelComponent implements OnInit {
   async updatePersonnel() {
     this.personnelData.birth_date = new Date(this.personnelData.birth_date);
     this.personnelData.employment_date = new Date(this.personnelData.employment_date);
+    const generatingToastElement = this.toastService.generatingToast('Updating personnel...');
     try {
       const response = await axios.put('http://localhost:4040/personnel/update', this.personnelData);
       if (response.data.status === 200) {
@@ -113,6 +114,7 @@ export class EditPersonnelComponent implements OnInit {
       this.toastService.failedToast('There was an error updating personnel data');
       console.error('There was an error updating personnel data:', error);
     }
+    document.removeChild(generatingToastElement);
   }
 
   convertEnumValue(enumObj: any, value: string): string {
