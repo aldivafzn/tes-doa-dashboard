@@ -36,7 +36,8 @@ interface Occurence {
   hirac_process: string,
   initial_probability: string,
   initial_severity: string,
-  initial_riskindex: string
+  initial_riskindex: string,
+  attachment: File | null
 }
 
 @Component({
@@ -70,7 +71,8 @@ export class EditIORComponent implements OnInit{
     hirac_process: '',
     initial_probability: '',
     initial_severity: '',
-    initial_riskindex: ''
+    initial_riskindex: '',
+    attachment: null
   };
 
   ngOnInit() {
@@ -114,6 +116,7 @@ export class EditIORComponent implements OnInit{
     this.iorData.occur_date = new Date(this.iorData.occur_date)
     this.iorData.report_date = new Date(this.iorData.report_date)
     console.log("Sending data:", this.iorData);
+    const generatingToastElement = this.toastService.generatingToast('Updating IOR...');
     try {
       const response = await axios.put('http://localhost:4040/ior/update', this.iorData);
       if (response.data.status === 200) {
@@ -128,5 +131,6 @@ export class EditIORComponent implements OnInit{
       this.toastService.failedToast('There was an error updating IOR');
       console.error('There was an error updating IOR', error);
     }
+    document.removeChild(generatingToastElement);
   }
 }

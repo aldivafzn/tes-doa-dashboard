@@ -178,7 +178,7 @@ export class DetailNCRComponent implements OnInit{
       const response = await axios.post('http://localhost:4040/ncr/show',
         { ncr_init_id: this.currentNCRInitID }
       );
-      this.ncrData = response.data.showProduct[0];
+      this.ncrData = response.data;
       this.ncrData.responsibility_office = this.convertEnumValue(responoffice, this.ncrData.responsibility_office);
       this.ncrData.to_uic = this.convertEnumValue(uic, this.ncrData.to_uic);
       this.ncrData.level_finding = this.convertEnumValue(level, this.ncrData.level_finding);
@@ -257,15 +257,27 @@ export class DetailNCRComponent implements OnInit{
     }
   }
 
-  async navigatePreviewNCR(url: string) {
-    if (!url) {
-      this.toastService.failedToast('No PDF link is found!');
-      return;
+  async navigatePreview() {
+    const generatePDFToastElement = this.toastService.generatingToast('Generating PDF');
+    try {
+      const response = await axios.post('http://localhost:4040/ncr/getPDF', 
+        { ncr_init_id: this.currentNCRInitID }
+      );
+      if (response.data.status === 200) {
+        this.toastService.successToast('PDF generated successfully! Redirecting...');
+        const preview = window.open(response.data.result.data.document_id, '_blank');
+        if (preview) {
+          preview.focus();
+        }
+      } else {
+        this.toastService.failedToast('There was an error while generating PDF');
+        console.error('Error Message:', response.data.message);
+      }
+    } catch (error) {
+      this.toastService.failedToast('Failed to generate PDF');
+      console.error('Error:', error);
     }
-    const preview = window.open(url, '_blank');
-    if (preview) {
-      preview.focus();
-    }
+    document.body.removeChild(generatePDFToastElement);
   }
 
   navigateEditNCR() {
@@ -295,16 +307,7 @@ export class DetailNCRComponent implements OnInit{
     return enumObj[value] || value;
   }
 
-  closeReplyDetails(id_ncr_reply: string) {
-    const element_id = 'reply_details_' + id_ncr_reply;
-    const element = document.getElementById(element_id);
-    if (element) {
-      element.removeAttribute('open');
-    }
-  }
-
-  closeResultDetails(id_ncr_result: string) {
-    const element_id = 'result_details_' + id_ncr_result;
+  closeDetails(element_id: string) {
     const element = document.getElementById(element_id);
     if (element) {
       element.removeAttribute('open');

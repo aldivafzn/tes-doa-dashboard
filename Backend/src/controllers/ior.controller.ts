@@ -115,6 +115,25 @@ export class IorController {
   }
 
   @UseGuards(JwtAuthGuard)
+  @Post('getPDF')
+  async getPDFOccurrence(@Body() showOccurrenceDto: ShowOccurrenceDto) {
+    try {
+      const result = await this.iorService.getPDFOccurrence(showOccurrenceDto);
+      return {
+        status: 200,
+        message: 'PDF generated successfully',
+        result,
+      };
+    } catch (error) {
+      return {
+        status: 500,
+        message: 'Error generating PDF',
+        error: error.message,
+      };
+    }
+  }
+
+  @UseGuards(JwtAuthGuard)
   @Post('follow-up/add')
   async addFollowUpOccurrence(@Body() dto: AddFollowUpOccurrenceDto) {
     const result = await this.iorService.addFollowUpOccurrence(dto);

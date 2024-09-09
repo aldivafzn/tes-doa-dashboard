@@ -67,6 +67,25 @@ export class NcrController {
   }
 
   @UseGuards(JwtAuthGuard)
+  @Post('getPDF')
+  async getPDFOccurrence(@Body() showNCRDto: ShowNCRDto) {
+    try {
+      const result = await this.ncrService.getPDFNcr(showNCRDto);
+      return {
+        status: 200,
+        message: 'PDF generated successfully',
+        result,
+      };
+    } catch (error) {
+      return {
+        status: 500,
+        message: 'Error generating PDF',
+        error: error.message,
+      };
+    }
+  }
+
+  @UseGuards(JwtAuthGuard)
   @Post('reply/add')
   async addNcrReply(
     @Body() createNcrReplyDto: CreateNcrReplyDto,

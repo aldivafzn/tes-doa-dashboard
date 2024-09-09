@@ -35,7 +35,8 @@ interface IORData {
   hirac_process: string,
   initial_probability: string,
   initial_severity: string,
-  initial_riskindex: string
+  initial_riskindex: string,
+  attachment: File | null
 }
 
 @Component({
@@ -67,7 +68,8 @@ export class FormIORComponent implements OnInit {
     hirac_process: '',
     initial_probability: '',
     initial_severity: '',
-    initial_riskindex: ''
+    initial_riskindex: '',
+    attachment: null
   };
 
   ngOnInit() {
@@ -107,7 +109,7 @@ export class FormIORComponent implements OnInit {
     this.ior_data.report_date = new Date(this.ior_data.report_date);
     console.log("Sending data:", this.ior_data);
     // Show the generating toast
-    const generatingToastElement = this.toastService.generatingToast('Generating NCR Form');
+    const generatingToastElement = this.toastService.generatingToast('Generating IOR Form');
   
     try {
         const response = await axios.post("http://localhost:4040/ior/add", this.ior_data);

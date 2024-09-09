@@ -208,6 +208,76 @@ model tbl_occurrence {
   tbl_follupoccur     tbl_follupoccur[]
 }
 
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model certification {
+  cert_id          String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  regulation_based reg_based
+  cert_type        cert_type
+  cert_number      String         @db.VarChar(255)
+  cert_first_date  DateTime       @db.Date
+  cert_expire_date DateTime       @db.Date
+  cert_letter_nbr  String         @db.VarChar(255)
+  cert_scope       String         @db.VarChar(255)
+  person_id        String?        @db.Uuid
+  tbl_personnel    tbl_personnel? @relation(fields: [person_id], references: [person_id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model education {
+  edu_id          String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  university      String         @db.VarChar(255)
+  major           String         @db.VarChar(50)
+  graduation_year Int
+  remark          String
+  person_id       String?        @db.Uuid
+  tbl_personnel   tbl_personnel? @relation(fields: [person_id], references: [person_id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model experience_record {
+  experience_id String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  job_title     String         @db.VarChar(255)
+  since_date    DateTime       @db.Date
+  until_date    DateTime       @db.Date
+  assignment    String
+  remark        String
+  person_id     String?        @db.Uuid
+  tbl_personnel tbl_personnel? @relation(fields: [person_id], references: [person_id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model tbl_personnel {
+  person_id         String              @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  person_name       String              @db.VarChar(255)
+  person_no         String              @db.VarChar(50)
+  job_title         String              @db.VarChar(255)
+  department        office_code
+  email_address     String              @db.VarChar(70)
+  birth_date        DateTime            @db.Date
+  employment_date   DateTime            @db.Date
+  job_desc          String
+  design_exp        String
+  certification     certification[]     
+  education         education[]            
+  experience_record experience_record[] 
+  training_record   training_record[]  
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model training_record {
+  training_id        String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  training_title     String            @db.VarChar(255)
+  training_category  training_category
+  start_date         DateTime          @db.Date
+  finish_date        DateTime          @db.Date
+  interval_recurrent Int
+  next_date          DateTime          @db.Date
+  place              String            @db.VarChar(255)
+  result             String
+  remark             String
+  person_id          String?           @db.Uuid
+  tbl_personnel      tbl_personnel?    @relation(fields: [person_id], references: [person_id], onDelete: NoAction, onUpdate: NoAction)
+}
+
 enum audit_type {
   Procedure_Audit @map("Procedure Audit")
   Product_Audit   @map("Product Audit")
@@ -352,4 +422,16 @@ enum level_type {
   Engine
   APU
   Others
+}
+
+enum cert_type {
+  Authorization
+  License
+}
+
+enum training_category {
+  Regulatory_Mandatory     @map("Regulatory Mandatory")
+  Regulatory_Non_Mandatory @map("Regulatory Non-Mandatory")
+  Competence_Requirement   @map("Competence Requirement")
+  Additional
 }

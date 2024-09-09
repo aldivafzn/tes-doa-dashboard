@@ -73,6 +73,7 @@ export class EditFollowonIORComponent implements OnInit{
     this.followonData.id_IOR = this.currentFollowonIorID;
     this.followonData.follup_date = new Date(this.followonData.follup_date)
     console.log("Sending data:", this.followonData);
+    const generatingToastElement = this.toastService.generatingToast('Updating IOR Follow On...');
     try {
       const response = await axios.put('http://localhost:4040/ior/follow-up/update', this.followonData);
       if (response.data.status === 200) {
@@ -88,5 +89,6 @@ export class EditFollowonIORComponent implements OnInit{
       this.toastService.failedToast('There was an error updating IOR Follow On');
       console.error('There was an error updating IOR Follow On', error);
     }
+    document.removeChild(generatingToastElement);
   }
 }

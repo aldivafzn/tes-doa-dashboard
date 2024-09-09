@@ -87,5 +87,10 @@ export class NavbarComponent implements OnInit {
     if (window.location.href != 'http://localhost:4200/editResultNCR') {
       sessionStorage.removeItem('id_ncr_result');
     }
+    if (window.location.href != 'http://localhost:4200/detailPersonnel' && 
+        window.location.href != 'http://localhost:4200/editPersonnel'
+      ) {
+      sessionStorage.removeItem('person_id');
+    }
   }
 }

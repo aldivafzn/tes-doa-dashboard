@@ -18,56 +18,16 @@ interface JwtPayload {
 }
 
 interface Personnel {
-  name: string,
-  personnel_no: string,
-  title: string,
+  person_id: string,
+  person_name: string,
+  person_no: string,
+  job_title: string,
   department: string,
-  email: string,
-  birth_date: string,
-  employ_date: string,
+  email_address: string,
+  birth_date: Date | string,
+  employment_date: Date | string,
   job_desc: string,
   design_exp: string
-}
-
-interface Education {
-  university: string,
-  major: string,
-  grad_year: Date | string,
-  remark: string,
-  person_id: string
-}
-
-interface Training {
-  training_title: string,
-  training_category: string,
-  start_date: Date | string,
-  finish_date: Date | string,
-  interval_recurrent: string,
-  next_date: Date | string,
-  place: string,
-  result: string,
-  remark: string,
-  person_id: string
-}
-
-interface Experience {
-  job_title: string,
-  since_date: Date | string,
-  until_date: Date | string,
-  assignment: string,
-  remark: string,
-  person_id: string
-}
-
-interface Certification {
-  regulation_based: string,
-  cert_type: string,
-  cert_number: string,
-  cert_first_date: Date | string,
-  cert_expire_date: Date | string,
-  cert_letter_nbr: string,
-  cert_scope: string,
-  person_id: string
 }
 
 @Component({
@@ -81,21 +41,19 @@ interface Certification {
 export class EditPersonnelComponent implements OnInit {
   constructor(private toastService: ToastService, private authService: AuthService) { }
   personnelData: Personnel = {
-    name: '',
-    personnel_no: '',
-    title: '',
+    person_id: '',
+    person_name: '',
+    person_no: '',
+    job_title: '',
     department: '',
-    email: '',
+    email_address: '',
     birth_date: '',
-    employ_date: '',
+    employment_date: '',
     job_desc: '',
     design_exp: ''
   }
   role: string | null = null;
-  educations: Education[] = [];
-  trainingRecords: Training[] = [];
-  experienceRecords: Experience[] = [];
-  certifications: Certification[] = [];
+  currentPersonId = '';
 
   ngOnInit() {
     const token = this.authService.getToken();
@@ -107,12 +65,32 @@ export class EditPersonnelComponent implements OnInit {
       this.toastService.failedToast('Unauthorized to access page');
       window.location.href ='/detailPersonnel';
     }
+    const person_id = sessionStorage.getItem('person_id');
+    if (person_id) {
+      this.currentPersonId = person_id;
+    }
     this.fetchPersonnel();
   }
 
   async fetchPersonnel() {
     try {
-
+      const response = await axios.post('http://localhost:4040/personnel/show', 
+        { person_id: this.currentPersonId }
+      );
+      this.personnelData = {
+        person_id: response.data.showProduct.person_id,
+        person_name: response.data.showProduct.person_name,
+        person_no: response.data.showProduct.person_no,
+        job_title: response.data.showProduct.job_title,
+        department: response.data.showProduct.department,
+        email_address: response.data.showProduct.email_address,
+        birth_date: response.data.showProduct.birth_date,
+        employment_date: response.data.showProduct.employment_date,
+        job_desc: response.data.showProduct.job_desc,
+        design_exp: response.data.showProduct.design_exp
+      }
+      this.personnelData.birth_date = this.personnelData.birth_date.toString().slice(0, 10);
+      this.personnelData.employment_date = this.personnelData.employment_date.toString().slice(0, 10);
     } catch (error) {
       this.toastService.failedToast('There was an error fetching personnel data');
       console.error('There was an error fetching personnel data:', error);
@@ -120,76 +98,27 @@ export class EditPersonnelComponent implements OnInit {
   }
 
   async updatePersonnel() {
+    this.personnelData.birth_date = new Date(this.personnelData.birth_date);
+    this.personnelData.employment_date = new Date(this.personnelData.employment_date);
+    const generatingToastElement = this.toastService.generatingToast('Updating personnel...');
     try {
-
+      const response = await axios.put('http://localhost:4040/personnel/update', this.personnelData);
+      if (response.data.status === 200) {
+        this.toastService.successToast('Personnel updated successfully');
+        window.location.href = '/detailPersonnel';
+      } else {
+        this.toastService.failedToast('Failed to update personnel data');
+        console.error('Failed to update personnel data');
+      }
     } catch (error) {
       this.toastService.failedToast('There was an error updating personnel data');
       console.error('There was an error updating personnel data:', error);
     }
+    document.removeChild(generatingToastElement);
   }
 
-  addEduOptions() {
-    this.educations.push({
-      university: '',
-      major: '',
-      grad_year: '',
-      remark: '',
-      person_id: ''
-    });
-  }
-
-  removeEduOptions() {
-    this.educations.pop();
-  }
-
-  addTrainingOptions() {
-    this.trainingRecords.push({
-      training_title: '',
-      training_category: '',
-      start_date: '',
-      finish_date: '',
-      interval_recurrent: '',
-      next_date: '',
-      place: '',
-      result: '',
-      remark: '',
-      person_id: ''
-    });
-  }
-
-  removeTrainingOptions() {
-    this.trainingRecords.pop();
-  }
-
-  addExperienceOptions() {
-    this.experienceRecords.push({
-      job_title: '',
-      since_date: '',
-      until_date: '',
-      assignment: '',
-      remark: '',
-      person_id: ''
-    });
-  }
-
-  removeExperienceOptions() {
-    this.experienceRecords.pop();
-  }
-
-  addCertificationOptions() {
-    this.certifications.push({
-      regulation_based: '',
-      cert_type: '',
-      cert_number: '',
-      cert_first_date: '',
-      cert_expire_date: '',
-      cert_letter_nbr: '',
-      cert_scope: '',
-      person_id: ''
-    });
-  }
-
-  removeCertificationOptions() {
-    this.certifications.pop();
+  convertEnumValue(enumObj: any, value: string): string {
+    // Convert the value if it's a key in the enum object
+    return enumObj[value] || value;
   }
 }

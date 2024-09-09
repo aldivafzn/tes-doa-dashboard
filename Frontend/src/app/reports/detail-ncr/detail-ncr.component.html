@@ -165,7 +165,7 @@
           </div>
         </div>
         <div class="flex flex-center mb-4 space-x-2">
-          <button (click)="navigatePreviewNCR(ncrData.document_id)" class="inline-block bg-[#016299] rounded border-2 border-primary px-3 pb-[6px] pt-2 font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white">
+          <button (click)="navigatePreview()" class="inline-block bg-[#016299] rounded border-2 border-primary px-3 pb-[6px] pt-2 font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white">
             <i class="far fa-file-pdf pr-2" style="font-size: 16px;"></i>Preview
           </button>
           <button (click)="navigateEditNCR()" class="inline-block bg-[#016299] rounded border-2 border-primary px-4 pb-[6px] pt-2 font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white" *ngIf="role === 'Admin' || role === 'IM'">
@@ -195,19 +195,19 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let item of replyNCR" class="border-b border-gray-500">
+                <tr *ngFor="let item of replyNCR; let i = index" class="border-b border-gray-500">
                   <td class="px-4 py-2 border-r border-gray-500">{{ item.identified_by_auditee }}</td>
                   <td class="px-4 py-2 border-r border-gray-500">{{ item.identified_date }}</td>
                   <td class="px-4 py-2 border-r border-gray-500">{{ item.accept_by_auditor }}</td>
                   <td class="px-4 py-2 border-r border-gray-500">{{ item.auditor_accept_date }}</td>
                   <td class="px-4 py-2 border-r border-gray-500 text-center">
-                    <details id="reply_details_{{item.id_ncr_reply}}" class="open">
+                    <details id="reply_details_{{i+1}}" class="open">
                       <summary class="inline-block bg-[#016299] rounded border-2 border-primary px-4 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 cursor-pointer focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white">
                         Details
                       </summary>
 
-                      <div class="bg-white outline outline-1 outline-gray-700 rounded-lg w-fit max-w-[60%] h-fit my-auto mx-auto fixed inset-0 text-gray-600 p-16">
-                        <span (click)="closeReplyDetails(item.id_ncr_reply)"
+                      <div class="bg-white shadow-md outline outline-1 outline-gray-700 rounded-lg w-fit max-w-[60%] h-fit my-auto mx-auto fixed inset-0 text-gray-600 p-16">
+                        <span (click)="closeDetails('reply_details_' + (i+1))"
                             class="bg-gray-400 rounded-full flex items-center justify-center text-3xl font-bold uppercase absolute -right-4 -top-4 w-10 h-10 text-white hover:bg-blue-200 hover:duration-200 cursor-pointer">
                             X
                         </span>
@@ -303,20 +303,20 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let item of resultNCR" class="border-b border-gray-500">
+                <tr *ngFor="let item of resultNCR; let i = index" class="border-b border-gray-500">
                   <td class="px-4 py-2 border-r border-gray-500">{{ item.proposed_close_auditee }}</td>
                   <td class="px-4 py-2 border-r border-gray-500">{{ item.proposed_close_date }}</td>
                   <td class="px-4 py-2 border-r border-gray-500">{{ item.is_close }}</td>
                   <td class="px-4 py-2 border-r border-gray-500">{{ item.effectiveness }}</td>
                   <td class="px-4 py-2 border-r border-gray-500">{{ item.new_ncr_issue_nbr }}</td>
                   <td class="px-4 py-2 border-r border-gray-500 text-center">
-                    <details id="result_details_{{item.id_ncr_result}}" class="open">
+                    <details id="result_details_{{i+1}}" class="open">
                       <summary class="inline-block bg-[#016299] rounded border-2 border-primary px-4 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 cursor-pointer focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white">
                         Details
                       </summary>
 
                       <div class="bg-white outline outline-1 outline-gray-700 rounded-lg w-fit max-w-[60%] h-fit my-auto mx-auto fixed inset-0 text-gray-600 p-16">
-                        <span (click)="closeResultDetails(item.id_ncr_result)"
+                        <span (click)="closeDetails('result_details_' + (i+1))"
                             class="bg-gray-400 rounded-full flex items-center justify-center text-3xl font-bold uppercase absolute -right-4 -top-4 w-10 h-10 text-white hover:bg-blue-200 hover:duration-200 cursor-pointer">
                             X
                         </span>

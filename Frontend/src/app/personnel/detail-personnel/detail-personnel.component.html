@@ -15,21 +15,21 @@
         <div class="grid grid-cols-2 gap-4 mb-4">
           <div class="space-x-2">
             <label class="tracking-wide font-semibold text-gray-700 text-left">Name:</label>
-            <label class="tracking-wide text-gray-600 text-left">{{personnel.name}}</label>
+            <label class="tracking-wide text-gray-600 text-left">{{personnel.person_name}}</label>
           </div>
           <div class="space-x-2">
             <label class="tracking-wide font-semibold text-gray-700 text-left">Personnel Number:</label>
-            <label class="tracking-wide text-gray-600 text-left">{{personnel.personnel_no}}</label>
+            <label class="tracking-wide text-gray-600 text-left">{{personnel.person_no}}</label>
           </div>
           <div class="col-span-2"><label class="tracking-wide font-semibold text-gray-700 text-left">Present Title(s):</label></div>
-          <div class="col-span-2"><p class="tracking-wide text-gray-600 text-left text-wrap">{{personnel.title}}</p></div>
+          <div class="col-span-2"><p class="tracking-wide text-gray-600 text-left text-wrap">{{personnel.job_title}}</p></div>
           <div class="space-x-2">
             <label class="tracking-wide font-semibold text-gray-700 text-left">Department:</label>
             <label class="tracking-wide text-gray-600 text-left">{{personnel.department}}</label>
           </div>
           <div class="space-x-2">
             <label class="tracking-wide font-semibold text-gray-700 text-left">Email Address:</label>
-            <label class="tracking-wide text-gray-600 text-left">{{personnel.email}}</label>
+            <label class="tracking-wide text-gray-600 text-left">{{personnel.email_address}}</label>
           </div>
           <div class="space-x-2">
             <label class="tracking-wide font-semibold text-gray-700 text-left">Date of Birth:</label>
@@ -37,32 +37,271 @@
           </div>
           <div class="space-x-2">
             <label class="tracking-wide font-semibold text-gray-700 text-left">Date of Employment:</label>
-            <label class="tracking-wide text-gray-600 text-left">{{personnel.employ_date}}</label>
+            <label class="tracking-wide text-gray-600 text-left">{{personnel.employment_date}}</label>
           </div>
           <div class="col-span-2"><label class="tracking-wide font-semibold text-gray-700 text-left">Job Description:</label></div>
           <div class="col-span-2"><p class="tracking-wide text-gray-600 text-left text-wrap">{{personnel.job_desc}}</p></div>
-          <div *ngIf="educations.length > -1" class="col-span-2 mt-2">
-            <label class="w-full tracking-wide font-semibold text-gray-700 text-left">Education(s):</label>
-            <ol class="list-decimal list-inside">
-              <li *ngFor="let education of educations" class="tracking-wide text-gray-600 text-left">
-                {{education.major.slice(0,4)}} {{education.university}}, {{education.major.slice(4)}}, {{education.grad_year}}
-              </li>
-            </ol>
-          </div>
         </div>
         <div class="flex flex-center mb-4 space-x-2">
-          <button (click)="navigatePreview(personnel.person_id)" class="inline-block bg-[#016299] rounded border-2 border-primary px-3 pb-[6px] pt-2 font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white">
+          <!-- <button class="inline-block bg-[#016299] rounded border-2 border-primary px-3 pb-[6px] pt-2 font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white">
             <i class="far fa-file-pdf pr-2" style="font-size: 16px;"></i>Preview
-          </button>
+          </button> -->
           <button (click)="navigateEdit()" class="inline-block bg-[#016299] rounded border-2 border-primary px-4 pb-[6px] pt-2 font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white" *ngIf="role === 'Admin' || role === 'IM'">
             <i class="fas fa-edit pr-2" style="font-size: 16px;"></i> Edit
           </button>
         </div>
       </div>
 
+      <!-- Educations -->
+      <div class="mb-8 p-12 rounded-lg shadow-md shadow-black outline outline-1 outline-gray-700">
+        <h2 class="text-2xl font-bold text-gray-900 text-center justify-center mb-8 uppercase">Educations</h2>
+        <div class="mt-5">
+          <details id="add_education" class="open">
+            <summary class="inline-block bg-[#016299] rounded border-2 border-primary px-4 pb-[6px] pt-2 font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 cursor-pointer focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white">
+              <i class="fa-solid fa-plus pr-2"></i>Add Education
+            </summary>
+
+            <div class="bg-white shadow-md outline outline-1 outline-gray-700 rounded-lg w-fit max-w-[60%] h-fit my-auto mx-auto fixed inset-0 text-gray-600 p-16">
+              <span onclick="document.getElementById('add_education').removeAttribute('open')"
+                  class="bg-gray-400 rounded-full flex items-center justify-center text-3xl font-bold uppercase absolute -right-4 -top-4 w-10 h-10 text-white hover:bg-blue-200 hover:duration-200 cursor-pointer">
+                  X
+              </span>
+              <div class="flex flex-wrap w-full">
+                <div class="w-full md:w-1/3 px-3 mb-3">
+                  <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2">
+                    University
+                  </label>
+                  <input [(ngModel)]="newEducation.university" name="university" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none py-3 px-4 leading-tight" id="grid-city" type="text" placeholder="XYZ University" required>
+                </div>
+                <div class="w-full md:w-1/3 px-3 mb-3">
+                  <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2">
+                    Major
+                  </label>
+                  <input [(ngModel)]="newEducation.major" name="major" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none py-3 px-4 leading-tight" id="grid-city" type="text" placeholder="(S1) Computer Engineering" required>
+                </div>
+                <div class="w-full md:w-1/3 px-3 mb-3">
+                  <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2">
+                    Graduation Year
+                  </label>
+                  <input [(ngModel)]="newEducation.graduation_year" name="grad_year" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none py-3 px-4 leading-tight" id="grid-city" type="number" placeholder="2020" required>
+                </div>
+                <div class="w-full px-3 mb-3">
+                  <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2" for="grid-password">
+                    Remark
+                  </label>
+                  <textarea [(ngModel)]="newEducation.remark" name="education_remark" class="appearance-none h-auto block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 leading-tight text-sm" placeholder="Enter your data" required></textarea>
+                </div>
+                <!-- Submit Button -->
+                <div class="w-full px-3 mb-3 text-center">
+                  <button (click)="addEducation()" type="submit" class="w-full md:w-1/3 text-white bg-[#016299] hover:bg-[#015581] focus:ring-4 focus:outline-none font-semibold rounded-lg text-base px-5 py-2.5 text-center">Submit</button>
+                </div>
+              </div>
+            </div>
+          </details>
+        </div>
+        <div class="show-table mt-5 border border-gray-500">
+          <div class="table-responsive overflow-auto "style="max-height: 600px; min-height: 200px;">
+            <table class="table w-full bg-white overflow-y-scroll text-sm" id="data-table">
+              <thead class="bg-blue-100 font-medium">
+                <tr class="border-b border-gray-500">
+                  <th id="university" class="px-4 py-2 border-r border-gray-500">University</th>
+                  <th id="major" class="px-4 py-2 border-r border-gray-500">Major</th>
+                  <th id="graduation_year" class="px-4 py-2 border-r border-gray-500">Graduation Year</th>
+                  <th id="education_remark" class="px-4 py-2 border-r border-gray-500">Remark</th>
+                  <th id="action" class="px-4 py-2">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of educations; let i = index" class="border-b border-gray-500">
+                  <td class="px-4 py-2 border-r border-gray-500">{{ item.university }}</td>
+                  <td class="px-4 py-2 border-r border-gray-500">{{ item.major }}</td>
+                  <td class="px-4 py-2 border-r border-gray-500">{{ item.graduation_year }}</td>
+                  <td class="px-4 py-2 border-r border-gray-500 text-center">
+                    <details id="education_remark_{{i+1}}" class="open">
+                      <summary class="inline-block bg-[#016299] rounded border-2 border-primary px-4 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 cursor-pointer focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white">
+                        Remark
+                      </summary>
+
+                      <div class="bg-white shadow-md outline outline-1 outline-gray-700 rounded-lg w-fit max-w-[60%] h-fit my-auto mx-auto fixed inset-0 text-gray-600 p-16">
+                        <span (click)="closeDetails('education_remark_' + (i+1))"
+                            class="bg-gray-400 rounded-full flex items-center justify-center text-3xl font-bold uppercase absolute -right-4 -top-4 w-10 h-10 text-white hover:bg-blue-200 hover:duration-200 cursor-pointer">
+                            X
+                        </span>
+                        <div class="grid grid-cols-2 gap-4">
+                          <div class="col-span-2 space-y-2">
+                            <label class="block tracking-wide text-gray-700 text-base font-semibold text-left">Remark:</label>
+                            <p class="tracking-wide text-gray-600 text-base text-left">{{item.remark}}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </details>
+                  </td>
+                  <td class="px-4 py-2 text-center">
+                    <details id="edit_education_{{i+1}}" class="open">
+                      <summary class="inline-block bg-[#016299] rounded border-2 border-primary px-4 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 cursor-pointer focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white">
+                        <i class="fas fa-edit" style="font-size: 12px;"></i> Edit
+                      </summary>
+
+                      <div class="bg-white shadow-md outline outline-1 outline-gray-700 rounded-lg w-fit max-w-[60%] h-fit my-auto mx-auto fixed inset-0 text-gray-600 p-16">
+                        <span (click)="closeDetails('edit_education_'+ (i+1))"
+                            class="bg-gray-400 rounded-full flex items-center justify-center text-3xl font-bold uppercase absolute -right-4 -top-4 w-10 h-10 text-white hover:bg-blue-200 hover:duration-200 cursor-pointer">
+                            X
+                        </span>
+                        <div class="flex flex-wrap w-full text-left">
+                          <div class="w-full md:w-1/3 px-3 mb-3">
+                            <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2">
+                              University
+                            </label>
+                            <input [(ngModel)]="item.university" name="university" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none py-3 px-4 leading-tight" id="grid-city" type="text" placeholder="XYZ University" required>
+                          </div>
+                          <div class="w-full md:w-1/3 px-3 mb-3">
+                            <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2">
+                              Major
+                            </label>
+                            <input [(ngModel)]="item.major" name="major" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none py-3 px-4 leading-tight" id="grid-city" type="text" placeholder="(S1) Computer Engineering" required>
+                          </div>
+                          <div class="w-full md:w-1/3 px-3 mb-3">
+                            <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2">
+                              Graduation Year
+                            </label>
+                            <input [(ngModel)]="item.graduation_year" name="grad_year" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none py-3 px-4 leading-tight" id="grid-city" type="number" placeholder="2020" required>
+                          </div>
+                          <div class="w-full px-3 mb-3">
+                            <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2" for="grid-password">
+                              Remark
+                            </label>
+                            <textarea [(ngModel)]="item.remark" name="education_remark" class="appearance-none h-auto block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 leading-tight text-sm" placeholder="Enter your data" required></textarea>
+                          </div>
+                          <!-- Submit Button -->
+                          <div class="w-full px-3 mb-3 text-center">
+                            <button (click)="editEducation(item)" type="submit" class="w-full md:w-1/3 text-white bg-[#016299] hover:bg-[#015581] focus:ring-4 focus:outline-none font-semibold rounded-lg text-base px-5 py-2.5 text-center">Submit</button>
+                          </div>
+                        </div>
+                      </div>
+                    </details>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="flex mt-4 justify-center">
+          <details id="export_excel_result" class="w-fit open">
+            <summary (click)="exportToExcel('export-edu-table')" class="inline-block text-white justify-center bg-[#107c41] hover:bg-[#185c37] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-4 py-2 motion-reduce:transition-none cursor-pointer">
+              <i class="fas fa-file-excel text-white mr-2"></i>Export to Excel
+            </summary>
+  
+            <div class="hidden bg-white outline outline-1 outline-gray-700 rounded-lg w-fit max-w-[80%] h-fit my-auto mx-auto fixed inset-0 text-gray-600 p-16">
+              <div class="show-table mt-5 border border-gray-500">
+                <div class="table-responsive overflow-auto" style="max-height: 600px; min-height: 200px;">
+                  <table class="table w-full bg-white overflow-y-scroll text-sm" id="export-edu-table">
+                    <thead class="bg-blue-100 font-medium">
+                      <tr class="border-b border-gray-500">
+                        <th id="university" class="px-4 py-2 border-r border-gray-500">University</th>
+                        <th id="major" class="px-4 py-2 border-r border-gray-500">Major</th>
+                        <th id="grad_year" class="px-4 py-2 border-r border-gray-500">Graduation Year</th>
+                        <th id="edu_remark" class="px-4 py-2">Remark</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of educations" class="border-b border-gray-500">
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.university }}</td>
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.major }}</td>
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.graduation_year }}</td>
+                        <td class="px-4 py-2">{{ item.remark }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+
       <!-- Training Records-->
       <div class="mb-8 p-12 rounded-lg shadow-md shadow-black outline outline-1 outline-gray-700">
         <h2 class="text-2xl font-bold text-gray-900 text-center justify-center mb-8 uppercase">Training Records</h2>
+        <div class="mt-5">
+          <details id="add_training" class="open">
+            <summary class="inline-block bg-[#016299] rounded border-2 border-primary px-4 pb-[6px] pt-2 font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 cursor-pointer focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white">
+              <i class="fa-solid fa-plus pr-2"></i>Add Training
+            </summary>
+
+            <div class="bg-white shadow-md outline outline-1 outline-gray-700 rounded-lg w-fit max-w-[60%] h-fit my-auto mx-auto fixed inset-0 text-gray-600 p-16">
+              <span onclick="document.getElementById('add_training').removeAttribute('open')"
+                  class="bg-gray-400 rounded-full flex items-center justify-center text-3xl font-bold uppercase absolute -right-4 -top-4 w-10 h-10 text-white hover:bg-blue-200 hover:duration-200 cursor-pointer">
+                  X
+              </span>
+              <div class="flex flex-wrap w-full">
+                <div class="w-full md:w-1/2 px-3 mb-3">
+                  <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2">
+                    Training Title
+                  </label>
+                  <input [(ngModel)]="newTraining.training_title" name="training_title" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none py-3 px-4 leading-tight" id="grid-city" type="text" placeholder="Work Safety Training" required>
+                </div>
+                <div class="w-full md:w-1/2 px-3 mb-3">
+                  <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2">
+                    Training Category
+                  </label>
+                  <select [(ngModel)]="newTraining.training_category" name="training_category" class="block w-full py-3 form-control bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 px-4 leading-tight" required>
+                    <option value="" disabled>Select Category</option>
+                    <option value="Regulatory_Mandatory">Regulatory Mandatory</option>
+                    <option value="Regulatory_Non-Mandatory">Regulatory Non-Mandatory</option>
+                    <option value="Competence_Requirement">Competence Requirement</option>
+                    <option value="Additional">Additional</option>
+                  </select>
+                </div>
+                <div class="w-full md:w-1/3 px-3 mb-3">
+                  <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2">
+                    Start Date
+                  </label>
+                  <input [(ngModel)]="newTraining.start_date" name="start_date" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none py-3 px-4 leading-tight" id="grid-city" type="date" required>
+                </div>
+                <div class="w-full md:w-1/3 px-3 mb-3">
+                  <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2">
+                    Finish Date
+                  </label>
+                  <input [(ngModel)]="newTraining.finish_date" name="finish_date" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none py-3 px-4 leading-tight" id="grid-city" type="date" required>
+                </div>
+                <div class="w-full md:w-1/3 px-3 mb-3">
+                  <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2">
+                    Interval Recurrent
+                  </label>
+                  <input [(ngModel)]="newTraining.interval_recurrent" name="interval_recurrent" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none py-3 px-4 leading-tight" id="grid-city" type="number" placeholder="12" required>
+                </div>
+                <div class="w-full md:w-1/3 px-3 mb-3">
+                  <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2" for="grid-password">
+                    Place
+                  </label>
+                  <input [(ngModel)]="newTraining.place" name="place" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none py-3 px-4 leading-tight" id="grid-city" type="text" placeholder="Jakarta" required>
+                </div>
+                <div class="w-full md:w-1/3 px-3 mb-3">
+                  <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2" for="grid-password">
+                    Result
+                  </label>
+                  <input [(ngModel)]="newTraining.result" name="result" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none py-3 px-4 leading-tight" id="grid-city" type="text" placeholder="Certificate" required>
+                </div>
+                <div class="w-full md:w-1/3 px-3 mb-3">
+                  <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2">
+                    Next Date
+                  </label>
+                  <input [(ngModel)]="newTraining.next_date" name="next_date" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none py-3 px-4 leading-tight" id="grid-city" type="date" required>
+                </div>
+                <div class="w-full px-3 mb-3">
+                  <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2" for="grid-password">
+                    Remark
+                  </label>
+                  <textarea [(ngModel)]="newTraining.remark" name="training_remark" class="appearance-none h-auto block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 leading-tight text-sm" placeholder="Enter your data" required></textarea>
+                </div>
+                <!-- Submit Button -->
+                <div class="w-full px-3 mb-3 text-center">
+                  <button (click)="addTraining()" type="submit" class="w-full md:w-1/3 text-white bg-[#016299] hover:bg-[#015581] focus:ring-4 focus:outline-none font-semibold rounded-lg text-base px-5 py-2.5 text-center">Submit</button>
+                </div>
+              </div>
+            </div>
+          </details>
+        </div>
         <div class="show-table mt-5 border border-gray-500">
           <div class="table-responsive overflow-auto "style="max-height: 600px; min-height: 200px;">
             <table class="table w-full bg-white overflow-y-scroll text-sm" id="data-table">
@@ -76,11 +315,12 @@
                   <th id="result" class="px-4 py-2 border-r border-gray-500">Result</th>
                   <th id="interval_recurrent" class="px-4 py-2 border-r border-gray-500">Interval Recurrent</th>
                   <th id="next_date" class="px-4 py-2 border-r border-gray-500">Next Training</th>
-                  <th id="remark" class="px-4 py-2">Remark</th>
+                  <th id="remark" class="px-4 py-2 border-r border-gray-500">Remark</th>
+                  <th id="action" class="px-4 py-2">Action</th>
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let item of trainingRecords" class="border-b border-gray-500">
+                <tr *ngFor="let item of trainingRecords; let i = index" class="border-b border-gray-500">
                   <td class="px-4 py-2 border-r border-gray-500">{{ item.training_title }}</td>
                   <td class="px-4 py-2 border-r border-gray-500">{{ item.training_category }}</td>
                   <td class="px-4 py-2 border-r border-gray-500">{{ item.start_date }}</td>
@@ -89,35 +329,144 @@
                   <td class="px-4 py-2 border-r border-gray-500">{{ item.result }}</td>
                   <td class="px-4 py-2 border-r border-gray-500">{{ item.interval_recurrent }}</td>
                   <td class="px-4 py-2 border-r border-gray-500">{{ item.next_date }}</td>
-                  <td class="px-4 py-2">{{ item.remark }}</td>
+                  <td class="px-4 py-2 border-r border-gray-500 text-center">
+                    <details id="training_remark_{{i+1}}" class="open">
+                      <summary class="inline-block bg-[#016299] rounded border-2 border-primary px-4 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 cursor-pointer focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white">
+                        Remark
+                      </summary>
+
+                      <div class="bg-white shadow-md outline outline-1 outline-gray-700 rounded-lg w-fit max-w-[60%] h-fit my-auto mx-auto fixed inset-0 text-gray-600 p-16">
+                        <span (click)="closeDetails('training_remark_' + (i+1))"
+                            class="bg-gray-400 rounded-full flex items-center justify-center text-3xl font-bold uppercase absolute -right-4 -top-4 w-10 h-10 text-white hover:bg-blue-200 hover:duration-200 cursor-pointer">
+                            X
+                        </span>
+                        <div class="grid grid-cols-2 gap-4">
+                          <div class="col-span-2 space-y-2">
+                            <label class="block tracking-wide text-gray-700 text-base font-semibold text-left">Remark:</label>
+                            <p class="tracking-wide text-gray-600 text-base text-left">{{item.remark}}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </details>
+                  </td>
+                  <td class="px-4 py-2 text-center">
+                    <details id="edit_training_{{i+1}}" class="open">
+                      <summary class="inline-block bg-[#016299] rounded border-2 border-primary px-4 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 cursor-pointer focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white">
+                        <i class="fas fa-edit" style="font-size: 12px;"></i> Edit
+                      </summary>
+
+                      <div class="bg-white shadow-md outline outline-1 outline-gray-700 rounded-lg w-fit max-w-[60%] h-fit my-auto mx-auto fixed inset-0 text-gray-600 p-16">
+                        <span (click)="closeDetails('edit_training_'+ (i+1))"
+                            class="bg-gray-400 rounded-full flex items-center justify-center text-3xl font-bold uppercase absolute -right-4 -top-4 w-10 h-10 text-white hover:bg-blue-200 hover:duration-200 cursor-pointer">
+                            X
+                        </span>
+                        <div class="flex flex-wrap w-full text-left">
+                          <div class="w-full md:w-1/2 px-3 mb-3">
+                            <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2">
+                              Training Title
+                            </label>
+                            <input [(ngModel)]="item.training_title" name="training_title" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none py-3 px-4 leading-tight" id="grid-city" type="text" placeholder="Work Safety Training" required>
+                          </div>
+                          <div class="w-full md:w-1/2 px-3 mb-3">
+                            <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2">
+                              Training Category
+                            </label>
+                            <select [(ngModel)]="item.training_category" name="training_category" class="block w-full py-3 form-control bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 px-4 leading-tight" required>
+                              <option value="" disabled>Select Category</option>
+                              <option value="Regulatory_Mandatory">Regulatory Mandatory</option>
+                              <option value="Regulatory_Non-Mandatory">Regulatory Non-Mandatory</option>
+                              <option value="Competence_Requirement">Competence Requirement</option>
+                              <option value="Additional">Additional</option>
+                            </select>
+                          </div>
+                          <div class="w-full md:w-1/3 px-3 mb-3">
+                            <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2">
+                              Start Date
+                            </label>
+                            <input [(ngModel)]="item.start_date" name="start_date" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none py-3 px-4 leading-tight" id="grid-city" type="date" required>
+                          </div>
+                          <div class="w-full md:w-1/3 px-3 mb-3">
+                            <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2">
+                              Finish Date
+                            </label>
+                            <input [(ngModel)]="item.finish_date" name="finish_date" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none py-3 px-4 leading-tight" id="grid-city" type="date" required>
+                          </div>
+                          <div class="w-full md:w-1/3 px-3 mb-3">
+                            <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2">
+                              Interval Recurrent
+                            </label>
+                            <input [(ngModel)]="item.interval_recurrent" name="interval_recurrent" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none py-3 px-4 leading-tight" id="grid-city" type="number" placeholder="12" required>
+                          </div>
+                          <div class="w-full md:w-1/3 px-3 mb-3">
+                            <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2" for="grid-password">
+                              Place
+                            </label>
+                            <input [(ngModel)]="item.place" name="place" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none py-3 px-4 leading-tight" id="grid-city" type="text" placeholder="Jakarta" required>
+                          </div>
+                          <div class="w-full md:w-1/3 px-3 mb-3">
+                            <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2" for="grid-password">
+                              Result
+                            </label>
+                            <input [(ngModel)]="item.result" name="result" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none py-3 px-4 leading-tight" id="grid-city" type="text" placeholder="Certificate" required>
+                          </div>
+                          <div class="w-full md:w-1/3 px-3 mb-3">
+                            <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2">
+                              Next Date
+                            </label>
+                            <input [(ngModel)]="item.next_date" name="next_date" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none py-3 px-4 leading-tight" id="grid-city" type="date" required>
+                          </div>
+                          <div class="w-full px-3 mb-3">
+                            <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2" for="grid-password">
+                              Remark
+                            </label>
+                            <textarea [(ngModel)]="item.remark" name="item_remark" class="appearance-none h-auto block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 leading-tight text-sm" placeholder="Enter your data" required></textarea>
+                          </div>
+                          <!-- Submit Button -->
+                          <div class="w-full px-3 mb-3 text-center">
+                            <button (click)="editTraining(item)" type="submit" class="w-full md:w-1/3 text-white bg-[#016299] hover:bg-[#015581] focus:ring-4 focus:outline-none font-semibold rounded-lg text-base px-5 py-2.5 text-center">Submit</button>
+                          </div>
+                        </div>
+                      </div>
+                    </details>
+                  </td>
                 </tr>
               </tbody>
             </table>
           </div>
         </div>
-        <!-- <div class="flex mt-4 justify-center">
+        <div class="flex mt-4 justify-center">
           <details id="export_excel_result" class="w-fit open">
-            <summary (click)="exportToExcel('export-edu-table')" class="inline-block text-white justify-center bg-[#107c41] hover:bg-[#185c37] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-4 py-2 motion-reduce:transition-none cursor-pointer">
+            <summary (click)="exportToExcel('export-train-table')" class="inline-block text-white justify-center bg-[#107c41] hover:bg-[#185c37] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-4 py-2 motion-reduce:transition-none cursor-pointer">
               <i class="fas fa-file-excel text-white mr-2"></i>Export to Excel
             </summary>
   
             <div class="hidden bg-white outline outline-1 outline-gray-700 rounded-lg w-fit max-w-[80%] h-fit my-auto mx-auto fixed inset-0 text-gray-600 p-16">
               <div class="show-table mt-5 border border-gray-500">
                 <div class="table-responsive overflow-auto" style="max-height: 600px; min-height: 200px;">
-                  <table class="table w-full bg-white overflow-y-scroll text-sm" id="export-edu-table">
+                  <table class="table w-full bg-white overflow-y-scroll text-sm" id="export-train-table">
                     <thead class="bg-blue-100 font-medium">
                       <tr class="border-b border-gray-500">
-                        <th id="university" class="px-4 py-2 border-r border-gray-500">University</th>
-                        <th id="major" class="px-4 py-2 border-r border-gray-500">Major</th>
-                        <th id="grad_year" class="px-4 py-2 border-r border-gray-500">Graduation Year</th>
-                        <th id="edu_remark" class="px-4 py-2">Remark</th>
+                        <th id="training_title" class="px-4 py-2 border-r border-gray-500">Type of Training</th>
+                        <th id="training_category" class="px-4 py-2 border-r border-gray-500">Category</th>
+                        <th id="start_date" class="px-4 py-2 border-r border-gray-500">Start</th>
+                        <th id="finish_date" class="px-4 py-2 border-r border-gray-500">Finish</th>
+                        <th id="place" class="px-4 py-2 border-r border-gray-500">Place</th>
+                        <th id="result" class="px-4 py-2 border-r border-gray-500">Result</th>
+                        <th id="interval_recurrent" class="px-4 py-2 border-r border-gray-500">Interval Recurrent</th>
+                        <th id="next_date" class="px-4 py-2 border-r border-gray-500">Next Training</th>
+                        <th id="remark" class="px-4 py-2">Remark</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr *ngFor="let item of educations" class="border-b border-gray-500">
-                        <td class="px-4 py-2 border-r border-gray-500">{{ item.university }}</td>
-                        <td class="px-4 py-2 border-r border-gray-500">{{ item.major }}</td>
-                        <td class="px-4 py-2 border-r border-gray-500">{{ item.grad_year }}</td>
+                      <tr *ngFor="let item of trainingRecords; let i = index" class="border-b border-gray-500">
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.training_title }}</td>
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.training_category }}</td>
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.start_date }}</td>
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.finish_date }}</td>
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.place }}</td>
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.result }}</td>
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.interval_recurrent }}</td>
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.next_date }}</td>
                         <td class="px-4 py-2">{{ item.remark }}</td>
                       </tr>
                     </tbody>
@@ -126,12 +475,62 @@
               </div>
             </div>
           </details>
-        </div> -->
+        </div>
       </div>
 
       <!-- Experience Records-->
       <div class="mb-8 p-12 rounded-lg shadow-md shadow-black outline outline-1 outline-gray-700">
         <h2 class="text-2xl font-bold text-gray-900 text-center justify-center mb-8 uppercase">Experience Records</h2>
+        <div class="mt-5">
+          <details id="add_experience" class="open">
+            <summary class="inline-block bg-[#016299] rounded border-2 border-primary px-4 pb-[6px] pt-2 font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 cursor-pointer focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white">
+              <i class="fa-solid fa-plus pr-2"></i>Add Experience
+            </summary>
+
+            <div class="bg-white shadow-md outline outline-1 outline-gray-700 rounded-lg w-fit max-w-[60%] h-fit my-auto mx-auto fixed inset-0 text-gray-600 p-16">
+              <span onclick="document.getElementById('add_experience').removeAttribute('open')"
+                  class="bg-gray-400 rounded-full flex items-center justify-center text-3xl font-bold uppercase absolute -right-4 -top-4 w-10 h-10 text-white hover:bg-blue-200 hover:duration-200 cursor-pointer">
+                  X
+              </span>
+              <div class="flex flex-wrap w-full">
+                <div class="w-full md:w-1/4 px-3 mb-3">
+                  <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2">
+                    Job Title
+                  </label>
+                  <input [(ngModel)]="newExperience.job_title" name="exp_job_title" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none py-3 px-4 leading-tight" id="grid-city" type="text" placeholder="Manager of Finance" required>
+                </div>
+                <div class="w-full md:w-1/4 px-3 mb-3">
+                  <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2">
+                    Since Date
+                  </label>
+                  <input [(ngModel)]="newExperience.since_date" name="since_date" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none py-3 px-4 leading-tight" id="grid-city" type="date" required>
+                </div>
+                <div class="w-full md:w-1/4 px-3 mb-3">
+                  <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2">
+                    Until Date
+                  </label>
+                  <input [(ngModel)]="newExperience.until_date" name="until_date" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none py-3 px-4 leading-tight" id="grid-city" type="date" required>
+                </div>
+                <div class="w-full md:w-1/4 px-3 mb-3">
+                  <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2">
+                    Assignment Location
+                  </label>
+                  <input [(ngModel)]="newExperience.assignment" name="assignment" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none py-3 px-4 leading-tight" id="grid-city" type="text" placeholder="JKTTEJ-1" required>
+                </div>
+                <div class="w-full px-3 mb-3">
+                  <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2" for="grid-password">
+                    Remark
+                  </label>
+                  <textarea [(ngModel)]="newExperience.remark" name="experience_remark" class="appearance-none h-auto block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 leading-tight text-sm" placeholder="Enter your data" required></textarea>
+                </div>
+                <!-- Submit Button -->
+                <div class="w-full px-3 mb-3 text-center">
+                  <button (click)="addExperience()" type="submit" class="w-full md:w-1/3 text-white bg-[#016299] hover:bg-[#015581] focus:ring-4 focus:outline-none font-semibold rounded-lg text-base px-5 py-2.5 text-center">Submit</button>
+                </div>
+              </div>
+            </div>
+          </details>
+        </div>
         <div class="show-table mt-5 border border-gray-500">
           <div class="table-responsive overflow-auto "style="max-height: 600px; min-height: 200px;">
             <table class="table w-full bg-white overflow-y-scroll text-sm" id="data-table">
@@ -141,23 +540,93 @@
                   <th id="since_date" class="px-4 py-2 border-r border-gray-500">Since</th>
                   <th id="until_date" class="px-4 py-2 border-r border-gray-500">Until</th>
                   <th id="assignment" class="px-4 py-2 border-r border-gray-500">Assignment Address</th>
-                  <th id="remark" class="px-4 py-2">Remark</th>
+                  <th id="remark" class="px-4 py-2 border-r border-gray-500">Remark</th>
+                  <th id="action" class="px-4 py-2">Action</th>
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let item of experienceRecords" class="border-b border-gray-500">
+                <tr *ngFor="let item of experienceRecords; let i = index" class="border-b border-gray-500">
                   <td class="px-4 py-2 border-r border-gray-500">{{ item.job_title }}</td>
                   <td class="px-4 py-2 border-r border-gray-500">{{ item.since_date }}</td>
                   <td class="px-4 py-2 border-r border-gray-500">{{ item.until_date }}</td>
                   <td class="px-4 py-2 border-r border-gray-500">{{ item.assignment }}</td>
-                  <td class="px-4 py-2">{{ item.remark }}</td>
+                  <td class="px-4 py-2 border-r border-gray-500 text-center">
+                    <details id="experience_remark_{{i+1}}" class="open">
+                      <summary class="inline-block bg-[#016299] rounded border-2 border-primary px-4 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 cursor-pointer focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white">
+                        Remark
+                      </summary>
+
+                      <div class="bg-white shadow-md outline outline-1 outline-gray-700 rounded-lg w-fit max-w-[60%] h-fit my-auto mx-auto fixed inset-0 text-gray-600 p-16">
+                        <span (click)="closeDetails('experience_remark_' + (i+1))"
+                            class="bg-gray-400 rounded-full flex items-center justify-center text-3xl font-bold uppercase absolute -right-4 -top-4 w-10 h-10 text-white hover:bg-blue-200 hover:duration-200 cursor-pointer">
+                            X
+                        </span>
+                        <div class="grid grid-cols-2 gap-4">
+                          <div class="col-span-2 space-y-2">
+                            <label class="block tracking-wide text-gray-700 text-base font-semibold text-left">Remark:</label>
+                            <p class="tracking-wide text-gray-600 text-base text-left">{{item.remark}}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </details>
+                  </td>
+                  <td class="px-4 py-2 text-center">
+                    <details id="edit_experience_{{i+1}}" class="open">
+                      <summary class="inline-block bg-[#016299] rounded border-2 border-primary px-4 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 cursor-pointer focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white">
+                        <i class="fas fa-edit" style="font-size: 12px;"></i> Edit
+                      </summary>
+
+                      <div class="bg-white shadow-md outline outline-1 outline-gray-700 rounded-lg w-fit max-w-[60%] h-fit my-auto mx-auto fixed inset-0 text-gray-600 p-16">
+                        <span (click)="closeDetails('edit_experience_'+ (i+1))"
+                            class="bg-gray-400 rounded-full flex items-center justify-center text-3xl font-bold uppercase absolute -right-4 -top-4 w-10 h-10 text-white hover:bg-blue-200 hover:duration-200 cursor-pointer">
+                            X
+                        </span>
+                        <div class="flex flex-wrap w-full text-left">
+                          <div class="w-full md:w-1/4 px-3 mb-3">
+                            <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2">
+                              Job Title
+                            </label>
+                            <input [(ngModel)]="item.job_title" name="exp_job_title" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none py-3 px-4 leading-tight" id="grid-city" type="text" placeholder="Manager of Finance" required>
+                          </div>
+                          <div class="w-full md:w-1/4 px-3 mb-3">
+                            <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2">
+                              Since Date
+                            </label>
+                            <input [(ngModel)]="item.since_date" name="since_date" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none py-3 px-4 leading-tight" id="grid-city" type="date" required>
+                          </div>
+                          <div class="w-full md:w-1/4 px-3 mb-3">
+                            <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2">
+                              Until Date
+                            </label>
+                            <input [(ngModel)]="item.until_date" name="until_date" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none py-3 px-4 leading-tight" id="grid-city" type="date" required>
+                          </div>
+                          <div class="w-full md:w-1/4 px-3 mb-3">
+                            <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2">
+                              Assignment Location
+                            </label>
+                            <input [(ngModel)]="item.assignment" name="assignment" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none py-3 px-4 leading-tight" id="grid-city" type="text" placeholder="JKTTEJ-1" required>
+                          </div>
+                          <div class="w-full px-3 mb-3">
+                            <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2" for="grid-password">
+                              Remark
+                            </label>
+                            <textarea [(ngModel)]="item.remark" name="experience_remark" class="appearance-none h-auto block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 leading-tight text-sm" placeholder="Enter your data" required></textarea>
+                          </div>
+                          <!-- Submit Button -->
+                          <div class="w-full px-3 mb-3 text-center">
+                            <button (click)="editExperience(item)" type="submit" class="w-full md:w-1/3 text-white bg-[#016299] hover:bg-[#015581] focus:ring-4 focus:outline-none font-semibold rounded-lg text-base px-5 py-2.5 text-center">Submit</button>
+                          </div>
+                        </div>
+                      </div>
+                    </details>
+                  </td>
                 </tr>
               </tbody>
             </table>
           </div>
         </div>
-        <!-- <div class="flex mt-4 justify-center">
-          <details id="export_excel_result" class="w-fit open">
+        <div class="flex mt-4 justify-center">
+          <details id="export_exp_table" class="w-fit open">
             <summary (click)="exportToExcel('export-edu-table')" class="inline-block text-white justify-center bg-[#107c41] hover:bg-[#185c37] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-4 py-2 motion-reduce:transition-none cursor-pointer">
               <i class="fas fa-file-excel text-white mr-2"></i>Export to Excel
             </summary>
@@ -165,20 +634,22 @@
             <div class="hidden bg-white outline outline-1 outline-gray-700 rounded-lg w-fit max-w-[80%] h-fit my-auto mx-auto fixed inset-0 text-gray-600 p-16">
               <div class="show-table mt-5 border border-gray-500">
                 <div class="table-responsive overflow-auto" style="max-height: 600px; min-height: 200px;">
-                  <table class="table w-full bg-white overflow-y-scroll text-sm" id="export-edu-table">
+                  <table class="table w-full bg-white overflow-y-scroll text-sm" id="export-exp-table">
                     <thead class="bg-blue-100 font-medium">
                       <tr class="border-b border-gray-500">
-                        <th id="university" class="px-4 py-2 border-r border-gray-500">University</th>
-                        <th id="major" class="px-4 py-2 border-r border-gray-500">Major</th>
-                        <th id="grad_year" class="px-4 py-2 border-r border-gray-500">Graduation Year</th>
-                        <th id="edu_remark" class="px-4 py-2">Remark</th>
+                        <th id="job_title" class="px-4 py-2 border-r border-gray-500">Position</th>
+                        <th id="since_date" class="px-4 py-2 border-r border-gray-500">Since</th>
+                        <th id="until_date" class="px-4 py-2 border-r border-gray-500">Until</th>
+                        <th id="assignment" class="px-4 py-2 border-r border-gray-500">Assignment Address</th>
+                        <th id="remark" class="px-4 py-2">Remark</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr *ngFor="let item of educations" class="border-b border-gray-500">
-                        <td class="px-4 py-2 border-r border-gray-500">{{ item.university }}</td>
-                        <td class="px-4 py-2 border-r border-gray-500">{{ item.major }}</td>
-                        <td class="px-4 py-2 border-r border-gray-500">{{ item.grad_year }}</td>
+                      <tr *ngFor="let item of experienceRecords; let i = index" class="border-b border-gray-500">
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.job_title }}</td>
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.since_date }}</td>
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.until_date }}</td>
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.assignment }}</td>
                         <td class="px-4 py-2">{{ item.remark }}</td>
                       </tr>
                     </tbody>
@@ -187,12 +658,82 @@
               </div>
             </div>
           </details>
-        </div> -->
+        </div>
       </div>
 
       <!-- Certifications -->
       <div class="mb-8 p-12 rounded-lg shadow-md shadow-black outline outline-1 outline-gray-700">
         <h2 class="text-2xl font-bold text-gray-900 text-center justify-center mb-8 uppercase">Certifications</h2>
+        <div class="mt-5">
+          <details id="add_certification" class="open">
+            <summary class="inline-block bg-[#016299] rounded border-2 border-primary px-4 pb-[6px] pt-2 font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 cursor-pointer focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white">
+              <i class="fa-solid fa-plus pr-2"></i>Add Certification
+            </summary>
+
+            <div class="bg-white shadow-md outline outline-1 outline-gray-700 rounded-lg w-fit max-w-[60%] h-fit my-auto mx-auto fixed inset-0 text-gray-600 p-16">
+              <span onclick="document.getElementById('add_certification').removeAttribute('open')"
+                  class="bg-gray-400 rounded-full flex items-center justify-center text-3xl font-bold uppercase absolute -right-4 -top-4 w-10 h-10 text-white hover:bg-blue-200 hover:duration-200 cursor-pointer">
+                  X
+              </span>
+              <div class="flex flex-wrap w-full">
+                <div class="w-full md:w-1/3 px-3 mb-3">
+                  <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2">
+                    Based on Regulation
+                  </label>
+                  <select [(ngModel)]="newCert.regulation_based" name="regulation_based" class="block w-full py-3 form-control bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 px-4 leading-tight" required>
+                    <option value="" disabled>Select Regulation</option>
+                    <option value="DGCA">DGCA</option>
+                    <option value="EASA">EASA</option>
+                  </select>
+                </div>
+                <div class="w-full md:w-1/3 px-3 mb-3">
+                  <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2">
+                    Certification Type
+                  </label>
+                  <select [(ngModel)]="newCert.cert_type" name="cert_type" class="block w-full py-3 form-control bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 px-4 leading-tight" required>
+                    <option value="" disabled>Select Regulation</option>
+                    <option value="Authorization">Authorization</option>
+                    <option value="License">License</option>
+                  </select>
+                </div>
+                <div class="w-full md:w-1/3 px-3 mb-3">
+                  <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2">
+                    Certification Number
+                  </label>
+                  <input [(ngModel)]="newCert.cert_number" name="cert_number" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none py-3 px-4 leading-tight" id="grid-city" type="text" placeholder="IMI-001" required>
+                </div>
+                <div class="w-full md:w-1/3 px-3 mb-3">
+                  <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2">
+                    First Issue Date
+                  </label>
+                  <input [(ngModel)]="newCert.cert_first_date" name="cert_first_date" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none py-3 px-4 leading-tight" id="grid-city" type="date" required>
+                </div>
+                <div class="w-full md:w-1/3 px-3 mb-3">
+                  <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2">
+                    Date of Expire
+                  </label>
+                  <input [(ngModel)]="newCert.cert_expire_date" name="cert_expire_date" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none py-3 px-4 leading-tight" id="grid-city" type="date" required>
+                </div>
+                <div class="w-full md:w-1/3 px-3 mb-3">
+                  <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2">
+                    Certification Letter Number
+                  </label>
+                  <input [(ngModel)]="newCert.cert_letter_nbr" name="cert_letter_nbr" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none py-3 px-4 leading-tight" id="grid-city" type="text" placeholder="ATZ/001/2024" required>
+                </div>
+                <div class="w-full px-3 mb-3">
+                  <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2" for="grid-password">
+                    Scope
+                  </label>
+                  <textarea [(ngModel)]="newCert.cert_scope" name="cert_scope" class="appearance-none h-auto block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 leading-tight text-sm" placeholder="Enter your data" required></textarea>
+                </div>
+                <!-- Submit Button -->
+                <div class="w-full px-3 mb-3 text-center">
+                  <button (click)="addCert()" type="submit" class="w-full md:w-1/3 text-white bg-[#016299] hover:bg-[#015581] focus:ring-4 focus:outline-none font-semibold rounded-lg text-base px-5 py-2.5 text-center">Submit</button>
+                </div>
+              </div>
+            </div>
+          </details>
+        </div>
         <div class="show-table mt-5 border border-gray-500">
           <div class="table-responsive overflow-auto "style="max-height: 600px; min-height: 200px;">
             <table class="table w-full bg-white overflow-y-scroll text-sm" id="data-table">
@@ -204,24 +745,114 @@
                   <th id="cert_first_date" class="px-4 py-2 border-r border-gray-500">First Issue</th>
                   <th id="cert_expire_date" class="px-4 py-2 border-r border-gray-500">Date of Expire</th>
                   <th id="cert_letter_nbr" class="px-4 py-2 border-r border-gray-500">Certification Letter Number</th>
-                  <th id="cert_scope" class="px-4 py-2">Scope</th>
+                  <th id="cert_scope" class="px-4 py-2 border-r border-gray-500">Scope</th>
+                  <th id="action" class="px-4 py-2">Action</th>
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let item of certifications" class="border-b border-gray-500">
+                <tr *ngFor="let item of certifications; let i = index" class="border-b border-gray-500">
                   <td class="px-4 py-2 border-r border-gray-500">{{ item.regulation_based }}</td>
                   <td class="px-4 py-2 border-r border-gray-500">{{ item.cert_type }}</td>
                   <td class="px-4 py-2 border-r border-gray-500">{{ item.cert_number }}</td>
                   <td class="px-4 py-2 border-r border-gray-500">{{ item.cert_first_date }}</td>
                   <td class="px-4 py-2 border-r border-gray-500">{{ item.cert_expire_date }}</td>
                   <td class="px-4 py-2 border-r border-gray-500">{{ item.cert_letter_nbr }}</td>
-                  <td class="px-4 py-2">{{ item.cert_scope }}</td>
+                  <td class="px-4 py-2 border-r border-gray-500 text-center">
+                    <details id="cert_scope_{{i+1}}" class="open">
+                      <summary class="inline-block bg-[#016299] rounded border-2 border-primary px-4 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 cursor-pointer focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white">
+                        Scope
+                      </summary>
+
+                      <div class="bg-white shadow-md outline outline-1 outline-gray-700 rounded-lg w-fit max-w-[60%] h-fit my-auto mx-auto fixed inset-0 text-gray-600 p-16">
+                        <span (click)="closeDetails('cert_scope_' + (i+1))"
+                            class="bg-gray-400 rounded-full flex items-center justify-center text-3xl font-bold uppercase absolute -right-4 -top-4 w-10 h-10 text-white hover:bg-blue-200 hover:duration-200 cursor-pointer">
+                            X
+                        </span>
+                        <div class="grid grid-cols-2 gap-4">
+                          <div class="col-span-2 space-y-2">
+                            <label class="block tracking-wide text-gray-700 text-base font-semibold text-left">Scope:</label>
+                            <p class="tracking-wide text-gray-600 text-base text-left">{{item.cert_scope}}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </details>
+                  </td>
+                  <td class="px-4 py-2 text-center">
+                    <details id="edit_cert_{{i+1}}" class="open">
+                      <summary class="inline-block bg-[#016299] rounded border-2 border-primary px-4 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-accent-300 hover:bg-primary-50/50 hover:text-primary-accent-300 cursor-pointer focus:border-primary-600 focus:bg-primary-50/50 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 motion-reduce:transition-none dark:text-primary-500 dark:hover:bg-blue-950 dark:focus:bg-blue-950 text-white">
+                        <i class="fas fa-edit" style="font-size: 12px;"></i> Edit
+                      </summary>
+
+                      <div class="bg-white shadow-md outline outline-1 outline-gray-700 rounded-lg w-fit max-w-[60%] h-fit my-auto mx-auto fixed inset-0 text-gray-600 p-16">
+                        <span (click)="closeDetails('edit_cert_'+ (i+1))"
+                            class="bg-gray-400 rounded-full flex items-center justify-center text-3xl font-bold uppercase absolute -right-4 -top-4 w-10 h-10 text-white hover:bg-blue-200 hover:duration-200 cursor-pointer">
+                            X
+                        </span>
+                        <div class="flex flex-wrap w-full text-left">
+                          <div class="w-full md:w-1/3 px-3 mb-3">
+                            <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2">
+                              Based on Regulation
+                            </label>
+                            <select [(ngModel)]="item.regulation_based" name="regulation_based" class="block w-full py-3 form-control bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 px-4 leading-tight" required>
+                              <option value="" disabled>Select Regulation</option>
+                              <option value="DGCA">DGCA</option>
+                              <option value="EASA">EASA</option>
+                            </select>
+                          </div>
+                          <div class="w-full md:w-1/3 px-3 mb-3">
+                            <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2">
+                              Certification Type
+                            </label>
+                            <select [(ngModel)]="item.cert_type" name="cert_type" class="block w-full py-3 form-control bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 px-4 leading-tight" required>
+                              <option value="" disabled>Select Regulation</option>
+                              <option value="Authorization">Authorization</option>
+                              <option value="License">License</option>
+                            </select>
+                          </div>
+                          <div class="w-full md:w-1/3 px-3 mb-3">
+                            <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2">
+                              Certification Number
+                            </label>
+                            <input [(ngModel)]="item.cert_number" name="cert_number" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none py-3 px-4 leading-tight" id="grid-city" type="text" placeholder="IMI-001" required>
+                          </div>
+                          <div class="w-full md:w-1/3 px-3 mb-3">
+                            <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2">
+                              First Issue Date
+                            </label>
+                            <input [(ngModel)]="item.cert_first_date" name="cert_first_date" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none py-3 px-4 leading-tight" id="grid-city" type="date" required>
+                          </div>
+                          <div class="w-full md:w-1/3 px-3 mb-3">
+                            <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2">
+                              Date of Expire
+                            </label>
+                            <input [(ngModel)]="item.cert_expire_date" name="cert_expire_date" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none py-3 px-4 leading-tight" id="grid-city" type="date" required>
+                          </div>
+                          <div class="w-full md:w-1/3 px-3 mb-3">
+                            <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2">
+                              Certification Letter Number
+                            </label>
+                            <input [(ngModel)]="item.cert_letter_nbr" name="cert_letter_nbr" class="block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none py-3 px-4 leading-tight" id="grid-city" type="text" placeholder="ATZ/001/2024" required>
+                          </div>
+                          <div class="w-full px-3 mb-3">
+                            <label class="block tracking-wide text-gray-700 text-xs font-semibold mb-2" for="grid-password">
+                              Scope
+                            </label>
+                            <textarea [(ngModel)]="item.cert_scope" name="cert_scope" class="appearance-none h-auto block w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 py-3 px-4 leading-tight text-sm" placeholder="Enter your data" required></textarea>
+                          </div>
+                          <!-- Submit Button -->
+                          <div class="w-full px-3 mb-3 text-center">
+                            <button (click)="editCert(item)" type="submit" class="w-full md:w-1/3 text-white bg-[#016299] hover:bg-[#015581] focus:ring-4 focus:outline-none font-semibold rounded-lg text-base px-5 py-2.5 text-center">Submit</button>
+                          </div>
+                        </div>
+                      </div>
+                    </details>
+                  </td>
                 </tr>
               </tbody>
             </table>
           </div>
         </div>
-        <!-- <div class="flex mt-4 justify-center">
+        <div class="flex mt-4 justify-center">
           <details id="export_excel_result" class="w-fit open">
             <summary (click)="exportToExcel('export-edu-table')" class="inline-block text-white justify-center bg-[#107c41] hover:bg-[#185c37] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-4 py-2 motion-reduce:transition-none cursor-pointer">
               <i class="fas fa-file-excel text-white mr-2"></i>Export to Excel
@@ -233,18 +864,24 @@
                   <table class="table w-full bg-white overflow-y-scroll text-sm" id="export-edu-table">
                     <thead class="bg-blue-100 font-medium">
                       <tr class="border-b border-gray-500">
-                        <th id="university" class="px-4 py-2 border-r border-gray-500">University</th>
-                        <th id="major" class="px-4 py-2 border-r border-gray-500">Major</th>
-                        <th id="grad_year" class="px-4 py-2 border-r border-gray-500">Graduation Year</th>
-                        <th id="edu_remark" class="px-4 py-2">Remark</th>
+                        <th id="regulation_based" class="px-4 py-2 border-r border-gray-500">Based on Regulation</th>
+                        <th id="cert_type" class="px-4 py-2 border-r border-gray-500">Certification Type</th>
+                        <th id="cert_number" class="px-4 py-2 border-r border-gray-500">Certification No.</th>
+                        <th id="cert_first_date" class="px-4 py-2 border-r border-gray-500">First Issue</th>
+                        <th id="cert_expire_date" class="px-4 py-2 border-r border-gray-500">Date of Expire</th>
+                        <th id="cert_letter_nbr" class="px-4 py-2 border-r border-gray-500">Certification Letter Number</th>
+                        <th id="cert_scope" class="px-4 py-2 border-r border-gray-500">Scope</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr *ngFor="let item of educations" class="border-b border-gray-500">
-                        <td class="px-4 py-2 border-r border-gray-500">{{ item.university }}</td>
-                        <td class="px-4 py-2 border-r border-gray-500">{{ item.major }}</td>
-                        <td class="px-4 py-2 border-r border-gray-500">{{ item.grad_year }}</td>
-                        <td class="px-4 py-2">{{ item.remark }}</td>
+                      <tr *ngFor="let item of certifications; let i = index" class="border-b border-gray-500">
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.regulation_based }}</td>
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.cert_type }}</td>
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.cert_number }}</td>
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.cert_first_date }}</td>
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.cert_expire_date }}</td>
+                        <td class="px-4 py-2 border-r border-gray-500">{{ item.cert_letter_nbr }}</td>
+                        <td class="px-4 py-2">{{ item.cert_scope }}</td>
                       </tr>
                     </tbody>
                   </table>
@@ -252,7 +889,7 @@
               </div>
             </div>
           </details>
-        </div> -->
+        </div>
       </div>
     </div>
   </div>

@@ -12,10 +12,18 @@ import { IorService } from './services/ior.service';
 import { NcrController } from './controllers/ncr.controller';
 import { NcrService } from './services/ncr.service';
 import { GoogleApiService } from './services/googleapi.service';
+import { PersonnelService } from './services/personnel.service';
+import { PersonnelController } from './controllers/personnel.controller';
 
 @Module({
   imports: [ConfigModule.forRoot({ isGlobal: true }), PrismaModule, AuthModule],
-  controllers: [AppController, AccountController, IorController, NcrController],
+  controllers: [
+    AppController,
+    AccountController,
+    IorController,
+    NcrController,
+    PersonnelController,
+  ],
   providers: [
     AppService,
     AccountService,
@@ -23,6 +31,7 @@ import { GoogleApiService } from './services/googleapi.service';
     IorService,
     NcrService,
     GoogleApiService,
+    PersonnelService,
   ],
 })
 export class AppModule {}
