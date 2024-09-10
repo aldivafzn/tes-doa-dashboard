@@ -133,7 +133,7 @@ export class DetailIORComponent implements OnInit{
 
   async fetchIOR() {
     try {
-      const response = await axios.post('http://localhost:4040/ior/show',
+      const response = await axios.post('http://34.87.6.132:4040/ior/show',
         { id_IOR: this.currentIORID }
       );
       this.iorData = response.data.result;
@@ -151,7 +151,7 @@ export class DetailIORComponent implements OnInit{
 
   async fetchFollowonIOR() {
     try {
-      const response = await axios.get('http://localhost:4040/ior/follow-up/show-all');
+      const response = await axios.get('http://34.87.6.132:4040/ior/follow-up/show-all');
       if (response.data.status === 200) {
         for (let i = 0; i < response.data.result.length; i++) {
           if (response.data.result[i].id_ior === this.currentIORID) {
@@ -189,7 +189,7 @@ export class DetailIORComponent implements OnInit{
   async navigatePreview() {
     const generatePDFToastElement = this.toastService.generatingToast('Generating PDF');
     try {
-      const response = await axios.post('http://localhost:4040/ior/getPDF', 
+      const response = await axios.post('http://34.87.6.132:4040/ior/getPDF', 
         { id_IOR: this.currentIORID }
       );
       if (response.data.status === 200) {

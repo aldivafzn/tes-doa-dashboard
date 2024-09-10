@@ -99,7 +99,7 @@ export class FormNCRComponent implements OnInit {
 
   async getAccountInfo() {
     try {
-      const response = await axios.post('http://localhost:4040/account/show', { accountid: this.currentAccountID });
+      const response = await axios.post('http://34.87.6.132:4040/account/show', { accountid: this.currentAccountID });
       if (response.data.status === 200 && response.data.account) {
         this.account = response.data.account;
       } else {
@@ -131,7 +131,7 @@ export class FormNCRComponent implements OnInit {
     const generatingToastElement = this.toastService.generatingToast('Generating NCR Form');
   
     try {
-      const response = await axios.post('http://localhost:4040/ncr/add', this.ncrData);
+      const response = await axios.post('http://34.87.6.132:4040/ncr/add', this.ncrData);
   
       // Remove the generating toast
       document.body.removeChild(generatingToastElement);

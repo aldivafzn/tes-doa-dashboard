@@ -116,7 +116,7 @@ export class AccountComponent implements OnInit {
 
   async getAccountInfo() {
     try {
-      const response = await axios.post('http://localhost:4040/account/show', { accountid: this.accountid });
+      const response = await axios.post('http://34.87.6.132:4040/account/show', { accountid: this.accountid });
       if (response.data.status === 200 && response.data.account) {
         this.account = response.data.account;
         this.account.unit = this.convertEnumValue(unit, this.account.unit);
@@ -131,7 +131,7 @@ export class AccountComponent implements OnInit {
 
   async fetchAllAccounts() {
     try {
-        const response = await axios.get('http://localhost:4040/account/show-all');
+        const response = await axios.get('http://34.87.6.132:4040/account/show-all');
         console.log("Fetched accounts:", response.data.accounts);
         this.allAccounts = response.data.accounts;
         console.log(this.allAccounts);
@@ -143,7 +143,7 @@ export class AccountComponent implements OnInit {
 
   async changePassword() {
     try {
-        const response = await axios.post('http://localhost:4040/account/update-password', {
+        const response = await axios.post('http://34.87.6.132:4040/account/update-password', {
             email: this.changePass.email,
             currentPass: this.changePass.currentPass,
             newPass: this.changePass.newPass
@@ -165,7 +165,7 @@ export class AccountComponent implements OnInit {
 
   async deleteAccount() {
     try {
-        const response = await axios.post('http://localhost:4040/account/delete', {
+        const response = await axios.post('http://34.87.6.132:4040/account/delete', {
           email: this.deleteCont.email,
           password: this.deleteCont.password
         });

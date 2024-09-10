@@ -23,7 +23,7 @@ export class LoginComponent {
   async login() {
     const loggingInToastElement = this.toastService.generatingToast('Logging In');
     try {
-      const response = await axios.post<{ status: number, message: string, token: string }>('http://localhost:4040/account/login', {
+      const response = await axios.post<{ status: number, message: string, token: string }>('http://34.87.6.132:4040/account/login', {
         email: this.email,
         password: this.password
       });

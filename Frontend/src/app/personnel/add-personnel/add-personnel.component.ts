@@ -117,7 +117,7 @@ export class AddPersonnelComponent implements OnInit {
 
     const generatingToastElement = this.toastService.generatingToast('Generating Personnel Form');
     try {
-      const response = await axios.post('http://localhost:4040/personnel/add', this.personnelData);
+      const response = await axios.post('http://34.87.6.132:4040/personnel/add', this.personnelData);
       if (response.data.status === 200) {
         if (response.data.personnel.person_id) {
           this.currentPersonId = response.data.personnel.person_id;
@@ -144,7 +144,7 @@ export class AddPersonnelComponent implements OnInit {
       for (let i = 0; i < this.educations.length; i++) {
         this.educations[i].person_id = this.currentPersonId;
         this.educations[i].graduation_year = Number(this.educations[i].graduation_year);
-        const response = await axios.post('http://localhost:4040/personnel/education/add', this.educations[i]);
+        const response = await axios.post('http://34.87.6.132:4040/personnel/education/add', this.educations[i]);
         if (response.data.status !== 200) {
           this.toastService.failedToast('Failed to submit Education form');
           console.error('Failed to submit Education form:', response.data.message);
@@ -166,7 +166,7 @@ export class AddPersonnelComponent implements OnInit {
         this.trainingRecords[i].finish_date = new Date(this.trainingRecords[i].finish_date);
         this.trainingRecords[i].next_date = new Date(this.trainingRecords[i].next_date);
         this.trainingRecords[i].interval_recurrent = Number(this.trainingRecords[i].interval_recurrent);
-        const response = await axios.post('http://localhost:4040/personnel/training/add', this.trainingRecords[i]);
+        const response = await axios.post('http://34.87.6.132:4040/personnel/training/add', this.trainingRecords[i]);
         if (response.data.status !== 200) {
           this.toastService.failedToast('Failed to submit Training form');
           console.error('Failed to submit Training form:', response.data.message);
@@ -186,7 +186,7 @@ export class AddPersonnelComponent implements OnInit {
         this.experienceRecords[i].person_id = this.currentPersonId;
         this.experienceRecords[i].since_date = new Date(this.experienceRecords[i].since_date);
         this.experienceRecords[i].until_date = new Date(this.experienceRecords[i].until_date);
-        const response = await axios.post('http://localhost:4040/personnel/experience/add', this.experienceRecords[i]);
+        const response = await axios.post('http://34.87.6.132:4040/personnel/experience/add', this.experienceRecords[i]);
         if (response.data.status !== 200) {
           this.toastService.failedToast('Failed to submit Experience form');
           console.error('Failed to submit Experience form:', response.data.message);
@@ -206,7 +206,7 @@ export class AddPersonnelComponent implements OnInit {
         this.certifications[i].person_id = this.currentPersonId;
         this.certifications[i].cert_first_date = new Date(this.certifications[i].cert_first_date);
         this.certifications[i].cert_expire_date = new Date(this.certifications[i].cert_expire_date);
-        const response = await axios.post('http://localhost:4040/personnel/cert/add', this.certifications[i]);
+        const response = await axios.post('http://34.87.6.132:4040/personnel/cert/add', this.certifications[i]);
         if (response.data.status !== 200) {
           this.toastService.failedToast('Failed to submit Certification form');
           console.error('Failed to submit Certification form:', response.data.message);

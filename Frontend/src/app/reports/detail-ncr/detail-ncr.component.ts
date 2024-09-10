@@ -175,7 +175,7 @@ export class DetailNCRComponent implements OnInit{
 
   async fetchNCR() {
     try {
-      const response = await axios.post('http://localhost:4040/ncr/show',
+      const response = await axios.post('http://34.87.6.132:4040/ncr/show',
         { ncr_init_id: this.currentNCRInitID }
       );
       this.ncrData = response.data;
@@ -196,7 +196,7 @@ export class DetailNCRComponent implements OnInit{
 
   async fetchReplyNCR() {
     try {
-      const response = await axios.post('http://localhost:4040/ncr/reply/show', {
+      const response = await axios.post('http://34.87.6.132:4040/ncr/reply/show', {
         ncr_init_id: this.currentNCRInitID
       });
       if (response.data.message === 'Showing NCR Reply') {
@@ -217,7 +217,7 @@ export class DetailNCRComponent implements OnInit{
 
   async fetchResultNCR() {
     try {
-      const response = await axios.post('http://localhost:4040/ncr/result/show', {
+      const response = await axios.post('http://34.87.6.132:4040/ncr/result/show', {
         ncr_init_id: this.currentNCRInitID
       });
       if (response.data.message === 'Showing NCR Follow Result') {
@@ -260,7 +260,7 @@ export class DetailNCRComponent implements OnInit{
   async navigatePreview() {
     const generatePDFToastElement = this.toastService.generatingToast('Generating PDF');
     try {
-      const response = await axios.post('http://localhost:4040/ncr/getPDF', 
+      const response = await axios.post('http://34.87.6.132:4040/ncr/getPDF', 
         { ncr_init_id: this.currentNCRInitID }
       );
       if (response.data.status === 200) {
