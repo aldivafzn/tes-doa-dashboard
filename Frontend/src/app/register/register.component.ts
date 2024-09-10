@@ -61,7 +61,7 @@ export class RegisterComponent implements OnInit {
   async registerAccount() {
     console.log("Sending data:", this.registerData);
     try {
-      const response = await axios.post("http://localhost:4040/account/add", this.registerData);
+      const response = await axios.post("http://34.87.6.132:4040/account/add", this.registerData);
       console.log("Server response:", response.data);
       if (response.data.status === 200) {
         this.registerMessage = response.data.message;

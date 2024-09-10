@@ -77,7 +77,7 @@ export class FollowonIORComponent {
 
   async getAccountInfo() {
     try {
-      const response = await axios.post('http://localhost:4040/account/show', { accountid: this.currentAccountID });
+      const response = await axios.post('http://34.87.6.132:4040/account/show', { accountid: this.currentAccountID });
       if (response.data.status === 200 && response.data.account) {
         this.account = response.data.account;
       } else {
@@ -94,7 +94,7 @@ export class FollowonIORComponent {
     console.log("Sending data:", this.followIORData);
     const generatingToastElement = this.toastService.generatingToast('Generating IOR Follow On...');
     try {
-      const response = await axios.post('http://localhost:4040/ior/follow-up/add', this.followIORData);
+      const response = await axios.post('http://34.87.6.132:4040/ior/follow-up/add', this.followIORData);
 
       if (response.data.status === 200) {
         this.toastService.successToast('Follow on NCR added successfully');

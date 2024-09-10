@@ -41,8 +41,8 @@ export class PersonnelService {
     return {
       status: 200,
       message: 'Personnel Created',
-      personnel
-    }
+      personnel,
+    };
   }
 
   async updatePersonnel(updatePersonnelDto: UpdatePersonnelDto) {
@@ -64,8 +64,8 @@ export class PersonnelService {
     return {
       status: 200,
       message: 'Personnel Updated',
-      newPersonnel
-    }
+      newPersonnel,
+    };
   }
 
   async deletePersonnel(deletePersonnelDto: DeletePersonnelDto) {
@@ -85,8 +85,8 @@ export class PersonnelService {
 
     return {
       status: 200,
-      message: 'Personnel deleted'
-    }
+      message: 'Personnel deleted',
+    };
   }
 
   async showPersonnelById(showPersonnelByIdDto: ShowPersonnelByIdDto) {
@@ -109,7 +109,7 @@ export class PersonnelService {
     return {
       status: 200,
       message: 'Personnel found',
-      showProduct: personnel
+      showProduct: personnel,
     };
   }
 
@@ -125,8 +125,8 @@ export class PersonnelService {
     return {
       status: 200,
       message: 'Showing Personnels',
-      showProduct: personnels
-    }
+      showProduct: personnels,
+    };
   }
 
   async searchPersonnel(searchPersonnelDto: SearchPersonnelDto) {
@@ -148,7 +148,7 @@ export class PersonnelService {
           ? 'Showing result of Personnel'
           : 'No Data Personnel',
       showProduct: personnels,
-    }; 
+    };
   }
 
   /* 
@@ -161,8 +161,8 @@ export class PersonnelService {
     return {
       status: 200,
       message: 'Education Created',
-      education
-    }
+      education,
+    };
   }
 
   async updateEducation(updateEducationDto: UpdateEducationDto) {
@@ -174,8 +174,8 @@ export class PersonnelService {
     return {
       status: 200,
       message: 'Education updated',
-      education
-    }
+      education,
+    };
   }
 
   async deleteEducation(deleteEducationDto: DeleteEducationDto) {
@@ -184,8 +184,8 @@ export class PersonnelService {
     });
     return {
       status: 200,
-      mesage: 'Education deleted'
-    }
+      mesage: 'Education deleted',
+    };
   }
 
   async showEducationById(showEducationById: ShowEducationByIdDto) {
@@ -196,8 +196,8 @@ export class PersonnelService {
     return {
       status: 200,
       message: 'Showing Education',
-      showProduct: educations
-    }
+      showProduct: educations,
+    };
   }
 
   /* Experience Management */
@@ -208,8 +208,8 @@ export class PersonnelService {
     return {
       status: 200,
       message: 'Experience Created',
-      experience
-    }
+      experience,
+    };
   }
 
   async updateExperience(updateExperienceDto: UpdateExperienceDto) {
@@ -221,8 +221,8 @@ export class PersonnelService {
     return {
       status: 200,
       message: 'Experience updated',
-      experience
-    }
+      experience,
+    };
   }
 
   async deleteExperience(deleteExperienceDto: DeleteExperienceDto) {
@@ -231,8 +231,8 @@ export class PersonnelService {
     });
     return {
       status: 200,
-      message: 'Experience deleted'
-    }
+      message: 'Experience deleted',
+    };
   }
 
   async showExperienceByPersonId(showExperienceById: ShowExperienceByIdDto) {
@@ -243,8 +243,8 @@ export class PersonnelService {
     return {
       status: 200,
       message: 'Showing experience',
-      showProduct: experiences
-    }
+      showProduct: experiences,
+    };
   }
 
   /* Training Management */
@@ -255,8 +255,8 @@ export class PersonnelService {
     return {
       status: 200,
       message: 'Training Created',
-      training
-    }
+      training,
+    };
   }
 
   async updateTraining(updateTrainingDto: UpdateTrainingDto) {
@@ -268,8 +268,8 @@ export class PersonnelService {
     return {
       status: 200,
       message: 'Training updated',
-      training
-    }
+      training,
+    };
   }
 
   async deleteTraining(deleteTrainingDto: DeleteTrainingDto) {
@@ -278,8 +278,8 @@ export class PersonnelService {
     });
     return {
       status: 200,
-      message: 'Training updated'
-    }
+      message: 'Training updated',
+    };
   }
 
   async showTrainingByPersonId(showTrainingById: ShowTrainingByIdDto) {
@@ -290,8 +290,8 @@ export class PersonnelService {
     return {
       status: 200,
       message: 'Showing Training',
-      showProduct: trainings
-    }
+      showProduct: trainings,
+    };
   }
 
   async addCert(addCertDto: AddCertDto) {
@@ -301,8 +301,8 @@ export class PersonnelService {
     return {
       status: 200,
       message: 'Certification Created',
-      cert
-    }
+      cert,
+    };
   }
 
   async updateCert(updateCertDto: UpdateCertDto) {
@@ -314,8 +314,8 @@ export class PersonnelService {
     return {
       status: 200,
       message: 'Certification updated',
-      cert
-    }
+      cert,
+    };
   }
 
   async deleteCert(deleteCertDto: DeleteCertDto) {
@@ -324,8 +324,8 @@ export class PersonnelService {
     });
     return {
       status: 200,
-      message: 'Certification deleted'
-    }
+      message: 'Certification deleted',
+    };
   }
 
   async showCertByPersonId(showCertById: ShowCertByIdDto) {
@@ -336,7 +336,7 @@ export class PersonnelService {
     return {
       status: 200,
       message: 'Showing Certifications',
-      showProduct: certs
-    }
+      showProduct: certs,
+    };
   }
 }

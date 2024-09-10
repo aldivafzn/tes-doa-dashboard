@@ -75,7 +75,7 @@ export class ShowReplyNCRComponent implements OnInit {
 
   async fetchDataFromServer() {
     try {
-      const response = await axios.post('http://localhost:4040/ncr/reply/show', {
+      const response = await axios.post('http://34.87.6.132:4040/ncr/reply/show', {
         ncr_init_id: this.currentNCRInitId
       });
       if (response.data.message === 'Showing NCR Reply') {
@@ -107,7 +107,7 @@ export class ShowReplyNCRComponent implements OnInit {
     try {
       sessionStorage.setItem('document_id', documentId);
       console.log(documentId);
-      const response = await axios.post('http://localhost:3000/getPDFDrive', { documentId });
+      const response = await axios.post('http://34.87.6.132:3000/getPDFDrive', { documentId });
       console.log(response.data.message);
       if (response.data.status === 200) {
         window.location.href = response.data.message;

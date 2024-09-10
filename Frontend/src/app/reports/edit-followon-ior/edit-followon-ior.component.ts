@@ -58,7 +58,7 @@ export class EditFollowonIORComponent implements OnInit{
 
   async fetchFollowupIOR() {
     try {
-      const response = await axios.post('http://localhost:4040/ior/follow-up/show',
+      const response = await axios.post('http://34.87.6.132:4040/ior/follow-up/show',
         { id_follup: this.currentFollowonIorID }
       );
       this.followonData = response.data.result;
@@ -75,7 +75,7 @@ export class EditFollowonIORComponent implements OnInit{
     console.log("Sending data:", this.followonData);
     const generatingToastElement = this.toastService.generatingToast('Updating IOR Follow On...');
     try {
-      const response = await axios.put('http://localhost:4040/ior/follow-up/update', this.followonData);
+      const response = await axios.put('http://34.87.6.132:4040/ior/follow-up/update', this.followonData);
       if (response.data.status === 200) {
         this.toastService.successToast('IOR Follow On updated successfully');
         console.log('IOR Follow On updated successfully');
