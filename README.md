@@ -160,7 +160,9 @@ To install and set up the project locally, follow these steps:
 - Export PDF feature on Personnel sections
 - Development and creating Project Management feature
 - Fullstack deployment using HTTPS in Google Cloud Platform
-- Fixing the slow process of export PDF features 
+- Fix the slow process of export PDF features
+- Upload attachment in NCR Reply
+- Add auto-naming in NCR Reply (in accept by auditor and accept by auditee section in form)
 
 ## Contributor
 | NPM    | Name                        | Major       | University                       | LinkedIn    | Batch       |
