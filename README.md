@@ -141,10 +141,10 @@ To install and set up the project locally, follow these steps:
 
 
 6. **Run the Application:**
-   - Frontend
+- Frontend
      ```bash
      ng serve
-   - Backend
+- Backend
      ```bash
      npx prisma generate
      npm run start:dev
@@ -165,8 +165,8 @@ To install and set up the project locally, follow these steps:
 ## Contributor
 | NPM    | Name                        | Major       | University                       | LinkedIn    | Batch       |
 |--------|-----------------------------|-------------|--------------------------------- |--------------------------------------------------------------------------------------------------------------| ----------------- |
-| M316D4  | Zalfy Putra Rezky          | Teknik Komputer    | Universitas Indonesia            | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/zalfyputra/)  | Batch 4.3 Sesi 1 |
-| M322D4KX2261  | Laode Alif Ma'sum Sidrajat Ika   | Teknik Komputer    | Universitas Indonesia          | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/alif5623/) | Batch 4.3 Sesi 1 |
-| M322D4KX2261  | Enricco Verindra Putra   | Teknik Komputer    | Universitas Indonesia          | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/enriccoverindra/) | Batch 4.3 Sesi 1 |
-| M322D4KX2223  | Jeffri             | Teknik Komputer    | Universitas Indonesia          | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/jeffri22/)  | Batch 4.3 Sesi 2 |
+| 2106731453  | Zalfy Putra Rezky          | Teknik Komputer    | Universitas Indonesia            | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/zalfyputra/)  | Batch 4.3 Sesi 1 |
+| 2106731213  | Laode Alif Ma'sum Sidrajat Ika   | Teknik Komputer    | Universitas Indonesia          | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/alif5623/) | Batch 4.3 Sesi 1 |
+| 2106731xxx  | Enricco Verindra Putra   | Teknik Komputer    | Universitas Indonesia          | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/enriccoverindra/) | Batch 4.3 Sesi 1 |
+| 2106705070  | Jeffri             | Teknik Komputer    | Universitas Indonesia          | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/jeffri22/)  | Batch 4.3 Sesi 2 |
 | 2106731491 | Mikhael Morris H. Siallagan | Teknik Komputer     | Universitas Indonesia           | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/mikhaelsllgn/)      | Batch 4.3 Sesi 2 |
