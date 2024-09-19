@@ -130,6 +130,14 @@ To install and set up the project locally, follow these steps:
    PORT_RUN = [YOUR PORT]
    JWT_EXPIRED = [YOUR JWT EXPIRED TIME]
    JWT_SECRET = [YOUR JWT SECRET]
+   USER_EMAIL = [YOUR GCP EMAIL]
+   TARGET_FOLDER = [YOUR TARGET FOLDER FOR NCR]
+   API_LOCATION = [YOUR GCP JSON CREDENTIALS]
+   TEMPLATE_DOCUMENT_IOR= [YOUR IOR TEMPLATE DOCS]
+   TARGET_FOLDER_IOR= [YOUR TARGET FOLDER FOR IOR]
+   TARGET_FOLDER_NCR = [YOUR TARGET FOLDER FOR NCR]
+   TEMPLATE_DOCUMENT_NCR_DGCA = [YOUR NCR DGCA TEMPLATE DOCS]
+   TEMPLATE_DOCUMENT_NCR_EASA = [YOUR NCR EASA TEMPLATE DOCS]
 
 
 6. **Run the Application:**
@@ -138,8 +146,27 @@ To install and set up the project locally, follow these steps:
      ng serve
    - Backend
      ```bash
+     npx prisma generate
      npm run start:dev
 
-## Usage
+## Improvement
+- Migrated to Nest & Prisma: Migrated into new high scalability framework and more easy to use.
+- Improved authentication method: Implemented Json Web Token (JWT) authentication for better security.
+- Expanded reports management: Redesigned NCR and IOR reports procedure including the follow ups, as well as the PDF generation feature.
+- Implemented personnel management features: Implemented new personnel management features, consisting of adding entries, listing, searching, as well as editing.
+- Improved UI/UX: Improved UI/UX by creating loading animation, and added more pop up notifications on modules previously lacking.
+
+## Future Improvement
+- Export PDF feature on Personnel sections
+- Development and creating Project Management feature
+- Fullstack deployment using HTTPS in Google Cloud Platform
+- Fixing the slow process of export PDF features 
 
 ## Contributor
+| NPM    | Name                        | Major       | University                       | LinkedIn    | Batch       |
+|--------|-----------------------------|-------------|--------------------------------- |--------------------------------------------------------------------------------------------------------------| ----------------- |
+| M316D4  | Zalfy Putra Rezky          | Teknik Komputer    | Universitas Indonesia            | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/zalfyputra/)  | Batch 4.3 Sesi 1 |
+| M322D4KX2261  | Laode Alif Ma'sum Sidrajat Ika   | Teknik Komputer    | Universitas Indonesia          | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/alif5623/) | Batch 4.3 Sesi 1 |
+| M322D4KX2261  | Enricco Verindra Putra   | Teknik Komputer    | Universitas Indonesia          | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/enriccoverindra/) | Batch 4.3 Sesi 1 |
+| M322D4KX2223  | Jeffri             | Teknik Komputer    | Universitas Indonesia          | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/jeffri22/)  | Batch 4.3 Sesi 2 |
+| 2106731491 | Mikhael Morris H. Siallagan | Teknik Komputer     | Universitas Indonesia           | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/mikhaelsllgn/)      | Batch 4.3 Sesi 2 |
