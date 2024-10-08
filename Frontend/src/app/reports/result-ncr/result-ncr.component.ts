@@ -114,7 +114,7 @@ export class ResultNCRComponent implements OnInit {
 
   async fetchNCR() {
     try {
-      const response = await axios.post('http://34.87.6.132:4040/ncr/show',
+      const response = await axios.post('http://localhost:4040/ncr/show',
         { ncr_init_id: this.currentNCRInitId }
       );
       this.ncrData = response.data.showProduct[0];
@@ -132,12 +132,12 @@ export class ResultNCRComponent implements OnInit {
     console.log("Sending data:", this.resultNCRData);
     const generatingToastElement = this.toastService.generatingToast('Generating NCR Follow Up Result...');
     try {
-      const response = await axios.post('http://34.87.6.132:4040/ncr/result/add', this.resultNCRData);
+      const response = await axios.post('http://localhost:4040/ncr/result/add', this.resultNCRData);
       if (response.data.status === 200) {
         this.toastService.successToast('NCR Follow Up Result added successfully');
         console.log('NCR Follow Up Result added successfully');
         this.ncrData.status = "Closed";
-        await axios.put('http://34.87.6.132:4040/ncr/update', this.ncrData);
+        await axios.put('http://localhost:4040/ncr/update', this.ncrData);
         window.location.href = '/detailNCR';
       } else {
         this.toastService.failedToast('Failed to add NCR Follow Up Result');

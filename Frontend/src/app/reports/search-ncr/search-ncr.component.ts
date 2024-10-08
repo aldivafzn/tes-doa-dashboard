@@ -111,7 +111,7 @@ export class SearchNCRComponent implements OnInit {
 
   async fetchDataFromServer() {
     try {
-      const response = await axios.get('http://34.87.6.132:4040/ncr/show-all');
+      const response = await axios.get('http://localhost:4040/ncr/show-all');
       if (response.data.status === 200) {
         this.items = response.data.ncrs;
         for (let i = 0; this.items.length; i++) {
@@ -138,7 +138,7 @@ export class SearchNCRComponent implements OnInit {
   async fetchDataBySearchTerm() {
     this.isInitialized = false;
     try {
-      const response = await axios.post('http://34.87.6.132:4040/ncr/search', {
+      const response = await axios.post('http://localhost:4040/ncr/search', {
         input: this.searchTerm
         //filterBy: this.filterBy // Include filter criteria in the request
       });
@@ -183,7 +183,7 @@ export class SearchNCRComponent implements OnInit {
 
   async navigatePreview(documentId: string) {
     try {
-      const response = await axios.post('http://34.87.6.132:3000/getPDFDrive', { documentId });
+      const response = await axios.post('http://localhost:3000/getPDFDrive', { documentId });
       console.log(response.data.message);
       if (response.data.status === 200) {
         window.location.href = response.data.message;

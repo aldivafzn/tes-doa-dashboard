@@ -66,7 +66,7 @@ export class ReplyNCRComponent implements OnInit {
     console.log("Sending data:", this.replyNCRData);
     const generatingToastElement = this.toastService.generatingToast('Generating NCR Reply...');
     try {
-      const response = await axios.post('http://34.87.6.132:4040/ncr/reply/add', this.replyNCRData);
+      const response = await axios.post('http://localhost:4040/ncr/reply/add', this.replyNCRData);
       if (response.data.status === 200) {
         this.toastService.successToast('NCR Reply added successfully');
         console.log('NCR Reply added successfully');
