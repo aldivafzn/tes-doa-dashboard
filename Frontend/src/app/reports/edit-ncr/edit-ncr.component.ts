@@ -106,7 +106,7 @@ export class EditNCRComponent implements OnInit {
 
   async fetchNCR() {
     try {
-      const response = await axios.post('http://34.87.6.132:4040/ncr/show',
+      const response = await axios.post('http://localhost:4040/ncr/show',
         { ncr_init_id: this.currentNCRinitID }
       );
       this.ncrData = response.data.showProduct[0];
@@ -128,7 +128,7 @@ export class EditNCRComponent implements OnInit {
     console.log("Sending data:", this.ncrData);
     const generatingToastElement = this.toastService.generatingToast('Updating NCR...');
     try {
-      const response = await axios.put('http://34.87.6.132:4040/ncr/update', this.ncrData);
+      const response = await axios.put('http://localhost:4040/ncr/update', this.ncrData);
       if (response.data.status === 200) {
         this.toastService.successToast('NCR updated successfully');
         console.log('NCR updated successfully');

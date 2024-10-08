@@ -43,7 +43,7 @@ export class NavbarComponent implements OnInit {
   }
 
   logout() {
-    axios.post(`http://34.87.6.132:4040/account/logout`)
+    axios.post(`http://localhost:4040/account/logout`)
       .then(response => {
         this.authService.removeToken();
         this.role = null;
@@ -62,33 +62,33 @@ export class NavbarComponent implements OnInit {
   }
 
   checkRoute() {
-    if (window.location.href != 'http://34.87.6.132:4200/editIOR' && 
-        window.location.href != 'http://34.87.6.132:4200/detailIOR' &&
-        window.location.href != 'http://34.87.6.132:4200/addFollowonIOR' &&
-        window.location.href != 'http://34.87.6.132:4200/editFollowonIOR'
+    if (window.location.href != 'http://localhost:4200/editIOR' && 
+        window.location.href != 'http://localhost:4200/detailIOR' &&
+        window.location.href != 'http://localhost:4200/addFollowonIOR' &&
+        window.location.href != 'http://localhost:4200/editFollowonIOR'
       ) {
       sessionStorage.removeItem('id_ior');
     }
-    if (window.location.href != 'http://34.87.6.132:4200/editFollowonIOR') {
+    if (window.location.href != 'http://localhost:4200/editFollowonIOR') {
       sessionStorage.removeItem('id_follup_ior');
     }
-    if (window.location.href != 'http://34.87.6.132:4200/editNCR' &&
-        window.location.href != 'http://34.87.6.132:4200/detailNCR' &&
-        window.location.href != 'http://34.87.6.132:4200/addReplyNCR' &&
-        window.location.href != 'http://34.87.6.132:4200/editReplyNCR' &&
-        window.location.href != 'http://34.87.6.132:4200/addResultNCR' &&
-        window.location.href != 'http://34.87.6.132:4200/editResultNCR'
+    if (window.location.href != 'http://localhost:4200/editNCR' &&
+        window.location.href != 'http://localhost:4200/detailNCR' &&
+        window.location.href != 'http://localhost:4200/addReplyNCR' &&
+        window.location.href != 'http://localhost:4200/editReplyNCR' &&
+        window.location.href != 'http://localhost:4200/addResultNCR' &&
+        window.location.href != 'http://localhost:4200/editResultNCR'
       ) {
       sessionStorage.removeItem('ncr_init_id');
     }
-    if (window.location.href != 'http://34.87.6.132:4200/editReplyNCR') {
+    if (window.location.href != 'http://localhost:4200/editReplyNCR') {
       sessionStorage.removeItem('id_ncr_reply');
     }
-    if (window.location.href != 'http://34.87.6.132:4200/editResultNCR') {
+    if (window.location.href != 'http://localhost:4200/editResultNCR') {
       sessionStorage.removeItem('id_ncr_result');
     }
-    if (window.location.href != 'http://34.87.6.132:4200/detailPersonnel' && 
-        window.location.href != 'http://34.87.6.132:4200/editPersonnel'
+    if (window.location.href != 'http://localhost:4200/detailPersonnel' && 
+        window.location.href != 'http://localhost:4200/editPersonnel'
       ) {
       sessionStorage.removeItem('person_id');
     }

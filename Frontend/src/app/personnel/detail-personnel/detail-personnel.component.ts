@@ -199,7 +199,7 @@ export class DetailPersonnelComponent implements OnInit {
 
   async fetchPersonnel() {
     try {
-      const response = await axios.post('http://34.87.6.132:4040/personnel/show', 
+      const response = await axios.post('http://localhost:4040/personnel/show', 
         { person_id: this.currentPersonId }
       );
       this.personnel = response.data.showProduct;
@@ -236,7 +236,7 @@ export class DetailPersonnelComponent implements OnInit {
     try {
       this.newEducation.person_id = this.currentPersonId;
       this.newEducation.graduation_year = Number(this.newEducation.graduation_year);
-      const response = await axios.post('http://34.87.6.132:4040/personnel/education/add', this.newEducation);
+      const response = await axios.post('http://localhost:4040/personnel/education/add', this.newEducation);
       if (response.data.status === 200) {
         this.toastService.successToast('Education added successfully');
         window.location.href = '/detailPersonnel';
@@ -255,7 +255,7 @@ export class DetailPersonnelComponent implements OnInit {
     const generatingToastElement = this.toastService.generatingToast('Updating education...');
     try {
       education.graduation_year = Number(education.graduation_year);
-      const response = await axios.put('http://34.87.6.132:4040/personnel/education/update', education);
+      const response = await axios.put('http://localhost:4040/personnel/education/update', education);
       if (response.data.status === 200) {
         this.toastService.successToast('Education updated successfully')
         window.location.href = '/detailPersonnel';
@@ -278,7 +278,7 @@ export class DetailPersonnelComponent implements OnInit {
       this.newTraining.finish_date = new Date(this.newTraining.finish_date);
       this.newTraining.next_date = new Date(this.newTraining.next_date);
       this.newTraining.interval_recurrent = Number(this.newTraining.interval_recurrent);
-      const response = await axios.post('http://34.87.6.132:4040/personnel/training/add', this.newTraining);
+      const response = await axios.post('http://localhost:4040/personnel/training/add', this.newTraining);
       if (response.data.status === 200) {
         this.toastService.successToast('Training added successfully');
         window.location.href = '/detailPersonnel';
@@ -300,7 +300,7 @@ export class DetailPersonnelComponent implements OnInit {
       training.finish_date = new Date(training.finish_date);
       training.next_date = new Date(training.next_date);
       training.interval_recurrent = Number(training.interval_recurrent);
-      const response = await axios.put('http://34.87.6.132:4040/personnel/training/update', training);
+      const response = await axios.put('http://localhost:4040/personnel/training/update', training);
       if (response.data.status === 200) {
         this.toastService.successToast('Training updated successfully');
         window.location.href = '/detailPersonnel';
@@ -321,7 +321,7 @@ export class DetailPersonnelComponent implements OnInit {
       this.newExperience.person_id = this.currentPersonId;
       this.newExperience.since_date = new Date(this.newExperience.since_date);
       this.newExperience.until_date = new Date(this.newExperience.until_date);
-      const response = await axios.post('http://34.87.6.132:4040/personnel/experience/add', this.newExperience);
+      const response = await axios.post('http://localhost:4040/personnel/experience/add', this.newExperience);
       if (response.data.status === 200) {
         this.toastService.successToast('Experience added successfully');
         window.location.href = '/detailPersonnel';
@@ -341,7 +341,7 @@ export class DetailPersonnelComponent implements OnInit {
     try {
       experience.since_date = new Date(experience.since_date);
       experience.until_date = new Date(experience.until_date);
-      const response = await axios.put('http://34.87.6.132:4040/personnel/experience/update', experience);
+      const response = await axios.put('http://localhost:4040/personnel/experience/update', experience);
       if (response.data.status === 200) {
         this.toastService.successToast('Experience updated successfully');
         window.location.href = '/detailPersonnel';
@@ -361,7 +361,7 @@ export class DetailPersonnelComponent implements OnInit {
       this.newCert.person_id = this.currentPersonId;
       this.newCert.cert_first_date = new Date(this.newCert.cert_first_date);
       this.newCert.cert_expire_date = new Date(this.newCert.cert_expire_date);
-      const response = await axios.post('http://34.87.6.132:4040/personnel/cert/add', this.newCert);
+      const response = await axios.post('http://localhost:4040/personnel/cert/add', this.newCert);
       if (response.data.status === 200) {
         this.toastService.successToast('Certification added successfully');
         window.location.href = '/detailPersonnel';
@@ -381,7 +381,7 @@ export class DetailPersonnelComponent implements OnInit {
     try {
       cert.cert_first_date = new Date(cert.cert_first_date);
       cert.cert_expire_date = new Date(cert.cert_expire_date);
-      const response = await axios.put('http://34.87.6.132:4040/personnel/cert/update', cert);
+      const response = await axios.put('http://localhost:4040/personnel/cert/update', cert);
       if (response.data.status === 200) {
         this.toastService.successToast('Certification updated successfully');
         window.location.href = '/detailPersonnel';
