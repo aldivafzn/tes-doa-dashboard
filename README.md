@@ -167,8 +167,5 @@ To install and set up the project locally, follow these steps:
 ## Contributor
 | NPM    | Name                        | Major       | University                       | LinkedIn    | Batch       |
 |--------|-----------------------------|-------------|--------------------------------- |--------------------------------------------------------------------------------------------------------------| ----------------- |
-| 2106731453  | Zalfy Putra Rezky          | Teknik Komputer    | Universitas Indonesia            | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/zalfyputra/)  | Batch 4.3 Sesi 1 |
-| 2106731213  | Laode Alif Ma'sum Sidrajat Ika   | Teknik Komputer    | Universitas Indonesia          | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/alif5623/) | Batch 4.3 Sesi 1 |
-| 2106731xxx  | Enricco Verindra Putra   | Teknik Komputer    | Universitas Indonesia          | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/enriccoverindra/) | Batch 4.3 Sesi 1 |
-| 2106705070  | Jeffri             | Teknik Komputer    | Universitas Indonesia          | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/jeffri22/)  | Batch 4.3 Sesi 2 |
-| 2106731491 | Mikhael Morris H. Siallagan | Teknik Komputer     | Universitas Indonesia           | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/mikhaelsllgn/)      | Batch 4.3 Sesi 2 |
+| 202131017  | Aldiva Fadlie Fauzan          | Teknik Informatika    | Institut Teknologi PLN            | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/aldivafadliefauzan)  | Batch 4.4 |
+
